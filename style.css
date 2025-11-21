@@ -4,7 +4,9 @@
     --color-secondary: #000000;
     --color-text: #000000;
     --color-light: #ffffff;
-    --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    
+    /* >>> MODIFICACIÓN: Pila de fuentes compatible con todos los softwares */
+    --font-family: 'Arial', 'Inter', sans-serif;
 }
 
 * {
