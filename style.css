@@ -18,8 +18,11 @@ body {
     line-height: 1.6;
     color: var(--color-text);
     background: var(--color-light);
-    font-weight: 200;
+    font-weight: 700;
     text-transform: lowercase;
+    /* >>> MODIFICACIÓN PRINCIPAL: Reducimos el tamaño de fuente base a la mitad. */
+    font-size: 0.5rem; /* Reducción global del tamaño base (típicamente 1rem = 16px) */
+    
     /* Configuración Flexbox para centrado global */
     min-height: 100vh;
     display: flex;
@@ -32,19 +35,16 @@ body {
 a {
     color: var(--color-text) !important; /* Forzar color negro */
     text-decoration: none !important; /* Forzar sin subrayado */
-    font-weight: 200;
-    /* AÑADIDO: Transición para suavizar el efecto de zoom y peso de fuente */
+    font-weight: 700;
     transition: transform 0.3s ease-in-out, font-weight 0.3s ease-in-out; 
-    /* AÑADIDO: Necesario para que la transformación (scale) funcione correctamente */
     display: inline-block; 
 }
 
 /* Efecto HOVER: Extra negrita y Zoom sutil */
 a:hover {
-    font-weight: 400 !important; /* Más negrita en el hover (Extra Bold) */
+    font-weight: 900 !important; /* Más negrita en el hover (Extra Bold) */
     font-style: normal !important; /* Aseguramos que no haya cursiva */
     cursor: pointer;
-    /* AÑADIDO: Efecto de zoom del 5% al pasar el ratón */
     transform: scale(1.05); 
 }
 
@@ -60,23 +60,25 @@ a:hover {
 }
 
 .hero-content {
-    max-width: 300px;
+    max-width: 800px;
     padding: 2rem;
-    font-weight: 400;
+    font-weight: 900;
 }
 
 .hero-content h2 {
-    font-size: 2.8rem;
+    /* >>> MODIFICACIÓN: Reducido de 2.8rem a 1.4rem (aproximadamente 50%) */
+    font-size: 1.4rem; 
     color: var(--color-secondary);
     margin-bottom: 2rem;
-    font-weight: 400;
+    font-weight: 900;
 }
 
 .professional-roles {
-    font-size: 1.8rem;
+    /* >>> MODIFICACIÓN: Reducido de 1.8rem a 0.9rem (aproximadamente 50%) */
+    font-size: 0.9rem; 
     margin-top: 1rem;
     margin-bottom: 1rem;
-    font-weight: 400;
+    font-weight: 900;
     line-height: 1.5;
 }
 
@@ -84,12 +86,74 @@ a:hover {
     display: inline-block;
     background: none;
     color: var(--color-secondary);
-    padding: 12px 25px;
-    margin-top: 2.5rem;
+    padding: 6px 12.5px; /* Reducción de padding para que se vea proporcional */
+    margin-top: 1.25rem; /* Reducción de margin */
     border: 2px solid var(--color-secondary);
-    font-size: 1rem;
-    /* Aseguramos que el botón también siga las reglas de a:hover */
+    /* >>> MODIFICACIÓN: Reducido de 1rem a 0.5rem (aproximadamente 50%) */
+    font-size: 0.5rem; 
 }
 
 
-/* * CENTRADO
+/* * CENTRADO PARA PÁGINAS INTERNAS (SOLUCIÓN AL PROBLEMA 'ARRIBA A LA IZQUIERDA') 
+ * Aplica a cualquier <main> que no sea .home-hero y asegura el centrado total 
+ */
+main {
+    flex-grow: 1; /* Ocupa todo el espacio vertical disponible */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrado vertical */
+    align-items: center; /* Centrado horizontal */
+    padding: 1.5rem 5%; /* Reducción de padding */
+    width: 100%; /* Aseguramos el ancho completo para el centrado */
+}
+
+/* Excepción: Si es la intro, usa las reglas de .home-hero */
+main.home-hero {
+    padding: 0; /* Quitamos el padding extra del main genérico */
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Reducido para proporciones */
+    gap: 20px; /* Reducción de gap */
+    max-width: 600px; /* Reducción de max-width */
+    width: 100%; /* La cuadrícula ocupa el 100% de su contenedor (main) */
+}
+
+.content-grid h2 {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-bottom: 1rem; /* Reducción de margin */
+    color: var(--color-secondary);
+    /* >>> MODIFICACIÓN: Reducido de 2.5rem a 1.25rem (aproximadamente 50%) */
+    font-size: 1.25rem; 
+    font-weight: 900;
+}
+
+.project-item {
+    background: var(--color-light);
+    border: 1px solid #eee;
+    padding: 12.5px; /* Reducción de padding */
+}
+
+.project-item iframe,
+.project-item img {
+    width: 100%;
+    height: 150px; /* Reducción de height para proporciones */
+    margin-bottom: 0.5rem; /* Reducción de margin */
+    border: 1px solid var(--color-primary);
+}
+
+.project-item h3 {
+    color: var(--color-secondary);
+    margin-bottom: 0.25rem; /* Reducción de margin */
+    /* >>> MODIFICACIÓN: Reducido de 1.2rem a 0.6rem (aproximadamente 50%) */
+    font-size: 0.6rem; 
+    font-weight: 900;
+}
+
+/* --- Pie de página --- */
+footer {
+    text-align: center;
+    padding: 0.75rem; /* Reducción de padding */
+    background:
