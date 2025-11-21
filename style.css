@@ -38,7 +38,7 @@ a {
 /* Efecto HOVER: Extra negrita y Cursiva */
 a:hover {
     font-weight: 900 !important; /* Más negrita en el hover */
-    font-style: italic !important; /* Cursiva en el hover */
+    font-style: extrabold !important; /* Cursiva en el hover */
     cursor: pointer;
 }
 
