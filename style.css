@@ -26,20 +26,26 @@ body {
     flex-direction: column;
 }
 
-/* * ESTILOS GLOBALES DE ENLACES (SOLUCIÓN AL PROBLEMA DEL COLOR AZUL) 
- * Usamos el selector 'a' y !important para sobreescribir el estilo predeterminado 
+/* * ESTILOS GLOBALES DE ENLACES
+ * Implementa el Extra Bold y el Zoom sutil que solicitaste.
  */
 a {
     color: var(--color-text) !important; /* Forzar color negro */
     text-decoration: none !important; /* Forzar sin subrayado */
     font-weight: 700;
+    /* AÑADIDO: Transición para suavizar el efecto de zoom y peso de fuente */
+    transition: transform 0.3s ease-in-out, font-weight 0.3s ease-in-out; 
+    /* AÑADIDO: Necesario para que la transformación (scale) funcione correctamente */
+    display: inline-block; 
 }
 
-/* Efecto HOVER: Extra negrita y Cursiva */
+/* Efecto HOVER: Extra negrita y Zoom sutil */
 a:hover {
-    font-weight: 900 !important; /* Más negrita en el hover */
-    font-style: extrabold !important; /* Cursiva en el hover */
+    font-weight: 900 !important; /* Más negrita en el hover (Extra Bold) */
+    font-style: normal !important; /* Aseguramos que no haya cursiva */
     cursor: pointer;
+    /* AÑADIDO: Efecto de zoom del 5% al pasar el ratón */
+    transform: scale(1.05); 
 }
 
 /* --- Estilos de la Página de Inicio (index.html) --- */
@@ -86,69 +92,4 @@ a:hover {
 }
 
 
-/* * CENTRADO PARA PÁGINAS INTERNAS (SOLUCIÓN AL PROBLEMA 'ARRIBA A LA IZQUIERDA') 
- * Aplica a cualquier <main> que no sea .home-hero y asegura el centrado total 
- */
-main {
-    flex-grow: 1; /* Ocupa todo el espacio vertical disponible */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centrado vertical */
-    align-items: center; /* Centrado horizontal */
-    padding: 3rem 5%;
-    width: 100%; /* Aseguramos el ancho completo para el centrado */
-}
-
-/* Excepción: Si es la intro, usa las reglas de .home-hero */
-main.home-hero {
-    padding: 0; /* Quitamos el padding extra del main genérico */
-}
-
-.content-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    max-width: 1200px;
-    width: 100%; /* La cuadrícula ocupa el 100% de su contenedor (main) */
-}
-
-.content-grid h2 {
-    grid-column: 1 / -1;
-    text-align: center;
-    margin-bottom: 2rem;
-    color: var(--color-secondary);
-    font-size: 2.5rem;
-    font-weight: 900;
-}
-
-.project-item {
-    background: var(--color-light);
-    border: 1px solid #eee;
-    padding: 25px;
-}
-
-.project-item iframe,
-.project-item img {
-    width: 100%;
-    height: 300px;
-    margin-bottom: 1rem;
-    border: 1px solid var(--color-primary);
-}
-
-.project-item h3 {
-    color: var(--color-secondary);
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
-    font-weight: 900;
-}
-
-/* --- Pie de página --- */
-footer {
-    text-align: center;
-    padding: 1.5rem;
-    background: var(--color-light);
-    color: var(--color-secondary);
-    border-top: 1px solid var(--color-text);
-    font-weight: 700;
-    font-size: 0.9rem;
-}
+/* * CENTRADO
