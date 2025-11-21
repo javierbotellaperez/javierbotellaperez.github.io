@@ -1,10 +1,11 @@
-/* --- Variables y Reset Básico --- */
+/* --- Variables y Reset Básico (ACTUALIZADO) --- */
 :root {
-    --color-primary: #000000; /* Negro para todo */
-    --color-secondary: #000000; 
-    --color-text: #000000;
-    --color-light: #ffffff; 
-    --font-family: 'Arial', sans-serif;
+    --color-primary: #000000; /* Todo negro */
+    --color-secondary: #000000; /* Todo negro */
+    --color-text: #000000; /* Todo negro */
+    --color-light: #ffffff; /* Blanco */
+    /* NUEVO: Pilas de Helvetica */
+    --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -14,20 +15,20 @@
 }
 
 body {
-    font-family: var(--font-family);
+    font-family: var(--font-family); /* Aplicación de Helvetica */
     line-height: 1.6;
     color: var(--color-text);
     background: var(--color-light);
     font-weight: 700; /* Tipografía BOLD */
     text-transform: lowercase; /* TODO en minúsculas */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
-
-/* --- ESTILOS ELIMINADOS: Se quitó el <header> completo para lograr el centrado --- */
-
 
 /* --- Estilos de la Página de Inicio (index.html) --- */
 .home-hero {
-    min-height: 100vh; /* Ocupa toda la altura de la vista */
+    flex-grow: 1; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,7 +39,6 @@ body {
 .hero-content {
     max-width: 800px;
     padding: 2rem;
-    /* Ajustamos el tamaño para que sea notablemente bold */
     font-weight: 900; 
 }
 
@@ -46,53 +46,60 @@ body {
     font-size: 2.8rem;
     color: var(--color-secondary);
     margin-bottom: 2rem;
-    font-weight: 900; /* Extra bold */
+    font-weight: 900; 
 }
 
-/* Estilo para los roles profesionales (mantenemos el centrado) */
 .professional-roles {
     font-size: 1.8rem; 
     margin-top: 1rem;
     margin-bottom: 1rem;
-    font-weight: 900; /* Extra bold */
+    font-weight: 900; 
     line-height: 1.5; 
 }
 
-/* Estilos para los HIPERVÍNCULOS */
+/* Estilos para los HIPERVÍNCULOS (Negro, sin subrayado) */
 .professional-roles .nav-link,
 .cta-button {
-    color: var(--color-text); /* El color de los enlaces es negro/gris oscuro (no azul) */
-    text-decoration: none; /* Quitamos el subrayado */
-    transition: font-weight 0.2s, font-style 0.2s; /* Transición para el hover */
-    font-weight: 700; /* Estado normal: bold */
+    color: var(--color-text); /* Aseguramos que sea negro */
+    text-decoration: none; 
+    transition: font-weight 0.2s, font-style 0.2s; 
+    font-weight: 700;
 }
 
 /* Efecto HOVER: Extra negrita y Cursiva */
 .professional-roles .nav-link:hover,
 .cta-button:hover {
-    font-weight: 900; /* Extra bold */
-    font-style: italic; /* Cursiva */
+    font-weight: 900; 
+    font-style: italic; 
     cursor: pointer;
 }
 
 .cta-button {
     display: inline-block;
-    background: none; /* Quitamos el fondo para ser más minimalista */
+    background: none; 
     color: var(--color-secondary);
     padding: 12px 25px;
     margin-top: 2.5rem; 
-    border: 2px solid var(--color-secondary); /* Borde para el botón */
+    border: 2px solid var(--color-secondary); 
     font-size: 1rem;
 }
 
 
 /* --- Estilos para la Cuadrícula de Contenido (Páginas internas) --- */
-/* NOTA: Estos estilos se mantienen si usas las páginas produccion/postproduccion/fotografia */
-.content-grid {
+main:not(.home-hero) { 
+    flex-grow: 1; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
     padding: 3rem 5%;
+}
+
+.content-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 40px; 
+    max-width: 1200px; 
 }
 
 .content-grid h2 {
@@ -106,7 +113,7 @@ body {
 
 .project-item {
     background: var(--color-light);
-    border: 1px solid #eee;
+    border: 1px solid #eee; 
     padding: 25px;
 }
 
@@ -131,7 +138,6 @@ footer {
     padding: 1.5rem;
     background: var(--color-light);
     color: var(--color-secondary);
-    margin-top: 5rem; 
     border-top: 1px solid var(--color-text);
     font-weight: 700; 
     font-size: 0.9rem;
