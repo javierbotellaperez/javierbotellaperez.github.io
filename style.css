@@ -142,3 +142,58 @@ footer {
     font-weight: 700; 
     font-size: 0.9rem;
 }
+
+/* Asegura que CUALQUIER enlace en el body que tenga la clase nav-link sea negro */
+body a.nav-link {
+    color: var(--color-text) !important; /* ¡IMPORTANTE! Forzamos el color */
+    text-decoration: none !important; /* ¡IMPORTANTE! Forzamos sin subrayado */
+    font-weight: 700;
+}
+
+/* El efecto HOVER se mantiene como antes */
+body a.nav-link:hover {
+    font-weight: 900; 
+    font-style: italic; 
+    cursor: pointer;
+}
+
+<link rel="stylesheet" href="css/style.css">
+
+<main>
+    <h2>🎬 production projects</h2>
+    <div class="content-grid">
+        </div>
+</main>
+
+/* CENTRADO PARA PÁGINAS INTERNAS CON CONTENIDO CORTO */
+/* La etiqueta <main> por sí misma se usa para centrar todo */
+main { 
+    flex-grow: 1; /* Ocupa todo el espacio vertical */
+    display: flex; 
+    flex-direction: column; /* Apila los hijos (h2 y content-grid) verticalmente */
+    justify-content: center; /* Centrado vertical del contenido */
+    align-items: center; /* Centrado horizontal del contenido */
+    padding: 3rem 5%;
+}
+
+/* El home-hero es la excepción y lo hace el <main> por sí mismo */
+.home-hero {
+    /* Mantenemos el estilo de la intro aquí */
+    flex-grow: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* La cuadrícula de proyectos */
+.content-grid {
+    /* La cuadrícula solo define el layout de los proyectos */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px; 
+    max-width: 1200px; 
+    width: 100%; /* Asegura que la cuadrícula ocupe el espacio */
+}
+
+
