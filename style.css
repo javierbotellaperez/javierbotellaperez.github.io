@@ -18,7 +18,7 @@ body {
     line-height: 1.6;
     color: var(--color-text);
     background: var(--color-light);
-    font-weight: 700;
+    font-weight: 200;
     text-transform: lowercase;
     /* Configuración Flexbox para centrado global */
     min-height: 100vh;
@@ -32,7 +32,7 @@ body {
 a {
     color: var(--color-text) !important; /* Forzar color negro */
     text-decoration: none !important; /* Forzar sin subrayado */
-    font-weight: 700;
+    font-weight: 200;
     /* AÑADIDO: Transición para suavizar el efecto de zoom y peso de fuente */
     transition: transform 0.3s ease-in-out, font-weight 0.3s ease-in-out; 
     /* AÑADIDO: Necesario para que la transformación (scale) funcione correctamente */
@@ -41,7 +41,7 @@ a {
 
 /* Efecto HOVER: Extra negrita y Zoom sutil */
 a:hover {
-    font-weight: 900 !important; /* Más negrita en el hover (Extra Bold) */
+    font-weight: 400 !important; /* Más negrita en el hover (Extra Bold) */
     font-style: normal !important; /* Aseguramos que no haya cursiva */
     cursor: pointer;
     /* AÑADIDO: Efecto de zoom del 5% al pasar el ratón */
@@ -60,23 +60,23 @@ a:hover {
 }
 
 .hero-content {
-    max-width: 800px;
+    max-width: 300px;
     padding: 2rem;
-    font-weight: 900;
+    font-weight: 400;
 }
 
 .hero-content h2 {
     font-size: 2.8rem;
     color: var(--color-secondary);
     margin-bottom: 2rem;
-    font-weight: 900;
+    font-weight: 400;
 }
 
 .professional-roles {
     font-size: 1.8rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    font-weight: 900;
+    font-weight: 400;
     line-height: 1.5;
 }
 
