@@ -1,10 +1,10 @@
-/* --- Variables y Reset Básico --- */
+/* --- Variables y Reset Básico (Ajustadas para Minimalismo) --- */
 :root {
-    --color-primary: #3498db; /* Azul atractivo */
-    --color-secondary: #2c3e50; /* Azul oscuro/negro suave */
-    --color-text: #333;
-    --color-light: #f4f4f4;
-    --font-family: 'Arial', sans-serif;
+    --color-primary: #333333; /* Gris oscuro para el carácter */
+    --color-secondary: #000000; /* Negro para acentos fuertes */
+    --color-text: #333333;
+    --color-light: #ffffff; /* Blanco limpio */
+    --font-family: 'Arial', sans-serif; /* Usamos una fuente legible y bold */
 }
 
 * {
@@ -18,27 +18,30 @@ body {
     line-height: 1.6;
     color: var(--color-text);
     background: var(--color-light);
+    font-weight: 700; /* Tipografía BOLD en todo el cuerpo */
+    text-transform: lowercase; /* TODO en minúsculas */
 }
 
 /* --- Encabezado y Navegación --- */
 header {
-    background: var(--color-secondary);
-    color: white;
-    padding: 1rem 5%;
+    background: var(--color-light); /* Fondo claro para minimalismo */
+    color: var(--color-secondary);
+    padding: 1.5rem 5%; /* Más espacio */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 5px solid var(--color-primary);
+    border-bottom: 2px solid var(--color-secondary); /* Borde fino para carácter */
 }
 
 header h1 {
-    font-size: 1.8rem;
-    margin-bottom: 0.2rem;
+    font-size: 1.5rem; /* Menos prominente */
+    margin-bottom: 0;
 }
 
 header p {
     font-size: 0.8rem;
-    opacity: 0.8;
+    opacity: 0.7; /* Subtítulos más sutiles */
+    font-weight: 400; /* Hacemos el subtítulo menos bold */
 }
 
 #main-nav ul {
@@ -47,100 +50,126 @@ header p {
 }
 
 #main-nav ul li a {
-    color: white;
+    color: var(--color-secondary);
     text-decoration: none;
     padding: 0.5rem 1rem;
     display: block;
-    transition: background 0.3s;
+    transition: color 0.3s;
+    font-size: 0.9rem;
 }
 
 #main-nav ul li a:hover,
 #main-nav ul li a.active {
-    background: var(--color-primary);
-    border-radius: 5px;
+    color: var(--color-primary);
+    background: none; /* Quitamos el fondo para hacerlo más minimalista */
+    text-decoration: underline;
 }
 
 /* --- Estilos de la Página de Inicio (index.html) --- */
 .home-hero {
-    min-height: 80vh; /* Ocupa casi toda la altura de la vista */
+    min-height: 85vh; 
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: white; /* Puedes añadir una imagen de fondo aquí */
+    background: var(--color-light);
 }
 
 .hero-content {
-    max-width: 700px;
+    max-width: 800px;
     padding: 2rem;
 }
 
 .hero-content h2 {
-    font-size: 2.5rem;
-    color: var(--color-primary);
+    font-size: 2.8rem;
+    color: var(--color-secondary);
+    margin-bottom: 1.5rem;
+}
+
+/* Estilo para los roles profesionales (mantenemos el centrado) */
+.professional-roles {
+    font-size: 1.8rem; /* Un poco más grande para el carácter */
+    margin-top: 1rem;
     margin-bottom: 1rem;
+    font-weight: 700; 
+    line-height: 1.5; /* Espaciado cómodo */
+}
+
+.professional-roles a {
+    color: var(--color-primary); 
+    text-decoration: none; 
+    transition: color 0.3s;
+    /* Los emojis y los bold están en el HTML, el CSS se encarga del enlace */
+}
+
+.professional-roles a:hover {
+    color: var(--color-secondary); 
+    text-decoration: none; /* Quitamos el subrayado al pasar el ratón, solo cambiamos el color */
 }
 
 .cta-button {
     display: inline-block;
-    background: var(--color-primary);
-    color: white;
-    padding: 10px 20px;
-    margin-top: 1.5rem;
+    background: var(--color-secondary);
+    color: var(--color-light);
+    padding: 12px 25px;
+    margin-top: 2.5rem; /* Más espacio */
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 0; /* Bordes rectos */
     transition: background 0.3s;
+    font-size: 1rem;
+    border: 2px solid var(--color-secondary);
 }
 
 .cta-button:hover {
-    background: #2980b9;
+    background: var(--color-light); /* Invertimos colores al pasar el ratón */
+    color: var(--color-secondary);
 }
 
 /* --- Estilos para la Cuadrícula de Contenido (Páginas internas) --- */
 .content-grid {
-    padding: 2rem 5%;
+    padding: 3rem 5%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    gap: 40px; /* Más separación para minimalismo */
 }
 
 .content-grid h2 {
-    grid-column: 1 / -1; /* Ocupa todo el ancho */
+    grid-column: 1 / -1; 
     text-align: center;
-    margin-bottom: 1.5rem;
-    color: var(--color-primary);
-    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--color-secondary);
+    font-size: 2.5rem;
 }
 
 .project-item {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    background: var(--color-light);
+    border: 1px solid #eee; /* Borde muy sutil */
+    padding: 25px;
+    border-radius: 0;
+    box-shadow: none; /* Quitamos las sombras */
 }
 
 .project-item iframe,
 .project-item img {
     width: 100%;
-    height: 250px; /* Altura fija para videos/fotos */
+    height: 300px; 
     display: block;
     margin-bottom: 1rem;
-    border: none;
-    border-radius: 5px;
-    object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
+    border: 1px solid var(--color-primary); /* Borde simple y visible */
+    border-radius: 0;
+    object-fit: cover; 
 }
 
 .project-item h3 {
     color: var(--color-secondary);
     margin-bottom: 0.5rem;
+    font-size: 1.2rem;
 }
 
 /* --- Pie de página --- */
 footer {
     text-align: center;
-    padding: 1rem;
-    background: var(--color-secondary);
-    color: white;
-    margin-top: 3rem;
-}
+    padding: 1.5rem;
+    background: var(--color-light);
+    color: var(--color-secondary);
+    margin-top: 5rem; /* Mucho espacio */
