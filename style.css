@@ -1,10 +1,10 @@
-/* --- Variables y Reset Básico (Ajustadas para Minimalismo) --- */
+/* --- Variables y Reset Básico --- */
 :root {
-    --color-primary: #333333; /* Gris oscuro para el carácter */
-    --color-secondary: #000000; /* Negro para acentos fuertes */
-    --color-text: #333333;
-    --color-light: #ffffff; /* Blanco limpio */
-    --font-family: 'Arial', sans-serif; /* Usamos una fuente legible y bold */
+    --color-primary: #000000; /* Negro para todo */
+    --color-secondary: #000000; 
+    --color-text: #000000;
+    --color-light: #ffffff; 
+    --font-family: 'Arial', sans-serif;
 }
 
 * {
@@ -18,56 +18,16 @@ body {
     line-height: 1.6;
     color: var(--color-text);
     background: var(--color-light);
-    font-weight: 700; /* Tipografía BOLD en todo el cuerpo */
+    font-weight: 700; /* Tipografía BOLD */
     text-transform: lowercase; /* TODO en minúsculas */
 }
 
-/* --- Encabezado y Navegación --- */
-header {
-    background: var(--color-light); /* Fondo claro para minimalismo */
-    color: var(--color-secondary);
-    padding: 1.5rem 5%; /* Más espacio */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid var(--color-secondary); /* Borde fino para carácter */
-}
+/* --- ESTILOS ELIMINADOS: Se quitó el <header> completo para lograr el centrado --- */
 
-header h1 {
-    font-size: 1.5rem; /* Menos prominente */
-    margin-bottom: 0;
-}
-
-header p {
-    font-size: 0.8rem;
-    opacity: 0.7; /* Subtítulos más sutiles */
-    font-weight: 400; /* Hacemos el subtítulo menos bold */
-}
-
-#main-nav ul {
-    list-style: none;
-    display: flex;
-}
-
-#main-nav ul li a {
-    color: var(--color-secondary);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    display: block;
-    transition: color 0.3s;
-    font-size: 0.9rem;
-}
-
-#main-nav ul li a:hover,
-#main-nav ul li a.active {
-    color: var(--color-primary);
-    background: none; /* Quitamos el fondo para hacerlo más minimalista */
-    text-decoration: underline;
-}
 
 /* --- Estilos de la Página de Inicio (index.html) --- */
 .home-hero {
-    min-height: 85vh; 
+    min-height: 100vh; /* Ocupa toda la altura de la vista */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -78,59 +38,61 @@ header p {
 .hero-content {
     max-width: 800px;
     padding: 2rem;
+    /* Ajustamos el tamaño para que sea notablemente bold */
+    font-weight: 900; 
 }
 
 .hero-content h2 {
     font-size: 2.8rem;
     color: var(--color-secondary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 900; /* Extra bold */
 }
 
 /* Estilo para los roles profesionales (mantenemos el centrado) */
 .professional-roles {
-    font-size: 1.8rem; /* Un poco más grande para el carácter */
+    font-size: 1.8rem; 
     margin-top: 1rem;
     margin-bottom: 1rem;
-    font-weight: 700; 
-    line-height: 1.5; /* Espaciado cómodo */
+    font-weight: 900; /* Extra bold */
+    line-height: 1.5; 
 }
 
-.professional-roles a {
-    color: var(--color-primary); 
-    text-decoration: none; 
-    transition: color 0.3s;
-    /* Los emojis y los bold están en el HTML, el CSS se encarga del enlace */
+/* Estilos para los HIPERVÍNCULOS */
+.professional-roles .nav-link,
+.cta-button {
+    color: var(--color-text); /* El color de los enlaces es negro/gris oscuro (no azul) */
+    text-decoration: none; /* Quitamos el subrayado */
+    transition: font-weight 0.2s, font-style 0.2s; /* Transición para el hover */
+    font-weight: 700; /* Estado normal: bold */
 }
 
-.professional-roles a:hover {
-    color: var(--color-secondary); 
-    text-decoration: none; /* Quitamos el subrayado al pasar el ratón, solo cambiamos el color */
+/* Efecto HOVER: Extra negrita y Cursiva */
+.professional-roles .nav-link:hover,
+.cta-button:hover {
+    font-weight: 900; /* Extra bold */
+    font-style: italic; /* Cursiva */
+    cursor: pointer;
 }
 
 .cta-button {
     display: inline-block;
-    background: var(--color-secondary);
-    color: var(--color-light);
+    background: none; /* Quitamos el fondo para ser más minimalista */
+    color: var(--color-secondary);
     padding: 12px 25px;
-    margin-top: 2.5rem; /* Más espacio */
-    text-decoration: none;
-    border-radius: 0; /* Bordes rectos */
-    transition: background 0.3s;
+    margin-top: 2.5rem; 
+    border: 2px solid var(--color-secondary); /* Borde para el botón */
     font-size: 1rem;
-    border: 2px solid var(--color-secondary);
 }
 
-.cta-button:hover {
-    background: var(--color-light); /* Invertimos colores al pasar el ratón */
-    color: var(--color-secondary);
-}
 
 /* --- Estilos para la Cuadrícula de Contenido (Páginas internas) --- */
+/* NOTA: Estos estilos se mantienen si usas las páginas produccion/postproduccion/fotografia */
 .content-grid {
     padding: 3rem 5%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px; /* Más separación para minimalismo */
+    gap: 40px; 
 }
 
 .content-grid h2 {
@@ -139,31 +101,28 @@ header p {
     margin-bottom: 2rem;
     color: var(--color-secondary);
     font-size: 2.5rem;
+    font-weight: 900;
 }
 
 .project-item {
     background: var(--color-light);
-    border: 1px solid #eee; /* Borde muy sutil */
+    border: 1px solid #eee;
     padding: 25px;
-    border-radius: 0;
-    box-shadow: none; /* Quitamos las sombras */
 }
 
 .project-item iframe,
 .project-item img {
     width: 100%;
     height: 300px; 
-    display: block;
     margin-bottom: 1rem;
-    border: 1px solid var(--color-primary); /* Borde simple y visible */
-    border-radius: 0;
-    object-fit: cover; 
+    border: 1px solid var(--color-primary); 
 }
 
 .project-item h3 {
     color: var(--color-secondary);
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
+    font-weight: 900;
 }
 
 /* --- Pie de página --- */
@@ -172,4 +131,8 @@ footer {
     padding: 1.5rem;
     background: var(--color-light);
     color: var(--color-secondary);
-    margin-top: 5rem; /* Mucho espacio */
+    margin-top: 5rem; 
+    border-top: 1px solid var(--color-text);
+    font-weight: 700; 
+    font-size: 0.9rem;
+}
