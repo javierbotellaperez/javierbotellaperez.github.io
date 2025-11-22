@@ -1,161 +1,47 @@
-/* --- Variables y Reset Básico --- */
-:root {
-    --color-primary: #000000;
-    --color-secondary: #000000;
-    --color-text: #000000;
-    --color-light: #ffffff;
-    
-    /* >>> MODIFICACIÓN: Pila de fuentes compatible con todos los softwares */
-    --font-family: 'Arial', 'Inter', sans-serif;
-}
+/* --- ESTILOS ESPECÍFICOS PARA EL STICKER --- */
 
-* {
-    margin: 0;
-    padding: 0;
+/* 1. Base del contenedor del Sticker (Sobreescribe estilos anteriores) */
+.movable-resizable-container {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    width: 200px;
+    height: 200px;
+    border: none; /* Eliminamos el borde azul */
+    cursor: grab;
     box-sizing: border-box;
-}
-
-body {
-    font-family: var(--font-family);
-    line-height: 1.6;
-    color: var(--color-text);
-    background: var(--color-light);
-    font-weight: 700;
-    text-transform: lowercase;
-    /* >>> MODIFICACIÓN PRINCIPAL: Reducimos el tamaño de fuente base a la mitad. */
-    font-size: 0.5rem; /* Reducción global del tamaño base (típicamente 1rem = 16px) */
+    user-select: none;
+    overflow: hidden; /* Oculta el pseudo-elemento doblado fuera de los límites */
     
-    /* Configuración Flexbox para centrado global */
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    /* Efecto transición para suavizar el "despegue" */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-/* * ESTILOS GLOBALES DE ENLACES
- * Implementa el Extra Bold y el Zoom sutil que solicitaste.
- */
-a {
-    color: var(--color-text) !important; /* Forzar color negro */
-    text-decoration: none !important; /* Forzar sin subrayado */
-    font-weight: 700;
-    transition: transform 0.3s ease-in-out, font-weight 0.3s ease-in-out; 
-    display: inline-block; 
+/* 2. Efecto HOVER: Despegue */
+.movable-resizable-container:hover {
+    transform: rotate(1deg) scale(1.02);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Efecto HOVER: Extra negrita y Zoom sutil */
-a:hover {
-    font-weight: 900 !important; /* Más negrita en el hover (Extra Bold) */
-    font-style: normal !important; /* Aseguramos que no haya cursiva */
-    cursor: pointer;
-    transform: scale(1.05); 
+/* 3. Pseudo-elemento para el efecto "Esquina Doblada" */
+.movable-resizable-container:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    
+    /* Crea el triángulo (la esquina) */
+    border-top: 25px solid var(--color-light); /* Color del papel doblado (blanco) */
+    border-left: 25px solid transparent; /* Transparencia para el efecto de pliegue */
+    
+    /* Dibuja la pequeña sombra que da profundidad */
+    box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.2); 
+    z-index: 10;
 }
 
-/* --- Estilos de la Página de Inicio (index.html) --- */
-.home-hero {
-    /* Centrado Vertical y Horizontal para la intro */
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: var(--color-light);
+/* 4. Eliminamos el controlador verde (resizer) */
+.resizer {
+    display: none; /* Desactivamos completamente el estilo del controlador verde */
 }
-
-.hero-content {
-    max-width: 800px;
-    padding: 2rem;
-    font-weight: 900;
-}
-
-.hero-content h2 {
-    /* >>> MODIFICACIÓN: Reducido de 2.8rem a 1.4rem (aproximadamente 50%) */
-    font-size: 1.4rem; 
-    color: var(--color-secondary);
-    margin-bottom: 2rem;
-    font-weight: 900;
-}
-
-.professional-roles {
-    /* >>> MODIFICACIÓN: Reducido de 1.8rem a 0.9rem (aproximadamente 50%) */
-    font-size: 0.9rem; 
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    font-weight: 900;
-    line-height: 1.5;
-}
-
-.cta-button {
-    display: inline-block;
-    background: none;
-    color: var(--color-secondary);
-    padding: 6px 12.5px; /* Reducción de padding para que se vea proporcional */
-    margin-top: 1.25rem; /* Reducción de margin */
-    border: 2px solid var(--color-secondary);
-    /* >>> MODIFICACIÓN: Reducido de 1rem a 0.5rem (aproximadamente 50%) */
-    font-size: 0.5rem; 
-}
-
-
-/* * CENTRADO PARA PÁGINAS INTERNAS (SOLUCIÓN AL PROBLEMA 'ARRIBA A LA IZQUIERDA') 
- * Aplica a cualquier <main> que no sea .home-hero y asegura el centrado total 
- */
-main {
-    flex-grow: 1; /* Ocupa todo el espacio vertical disponible */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centrado vertical */
-    align-items: center; /* Centrado horizontal */
-    padding: 1.5rem 5%; /* Reducción de padding */
-    width: 100%; /* Aseguramos el ancho completo para el centrado */
-}
-
-/* Excepción: Si es la intro, usa las reglas de .home-hero */
-main.home-hero {
-    padding: 0; /* Quitamos el padding extra del main genérico */
-}
-
-.content-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Reducido para proporciones */
-    gap: 20px; /* Reducción de gap */
-    max-width: 600px; /* Reducción de max-width */
-    width: 100%; /* La cuadrícula ocupa el 100% de su contenedor (main) */
-}
-
-.content-grid h2 {
-    grid-column: 1 / -1;
-    text-align: center;
-    margin-bottom: 1rem; /* Reducción de margin */
-    color: var(--color-secondary);
-    /* >>> MODIFICACIÓN: Reducido de 2.5rem a 1.25rem (aproximadamente 50%) */
-    font-size: 1.25rem; 
-    font-weight: 900;
-}
-
-.project-item {
-    background: var(--color-light);
-    border: 1px solid #eee;
-    padding: 12.5px; /* Reducción de padding */
-}
-
-.project-item iframe,
-.project-item img {
-    width: 100%;
-    height: 150px; /* Reducción de height para proporciones */
-    margin-bottom: 0.5rem; /* Reducción de margin */
-    border: 1px solid var(--color-primary);
-}
-
-.project-item h3 {
-    color: var(--color-secondary);
-    margin-bottom: 0.25rem; /* Reducción de margin */
-    /* >>> MODIFICACIÓN: Reducido de 1.2rem a 0.6rem (aproximadamente 50%) */
-    font-size: 0.6rem; 
-    font-weight: 900;
-}
-
-/* --- Pie de página --- */
-footer {
-    text-align: center;
-    padding: 0.75rem; /* Reducción de padding */
-    background:
