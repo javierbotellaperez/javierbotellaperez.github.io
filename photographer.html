@@ -9,14 +9,14 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 
-    <style>
+   <style>
         body {
-            /* Asegura que no haya barras de scroll y anula el centrado del body */
+            /* REFORZADO: Asegura que el punto de inicio (0,0) esté justo en la esquina */
             overflow: hidden;
-            margin: 0;
-            padding: 0;
+            margin: 0 !important; /* Refuerza la anulación de márgenes */
+            padding: 0 !important; /* Refuerza la anulación de padding */
         }
-
+        
         .movable-resizable-container {
             position: absolute;
             width: 250px;
@@ -25,9 +25,7 @@
             user-select: none;
             overflow: hidden;
             
-            /* 🔥 IMPORTANTE: ELIMINAMOS la transición CSS
-               para evitar conflictos con la actualización constante de posición de JS. */
-            /* transition: transform 0.3s ease-out, width 0.3s ease-out, height 0.3s ease-out; */
+            /* 🔥 IMPORTANTE: Transición eliminada para evitar conflictos con JS */
             will-change: transform;
         }
 
