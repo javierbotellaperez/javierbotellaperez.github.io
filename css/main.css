@@ -1,76 +1,4 @@
 /* ===================================== */
-/* 1. VARIABLES GLOBALES & RESET */
-/* ===================================== */
-:root {
-    /* Paleta de colores */
-    --color-primary: #000000;
-    --color-text: var(--color-primary);
-    --color-background: #ffffff;
-
-    /* Tipografía */
-    --font-family: 'Arial', 'Inter', sans-serif;
-    --font-weight-regular: 400; 
-    --font-weight-bold: 700;
-    --font-weight-extrabold: 900;
-    
-    /* Tamaños de texto base (ajustados para mejor legibilidad) */
-    --font-size-base: 0.8rem; 
-    --font-size-title: 1.4rem;
-    --font-size-role: 0.9rem;
-}
-
-/* Reset Universal (Box Model y Margen/Relleno) */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Estilos de Tipografía y Layout del Cuerpo */
-body {
-    font-family: var(--font-family);
-    line-height: 1.6;
-    color: var(--color-text);
-    background: var(--color-background);
-    font-weight: var(--font-weight-regular);
-    text-transform: lowercase;
-    font-size: var(--font-size-base);
-}
-
-/* Control de Flexbox para Layouts No Interactivos (index, about, etc.) */
-body:not(.interactive-page) {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ===================================== */
-/* 2. ESTILOS GLOBALES DE ENLACES */
-/* ===================================== */
-a {
-    color: var(--color-text); 
-    text-decoration: none;
-    font-weight: var(--font-weight-bold);
-    transition: transform 0.3s ease-in-out, font-weight 0.3s ease-in-out;
-    display: inline-block;
-}
-
-/* Excluir el efecto HOVER para elementos interactivos */
-a.interactive-sticker:hover {
-    transform: none; 
-    font-weight: var(--font-weight-bold); 
-    cursor: grab; 
-}
-
-/* Efecto HOVER (para enlaces de texto normales) */
-a:not(.interactive-sticker):hover {
-    font-weight: var(--font-weight-extrabold); 
-    font-style: normal;
-    cursor: pointer;
-    transform: scale(1.05);
-}
-
-/* ===================================== */
 /* 3. ESTILOS DE LA PÁGINA DE INICIO (INDEX) */
 /* ===================================== */
 
@@ -95,16 +23,20 @@ a:not(.interactive-sticker):hover {
 .hero-content h1 {
     font-size: var(--font-size-title);
     color: var(--color-text);
-    margin-bottom: 2rem;
+    /* 🟢 CORRECCIÓN: Reducimos el margen inferior de 2rem a 1rem */
+    margin-bottom: 1rem; 
     font-weight: var(--font-weight-extrabold);
 }
 
 /* Contenedor de los enlaces de roles */
 .professional-links {
-    /* No se modifica */
+    /* 🟢 CORRECCIÓN CLAVE: Aplica un margen superior negativo para acercar los <p> al h1 */
+    margin-top: -0.5rem; 
+    /* El margen inferior asegura que el footer no se pegue al contenido */
+    margin-bottom: 1.5rem; 
 }
 
-/* 🟢 MODIFICACIÓN CLAVE: Restablecemos a display: block y eliminamos los márgenes */
+/* MODIFICACIÓN CLAVE: Restablecemos a display: block y eliminamos los márgenes por defecto */
 .role-group {
     font-size: var(--font-size-role);
     /* Se elimina todo margen vertical (top/bottom) para pegar las líneas */
@@ -114,13 +46,13 @@ a:not(.interactive-sticker):hover {
     display: block; 
     
     font-weight: var(--font-weight-extrabold);
-    /* El line-height: 1.5 dará una separación vertical mínima y legible */
+    /* Mantenemos el line-height: 1.5 para la separación mínima y legible */
     line-height: 1.5; 
 }
 
 /* Estilo para el separador '|' si se usa */
 .separator {
-    display: none; /* Aseguramos que no se muestre si se usa <p> */
+    display: none; 
 }
 
 /* El main genérico también excluye la página interactiva */
@@ -132,68 +64,4 @@ main:not(.full-screen-interactive) {
     align-items: center;
     padding: 1.5rem 5%;
     width: 100%;
-}
-
-/* --- Pie de página --- */
-footer {
-    text-align: center;
-    padding: 0.75rem;
-    font-size: 0.65rem; 
-    font-weight: var(--font-weight-regular);
-}
-
-/* ===================================== */
-/* 4. ESTILOS DE GRIDS/PROYECTOS (Secundarios) */
-/* ===================================== */
-
-/* Estos estilos se usarán en filmmaker.html o photographer.html, etc. */
-
-.content-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-    gap: 20px;
-    max-width: 1000px;
-    width: 100%;
-}
-
-.content-grid h2 {
-    grid-column: 1 / -1;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: var(--color-text);
-    font-size: 1.5rem;
-    font-weight: var(--font-weight-extrabold);
-}
-
-/* A partir de aquí no hay más cambios en la sección 4 */
-.project-item {
-    background: var(--color-background);
-    border: 1px solid var(--color-primary);
-    padding: 15px;
-    transition: box-shadow 0.3s ease;
-}
-
-.project-item:hover {
-    box-shadow: 4px 4px 0 var(--color-primary);
-}
-
-.project-item iframe,
-.project-item img {
-    width: 100%;
-    height: auto; 
-    max-height: 200px; 
-    margin-bottom: 0.75rem;
-    border: 1px solid var(--color-primary);
-}
-
-.project-item h3 {
-    color: var(--color-text);
-    margin-bottom: 0.25rem;
-    font-size: 1rem; 
-    font-weight: var(--font-weight-bold);
-}
-
-.project-item p {
-    font-size: 0.8rem;
-    font-weight: var(--font-weight-regular);
 }
