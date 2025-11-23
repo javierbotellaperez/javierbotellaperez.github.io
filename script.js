@@ -13,7 +13,7 @@ if (containerLink) {
     const MIN_SCALE = 0.5;
     const MAX_SCALE = 3;
     const TAMANO_INICIAL = 250;
-    let isMoving = false; // Nueva variable para controlar si hubo un arrastre real
+    let isMoving = false; // Controla si hubo un arrastre real o solo un click
 
     // --- FUNCIÓN DE POSICIONAMIENTO INICIAL (AL AZAR) ---
     function posicionarAleatoriamente() {
@@ -32,10 +32,10 @@ if (containerLink) {
     }
 
     // --- LÓGICA HAMMER.JS PARA GESTOS (Arrastre y Zoom) ---
-    // 🔥 ELIMINAMOS 'inputClass: Hammer.MouseInput' para evitar conflictos
+    // Inicialización limpia
     const mc = new Hammer(containerLink);
     
-    // Configuramos el PAN para movimiento libre y sensible
+    // Configuramos el PAN para movimiento libre (ALL) y sensible (threshold: 5)
     mc.get('pan').set({ 
         direction: Hammer.DIRECTION_ALL,
         threshold: 5
@@ -45,11 +45,10 @@ if (containerLink) {
 
 
     /* =========================================
-       1. GESTO DE ARRASTRE (PAN) - Movimiento Libre
+       1. GESTO DE ARRASTRE (PAN) - Movimiento Libre y Fijación
        ========================================= */
 
     mc.on('panstart', function (ev) {
-        // Al inicio, asumimos que NO es un movimiento, sino un click
         isMoving = false; 
         
         // CRÍTICO: Leer la posición real actual para evitar el salto
@@ -63,15 +62,13 @@ if (containerLink) {
             }
         }
 
-        // Desactiva la transición al empezar a arrastrar
+        // Desactiva la transición para la respuesta INSTANTÁNEA
         containerDiv.style.transition = 'none';
-        
-        // Deshabilita el enlace para evitar que se active inmediatamente
-        containerLink.style.pointerEvents = 'none'; 
+        containerLink.style.pointerEvents = 'none'; // Deshabilita el enlace
     });
 
     mc.on('panmove', function (ev) {
-        // Si nos movemos más de 5 píxeles (el threshold), es un movimiento real
+        // Marcamos si hubo movimiento real
         if (Math.abs(ev.deltaX) > 5 || Math.abs(ev.deltaY) > 5) {
             isMoving = true;
         }
@@ -85,17 +82,17 @@ if (containerLink) {
         // Reactiva la transición para una liberación SUAVE
         containerDiv.style.transition = 'transform 0.3s ease-out';
         
-        // Guarda la posición final (el sticker se queda donde lo sueltas)
+        // Guarda la posición final (Fijación)
         currentX += ev.deltaX;
         currentY += ev.deltaY;
         
-        // 🔥 CRÍTICO: Reactivación INMEDIATA y manejo del click
+        // 🔥 CRÍTICO: Manejo del Click vs. Movimiento
         if (isMoving) {
             // Si hubo movimiento, reactivamos los eventos y la imagen se queda.
             containerLink.style.pointerEvents = 'auto';
         } else {
             // Si NO hubo movimiento (fue un toque/click rápido), reactivamos el enlace
-            // DESPUÉS de un pequeño retraso, permitiendo que el navegador registre el 'click'.
+            // DESPUÉS de un pequeño retraso para permitir que el navegador registre el 'click'.
              setTimeout(() => {
                 containerLink.style.pointerEvents = 'auto';
             }, 50); 
@@ -104,7 +101,7 @@ if (containerLink) {
 
 
     /* =========================================
-       2. GESTO DE ZOOM (PINCH) - No necesita cambios
+       2. GESTO DE ZOOM (PINCH) 
        ========================================= */
 
     mc.on('pinchstart', function (ev) {
