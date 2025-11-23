@@ -33,7 +33,13 @@ if (containerLink) {
 
     // --- LÓGICA HAMMER.JS PARA GESTOS (Arrastre y Zoom) ---
     const mc = new Hammer(containerLink);
-    mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+    
+    // 🔥 CORRECCIÓN: Ajuste del umbral (threshold) para mayor sensibilidad del arrastre (PAN)
+    mc.get('pan').set({ 
+        direction: Hammer.DIRECTION_ALL,
+        threshold: 5 // Reducido de 10px (por defecto) a 5px
+    }); 
+    
     mc.get('pinch').set({ enable: true });
 
 
@@ -42,7 +48,7 @@ if (containerLink) {
        ========================================= */
 
     mc.on('panstart', function (ev) {
-        // 🔥 CRÍTICO: Leer la posición real actual del elemento para evitar el salto
+        // CRÍTICO: Leer la posición real actual del elemento para evitar el salto
         const transformMatrix = window.getComputedStyle(containerDiv).transform;
         
         if (transformMatrix !== 'none') {
@@ -107,6 +113,5 @@ if (containerLink) {
     window.addEventListener('load', posicionarAleatoriamente);
 
 } else {
-    // Si el script se carga en una página sin el elemento, no hace nada.
     console.log("Script de interacción no inicializado: El elemento base no fue encontrado.");
 }
