@@ -4,8 +4,6 @@
     --color-secondary: #000000;
     --color-text: #000000;
     --color-light: #ffffff;
-    
-    /* >>> MODIFICACIÓN: Pila de fuentes compatible con todos los softwares */
     --font-family: 'Arial', 'Inter', sans-serif;
 }
 
@@ -22,26 +20,20 @@ body {
     background: var(--color-light);
     font-weight: 700;
     text-transform: lowercase;
-    /* Reducción global del tamaño base */
     font-size: 0.5rem; 
 }
 
-/*
- * REGLAS DE FLEXBOX Y ALTURA:
- * ESTAS REGLAS SOLO SE APLICAN A LAS PÁGINAS QUE NO TENGAN la clase 'interactive-page'
- * (Es decir, se aplican a index.html y otras páginas normales).
+/* * MODIFICACIÓN CLAVE: Las reglas de Flexbox y Altura SÓLO se aplican a las 
+ * páginas que NO tengan la clase 'interactive-page' (ej. index.html).
 */
 body:not(.interactive-page) {
-    /* Configuración Flexbox para centrado global */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 
-/* * ESTILOS GLOBALES DE ENLACES
- * Implementa el Extra Bold y el Zoom sutil que solicitaste.
-*/
+/* * ESTILOS GLOBALES DE ENLACES */
 a {
     color: var(--color-text) !important;
     text-decoration: none !important;
@@ -50,24 +42,18 @@ a {
     display: inline-block;
 }
 
-/*
- * ANULACIÓN DEL EFECTO HOVER EN LAS IMÁGENES INTERACTIVAS:
- * Evita conflictos con el arrastre y el zoom del JavaScript,
- * y se asegura de que el enlace se comporte como un contenedor.
+/* * ANULACIÓN DEL EFECTO HOVER EN LOS STICKERS INTERACTIVOS: 
+ * Evita conflictos con el JavaScript de arrastre y zoom.
 */
-a.interactive-sticker {
-    display: block; /* Asegura que el enlace del sticker se pueda posicionar */
-}
 a.interactive-sticker:hover {
     transform: none !important;
     font-weight: 700 !important;
     cursor: grab; /* Mantiene el cursor de arrastre */
 }
 
-
 /* Efecto HOVER (para enlaces de texto normales) */
 a:not(.interactive-sticker):hover {
-    font-weight: 900 !important; /* Más negrita en el hover (Extra Bold) */
+    font-weight: 900 !important;
     font-style: normal !important;
     cursor: pointer;
     transform: scale(1.05);
@@ -76,7 +62,6 @@ a:not(.interactive-sticker):hover {
 
 /* --- Estilos de la Página de Inicio (index.html) --- */
 .home-hero {
-    /* Centrado Vertical y Horizontal para la intro */
     flex-grow: 1;
     display: flex;
     justify-content: center;
@@ -84,7 +69,20 @@ a:not(.interactive-sticker):hover {
     text-align: center;
     background: var(--color-light);
 }
-/* ... (El resto de tus estilos de .home-hero, .hero-content, .professional-roles, etc. se mantienen sin cambios) ... */
+/* (El resto de estilos de .hero-content, .professional-roles, .cta-button, etc. se mantienen sin cambios) */
+
+/* * CENTRADO PARA PÁGINAS INTERNAS: SOLO para páginas normales.
+*/
+main:not(.full-screen-interactive) {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 5%;
+    width: 100%;
+}
+/* (El resto de estilos de grid, project-item, etc. se mantienen sin cambios) */
 
 .hero-content {
     max-width: 800px;
@@ -93,7 +91,6 @@ a:not(.interactive-sticker):hover {
 }
 
 .hero-content h2 {
-    /* >>> MODIFICACIÓN: Reducido de 2.8rem a 1.4rem (aproximadamente 50%) */
     font-size: 1.4rem;
     color: var(--color-secondary);
     margin-bottom: 2rem;
@@ -101,7 +98,6 @@ a:not(.interactive-sticker):hover {
 }
 
 .professional-roles {
-    /* >>> MODIFICACIÓN: Reducido de 1.8rem a 0.9rem (aproximadamente 50%) */
     font-size: 0.9rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -113,48 +109,29 @@ a:not(.interactive-sticker):hover {
     display: inline-block;
     background: none;
     color: var(--color-secondary);
-    padding: 6px 12.5px; /* Reducción de padding para que se vea proporcional */
-    margin-top: 1.25rem; /* Reducción de margin */
+    padding: 6px 12.5px;
+    margin-top: 1.25rem;
     border: 2px solid var(--color-secondary);
-    /* >>> MODIFICACIÓN: Reducido de 1rem a 0.5rem (aproximadamente 50%) */
     font-size: 0.5rem;
 }
 
-
-/*
- * CENTRADO PARA PÁGINAS INTERNAS
- * Esta regla de Flexbox SOLO aplica a las páginas normales (no interactivas)
-*/
-main:not(.full-screen-interactive) {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem 5%;
-    width: 100%;
-}
-
-/* Excepción: Si es la intro, usa las reglas de .home-hero */
 main.home-hero {
     padding: 0;
 }
-/* ... (El resto de tus estilos de .content-grid, .project-item, etc. se mantienen sin cambios) ... */
 
 .content-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Reducido para proporciones */
-    gap: 20px; /* Reducción de gap */
-    max-width: 600px; /* Reducción de max-width */
-    width: 100%; /* La cuadrícula ocupa el 100% de su contenedor (main) */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    max-width: 600px;
+    width: 100%;
 }
 
 .content-grid h2 {
     grid-column: 1 / -1;
     text-align: center;
-    margin-bottom: 1rem; /* Reducción de margin */
+    margin-bottom: 1rem;
     color: var(--color-secondary);
-    /* >>> MODIFICACIÓN: Reducido de 2.5rem a 1.25rem (aproximadamente 50%) */
     font-size: 1.25rem;
     font-weight: 900;
 }
@@ -162,21 +139,20 @@ main.home-hero {
 .project-item {
     background: var(--color-light);
     border: 1px solid #eee;
-    padding: 12.5px; /* Reducción de padding */
+    padding: 12.5px;
 }
 
 .project-item iframe,
 .project-item img {
     width: 100%;
-    height: 150px; /* Reducción de height para proporciones */
-    margin-bottom: 0.5rem; /* Reducción de margin */
+    height: 150px;
+    margin-bottom: 0.5rem;
     border: 1px solid var(--color-primary);
 }
 
 .project-item h3 {
     color: var(--color-secondary);
-    margin-bottom: 0.25rem; /* Reducción de margin */
-    /* >>> MODIFICACIÓN: Reducido de 1.2rem a 0.6rem (aproximadamente 50%) */
+    margin-bottom: 0.25rem;
     font-size: 0.6rem;
     font-weight: 900;
 }
@@ -184,6 +160,5 @@ main.home-hero {
 /* --- Pie de página --- */
 footer {
     text-align: center;
-    padding: 0.75rem; /* Reducción de padding */
-    /* Se asume que aquí termina el background o hay un estilo de color */
+    padding: 0.75rem;
 }
