@@ -3,145 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imagen Movible y Zoom</title>
-    <style>
-        /* --- ESTILOS DE LA IMAGEN INTERACTIVA --- */
+    <title>Página de Fotógrafo - Interactiva</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 
-        /* 1. Base del contenedor (Ahora limpio y funcional) */
-        .movable-resizable-container {
-            position: absolute;
-            top: 50px;
-            left: 50px;
-            width: 200px; /* Tamaño inicial */
-            height: 200px; /* Tamaño inicial */
-            border: none #ccc; /* Borde simple para visibilidad */
-            cursor: grab; /* Indica que se puede arrastrar */
-            box-sizing: none;
-            user-select: none;
-            overflow: hidden; 
-            
-            /* Transiciones y efectos visuales de sticker eliminados */
-            transition: none; 
+    <style>
+        /* Estilos base del body */
+        body {
+            overflow: hidden; /* Importante para que las imágenes no generen scroll */
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
         }
 
-        /* 2. Estilos para la imagen dentro del contenedor */
+        /* --- ESTILOS DEL CONTENEDOR INTERACTIVO --- */
+        .movable-resizable-container {
+            /* 'position: absolute' es CLAVE para la manipulación con JS */
+            position: absolute;
+            width: 250px; /* Tamaño inicial */
+            height: 250px; /* Tamaño inicial */
+            cursor: grab;
+            user-select: none;
+            overflow: hidden;
+            /* La transición CSS permite que el zoom y la liberación sean fluidos */
+            transition: transform 0.3s ease-out, width 0.3s ease-out, height 0.3s ease-out;
+            will-change: transform; /* Optimización de rendimiento */
+        }
+
+        /* Estilos para la imagen (PNG Silueteado) */
         .movable-resizable-container img {
             width: 100%;
             height: 100%;
             display: block;
-            object-fit: cover;
+            /* object-fit: contain; es mejor para siluetas, asegura que toda la imagen quepa */
+            object-fit: contain;
         }
-
-        /* 3. Estilos de hover y esquina doblada han sido eliminados */
     </style>
 </head>
 <body>
 
-    <div id="imageContainer" class="movable-resizable-container">
-        <img src="https://images.are.na/eyJidWNrZXQiOiJhcmVuYV9pbWFnZXMiLCJrZXkiOiI0MTI5MzY3MC9vcmlnaW5hbF8xMTM2ZDY2ZDI0OTNmYTQ3ZDc5MWEwOGNiZWQ4ZjFkNC5wbmciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjYwMCwiaGVpZ2h0Ijo2MDAsImZpdCI6Imluc2lkZSIsIndpdGhvdXRFbmxhcmdlbWVudCI6dHJ1ZX0sIndlYnAiOnsicXVhbGl0eSI6NzV9LCJmbGF0dGVuIjp7ImJhY2tncm91bmQiOnsiciI6MjAzLCJnIjoyMDMsImIiOjIwM319LCJqcGVnIjp7InF1YWxpdHkiOjc1fSwicm90YXRlIjpudWxsfX0=" alt="Foto proporcionada por el usuario">
-    </div>
+    <a href="arnau.html" id="imageLink_arnau">
+        <div class="movable-resizable-container" id="imageContainer_arnau">
+            <img src="sticker_arnau.png" alt="Sticker Arnau - Clic para ver sesión">
+        </div>
+    </a>
 
-    <script>
-        // --- 1. CONFIGURACIÓN INICIAL ---
-        const container = document.getElementById('imageContainer');
-        
-        let isDragging = false;
-        let animationFrameId = null; // ID para requestAnimationFrame
-        
-        // Posiciones del cursor y desplazamiento
-        let initialX; 
-        let initialY; 
-        let xOffset = 0; 
-        let yOffset = 0; 
-
-        // --- 2. FUNCIÓN CLAVE: ACTUALIZA LA POSICIÓN (FLUIDA) ---
-        function setTranslate(xPos, yPos, el) {
-            // Usa translate3d para asegurar la aceleración por hardware (GPU)
-            el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
-        }
-
-        // --- 3. BUCLE DE ANIMACIÓN FLUIDA (requestAnimationFrame) ---
-        function moveSticker() {
-            if (isDragging) {
-                setTranslate(xOffset, yOffset, container);
-                // Vuelve a solicitar el siguiente cuadro para mantener la fluidez
-                animationFrameId = requestAnimationFrame(moveSticker);
-            }
-        }
-
-        // --- 4. FUNCIONES DE ARRASTRE ---
-        function dragStart(e) {
-            e.preventDefault();
-            isDragging = true;
-            container.style.cursor = 'grabbing';
-            
-            initialX = e.clientX;
-            initialY = e.clientY;
-            
-            // Obtener el offset actual de la transformación
-            const transformMatrix = window.getComputedStyle(container).transform;
-            if (transformMatrix !== 'none') {
-                const matrix = transformMatrix.match(/matrix.*\((.+)\)/)[1].split(', ');
-                xOffset = parseFloat(matrix[4] || 0);
-                yOffset = parseFloat(matrix[5] || 0);
-            }
-            
-            // Inicia el bucle de animación
-            if (animationFrameId === null) {
-                 animationFrameId = requestAnimationFrame(moveSticker);
-            }
-        }
-
-        function drag(e) {
-            if (isDragging) {
-                // Calcula el nuevo desplazamiento
-                xOffset += (e.clientX - initialX);
-                yOffset += (e.clientY - initialY);
-                
-                // Reinicia las posiciones iniciales para el siguiente cálculo
-                initialX = e.clientX;
-                initialY = e.clientY;
-            }
-        }
-
-        function dragEnd(e) {
-            isDragging = false;
-            container.style.cursor = 'grab';
-            
-            // Detiene el bucle de requestAnimationFrame
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-                animationFrameId = null;
-            }
-        }
-        
-        // --- 5. FUNCIÓN DE ZOOM (Rueda/Pellizco) ---
-        function handleZoom(e) {
-            e.preventDefault(); 
-
-            const scaleFactor = 0.05; 
-            let currentWidth = container.offsetWidth;
-            let currentHeight = container.offsetHeight;
-            let delta = e.deltaY * -0.01; 
-
-            let newWidth = currentWidth + currentWidth * delta * scaleFactor;
-            let newHeight = currentHeight + currentHeight * delta * scaleFactor;
-
-            const minSize = 50; 
-            const maxSize = 800; 
-
-            if (newWidth > minSize && newWidth < maxSize) {
-                container.style.width = newWidth + 'px';
-                container.style.height = newHeight + 'px';
-            }
-        }
-
-        // --- 6. ASIGNACIÓN DE EVENT LISTENERS ---
-
-        container.addEventListener("mousedown", dragStart, false);
-        document.addEventListener("mouseup", dragEnd, false);
-        document.addEventListener("mousemove", drag, false);
-        container.addEventListener("wheel", handleZoom, false);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
