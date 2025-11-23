@@ -22,7 +22,6 @@ if (containerLink) {
         currentX = Math.random() * (anchoViewport - TAMANO_INICIAL * 1.5);
         currentY = Math.random() * (altoViewport - TAMANO_INICIAL * 1.5);
         
-        // Aplicamos la posición inicial. Al inicio queremos fluidez.
         setTransform(currentX, currentY, currentScale);
     }
 
@@ -32,19 +31,23 @@ if (containerLink) {
     }
 
     // --- LÓGICA HAMMER.JS PARA GESTOS (Arrastre y Zoom) ---
-    const mc = new Hammer(containerLink);
+    const mc = new Hammer(containerLink, {
+        // Asegura que Hammer detecte los eventos del ratón (clic y arrastre)
+        inputClass: Hammer.MouseInput 
+    });
     
-    // 🔥 CORRECCIÓN: Ajuste del umbral (threshold) para mayor sensibilidad del arrastre (PAN)
+    // 🔥 CORRECCIÓN CLAVE: Configuramos el PAN para que sea sensible (threshold: 5)
+    // y para que detecte el movimiento en TODAS las direcciones.
     mc.get('pan').set({ 
         direction: Hammer.DIRECTION_ALL,
-        threshold: 5 // Reducido de 10px (por defecto) a 5px
+        threshold: 5
     }); 
     
     mc.get('pinch').set({ enable: true });
 
 
     /* =========================================
-       1. GESTO DE ARRASTRE (PAN)
+       1. GESTO DE ARRASTRE (PAN) - Movimiento Libre (Ratón/Dedo)
        ========================================= */
 
     mc.on('panstart', function (ev) {
@@ -62,10 +65,11 @@ if (containerLink) {
 
         // Desactiva la transición al empezar a arrastrar para una respuesta INSTANTÁNEA
         containerDiv.style.transition = 'none';
-        containerLink.style.pointerEvents = 'none';
+        containerLink.style.pointerEvents = 'none'; // Deshabilita el enlace temporalmente
     });
 
     mc.on('panmove', function (ev) {
+        // El movimiento libre está dado por la suma del desplazamiento X e Y
         const deltaX = currentX + ev.deltaX;
         const deltaY = currentY + ev.deltaY;
         setTransform(deltaX, deltaY, currentScale);
