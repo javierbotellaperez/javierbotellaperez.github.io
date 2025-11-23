@@ -4,44 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Fotógrafo - Interactiva</title>
+    
+    <link rel="stylesheet" href="styles.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 
     <style>
-        /* Estilos base del body */
         body {
-            overflow: hidden; /* Importante para que las imágenes no generen scroll */
+            /* Asegura que no haya barras de scroll para un diseño a pantalla completa */
+            overflow: hidden;
+            /* El resto de estilos ya se manejan en styles.css */
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
         }
 
-        /* --- ESTILOS DEL CONTENEDOR INTERACTIVO --- */
+        /* Contenedor del sticker (el enlace <a>) */
+        .interactive-sticker {
+             /* Asegura que el enlace se pueda posicionar y anula el display: inline-block; del CSS general */
+             display: block !important;
+        }
+
         .movable-resizable-container {
-            /* 'position: absolute' es CLAVE para la manipulación con JS */
             position: absolute;
             width: 250px; /* Tamaño inicial */
             height: 250px; /* Tamaño inicial */
             cursor: grab;
             user-select: none;
             overflow: hidden;
-            /* La transición CSS permite que el zoom y la liberación sean fluidos */
+            /* Las transiciones permiten un movimiento fluido, ¡mantener! */
             transition: transform 0.3s ease-out, width 0.3s ease-out, height 0.3s ease-out;
-            will-change: transform; /* Optimización de rendimiento */
+            will-change: transform;
         }
 
-        /* Estilos para la imagen (PNG Silueteado) */
         .movable-resizable-container img {
             width: 100%;
             height: 100%;
             display: block;
-            /* object-fit: contain; es mejor para siluetas, asegura que toda la imagen quepa */
-            object-fit: contain;
+            object-fit: contain; /* Perfecto para PNGs silueteados */
         }
     </style>
 </head>
-<body>
+<body class="interactive-page">
 
-    <a href="arnau.html" id="imageLink_arnau">
+    <a href="arnau.html" id="imageLink_arnau" class="interactive-sticker">
         <div class="movable-resizable-container" id="imageContainer_arnau">
             <img src="sticker_arnau.png" alt="Sticker Arnau - Clic para ver sesión">
         </div>
