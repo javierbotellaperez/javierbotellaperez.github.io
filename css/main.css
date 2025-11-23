@@ -101,25 +101,26 @@ a:not(.interactive-sticker):hover {
 
 /* Contenedor de los enlaces de roles */
 .professional-links {
-    /* Aplicamos un comportamiento en línea para que los 'span' hijos fluyan */
-    display: inline;
+    /* No se modifica */
 }
 
-/* 🟢 MODIFICACIÓN CLAVE: Se eliminan los márgenes para que el texto fluya en una línea */
+/* 🟢 MODIFICACIÓN CLAVE: Restablecemos a display: block y eliminamos los márgenes */
 .role-group {
     font-size: var(--font-size-role);
-    /* Se eliminan los márgenes de bloque que causaban los saltos de línea */
-    margin: 0 0.5rem; /* Añadido un pequeño margen horizontal para separación mínima */
+    /* Se elimina todo margen vertical (top/bottom) para pegar las líneas */
+    margin: 0; 
+    
+    /* Aseguramos que sea un elemento de bloque (como un <p>) para forzar el salto de línea */
+    display: block; 
     
     font-weight: var(--font-weight-extrabold);
-    /* Importante: hacemos que el span se comporte como inline para que fluya con el texto */
-    display: inline; 
-    line-height: 1.5;
+    /* El line-height: 1.5 dará una separación vertical mínima y legible */
+    line-height: 1.5; 
 }
 
 /* Estilo para el separador '|' si se usa */
 .separator {
-    margin: 0 0.25rem;
+    display: none; /* Aseguramos que no se muestre si se usa <p> */
 }
 
 /* El main genérico también excluye la página interactiva */
@@ -158,3 +159,41 @@ footer {
 .content-grid h2 {
     grid-column: 1 / -1;
     text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-extrabold);
+}
+
+/* A partir de aquí no hay más cambios en la sección 4 */
+.project-item {
+    background: var(--color-background);
+    border: 1px solid var(--color-primary);
+    padding: 15px;
+    transition: box-shadow 0.3s ease;
+}
+
+.project-item:hover {
+    box-shadow: 4px 4px 0 var(--color-primary);
+}
+
+.project-item iframe,
+.project-item img {
+    width: 100%;
+    height: auto; 
+    max-height: 200px; 
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--color-primary);
+}
+
+.project-item h3 {
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+    font-size: 1rem; 
+    font-weight: var(--font-weight-bold);
+}
+
+.project-item p {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-regular);
+}
