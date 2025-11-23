@@ -22,7 +22,7 @@ if (containerLink) {
         currentX = Math.random() * (anchoViewport - TAMANO_INICIAL * 1.5);
         currentY = Math.random() * (altoViewport - TAMANO_INICIAL * 1.5);
         
-        // Aplicamos la posición inicial. Al inicio queremos fluidez, así que la transición está activada.
+        // Aplicamos la posición inicial. Al inicio queremos fluidez.
         setTransform(currentX, currentY, currentScale);
     }
 
@@ -42,6 +42,18 @@ if (containerLink) {
        ========================================= */
 
     mc.on('panstart', function (ev) {
+        // 🔥 CRÍTICO: Leer la posición real actual del elemento para evitar el salto
+        const transformMatrix = window.getComputedStyle(containerDiv).transform;
+        
+        if (transformMatrix !== 'none') {
+            const matrix = transformMatrix.match(/matrix.*\((.+)\)/);
+            if (matrix && matrix[1]) {
+                const values = matrix[1].split(', ');
+                currentX = parseFloat(values[4] || 0);
+                currentY = parseFloat(values[5] || 0);
+            }
+        }
+
         // Desactiva la transición al empezar a arrastrar para una respuesta INSTANTÁNEA
         containerDiv.style.transition = 'none';
         containerLink.style.pointerEvents = 'none';
@@ -94,4 +106,7 @@ if (containerLink) {
 
     window.addEventListener('load', posicionarAleatoriamente);
 
+} else {
+    // Si el script se carga en una página sin el elemento, no hace nada.
+    console.log("Script de interacción no inicializado: El elemento base no fue encontrado.");
 }
