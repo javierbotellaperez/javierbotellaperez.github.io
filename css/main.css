@@ -9,12 +9,12 @@
 
     /* Tipografía */
     --font-family: 'Arial', 'Inter', sans-serif;
-    --font-weight-regular: 400; /* Añadido para mejor control */
+    --font-weight-regular: 400; 
     --font-weight-bold: 700;
     --font-weight-extrabold: 900;
     
     /* Tamaños de texto base (ajustados para mejor legibilidad) */
-    --font-size-base: 0.8rem; /* Aumentado de 0.5rem a 0.8rem */
+    --font-size-base: 0.8rem; 
     --font-size-title: 1.4rem;
     --font-size-role: 0.9rem;
 }
@@ -32,14 +32,12 @@ body {
     line-height: 1.6;
     color: var(--color-text);
     background: var(--color-background);
-    /* Se establece el peso normal aquí, los elementos específicos usarán el peso bold/extrabold */
     font-weight: var(--font-weight-regular);
     text-transform: lowercase;
-    font-size: var(--font-size-base); /* Usa la nueva variable base */
+    font-size: var(--font-size-base);
 }
 
 /* Control de Flexbox para Layouts No Interactivos (index, about, etc.) */
-/* CRÍTICO: Asegura que el contenido ocupe toda la altura disponible */
 body:not(.interactive-page) {
     min-height: 100vh;
     display: flex;
@@ -50,7 +48,6 @@ body:not(.interactive-page) {
 /* 2. ESTILOS GLOBALES DE ENLACES */
 /* ===================================== */
 a {
-    /* Usamos el color de texto global para evitar redundancia */
     color: var(--color-text); 
     text-decoration: none;
     font-weight: var(--font-weight-bold);
@@ -85,7 +82,7 @@ a:not(.interactive-sticker):hover {
     align-items: center;
     text-align: center;
     background: var(--color-background);
-    padding: 0; /* Asegura que no haya relleno extra en el main */
+    padding: 0; 
 }
 
 .hero-content {
@@ -94,7 +91,7 @@ a:not(.interactive-sticker):hover {
     font-weight: var(--font-weight-extrabold);
 }
 
-/* Estilos para el título principal H1 (antes H2 en el código original) */
+/* Estilos para el título principal H1 */
 .hero-content h1 {
     font-size: var(--font-size-title);
     color: var(--color-text);
@@ -104,15 +101,25 @@ a:not(.interactive-sticker):hover {
 
 /* Contenedor de los enlaces de roles */
 .professional-links {
-    /* Aquí podrías añadir estilos de layout si decides mostrar los roles de forma diferente */
+    /* Aplicamos un comportamiento en línea para que los 'span' hijos fluyan */
+    display: inline;
 }
 
+/* 🟢 MODIFICACIÓN CLAVE: Se eliminan los márgenes para que el texto fluya en una línea */
 .role-group {
     font-size: var(--font-size-role);
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    /* Se eliminan los márgenes de bloque que causaban los saltos de línea */
+    margin: 0 0.5rem; /* Añadido un pequeño margen horizontal para separación mínima */
+    
     font-weight: var(--font-weight-extrabold);
+    /* Importante: hacemos que el span se comporte como inline para que fluya con el texto */
+    display: inline; 
     line-height: 1.5;
+}
+
+/* Estilo para el separador '|' si se usa */
+.separator {
+    margin: 0 0.25rem;
 }
 
 /* El main genérico también excluye la página interactiva */
@@ -130,7 +137,7 @@ main:not(.full-screen-interactive) {
 footer {
     text-align: center;
     padding: 0.75rem;
-    font-size: 0.65rem; /* Ajuste para que no sea tan pequeño */
+    font-size: 0.65rem; 
     font-weight: var(--font-weight-regular);
 }
 
@@ -142,7 +149,6 @@ footer {
 
 .content-grid {
     display: grid;
-    /* Ajuste: Usa minmax con un tamaño flexible para mejor respuesta */
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
     gap: 20px;
     max-width: 1000px;
@@ -152,40 +158,3 @@ footer {
 .content-grid h2 {
     grid-column: 1 / -1;
     text-align: center;
-    margin-bottom: 1.5rem;
-    color: var(--color-text);
-    font-size: 1.5rem;
-    font-weight: var(--font-weight-extrabold);
-}
-
-.project-item {
-    background: var(--color-background);
-    border: 1px solid var(--color-primary);
-    padding: 15px;
-    transition: box-shadow 0.3s ease;
-}
-
-.project-item:hover {
-    box-shadow: 4px 4px 0 var(--color-primary);
-}
-
-.project-item iframe,
-.project-item img {
-    width: 100%;
-    height: auto; /* Permite que la imagen mantenga su proporción */
-    max-height: 200px; /* Limita la altura máxima */
-    margin-bottom: 0.75rem;
-    border: 1px solid var(--color-primary);
-}
-
-.project-item h3 {
-    color: var(--color-text);
-    margin-bottom: 0.25rem;
-    font-size: 1rem; /* Ajuste para mejor legibilidad */
-    font-weight: var(--font-weight-bold);
-}
-
-.project-item p {
-    font-size: 0.8rem;
-    font-weight: var(--font-weight-regular);
-}
