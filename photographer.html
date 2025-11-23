@@ -9,36 +9,38 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 
-   <style>
+    <style>
         body {
-            /* REFORZADO: Asegura que el punto de inicio (0,0) esté justo en la esquina */
+            /* Reglas CRÍTICAS para el movimiento libre: anulan el Flexbox global */
             overflow: hidden;
-            margin: 0 !important; /* Refuerza la anulación de márgenes */
-            padding: 0 !important; /* Refuerza la anulación de padding */
+            margin: 0 !important;
+            padding: 0 !important;
         }
-        
+
+        /* El contenedor del enlace <a>, que es el elemento interactivo */
+        .interactive-sticker {
+             /* Anula la regla global 'display: inline-block' y permite la posición absoluta */
+             display: block !important;
+             user-select: none;
+        }
+
+        /* El contenedor que realmente se mueve y hace el zoom */
         .movable-resizable-container {
             position: absolute;
-            width: 250px;
-            height: 250px;
+            width: 250px; /* Tamaño inicial */
+            height: 250px; /* Tamaño inicial */
             cursor: grab;
-            user-select: none;
             overflow: hidden;
-            
-            /* 🔥 IMPORTANTE: Transición eliminada para evitar conflictos con JS */
+            /* Transición desactivada aquí para que JS la controle (panstart/panend) */
             will-change: transform;
         }
 
+        /* La imagen PNG dentro del contenedor */
         .movable-resizable-container img {
             width: 100%;
             height: 100%;
             display: block;
-            object-fit: contain;
-        }
-        
-        /* Asegura que el enlace no se comporte como inline */
-        .interactive-sticker {
-             display: block !important;
+            object-fit: contain; /* Perfecto para PNGs silueteados */
         }
     </style>
 </head>
