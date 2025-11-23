@@ -13,7 +13,10 @@ if (containerLink) {
     const MIN_SCALE = 0.5;
     const MAX_SCALE = 3;
     const TAMANO_INICIAL = 250;
-    let isMoving = false; // Controla si hubo un arrastre real o solo un click
+    let isMoving = false; // Controla si hubo un arrastre real
+
+    // 🔥 Nuevo valor de TRANSICIÓN RÁPIDA (para la agilidad)
+    const QUICK_TRANSITION = 'transform 0.1s ease-out'; // Reducido de 0.3s a 0.1s
 
     // --- FUNCIÓN DE POSICIONAMIENTO INICIAL (AL AZAR) ---
     function posicionarAleatoriamente() {
@@ -32,10 +35,8 @@ if (containerLink) {
     }
 
     // --- LÓGICA HAMMER.JS PARA GESTOS (Arrastre y Zoom) ---
-    // Inicialización limpia
     const mc = new Hammer(containerLink);
     
-    // Configuramos el PAN para movimiento libre (ALL) y sensible (threshold: 5)
     mc.get('pan').set({ 
         direction: Hammer.DIRECTION_ALL,
         threshold: 5
@@ -45,7 +46,7 @@ if (containerLink) {
 
 
     /* =========================================
-       1. GESTO DE ARRASTRE (PAN) - Movimiento Libre y Fijación
+       1. GESTO DE ARRASTRE (PAN) - Movimiento Libre
        ========================================= */
 
     mc.on('panstart', function (ev) {
@@ -64,11 +65,13 @@ if (containerLink) {
 
         // Desactiva la transición para la respuesta INSTANTÁNEA
         containerDiv.style.transition = 'none';
-        containerLink.style.pointerEvents = 'none'; // Deshabilita el enlace
+        
+        // Deshabilita el enlace. Lo reactivaremos inmediatamente en panend.
+        containerLink.style.pointerEvents = 'none'; 
     });
 
     mc.on('panmove', function (ev) {
-        // Marcamos si hubo movimiento real
+        // Marcamos si hubo movimiento real (más de 5 píxeles)
         if (Math.abs(ev.deltaX) > 5 || Math.abs(ev.deltaY) > 5) {
             isMoving = true;
         }
@@ -79,24 +82,18 @@ if (containerLink) {
     });
 
     mc.on('panend', function (ev) {
-        // Reactiva la transición para una liberación SUAVE
-        containerDiv.style.transition = 'transform 0.3s ease-out';
+        // 🔥 AJUSTE DE AGILIDAD: Reactiva la transición RÁPIDA para una liberación SUAVE
+        containerDiv.style.transition = QUICK_TRANSITION;
         
         // Guarda la posición final (Fijación)
         currentX += ev.deltaX;
         currentY += ev.deltaY;
         
-        // 🔥 CRÍTICO: Manejo del Click vs. Movimiento
-        if (isMoving) {
-            // Si hubo movimiento, reactivamos los eventos y la imagen se queda.
+        // 🔥 CORRECCIÓN CRÍTICA: Reactivación del Enlace para el Ratón/Clic
+        // Usamos el setTimeout mínimo para que el navegador registre el 'click' final
+        setTimeout(() => {
             containerLink.style.pointerEvents = 'auto';
-        } else {
-            // Si NO hubo movimiento (fue un toque/click rápido), reactivamos el enlace
-            // DESPUÉS de un pequeño retraso para permitir que el navegador registre el 'click'.
-             setTimeout(() => {
-                containerLink.style.pointerEvents = 'auto';
-            }, 50); 
-        }
+        }, 10); 
     });
 
 
@@ -105,6 +102,7 @@ if (containerLink) {
        ========================================= */
 
     mc.on('pinchstart', function (ev) {
+        // Desactiva la transición para la respuesta INSTANTÁNEA
         containerDiv.style.transition = 'none';
     });
     
@@ -115,7 +113,9 @@ if (containerLink) {
     });
 
     mc.on('pinchend', function (ev) {
-        containerDiv.style.transition = 'transform 0.3s ease-out';
+        // 🔥 AJUSTE DE AGILIDAD: Reactiva la transición RÁPIDA para un final de zoom SUAVE
+        containerDiv.style.transition = QUICK_TRANSITION;
+        
         currentScale *= ev.scale;
         currentScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, currentScale));
     });
