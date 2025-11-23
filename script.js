@@ -1,93 +1,92 @@
-<script>
-        // --- 1. CONFIGURACIÓN INICIAL ---
-        const container = document.getElementById('imageContainer');
-        
-        let isDragging = false;
-        let animationFrameId = null; 
-        let initialX; 
-        let initialY; 
-        let xOffset = 0; 
-        let yOffset = 0; 
+// El ID del contenedor principal (el enlace) que queremos controlar.
+const ELEMENTO_ID = 'imageLink_arnau';
+const containerLink = document.getElementById(ELEMENTO_ID);
 
-        // --- 2. FUNCIÓN CLAVE: ACTUALIZA LA POSICIÓN (USANDO GPU) ---
-        function setTranslate(xPos, yPos, el) {
-            el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
-        }
+// Seleccionamos el div que contiene la imagen para aplicar las transformaciones
+const containerDiv = containerLink.querySelector('.movable-resizable-container');
 
-        // --- 3. BUCLE DE ANIMACIÓN FLUIDA ---
-        function moveSticker() {
-            if (isDragging) {
-                setTranslate(xOffset, yOffset, container);
-                animationFrameId = requestAnimationFrame(moveSticker);
-            }
-        }
+// Variables de estado
+let currentScale = 1;
+let currentX = 0;
+let currentY = 0;
+const MIN_SCALE = 0.5;
+const MAX_SCALE = 3;
+const TAMANO_INICIAL = 250; // Debe coincidir con el CSS
 
-        // --- 4. FUNCIONES DE ARRASTRE ---
-        function dragStart(e) {
-            e.preventDefault();
-            isDragging = true;
-            container.style.cursor = 'grabbing';
-            
-            initialX = e.clientX;
-            initialY = e.clientY;
-            
-            const transformMatrix = window.getComputedStyle(container).transform;
-            if (transformMatrix !== 'none') {
-                const matrix = transformMatrix.match(/matrix.*\((.+)\)/)[1].split(', ');
-                xOffset = parseFloat(matrix[4] || 0);
-                yOffset = parseFloat(matrix[5] || 0);
-            }
-            
-            if (animationFrameId === null) {
-                 animationFrameId = requestAnimationFrame(moveSticker);
-            }
-        }
+// --- FUNCIÓN DE POSICIONAMIENTO INICIAL (AL AZAR) ---
+function posicionarAleatoriamente() {
+    const anchoViewport = window.innerWidth;
+    const altoViewport = window.innerHeight;
 
-        function drag(e) {
-            if (isDragging) {
-                xOffset = e.clientX - initialX + xOffset;
-                yOffset = e.clientY - initialY + yOffset;
-                
-                initialX = e.clientX;
-                initialY = e.clientY;
-            }
-        }
+    // Calcula una posición X e Y inicial al azar, dejando espacio en los bordes.
+    currentX = Math.random() * (anchoViewport - TAMANO_INICIAL);
+    currentY = Math.random() * (altoViewport - TAMANO_INICIAL);
 
-        function dragEnd(e) {
-            isDragging = false;
-            container.style.cursor = 'grab';
-            
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-                animationFrameId = null;
-            }
-        }
-        
-        // --- 5. FUNCIÓN DE ZOOM ---
-        function handleZoom(e) {
-            e.preventDefault(); 
+    // Aplica la transformación inicial
+    setTransform(currentX, currentY, currentScale);
+}
 
-            const scaleFactor = 0.05; 
-            let currentWidth = container.offsetWidth;
-            let currentHeight = container.offsetHeight;
-            let delta = e.deltaY * -0.01; 
+// --- FUNCIÓN CLAVE: APLICAR TRANSFORMACIÓN (Fluidez garantizada por CSS transition) ---
+function setTransform(x, y, scale) {
+    // Usamos translate3d y scale para el mejor rendimiento (aceleración por GPU)
+    containerDiv.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+}
 
-            let newWidth = currentWidth + currentWidth * delta * scaleFactor;
-            let newHeight = currentHeight + currentHeight * delta * scaleFactor;
+// --- LÓGICA HAMMER.JS PARA GESTOS (Arrastre y Zoom) ---
+const mc = new Hammer(containerLink);
 
-            const minSize = 50; 
-            const maxSize = 800; 
+// Habilitamos el arrastre (pan) y el pellizco (pinch)
+mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+mc.get('pinch').set({ enable: true });
 
-            if (newWidth > minSize && newWidth < maxSize) {
-                container.style.width = newWidth + 'px';
-                container.style.height = newHeight + 'px';
-            }
-        }
 
-        // --- 6. ASIGNACIÓN DE EVENT LISTENERS ---
+/* =========================================
+   1. GESTO DE ARRASTRE (PAN - Imantar y Desplazar)
+   ========================================= */
 
-        container.addEventListener("mousedown", dragStart, false);
-        document.addEventListener("mouseup", dragEnd, false);
-        document.addEventListener("mousemove", drag, false);
-        container.addEventListener("wheel", handleZoom, false);
-    </script>
+mc.on('panstart panmove', function (ev) {
+    // 1. Deshabilita el enlace temporalmente mientras se arrastra
+    containerLink.style.pointerEvents = 'none';
+
+    // 2. Calcula la nueva posición sumando el desplazamiento (delta) de Hammer
+    const deltaX = currentX + ev.deltaX;
+    const deltaY = currentY + ev.deltaY;
+
+    // 3. Aplica la transformación en tiempo real
+    setTransform(deltaX, deltaY, currentScale);
+});
+
+mc.on('panend', function (ev) {
+    // 1. Guarda la posición final para el siguiente arrastre
+    currentX += ev.deltaX;
+    currentY += ev.deltaY;
+    
+    // 2. Reactiva el enlace
+    setTimeout(() => {
+        containerLink.style.pointerEvents = 'auto';
+    }, 350); // Pequeño retraso para evitar que el enlace se active al soltar el ratón/dedo
+});
+
+
+/* =========================================
+   2. GESTO DE ZOOM (PINCH - Agrandar/Encoger)
+   ========================================= */
+
+mc.on('pinchstart pinchmove', function (ev) {
+    // 1. Calcula la nueva escala, limitándola con las constantes
+    let newScale = currentScale * ev.scale;
+    newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
+
+    // 2. Aplica la nueva transformación (posición no cambia, solo la escala)
+    setTransform(currentX, currentY, newScale);
+});
+
+mc.on('pinchend', function (ev) {
+    // 1. Guarda la escala final
+    currentScale *= ev.scale;
+    currentScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, currentScale));
+});
+
+
+// Ejecuta la función de posición aleatoria al cargar la página
+window.addEventListener('load', posicionarAleatoriamente);
