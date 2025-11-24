@@ -1,9 +1,9 @@
 /* css/filmmaker.css */
 
-/* Contenedor que limita el ancho y añade sombra para el efecto de borde */
+/* Contenedor que limita el ancho de la tira de carrusel */
 .carousel-wrapper {
     width: 95vw; 
-    max-width: 1800px; /* Tamaño grande */
+    max-width: 1800px; 
     margin: 3rem auto;
     overflow: hidden; 
     padding: 10px 0;
@@ -13,6 +13,7 @@
 .film-strip {
     display: flex;
     overflow-x: scroll; 
+    /* Importante para que el scroll se detenga en cada video */
     scroll-snap-type: x mandatory; 
     -webkit-overflow-scrolling: touch; 
     scrollbar-width: none; 
@@ -21,8 +22,8 @@
     display: none; 
 }
 
-/* 🟢 CLAVE para el bucle infinito: Evita que el contenido parpadee 
-   o muestre transiciones al JavaScript resetear el scroll */
+/* 🟢 CLAVE para el bucle infinito: Deshabilita el comportamiento de scroll suave 
+   mientras JavaScript está haciendo el salto instantáneo. */
 .film-strip.is-scrolling {
     scroll-behavior: auto !important;
 }
@@ -70,28 +71,5 @@
     /* SIN SOMBREADO/FONDO */
     background: none; 
     
-    /* TÍTULO Y ARTISTA EN BLANCO PURO */
-    color: var(--color-light); 
-    
-    text-transform: lowercase; 
-    text-align: center; 
-    width: 100%; 
-}
-
-/* Título de la Canción (BOLD) */
-.video-info h3 {
-    font-size: 2.5rem; 
-    margin: 0;
-    font-weight: var(--font-weight-extrabold); 
-    /* SIN SOMBREADO EN TEXTO */
-    text-shadow: none; 
-}
-
-/* Nombre del Artista (Debajo) */
-.video-info p {
-    font-size: 1.8rem; 
-    margin: 0;
-    font-weight: var(--font-weight-regular); 
-    /* SIN SOMBREADO EN TEXTO */
-    text-shadow: none; 
-}
+    /* 🟢 TÍTULO Y ARTISTA EN BLANCO PURO */
+    color: var(--color-light);
