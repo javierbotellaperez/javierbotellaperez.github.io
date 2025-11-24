@@ -2,34 +2,34 @@
 
 /* Contenedor que limita el ancho y añade sombra para el efecto de borde */
 .carousel-wrapper {
-    width: 90vw;
-    max-width: 1200px;
+    width: 95vw; /* Aumentado el ancho para que la tira ocupe más espacio */
+    max-width: 1400px; /* Aumentado el ancho máximo */
     margin: 3rem auto;
-    overflow: hidden; /* Oculta el scrollbar del navegador */
+    overflow: hidden; 
     padding: 10px 0;
 }
 
 /* Tira de Film: Usa Flexbox para disposición horizontal */
 .film-strip {
     display: flex;
-    overflow-x: scroll; /* Permite el scroll horizontal */
-    scroll-snap-type: x mandatory; /* Para que se detenga en cada video */
-    -webkit-overflow-scrolling: touch; /* Mejor desplazamiento táctil */
-    scrollbar-width: none; /* Oculta el scrollbar en Firefox */
+    overflow-x: scroll; 
+    scroll-snap-type: x mandatory; 
+    -webkit-overflow-scrolling: touch; 
+    scrollbar-width: none; 
 }
 .film-strip::-webkit-scrollbar {
-    display: none; /* Oculta el scrollbar en Chrome/Safari */
+    display: none; 
 }
 
 /* Cada elemento de video en la tira */
 .film-item {
-    flex: 0 0 auto; /* No crece ni se encoge, tamaño fijo */
-    width: 380px; /* Ancho fijo de cada video (Ajustar al gusto) */
+    flex: 0 0 auto; 
+    width: 450px; /* 🟢 AUMENTADO: Mayor ancho fijo de cada video */
     height: auto;
-    margin-right: 20px;
+    margin-right: 40px; /* Mayor separación entre videos */
     position: relative;
     text-align: center;
-    scroll-snap-align: center; /* Alinea el video al centro al detenerse */
+    scroll-snap-align: center; 
     background: var(--color-background);
     border: 1px solid var(--color-primary);
     transition: transform 0.3s ease;
@@ -51,20 +51,31 @@
 /* Información del video sobre la miniatura */
 .video-info {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente claro */
-    text-align: left;
+    /* 🟢 CLAVE: Centrar horizontal y verticalmente */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrado perfecto */
+    
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.4); /* Fondo oscuro semi-transparente para contraste */
+    color: var(--color-light); /* 🟢 COLOR BLANCO */
+    
+    /* Aseguramos que la información se vea en minúsculas */
+    text-transform: lowercase; 
+    text-align: center; /* 🟢 Centra el texto dentro del bloque */
+    width: 100%; /* Ocupa el ancho completo para centrar */
 }
 
+/* Título de la Canción (BOLD) */
 .video-info h3 {
-    font-size: 1rem;
-    margin: 0 0 5px 0;
+    font-size: 1.5rem; /* Mayor tamaño */
+    margin: 0;
+    font-weight: var(--font-weight-extrabold); /* 🟢 BOLD para la canción */
 }
 
+/* Nombre del Artista (Debajo) */
 .video-info p {
-    font-size: 0.7rem;
+    font-size: 1.1rem;
     margin: 0;
+    font-weight: var(--font-weight-regular); /* Normal para el artista */
 }
