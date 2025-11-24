@@ -1,100 +1,80 @@
-/* css/filmmaker.css */
+/* css/post.css */
 
-/* Contenedor que limita el ancho de la tira de carrusel */
-.carousel-wrapper {
-    width: 95vw; 
-    max-width: 1920px; /* Aumentado el ancho máximo */
-    margin: 3rem auto;
-    overflow: hidden; 
-    padding: 10px 0;
+/* 1. Ajustes de Cuadrícula Específicos */
+.post-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 30px; 
 }
 
-/* Tira de Film: Usa Flexbox para disposición horizontal */
-.film-strip {
-    display: flex;
-    overflow-x: scroll; 
-    
-    /* ELIMINAMOS SCROLL-SNAP para que JS controle la posición */
-    scroll-snap-type: none; 
-    
-    -webkit-overflow-scrolling: touch; 
-    scrollbar-width: none; 
-}
-.film-strip::-webkit-scrollbar {
-    display: none; 
-}
-
-/* CLAVE para el bucle infinito: Deshabilita el comportamiento de scroll suave */
-.film-strip.is-scrolling {
-    scroll-behavior: auto !important;
-}
-
-/* Cada elemento de video en la tira */
-.film-item {
-    flex: 0 0 auto; 
-    /* 🟢 TAMAÑO AJUSTADO: Ancho de 960px (Mantiene el ratio 16:9) */
-    width: 960px; 
-    /* La altura se ajustará automáticamente si el GIF original es 16:9. */
-    height: auto; 
-    margin-right: 50px; 
+/* 2. Estilo de la Ficha de Archivador (Ahora es un ENLACE A) */
+.archive-card {
     position: relative;
-    text-align: center;
+    padding: 25px; 
+    background: var(--color-background); 
+    border: 3px solid var(--color-primary); 
+    box-shadow: 6px 6px 0px var(--color-primary); 
+    transition: all 0.2s ease;
     
-    background: var(--color-background);
-    border: none; 
-    
-    transition: transform 0.3s ease;
+    /* 🟢 CLAVE: Restaurar el display de bloque si es un <a> */
+    display: block; 
+    text-decoration: none; /* Asegurar que no haya subrayado */
 }
 
-/* Efecto hover: Levanta el video */
-.film-item:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+/* El artículo (si no tiene enlace) mantiene su estilo */
+article.archive-card {
+    cursor: default;
 }
 
-/* Imagen/GIF dentro del film-item */
-.film-item img {
+.archive-card:hover {
+    /* Efecto al pasar el ratón: levanta la tarjeta */
+    transform: translate(-3px, -3px);
+    box-shadow: 10px 10px 0px var(--color-primary);
+}
+
+/* 🟢 NUEVO: Estilo para la imagen de thumbnail */
+.project-thumbnail {
     width: 100%;
-    /* 🟢 CLAVE: Fuerza la relación de aspecto para que el contenedor siempre mida 16:9. */
-    aspect-ratio: 16 / 9; 
     height: auto;
     display: block;
-    /* object-fit: cover; // Usa 'cover' si quieres que el GIF llene el 16:9 sin barras, cortando los excesos */
-    object-fit: contain; /* Usa 'contain' si quieres ver el GIF completo con barras negras si el ratio no coincide */
+    margin-bottom: 15px; /* Espacio antes del texto del proyecto */
+    border: 1px solid var(--color-primary);
 }
 
-/* Información del video sobre la miniatura */
-.video-info {
+
+/* 3. Título del Rol (La pestaña de la Ficha) */
+.role-title {
     position: absolute;
-    /* Centrar horizontal y verticalmente */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); 
-    
-    padding: 20px;
-    
-    background: none; 
-    
-    /* TÍTULO Y ARTISTA EN BLANCO PURO */
-    color: var(--color-light); 
-    
-    text-transform: lowercase; 
-    text-align: center; 
-    width: 100%; 
+    top: -15px; 
+    left: 10px;
+    padding: 5px 10px;
+    background: var(--color-primary); 
+    color: var(--color-background); 
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase; 
 }
 
-/* Título de la Canción (BOLD) */
-.video-info h3 {
-    font-size: 2.5rem; 
-    margin: 0;
-    font-weight: var(--font-weight-extrabold); 
-    text-shadow: none; 
+/* 4. Contenido de la Ficha */
+.card-details h3 {
+    font-size: 1.1rem; 
+    margin-bottom: 10px;
+    font-weight: var(--font-weight-extrabold);
+    /* 🟢 El color de texto debe ser explícitamente negro/primary si es un enlace */
+    color: var(--color-text);
 }
 
-/* Nombre del Artista (Debajo) */
-.video-info p {
-    font-size: 1.8rem; 
-    margin: 0;
-    font-weight: var(--font-weight-regular); 
-    text-shadow: none; 
+.card-details p {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    /* 🟢 El color de texto debe ser explícitamente negro/primary si es un enlace */
+    color: var(--color-text);
+    font-weight: var(--font-weight-regular);
+}
+
+.client-name {
+    font-style: italic;
+    font-weight: var(--font-weight-bold);
 }
