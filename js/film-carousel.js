@@ -14,55 +14,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // Configuración
     const AUTO_SCROLL_SPEED = 1; 
     const AUTO_SCROLL_INTERVAL = 10; 
-    const RESUME_DELAY = 3000; 
+    const RESUME_DELAY = 3000; // 3 segundos antes de reanudar
     
     let autoScrollTimer = null;
     let resumeTimer = null;
 
-    // --- 1. CONFIGURACIÓN DEL BUCLE ---
+    // --- Lógica del Bucle Infinito ---
     
-    // 1. Clonar los elementos existentes (solo una vez es suficiente)
+    // 1. Clonar el contenido y obtener el ancho original
     const originalItems = Array.from(filmStrip.children);
+    originalItems.forEach(item => {
+        filmStrip.appendChild(item.cloneNode(true));
+    });
     
-    // Obtenemos el ancho del conjunto de elementos originales
     let originalWidth = 0;
 
-    // Duplicamos el contenido (solo una vez)
-    originalItems.forEach(item => {
-        filmStrip.appendChild(item.cloneNode(true)); 
-    });
-
-    // --- Lógica de Scroll Automático y Bucle ---
-    
     // Función para iniciar el movimiento automático
     function startAutoScroll() {
         if (autoScrollTimer !== null) return; 
-        
         clearTimeout(resumeTimer); 
 
-        // 🟢 CLAVE: El temporizador de Autoplay
+        // 🟢 Calculamos el ancho dentro del intervalo, si es necesario
+        if (originalWidth === 0) {
+             originalWidth = filmStrip.scrollWidth / 2;
+        }
+
         autoScrollTimer = setInterval(() => {
             
-            // Si el ancho original no se ha calculado, lo calculamos ahora
-            if (originalWidth === 0) {
-                 // Calculamos el ancho del primer set de elementos
-                 originalWidth = filmStrip.scrollWidth / 2;
-            }
-
             // Desplaza el carrusel un pequeño paso a la derecha
             filmStrip.scrollLeft += AUTO_SCROLL_SPEED;
 
-            // 🟢 Condición de Bucle Infinito: Si el scroll pasa el ancho original, saltamos.
+            // Condición de Bucle Infinito: Si el scroll pasa el ancho original, saltamos.
             if (filmStrip.scrollLeft >= originalWidth) {
-                // Saltamos al inicio del set original (simulando el bucle)
                 filmStrip.scrollLeft -= originalWidth;
             }
             
         }, AUTO_SCROLL_INTERVAL);
     }
     
-    // Función para detener el movimiento automático
-    function stopAutoScroll() {
+    // Función para detener el movimiento automático y preparar la reanudación
+    function stopAutoScrollAndPrepareResume() {
         if (autoScrollTimer !== null) {
             clearInterval(autoScrollTimer);
             autoScrollTimer = null;
@@ -79,31 +70,22 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- Lógica de Interacción del Usuario ---
 
-    let isInteracting = false; // Bandera para saber si el scroll es manual
-
-    // Función que se llama cuando el usuario interactúa (trackpad, wheel, touch)
-    function handleUserInteraction() {
-        // Detiene el autoplay y comienza el temporizador de reanudación
-        stopAutoScroll();
-        isInteracting = true; 
-        
-        // Reiniciamos el temporizador de reanudación con cada evento de scroll
-        filmStrip.addEventListener('scroll', handleScrollActivity);
-    }
-
     let scrollActivityTimer = null;
 
-    function handleScrollActivity() {
-        // Reiniciamos el temporizador de reanudación con cada evento de scroll
-        clearTimeout(resumeTimer); 
+    // Esta función se llama cada vez que el usuario scrollea manualmente
+    function handleManualScroll() {
+        // 1. Detenemos el autoplay inmediatamente
+        stopAutoScrollAndPrepareResume(); 
         
-        // Usamos un pequeño retraso para detectar cuando el scroll manual ha finalizado.
+        // 2. Limpiamos el temporizador de actividad de scroll
         clearTimeout(scrollActivityTimer);
-
+        
+        // 3. Configuramos un nuevo temporizador para detectar el final de la actividad manual.
+        // Mientras el usuario siga scrolleando, este temporizador se reiniciará constantemente.
         scrollActivityTimer = setTimeout(() => {
-            // El scroll manual ha terminado, reiniciamos el ciclo de stop/resume.
-            stopAutoScroll(); 
-            isInteracting = false;
+            // Cuando el usuario deja de scrollear por 150ms, el temporizador de RESUME_DELAY (en stopAutoScroll) 
+            // ya está corriendo y se ejecutará para reiniciar el autoplay.
+            // No necesitamos hacer nada más aquí.
         }, 150); 
     }
 
@@ -112,9 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initializeScroll() {
         // Establecemos los listeners para detectar la interacción manual
-        filmStrip.addEventListener('wheel', handleUserInteraction, false);
-        filmStrip.addEventListener('touchstart', handleUserInteraction, false);
+        filmStrip.addEventListener('wheel', handleManualScroll, false);
+        filmStrip.addEventListener('touchstart', handleManualScroll, false);
         
+        // Inicializamos el scroll en el punto medio para que el bucle sea perfecto
+        // Calculamos el ancho aquí por primera vez
+        originalWidth = filmStrip.scrollWidth / 2;
+        filmStrip.scrollLeft = originalWidth;
+
         // Iniciamos el Autoplay
         startAutoScroll();
     }
