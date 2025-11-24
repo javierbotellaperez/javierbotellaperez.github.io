@@ -1,65 +1,67 @@
 /**
  * js/film-carousel.js
  * Implementa un carrusel que simula un bucle infinito
- * copiando los elementos y reseteando el scroll.
+ * duplicando el contenido tres veces y reseteando el scroll.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     const filmStrip = document.getElementById('film-strip-carousel');
     
-    // Si no encontramos la tira de película, salimos.
     if (!filmStrip) {
         console.error("No se encontró el elemento #film-strip-carousel.");
         return;
     }
+    
+    // 1. Clonar los elementos existentes
+    const originalItems = Array.from(filmStrip.children);
+    
+    // 2. Duplicar el contenido (al menos una vez) para crear el bucle visual.
+    // Lo duplicamos dos veces para tener: Original | Copia 1 | Copia 2
+    originalItems.forEach(item => {
+        filmStrip.appendChild(item.cloneNode(true)); // Copia 1
+        filmStrip.appendChild(item.cloneNode(true)); // Copia 2
+    });
 
-    // Función para clonar y añadir elementos al final
-    function setupInfiniteScroll() {
-        // 1. Clonar los elementos existentes
-        const items = Array.from(filmStrip.children);
-        
-        // 2. Duplicar la primera serie de elementos y añadirlos al final
-        // Esto crea el "bucle" visual necesario. 
-        items.forEach(item => {
-            const clone = item.cloneNode(true); // Clonar profundamente
-            filmStrip.appendChild(clone);
-        });
-        
-        // 3. Obtener las dimensiones
-        setTimeout(() => {
-            initializeScrollLoop(filmStrip, items.length);
-        }, 100); 
-    }
+    // CLAVE: La función de inicialización del bucle.
+    function initializeScrollLoop() {
+        // Obtenemos las dimensiones una vez que se han añadido los clones
+        const itemWidth = filmStrip.firstElementChild.offsetWidth + 
+                          parseInt(window.getComputedStyle(filmStrip.firstElementChild).marginRight);
 
-    function initializeScrollLoop(strip, originalItemCount) {
-        // Calculamos el ancho de cada ítem (incluyendo el margen derecho)
-        const itemWidth = strip.firstElementChild.offsetWidth + 
-                          parseInt(window.getComputedStyle(strip.firstElementChild).marginRight);
-
-        // Ancho total de los elementos originales
-        const originalWidth = itemWidth * originalItemCount;
+        // La posición central (punto de reinicio) es el final del conjunto original de ítems.
+        const originalWidth = itemWidth * originalItems.length;
 
         let isScrolling;
 
-        strip.addEventListener('scroll', () => {
+        filmStrip.addEventListener('scroll', () => {
             // Bandera para indicar que estamos desplazándonos
-            strip.classList.add('is-scrolling');
+            filmStrip.classList.add('is-scrolling');
 
-            // 1. Limpiar el temporizador de reinicio para evitar parpadeos
             window.clearTimeout(isScrolling);
 
-            // 2. Comprobar si hemos pasado el límite del contenido original
-            if (strip.scrollLeft >= originalWidth) {
-                // Si pasamos el límite, nos movemos instantáneamente al inicio del contenido duplicado
-                strip.scrollLeft -= originalWidth;
-            } 
-            // 3. Temporizador para quitar la clase 'is-scrolling' (simula que el scroll ha terminado)
-            isScrolling = setTimeout(() => {
-                strip.classList.remove('is-scrolling');
-            }, 66); 
-        });
-    }
+            // 🟢 Condición de Salto (Cuando llegamos al final del primer set)
+            if (filmStrip.scrollLeft >= originalWidth) {
+                // Saltamos instantáneamente al inicio (el inicio de la primera copia)
+                filmStrip.scrollLeft -= originalWidth;
+            }
+            
+            // 🟢 Condición de Salto Inverso (Cuando el usuario vuelve mucho al inicio)
+            else if (filmStrip.scrollLeft < itemWidth) {
+                 // Si nos desplazamos demasiado a la izquierda, saltamos a la parte duplicada
+                 filmStrip.scrollLeft += originalWidth;
+            }
 
-    // Iniciar la configuración
-    setupInfiniteScroll();
+            // Temporizador para quitar la clase 'is-scrolling'
+            isScrolling = setTimeout(() => {
+                filmStrip.classList.remove('is-scrolling');
+            }, 66);
+        });
+        
+        // Colocamos el scroll en el punto medio (inicio del contenido original) para que 
+        // el bucle inverso también funcione desde el principio.
+        filmStrip.scrollLeft = originalWidth;
+    }
+    
+    // Iniciamos el bucle después de un pequeño retraso para asegurar que el navegador ha renderizado todo
+    setTimeout(initializeScrollLoop, 150); 
 });
