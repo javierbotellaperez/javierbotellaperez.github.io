@@ -1,1 +1,215 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javier Botella Pérez | Proyecto Arnau</title>
+    
+    <link rel="stylesheet" href="css/main.css">
+    
+    <style>
+        /* Define un contenedor con ancho máximo para la cuadrícula */
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto; /* Centra el contenedor principal */
+        }
+        
+        /* Asegura que el título no interfiera con el centrado */
+        .content-container h2 {
+            grid-column: 1 / -1; 
+        }
+        
+        /* CLAVE: Estilos llamativos de cuadrícula (Masonry-like layout) */
+        .content-grid {
+            display: grid;
+            /* Columnas automáticas y responsivas: min de 280px por columna */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        /* Estilos para los artículos de proyecto (las fotos) */
+        .project-item {
+            padding: 0;
+            border: none;
+            overflow: hidden; 
+        }
+        
+        /* Las imágenes ocupan todo el espacio del artículo */
+        .project-item img {
+            width: 100%;
+            height: auto;
+            max-height: none; 
+            display: block;
+            margin-bottom: 0;
+        }
+        
+        /* Diseño Destacado: Fotos que ocupan 2 filas */
+        .span-2-rows {
+            grid-row: span 2; 
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <nav class="header-nav">
+            <p class="role-group">
+                <a href="index.html" class="nav-link">home</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="photographer.html" class="nav-link">photographer (stickers)</a>
+            </p>
+        </nav>
+    </header>
 
+    <main class="content-container">
+        <h2 style="text-align: center; margin-bottom: 2.5rem;">PROYECTO ARNÁU | Fotografía</h2>
+
+        <section class="content-grid">
+            
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_1.jpg" alt="Foto 1 del proyecto Arnáu" class="span-2-rows">
+            </article>
+
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_2.jpg" alt="Foto 2 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_3.jpg" alt="Foto 3 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_4.jpg" alt="Foto 4 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_5.jpg" alt="Foto 5 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_6.jpg" alt="Foto 6 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_7.jpg" alt="Foto 7 del proyecto Arnáu">
+            </article>
+
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_8.jpg" alt="Foto 8 del proyecto Arnáu" class="span-2-rows">
+            </article>
+            
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_9.jpg" alt="Foto 9 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_10.jpg" alt="Foto 10 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_11.jpg" alt="Foto 11 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_12.jpg" alt="Foto 12 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_13.jpg" alt="Foto 13 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_14.jpg" alt="Foto 14 del proyecto Arnáu">
+            </article>
+            
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_15.jpg" alt="Foto 15 del proyecto Arnáu" class="span-2-rows">
+            </article>
+
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_16.jpg" alt="Foto 16 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_17.jpg" alt="Foto 17 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_18.jpg" alt="Foto 18 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_19.jpg" alt="Foto 19 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_20.jpg" alt="Foto 20 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_21.jpg" alt="Foto 21 del proyecto Arnáu">
+            </article>
+            
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_22.jpg" alt="Foto 22 del proyecto Arnáu" class="span-2-rows">
+            </article>
+
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_23.jpg" alt="Foto 23 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_24.jpg" alt="Foto 24 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_25.jpg" alt="Foto 25 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_26.jpg" alt="Foto 26 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_27.jpg" alt="Foto 27 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_28.jpg" alt="Foto 28 del proyecto Arnáu">
+            </article>
+
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_29.jpg" alt="Foto 29 del proyecto Arnáu" class="span-2-rows">
+            </article>
+
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_30.jpg" alt="Foto 30 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_31.jpg" alt="Foto 31 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_32.jpg" alt="Foto 32 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_33.jpg" alt="Foto 33 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_34.jpg" alt="Foto 34 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_35.jpg" alt="Foto 35 del proyecto Arnáu">
+            </article>
+            
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_36.jpg" alt="Foto 36 del proyecto Arnáu" class="span-2-rows">
+            </article>
+
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_37.jpg" alt="Foto 37 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_38.jpg" alt="Foto 38 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_39.jpg" alt="Foto 39 del proyecto Arnáu">
+            </article>
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_40.jpg" alt="Foto 40 del proyecto Arnáu">
+            </article>
+
+            <article class="project-item">
+                <img src="assets/images/arnau/photo_41.jpg" alt="Foto 41 del proyecto Arnáu" class="span-2-rows">
+            </article>
+            
+        </section>
+        
+    </main>
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> javier botella pérez. all rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
