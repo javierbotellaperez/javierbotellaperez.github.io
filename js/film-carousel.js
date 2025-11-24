@@ -2,7 +2,6 @@
  * js/film-carousel.js
  * Implementa un carrusel que simula un bucle infinito
  * duplicando el contenido tres veces y reseteando el scroll.
- * Se eliminan los conflictos de scroll-snap de CSS.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,24 +12,25 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     
+    // Configuración del Autoplay
+    const AUTO_SCROLL_SPEED = 1; // Velocidad de desplazamiento (ej: 1 píxel por fotograma)
+    const AUTO_SCROLL_INTERVAL = 10; // Intervalo de tiempo (ej: 10 milisegundos)
+    let autoScrollTimer = null;
+
     // 1. Clonar los elementos existentes
     const originalItems = Array.from(filmStrip.children);
     
-    // 2. Duplicar el contenido (dos veces) para crear el bucle visual.
-    // Estructura: Original | Copia 1 | Copia 2
+    // Duplicar el contenido (dos veces)
     originalItems.forEach(item => {
         filmStrip.appendChild(item.cloneNode(true)); // Copia 1
         filmStrip.appendChild(item.cloneNode(true)); // Copia 2
     });
 
-    // CLAVE: La función de inicialización del bucle.
     function initializeScrollLoop() {
         
-        // 🟢 CORRECCIÓN CLAVE DE CÁLCULO: Usamos getBoundingClientRect().width para obtener el ancho real.
+        // Cálculo del ancho del ítem (ancho + margen derecho)
         const firstItem = originalItems[0];
         const itemComputedStyle = window.getComputedStyle(firstItem);
-        
-        // Calculamos el ancho del ítem (ancho + margen derecho)
         const itemWidth = firstItem.getBoundingClientRect().width + 
                           parseFloat(itemComputedStyle.marginRight);
 
@@ -39,35 +39,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let isScrolling;
 
+        // --- Lógica del Bucle Infinito (Salto) ---
         filmStrip.addEventListener('scroll', () => {
-            // Eliminamos la clase is-scrolling para anular scroll-behavior: auto; al saltar
             filmStrip.classList.remove('is-scrolling');
-
             window.clearTimeout(isScrolling);
 
-            // 1. Condición de Salto hacia adelante (Cuando llegamos al final del primer set)
+            // Condición de Salto hacia adelante
             if (filmStrip.scrollLeft >= originalWidth) {
-                // Saltamos instantáneamente al inicio (el inicio de la primera copia)
                 filmStrip.scrollLeft -= originalWidth;
             }
             
-            // 2. Condición de Salto Inverso (Cuando el usuario vuelve mucho al inicio)
+            // Condición de Salto Inverso (para el scroll manual hacia atrás)
             else if (filmStrip.scrollLeft < itemWidth) {
-                 // Si nos desplazamos demasiado a la izquierda, saltamos a la parte duplicada
                  filmStrip.scrollLeft += originalWidth;
             }
 
-            // 3. Pequeño temporizador para poner la clase 'is-scrolling' si hay scroll activo
+            // Temporizador para quitar la clase 'is-scrolling'
             isScrolling = setTimeout(() => {
                 filmStrip.classList.add('is-scrolling');
             }, 50); 
         });
         
-        // Colocamos el scroll en el punto medio (inicio del contenido original) para que 
-        // el bucle inverso también funcione desde el principio.
+        // Colocamos el scroll en el punto medio (inicio del contenido original)
         filmStrip.scrollLeft = originalWidth;
+
+        // --- 🟢 NUEVA FUNCIÓN: INICIAR EL SCROLL AUTOMÁTICO ---
+        startAutoScroll();
     }
     
-    // Iniciamos el bucle después de un pequeño retraso para asegurar que el navegador ha renderizado todo
+    // 🟢 Función para iniciar el movimiento automático
+    function startAutoScroll() {
+        if (autoScrollTimer !== null) return; // Evitar iniciar dos veces
+
+        autoScrollTimer = setInterval(() => {
+            // Desplaza el carrusel un pequeño paso a la derecha
+            filmStrip.scrollLeft += AUTO_SCROLL_SPEED;
+
+            // Se detiene el autoscroll si el usuario interactúa manualmente
+            filmStrip.addEventListener('wheel', stopAutoScroll, { once: true });
+            filmStrip.addEventListener('touchstart', stopAutoScroll, { once: true });
+            
+        }, AUTO_SCROLL_INTERVAL);
+    }
+    
+    // 🟢 Función para detener el movimiento automático
+    function stopAutoScroll() {
+        if (autoScrollTimer !== null) {
+            clearInterval(autoScrollTimer);
+            autoScrollTimer = null;
+        }
+    }
+
+    // Iniciar la configuración y el autoscroll
     setTimeout(initializeScrollLoop, 200); 
 });
