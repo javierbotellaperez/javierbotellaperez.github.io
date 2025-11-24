@@ -13,8 +13,10 @@
 .film-strip {
     display: flex;
     overflow-x: scroll; 
-    /* Importante para que el scroll se detenga en cada video */
-    scroll-snap-type: x mandatory; 
+    
+    /* 🔴 CLAVE: ELIMINAMOS SCROLL-SNAP para que JS controle la posición */
+    scroll-snap-type: none; 
+    
     -webkit-overflow-scrolling: touch; 
     scrollbar-width: none; 
 }
@@ -22,7 +24,7 @@
     display: none; 
 }
 
-/* 🟢 CLAVE para el bucle infinito: Deshabilita el comportamiento de scroll suave 
+/* CLAVE para el bucle infinito: Deshabilita el comportamiento de scroll suave 
    mientras JavaScript está haciendo el salto instantáneo. */
 .film-strip.is-scrolling {
     scroll-behavior: auto !important;
@@ -31,15 +33,16 @@
 /* Cada elemento de video en la tira */
 .film-item {
     flex: 0 0 auto; 
-    width: 900px; /* 100% Más grande */
+    width: 900px; 
     height: auto;
     margin-right: 50px; 
     position: relative;
     text-align: center;
-    scroll-snap-align: center; 
-    background: var(--color-background);
     
-    /* SIN MARCO NEGRO */
+    /* 🔴 ELIMINAMOS SCROLL-SNAP ALIGN */
+    /* scroll-snap-align: center; */ 
+    
+    background: var(--color-background);
     border: none; 
     
     transition: transform 0.3s ease;
@@ -64,12 +67,32 @@
     /* Centrar horizontal y verticalmente */
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centrado perfecto */
+    transform: translate(-50%, -50%); 
     
     padding: 20px;
     
-    /* SIN SOMBREADO/FONDO */
     background: none; 
     
-    /* 🟢 TÍTULO Y ARTISTA EN BLANCO PURO */
-    color: var(--color-light);
+    /* TÍTULO Y ARTISTA EN BLANCO PURO */
+    color: var(--color-light); 
+    
+    text-transform: lowercase; 
+    text-align: center; 
+    width: 100%; 
+}
+
+/* Título de la Canción (BOLD) */
+.video-info h3 {
+    font-size: 2.5rem; 
+    margin: 0;
+    font-weight: var(--font-weight-extrabold); 
+    text-shadow: none; 
+}
+
+/* Nombre del Artista (Debajo) */
+.video-info p {
+    font-size: 1.8rem; 
+    margin: 0;
+    font-weight: var(--font-weight-regular); 
+    text-shadow: none; 
+}
