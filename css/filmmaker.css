@@ -3,7 +3,7 @@
 /* Contenedor que limita el ancho de la tira de carrusel */
 .carousel-wrapper {
     width: 95vw; 
-    max-width: 960px; /* Aumentado el ancho máximo */
+    max-width: 1920px; /* Aumentado el ancho máximo */
     margin: 3rem auto;
     overflow: hidden; 
     padding: 10px 0;
