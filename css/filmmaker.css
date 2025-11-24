@@ -3,7 +3,7 @@
 /* Contenedor que limita el ancho y añade sombra para el efecto de borde */
 .carousel-wrapper {
     width: 95vw; 
-    max-width: 1800px; /* 🟢 100% Más grande en el contenedor principal */
+    max-width: 1800px; /* Tamaño grande */
     margin: 3rem auto;
     overflow: hidden; 
     padding: 10px 0;
@@ -24,15 +24,15 @@
 /* Cada elemento de video en la tira */
 .film-item {
     flex: 0 0 auto; 
-    width: 900px; /* 🟢 100% Más grande (antes 450px) */
+    width: 900px; /* 100% Más grande */
     height: auto;
-    margin-right: 50px; /* Mayor separación entre videos */
+    margin-right: 50px; 
     position: relative;
     text-align: center;
     scroll-snap-align: center; 
     background: var(--color-background);
     
-    /* SIN MARCO NEGRO */
+    /* 🟢 SIN MARCO NEGRO */
     border: none; 
     
     transition: transform 0.3s ease;
@@ -64,7 +64,7 @@
     /* SIN SOMBREADO/FONDO */
     background: none; 
     
-    /* 🟢 TÍTULO Y ARTISTA EN BLANCO PURO */
+    /* 🟢 TÍTULO Y ARTISTA EN BLANCO PURO (Usando la nueva variable --color-light) */
     color: var(--color-light); 
     
     text-transform: lowercase; 
@@ -74,7 +74,7 @@
 
 /* Título de la Canción (BOLD) */
 .video-info h3 {
-    font-size: 2.5rem; /* Aumentado para que se vea bien en el nuevo tamaño */
+    font-size: 2.5rem; 
     margin: 0;
     font-weight: var(--font-weight-extrabold); 
     /* 🟢 SIN SOMBREADO EN TEXTO */
@@ -83,7 +83,7 @@
 
 /* Nombre del Artista (Debajo) */
 .video-info p {
-    font-size: 1.8rem; /* Aumentado para que se vea bien en el nuevo tamaño */
+    font-size: 1.8rem; 
     margin: 0;
     font-weight: var(--font-weight-regular); 
     /* 🟢 SIN SOMBREADO EN TEXTO */
