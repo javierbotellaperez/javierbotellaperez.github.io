@@ -2,25 +2,30 @@
 
 /* 1. Ajustes de Cuadrícula Específicos */
 .post-grid {
-    /* Cuadrícula adaptable con columnas más estrechas para las fichas */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    max-width: 1200px; /* Ancho máximo para el contenedor */
+    max-width: 1200px; 
     margin: 0 auto;
     padding: 2rem;
-    gap: 30px; /* Mayor espacio entre fichas */
+    gap: 30px; 
 }
 
-/* 2. Estilo de la Ficha de Archivador */
+/* 2. Estilo de la Ficha de Archivador (Ahora es un ENLACE A) */
 .archive-card {
     position: relative;
-    padding: 25px; /* Relleno interno generoso */
+    padding: 25px; 
     background: var(--color-background); 
-    border: 3px solid var(--color-primary); /* Borde grueso y marcado */
-    cursor: default; /* Indica que no es un enlace navegable */
-    
-    /* Sombra para efecto 3D/apilado sutil */
+    border: 3px solid var(--color-primary); 
     box-shadow: 6px 6px 0px var(--color-primary); 
     transition: all 0.2s ease;
+    
+    /* 🟢 CLAVE: Restaurar el display de bloque si es un <a> */
+    display: block; 
+    text-decoration: none; /* Asegurar que no haya subrayado */
+}
+
+/* El artículo (si no tiene enlace) mantiene su estilo */
+article.archive-card {
+    cursor: default;
 }
 
 .archive-card:hover {
@@ -29,35 +34,47 @@
     box-shadow: 10px 10px 0px var(--color-primary);
 }
 
+/* 🟢 NUEVO: Estilo para la imagen de thumbnail */
+.project-thumbnail {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 15px; /* Espacio antes del texto del proyecto */
+    border: 1px solid var(--color-primary);
+}
+
+
 /* 3. Título del Rol (La pestaña de la Ficha) */
 .role-title {
     position: absolute;
-    top: -15px; /* Sube la "pestaña" fuera del borde superior */
+    top: -15px; 
     left: 10px;
     padding: 5px 10px;
-    background: var(--color-primary); /* Fondo oscuro para la pestaña */
-    color: var(--color-background); /* Texto blanco/claro */
+    background: var(--color-primary); 
+    color: var(--color-background); 
     font-size: 0.75rem;
     font-weight: var(--font-weight-bold);
-    text-transform: uppercase; /* El título del rol en mayúsculas para diferenciar */
+    text-transform: uppercase; 
 }
 
 /* 4. Contenido de la Ficha */
 .card-details h3 {
-    font-size: 1.1rem; /* Título del proyecto */
+    font-size: 1.1rem; 
     margin-bottom: 10px;
     font-weight: var(--font-weight-extrabold);
+    /* 🟢 El color de texto debe ser explícitamente negro/primary si es un enlace */
     color: var(--color-text);
 }
 
 .card-details p {
     font-size: 0.8rem;
     margin-top: 5px;
+    /* 🟢 El color de texto debe ser explícitamente negro/primary si es un enlace */
+    color: var(--color-text);
     font-weight: var(--font-weight-regular);
 }
 
 .client-name {
-    /* Estilo diferente para el nombre del cliente/artista */
     font-style: italic;
     font-weight: var(--font-weight-bold);
 }
