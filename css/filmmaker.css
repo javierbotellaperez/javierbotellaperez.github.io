@@ -2,8 +2,8 @@
 
 /* Contenedor que limita el ancho y añade sombra para el efecto de borde */
 .carousel-wrapper {
-    width: 95vw; /* Aumentado el ancho para que la tira ocupe más espacio */
-    max-width: 1400px; /* Aumentado el ancho máximo */
+    width: 95vw; 
+    max-width: 1600px; /* 🟢 Más grande */
     margin: 3rem auto;
     overflow: hidden; 
     padding: 10px 0;
@@ -24,14 +24,17 @@
 /* Cada elemento de video en la tira */
 .film-item {
     flex: 0 0 auto; 
-    width: 450px; /* 🟢 AUMENTADO: Mayor ancho fijo de cada video */
+    width: 600px; /* 🟢 50% Más grande (antes 450px) */
     height: auto;
-    margin-right: 40px; /* Mayor separación entre videos */
+    margin-right: 40px; 
     position: relative;
     text-align: center;
     scroll-snap-align: center; 
     background: var(--color-background);
-    border: 1px solid var(--color-primary);
+    
+    /* 🟢 SIN MARCO NEGRO */
+    border: none; 
+    
     transition: transform 0.3s ease;
 }
 
@@ -51,31 +54,36 @@
 /* Información del video sobre la miniatura */
 .video-info {
     position: absolute;
-    /* 🟢 CLAVE: Centrar horizontal y verticalmente */
+    /* Centrar horizontal y verticalmente */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /* Centrado perfecto */
     
     padding: 20px;
-    background: rgba(0, 0, 0, 0.4); /* Fondo oscuro semi-transparente para contraste */
-    color: var(--color-light); /* 🟢 COLOR BLANCO */
     
-    /* Aseguramos que la información se vea en minúsculas */
+    /* 🟢 SIN SOMBREADO/FONDO */
+    background: none; 
+    
+    /* 🟢 TÍTULO Y ARTISTA EN BLANCO */
+    color: var(--color-light); 
+    
     text-transform: lowercase; 
-    text-align: center; /* 🟢 Centra el texto dentro del bloque */
-    width: 100%; /* Ocupa el ancho completo para centrar */
+    text-align: center; 
+    width: 100%; 
 }
 
 /* Título de la Canción (BOLD) */
 .video-info h3 {
-    font-size: 1.5rem; /* Mayor tamaño */
+    font-size: 1.5rem; 
     margin: 0;
-    font-weight: var(--font-weight-extrabold); /* 🟢 BOLD para la canción */
+    font-weight: var(--font-weight-extrabold); 
+    text-shadow: 1px 1px 3px var(--color-primary); /* Añade sombra al texto para que contraste con la imagen */
 }
 
 /* Nombre del Artista (Debajo) */
 .video-info p {
     font-size: 1.1rem;
     margin: 0;
-    font-weight: var(--font-weight-regular); /* Normal para el artista */
+    font-weight: var(--font-weight-regular); 
+    text-shadow: 1px 1px 3px var(--color-primary); /* Añade sombra al texto para que contraste con la imagen */
 }
