@@ -3,7 +3,7 @@
 /* Contenedor que limita el ancho de la tira de carrusel */
 .carousel-wrapper {
     width: 95vw; 
-    max-width: 1920px; 
+    max-width: 1400px; /* Reducido el ancho máximo del wrapper */
     margin: 3rem auto;
     overflow: hidden; 
     padding: 10px 0;
@@ -13,10 +13,7 @@
 .film-strip {
     display: flex;
     overflow-x: scroll; 
-    
-    /* ELIMINAMOS SCROLL-SNAP para que JS controle la posición */
     scroll-snap-type: none; 
-    
     -webkit-overflow-scrolling: touch; 
     scrollbar-width: none; 
 }
@@ -32,11 +29,12 @@
 /* Cada elemento de video en la tira */
 .film-item {
     flex: 0 0 auto; 
-    width: 960px; /* Ancho fijo de 960px para mantener el ratio 16:9 */
+    /* 🟢 CORRECCIÓN DE TAMAÑO: Reducido a 700px (un tamaño más común y visible) */
+    width: 700px; 
     
-    /* 🟢 CLAVE: Técnica del Padding para forzar el ratio 16:9 */
+    /* CLAVE: Técnica del Padding para forzar el ratio 16:9 */
     height: 0; 
-    padding-bottom: 56.25%; /* 56.25% es (9 / 16) * 100, la proporción para 16:9 */
+    padding-bottom: 39.375%; /* 39.375% es (9 / 16) * 700px, adaptado al nuevo ancho */
     
     margin-right: 50px; 
     position: relative;
@@ -48,55 +46,47 @@
     transition: transform 0.3s ease;
 }
 
+/* 🟢 CORRECCIÓN: El contenedor de imagen debe ser absoluto para que la información se vea. */
+.film-item img { 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
+
 /* Efecto hover: Levanta el video */
 .film-item:hover {
     transform: translateY(-5px); 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Imagen/GIF dentro del film-item (Debe ser ABSOLUTA para ignorar el padding) */
-.film-item img,
-.film-item .video-info { 
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* Imagen/GIF dentro del film-item */
-.film-item img {
-    /* object-fit: contain; // Usa 'contain' si quieres barras negras */
-    object-fit: cover; /* 🟢 Usamos 'cover' para asegurar que la imagen siempre llene el 16:9, aunque puede cortar los bordes del GIF si no es 16:9 */
-    display: block;
-}
-
-/* Información del video sobre la miniatura */
+/* 🟢 CORRECCIÓN DE HOVER: La información debe tener un Z-INDEX más alto para que el hover funcione */
 .video-info {
     position: absolute;
-    /* Centrar horizontal y verticalmente */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); 
-    
-    padding: 20px;
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    height: 100%;
+    z-index: 10; /* 🟢 CLAVE: Asegura que la información esté por encima del GIF/imagen */
+
+    /* Centrado del texto DENTRO del bloque .video-info */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     
     background: none; 
-    
-    /* TÍTULO Y ARTISTA EN BLANCO PURO */
     color: var(--color-light); 
     
-    text-transform: lowercase; 
-    text-align: center; 
-    width: 100%; 
-    height: auto; 
-    
-    /* 🟢 CLAVE: Ocultar el texto por defecto */
+    /* 🟢 Hover y Opacidad */
     opacity: 0;
     transition: opacity 0.4s ease; 
 }
 
-/* 🟢 CLAVE: Mostrar el texto cuando el cursor pasa sobre el ítem */
 .film-item:hover .video-info {
     opacity: 1;
 }
@@ -104,16 +94,18 @@
 
 /* Título de la Canción (BOLD) */
 .video-info h3 {
-    font-size: 2.5rem; 
+    font-size: 2rem; /* Ajustado al nuevo tamaño */
     margin: 0;
     font-weight: var(--font-weight-extrabold); 
     text-shadow: none; 
+    text-transform: lowercase;
 }
 
 /* Nombre del Artista (Debajo) */
 .video-info p {
-    font-size: 1.8rem; 
+    font-size: 1.5rem; /* Ajustado al nuevo tamaño */
     margin: 0;
     font-weight: var(--font-weight-regular); 
     text-shadow: none; 
+    text-transform: lowercase;
 }
