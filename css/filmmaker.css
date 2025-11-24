@@ -1,1 +1,70 @@
+/* css/filmmaker.css */
 
+/* Contenedor que limita el ancho y añade sombra para el efecto de borde */
+.carousel-wrapper {
+    width: 90vw;
+    max-width: 1200px;
+    margin: 3rem auto;
+    overflow: hidden; /* Oculta el scrollbar del navegador */
+    padding: 10px 0;
+}
+
+/* Tira de Film: Usa Flexbox para disposición horizontal */
+.film-strip {
+    display: flex;
+    overflow-x: scroll; /* Permite el scroll horizontal */
+    scroll-snap-type: x mandatory; /* Para que se detenga en cada video */
+    -webkit-overflow-scrolling: touch; /* Mejor desplazamiento táctil */
+    scrollbar-width: none; /* Oculta el scrollbar en Firefox */
+}
+.film-strip::-webkit-scrollbar {
+    display: none; /* Oculta el scrollbar en Chrome/Safari */
+}
+
+/* Cada elemento de video en la tira */
+.film-item {
+    flex: 0 0 auto; /* No crece ni se encoge, tamaño fijo */
+    width: 380px; /* Ancho fijo de cada video (Ajustar al gusto) */
+    height: auto;
+    margin-right: 20px;
+    position: relative;
+    text-align: center;
+    scroll-snap-align: center; /* Alinea el video al centro al detenerse */
+    background: var(--color-background);
+    border: 1px solid var(--color-primary);
+    transition: transform 0.3s ease;
+}
+
+/* Efecto hover: Levanta el video */
+.film-item:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagen de miniatura del video */
+.film-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Información del video sobre la miniatura */
+.video-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente claro */
+    text-align: left;
+}
+
+.video-info h3 {
+    font-size: 1rem;
+    margin: 0 0 5px 0;
+}
+
+.video-info p {
+    font-size: 0.7rem;
+    margin: 0;
+}
