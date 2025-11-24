@@ -3,7 +3,7 @@
 /* Contenedor que limita el ancho de la tira de carrusel */
 .carousel-wrapper {
     width: 95vw; 
-    max-width: 1800px; 
+    max-width: 1920px; /* Aumentado el ancho máximo */
     margin: 3rem auto;
     overflow: hidden; 
     padding: 10px 0;
@@ -14,7 +14,7 @@
     display: flex;
     overflow-x: scroll; 
     
-    /* 🔴 CLAVE: ELIMINAMOS SCROLL-SNAP para que JS controle la posición */
+    /* ELIMINAMOS SCROLL-SNAP para que JS controle la posición */
     scroll-snap-type: none; 
     
     -webkit-overflow-scrolling: touch; 
@@ -24,8 +24,7 @@
     display: none; 
 }
 
-/* CLAVE para el bucle infinito: Deshabilita el comportamiento de scroll suave 
-   mientras JavaScript está haciendo el salto instantáneo. */
+/* CLAVE para el bucle infinito: Deshabilita el comportamiento de scroll suave */
 .film-strip.is-scrolling {
     scroll-behavior: auto !important;
 }
@@ -33,14 +32,13 @@
 /* Cada elemento de video en la tira */
 .film-item {
     flex: 0 0 auto; 
-    width: 900px; 
-    height: auto;
+    /* 🟢 TAMAÑO AJUSTADO: Ancho de 960px (Mantiene el ratio 16:9) */
+    width: 960px; 
+    /* La altura se ajustará automáticamente si el GIF original es 16:9. */
+    height: auto; 
     margin-right: 50px; 
     position: relative;
     text-align: center;
-    
-    /* 🔴 ELIMINAMOS SCROLL-SNAP ALIGN */
-    /* scroll-snap-align: center; */ 
     
     background: var(--color-background);
     border: none; 
@@ -54,11 +52,15 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Imagen de miniatura del video */
+/* Imagen/GIF dentro del film-item */
 .film-item img {
     width: 100%;
+    /* 🟢 CLAVE: Fuerza la relación de aspecto para que el contenedor siempre mida 16:9. */
+    aspect-ratio: 16 / 9; 
     height: auto;
     display: block;
+    /* object-fit: cover; // Usa 'cover' si quieres que el GIF llene el 16:9 sin barras, cortando los excesos */
+    object-fit: contain; /* Usa 'contain' si quieres ver el GIF completo con barras negras si el ratio no coincide */
 }
 
 /* Información del video sobre la miniatura */
