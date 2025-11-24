@@ -2,6 +2,7 @@
  * js/film-carousel.js
  * Implementa un carrusel que simula un bucle infinito
  * duplicando el contenido tres veces y reseteando el scroll.
+ * Se eliminan los conflictos de scroll-snap de CSS.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,8 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let isScrolling;
 
         filmStrip.addEventListener('scroll', () => {
-            // 🟢 CLAVE para el rendimiento: Eliminamos la clase is-scrolling inmediatamente 
-            // y la reactivamos después del salto si es necesario.
+            // Eliminamos la clase is-scrolling para anular scroll-behavior: auto; al saltar
             filmStrip.classList.remove('is-scrolling');
 
             window.clearTimeout(isScrolling);
@@ -52,15 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             // 2. Condición de Salto Inverso (Cuando el usuario vuelve mucho al inicio)
-            // Esto asegura que el loop funcione en ambas direcciones
             else if (filmStrip.scrollLeft < itemWidth) {
-                 // Si nos desplazamos demasiado a la izquierda, saltamos al final del primer set
+                 // Si nos desplazamos demasiado a la izquierda, saltamos a la parte duplicada
                  filmStrip.scrollLeft += originalWidth;
             }
 
-            // 3. Pequeño temporizador para poner la clase 'is-scrolling' si hay scroll activo (opcional)
+            // 3. Pequeño temporizador para poner la clase 'is-scrolling' si hay scroll activo
             isScrolling = setTimeout(() => {
-                // filmStrip.classList.add('is-scrolling'); // Comentado para simplificar la solución
+                filmStrip.classList.add('is-scrolling');
             }, 50); 
         });
         
