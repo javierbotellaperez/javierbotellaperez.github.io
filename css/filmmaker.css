@@ -3,7 +3,7 @@
 /* Contenedor que limita el ancho de la tira de carrusel */
 .carousel-wrapper {
     width: 95vw; 
-    max-width: 1920px; 
+    max-width: 960px; /* Aumentado el ancho máximo */
     margin: 3rem auto;
     overflow: hidden; 
     padding: 10px 0;
@@ -13,7 +13,10 @@
 .film-strip {
     display: flex;
     overflow-x: scroll; 
-    scroll-snap-type: none; /* Sin scroll-snap */
+    
+    /* ELIMINAMOS SCROLL-SNAP para que JS controle la posición */
+    scroll-snap-type: none; 
+    
     -webkit-overflow-scrolling: touch; 
     scrollbar-width: none; 
 }
@@ -29,18 +32,17 @@
 /* Cada elemento de video en la tira */
 .film-item {
     flex: 0 0 auto; 
-    width: 960px; /* Ancho fijo de 960px */
-    
-    /* 🟢 CORRECCIÓN CLAVE: Técnica del Padding para forzar el ratio 16:9 */
-    height: 0; /* Altura 0 para que el padding la controle */
-    padding-bottom: 56.25%; /* 56.25% es (9 / 16) * 100, la proporción para 16:9 */
-    
+    /* 🟢 TAMAÑO AJUSTADO: Ancho de 960px (Mantiene el ratio 16:9) */
+    width: 960px; 
+    /* La altura se ajustará automáticamente si el GIF original es 16:9. */
+    height: auto; 
     margin-right: 50px; 
     position: relative;
     text-align: center;
     
     background: var(--color-background);
     border: none; 
+    
     transition: transform 0.3s ease;
 }
 
@@ -50,37 +52,35 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Imagen/GIF dentro del film-item (Debe ser ABSOLUTA para ignorar el padding) */
-.film-item img,
-.film-item .video-info { /* 🟢 Aplicar a la imagen y al contenedor de texto */
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
 /* Imagen/GIF dentro del film-item */
 .film-item img {
-    /* 🟢 Asegura que la imagen/GIF se vea correctamente dentro del contenedor 16:9 */
-    object-fit: contain; 
+    width: 100%;
+    /* 🟢 CLAVE: Fuerza la relación de aspecto para que el contenedor siempre mida 16:9. */
+    aspect-ratio: 16 / 9; 
+    height: auto;
     display: block;
+    /* object-fit: cover; // Usa 'cover' si quieres que el GIF llene el 16:9 sin barras, cortando los excesos */
+    object-fit: contain; /* Usa 'contain' si quieres ver el GIF completo con barras negras si el ratio no coincide */
 }
 
 /* Información del video sobre la miniatura */
 .video-info {
-    /* El centrado debe ser ajustado porque ahora es position: absolute */
+    position: absolute;
+    /* Centrar horizontal y verticalmente */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); 
     
     padding: 20px;
+    
     background: none; 
+    
+    /* TÍTULO Y ARTISTA EN BLANCO PURO */
     color: var(--color-light); 
+    
     text-transform: lowercase; 
     text-align: center; 
     width: 100%; 
-    height: auto; /* Dejamos la altura libre para que se centre bien el texto */
 }
 
 /* Título de la Canción (BOLD) */
