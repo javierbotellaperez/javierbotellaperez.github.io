@@ -21,6 +21,12 @@
     display: none; 
 }
 
+/* 🟢 CLAVE para el bucle infinito: Evita que el contenido parpadee 
+   o muestre transiciones al JavaScript resetear el scroll */
+.film-strip.is-scrolling {
+    scroll-behavior: auto !important;
+}
+
 /* Cada elemento de video en la tira */
 .film-item {
     flex: 0 0 auto; 
