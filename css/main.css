@@ -1,3 +1,4 @@
+/* css/main.css */
 /* ===================================== */
 /* 1. VARIABLES GLOBALES & RESET */
 /* ===================================== */
@@ -6,6 +7,9 @@
     --color-primary: #000000;
     --color-text: var(--color-primary);
     --color-background: #ffffff;
+    
+    /* 🟢 CORRECCIÓN CLAVE: Definición del color blanco/claro para usar en contrastes */
+    --color-light: #ffffff; 
 
     /* Tipografía */
     --font-family: 'Arial', 'Inter', sans-serif;
@@ -52,8 +56,7 @@ a {
     text-decoration: none;
     font-weight: var(--font-weight-bold);
     transition: transform 0.3s ease-in-out, font-weight 0.3s ease-in-out;
-    /* 🟢 CLAVE: Restaurado a inline-block para que funcione el transform: scale(1.05) */
-    display: inline-block; 
+    display: inline-block;
 }
 
 /* Excluir el efecto HOVER para elementos interactivos */
@@ -108,13 +111,13 @@ a:not(.interactive-sticker):hover {
     /* El margen inferior asegura que el footer no se pegue al contenido */
     margin-bottom: 1.5rem; 
     
-    /* 🟢 CLAVE: Elimina el espacio blanco generado por la fuente */
+    /* CLAVE: Elimina el espacio blanco generado por la fuente */
     font-size: 0; 
 }
 
 /* MODIFICACIÓN CLAVE: Restablecemos a display: block y eliminamos los márgenes por defecto */
 .role-group {
-    /* 🟢 CLAVE: Restablecemos el tamaño de fuente para el contenido */
+    /* CLAVE: Restablecemos el tamaño de fuente para el contenido */
     font-size: var(--font-size-role); 
     
     /* Elimina todo margen vertical (top/bottom) para pegar las líneas */
@@ -128,10 +131,9 @@ a:not(.interactive-sticker):hover {
     line-height: 1.5; 
 }
 
-/* 🟢 NUEVA REGLA: Restablecer el tamaño de fuente en todos los hijos directos del párrafo. */
+/* NUEVA REGLA: Restablecer el tamaño de fuente en todos los hijos directos del párrafo. */
 .role-group > * {
     font-size: var(--font-size-role);
-    /* No se requiere más anulación de display aquí */
 }
 
 /* Estilo para el separador '|' si se usa */
