@@ -1,6 +1,6 @@
 /* css/post.css */
 
-/* 1. Estilos de Cuadrícula */
+/* 1. Ajustes de Cuadrícula Específicos */
 .post-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     max-width: 1200px; 
@@ -9,35 +9,44 @@
     gap: 30px; 
 }
 
-/* 2. Estilos de la Ficha de Archivador */
+/* 2. Estilo de la Ficha de Archivador (Ahora es ARTICLE) */
 .archive-card {
     position: relative;
     padding: 25px; 
     background: var(--color-background); 
     border: 3px solid var(--color-primary); 
     box-shadow: 6px 6px 0px var(--color-primary); 
-    transition: all 0.2s ease, opacity 0.3s ease; /* Añadida transición de opacidad para el filtro */
-    display: block; 
-    text-decoration: none; 
-    /* Altura mínima para que las fichas vacías no desaparezcan */
-    min-height: 250px; 
+    transition: all 0.2s ease, opacity 0.3s ease; 
+    
+    /* Es un artículo, por lo que es un bloque por defecto */
+    cursor: default; 
 }
 
+/* 🟢 CLAVE: Aplicar el hover a la ficha ARTICLE */
 .archive-card:hover {
     transform: translate(-3px, -3px);
     box-shadow: 10px 10px 0px var(--color-primary);
+}
+
+/* 🟢 CLAVE: La imagen es el único enlace */
+.archive-card a {
+    display: block;
+    text-decoration: none;
+}
+.archive-card a:hover {
+    /* Deshabilitar el efecto hover de escala de main.css para este enlace */
+    transform: none; 
 }
 
 /* 3. Estilos del Filtro Desplegable */
 .filter-controls-area {
     text-align: center;
     position: relative;
-    z-index: 100; /* Asegura que el desplegable esté encima de todo */
+    z-index: 100; 
     margin-bottom: 2rem;
 }
 
 .filter-dropdown-toggle h2 {
-    /* Mantiene el estilo de título, actúa como botón principal */
     font-size: 1.4rem; 
     cursor: pointer;
     display: inline-block;
@@ -53,15 +62,12 @@
     background: var(--color-background);
     border: 3px solid var(--color-primary);
     padding: 10px;
-    
-    /* 🟢 CLAVE: Ocultar el menú por defecto */
     display: none; 
     flex-direction: column;
     text-align: left;
 }
 
 .filter-dropdown-menu.visible {
-    /* 🟢 CLAVE: Mostrar el menú cuando el JavaScript añade la clase */
     display: flex;
 }
 
@@ -99,9 +105,48 @@
     border: 1px solid var(--color-primary);
 }
 
+/* 🟢 NUEVO: Estilo para la etiqueta de Categoría */
+.project-category-info {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 5px;
+    padding: 3px 5px;
+    background: #f0f0f0; /* Fondo gris suave para destacar */
+    display: inline-block;
+}
+
 /* Oculta los elementos que no coinciden con el filtro */
 .archive-card.hidden {
     display: none !important;
 }
 
-/* ... (resto de los estilos de la ficha) ... */
+.role-title {
+    position: absolute;
+    top: -15px; 
+    left: 10px;
+    padding: 5px 10px;
+    background: var(--color-primary); 
+    color: var(--color-background); 
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase; 
+}
+
+.card-details h3 {
+    font-size: 1.1rem; 
+    margin-bottom: 10px;
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text);
+}
+
+.card-details p {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    color: var(--color-text);
+    font-weight: var(--font-weight-regular);
+}
+
+.client-name {
+    font-style: italic;
+    font-weight: var(--font-weight-bold);
+}
