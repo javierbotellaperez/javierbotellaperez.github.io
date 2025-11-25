@@ -22,32 +22,66 @@
     </header>
 
     <main class="content-container">
-        <h2 style="text-align: center; margin-bottom: 2.5rem;">POST COORDINATOR | PRODUCTION CREDITS</h2>
-
-        <section class="content-grid post-grid">
+        
+        <section class="filter-controls-area">
             
-            <a href="https://www.youtube.com/watch?v=y51P8HNpwaM" target="_blank" rel="noopener noreferrer" class="archive-card project-item">
-                <p class="role-title">Post production Coordinator</p>
+            <div class="filter-dropdown-toggle" id="filter-toggle">
+                <h2 id="current-filter-title">All Work</h2>
+            </div>
+            
+            <div class="filter-dropdown-menu" id="filter-menu">
+                
+                <button class="filter-button active" data-filter="all">All Work</button>
+
+                <p class="filter-group-title">Roles</p>
+                <button class="filter-button" data-filter="Post Coordinator">Post Coordinator</button>
+                <button class="filter-button" data-filter="Prod Coordinator">Prod Coordinator</button>
+                <button class="filter-button" data-filter="Production Manager">Production Manager</button>
+                <button class="filter-button" data-filter="Prod Assistant">Prod Assistant</button>
+                
+                <p class="filter-group-title">Categories</p>
+                <button class="filter-button" data-filter="Music Video">Music Video</button>
+                <button class="filter-button" data-filter="Commercial">Commercial</button>
+                <button class="filter-button" data-filter="TV & Series">TV & Series</button>
+                
+            </div>
+        </section>
+        
+        <section class="content-grid post-grid" id="project-grid">
+            
+            <a href="https://www.youtube.com/watch?v=y51P8HNpwaM" target="_blank" rel="noopener noreferrer" 
+               class="archive-card project-item" 
+               data-role="Post Coordinator" 
+               data-category="Commercial" 
+               data-search-term="motomami rosalia tiktok">
+                <p class="role-title">Post Coordinator</p>
                 <img src="https://img.youtube.com/vi/y51P8HNpwaM/maxresdefault.jpg" alt="Thumbnail del Proyecto Motomami" class="project-thumbnail">
                 <div class="card-details">
-                    <h3>Motomami</h3>
-                    <p class="client-name">Rosalía for Tiktok</p>
-                    <p class="project-date">2022</p>
+                    <h3>Proyecto: Motomami</h3>
+                    <p class="client-name">Cliente: Rosalía for Tiktok</p>
+                    <p class="project-date">Año: 2022</p>
                 </div>
             </a>
 
-            <a href="https://www.youtube.com/watch?v=BC19kwABFwc" target="_blank" rel="noopener noreferrer" class="archive-card project-item">
-                <p class="role-title">Post production Coordinator</p>
+            <a href="https://www.youtube.com/watch?v=BC19kwABFwc" target="_blank" rel="noopener noreferrer" 
+               class="archive-card project-item" 
+               data-role="Prod Coordinator" 
+               data-category="Music Video" 
+               data-search-term="dua lipa love again">
+                <p class="role-title">Prod Coordinator</p>
                 <img src="https://img.youtube.com/vi/BC19kwABFwc/maxresdefault.jpg" alt="Thumbnail del Proyecto Love Again" class="project-thumbnail">
                 <div class="card-details">
-                    <h3>Love Again</h3>
-                    <p class="client-name">Dua Lipa</p>
-                    <p class="project-date">2020</p>
+                    <h3>Proyecto: Love Again</h3>
+                    <p class="client-name">Cliente: Dua Lipa</p>
+                    <p class="project-date">Año: 2020</p>
                 </div>
             </a>
             
-            <article class="project-item archive-card">
-                <p class="role-title">Jefe de Producción</p>
+            <article class="project-item archive-card" 
+                     data-role="Production Manager" 
+                     data-category="TV & Series"
+                     data-search-term="serie documental netflix">
+                <p class="role-title">Production Manager</p>
                 <div class="card-details">
                     <h3>Serie Documental Corta</h3>
                     <p class="client-name">Cliente: Netflix Latam</p>
@@ -63,5 +97,6 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/post-filter.js"></script> 
 </body>
 </html>
