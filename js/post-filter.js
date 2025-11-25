@@ -14,8 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Obtenemos todos los elementos de tarjeta (<article>s)
     const projects = Array.from(projectGrid.querySelectorAll('.archive-card')); 
 
+    // --- 🟢 NUEVA LÓGICA: Añadir el botón de Reset [x] al DOM ---
+    const resetButton = document.createElement('button');
+    resetButton.classList.add('filter-reset-btn');
+    resetButton.innerHTML = 'x'; 
+    resetButton.setAttribute('aria-label', 'Clear active filter');
+    filterToggle.appendChild(resetButton); 
+
     // 1. Lógica del Desplegable (Dropdown)
-    filterToggle.addEventListener('click', () => {
+    filterToggle.addEventListener('click', (e) => {
+        // Si se hace clic en el botón de reset, no abrimos el menú
+        if (e.target === resetButton) return; 
         filterMenu.classList.toggle('visible');
     });
 
@@ -26,33 +35,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- Lógica del Botón Reset [x] ---
+    resetButton.addEventListener('click', () => {
+        // Simular el clic en el botón 'All Work'
+        const allWorkButton = Array.from(filterButtons).find(btn => btn.getAttribute('data-filter') === 'all');
+        if (allWorkButton) {
+            allWorkButton.click();
+        }
+    });
+
     // 2. Lógica de Filtrado por Botón del Menú
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const filterValue = button.getAttribute('data-filter');
             
             filterMenu.classList.remove('visible');
-            
-            // 🟢 Actualizar el título principal
             currentTitle.textContent = button.textContent;
 
-            // Desactivar todos los botones y activar el seleccionado
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
+
+            // Marcar si hay un filtro activo (para mostrar el botón X)
+            if (filterValue === 'all') {
+                currentTitle.classList.remove('filtered');
+            } else {
+                currentTitle.classList.add('filtered');
+            }
 
             // Ejecutar el filtrado y ordenación
             filterProjects(filterValue);
         });
     });
     
-    // 🟢 NUEVA FUNCIÓN: Configurar listeners para las etiquetas (tags) de las tarjetas
+    // 🟢 3. Configurar listeners para las etiquetas (tags) de las tarjetas
     function setupTagListeners() {
         // Seleccionamos los nuevos enlaces de filtro que están DENTRO de las tarjetas
         const tagElements = document.querySelectorAll('.role-filter-tag, .category-filter-tag');
 
         tagElements.forEach(tag => {
             tag.addEventListener('click', (e) => {
-                e.preventDefault(); // Evitar que el navegador intente navegar
+                e.preventDefault(); 
                 const filterValue = tag.getAttribute('data-filter');
                 
                 // Buscar el botón correspondiente en el menú para actualizar el estado
@@ -64,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     // Si el filtro no existe en el menú, solo aplicamos la lógica básica
                     currentTitle.textContent = filterValue;
+                    currentTitle.classList.add('filtered');
                     filterProjects(filterValue);
                 }
             });
@@ -71,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // 3. Función Principal de Filtrado
+    // 4. Función Principal de Filtrado
     function filterProjects(filterValue) {
         
         projects.forEach(project => {
@@ -96,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // 4. Implementación de Ordenación Aleatoria
+        // 5. Implementación de Ordenación Aleatoria
         shuffleProjects(projects);
     }
     
