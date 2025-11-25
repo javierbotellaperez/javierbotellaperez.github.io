@@ -2,8 +2,8 @@
 
 /* 1. Ajustes de Cuadrícula Específicos */
 .post-grid {
-    /* 🟢 CLAVE: Ancho fijo para evitar deformación al filtrar */
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    /* CLAVE: Ancho Fijo de 320px para la ficha, para evitar estiramiento */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 320px));
     max-width: 1200px; 
     margin: 0 auto;
     padding: 2rem;
@@ -16,12 +16,13 @@
     padding: 25px; 
     background: var(--color-background); 
     
-    /* 🟢 CLAVE: Altura fija para que todas las fichas sean uniformes */
-    height: 400px; 
-    
     /* Restaurar Borde y Sombra de la Ficha */
     border: 3px solid var(--color-primary); 
     box-shadow: 6px 6px 0px var(--color-primary); 
+    
+    /* Altura Mínima para evitar el estiramiento vertical excesivo */
+    min-height: 300px; 
+    height: auto; 
     
     transition: all 0.2s ease, opacity 0.3s ease; 
     cursor: default; 
@@ -41,7 +42,7 @@
 }
 /* Aseguramos que el hover global del enlace no interfiera */
 .archive-card a:hover {
-    transform: none !important; /* Anula el zoom de main.css */
+    transform: none !important; 
     font-weight: var(--font-weight-bold);
 }
 
@@ -53,7 +54,7 @@
     margin-bottom: 2rem;
 }
 
-/* 🟢 CLAVE: Alineación del Título y Botón de Reset */
+/* Alineación del Título y Botón de Reset */
 .filter-dropdown-toggle {
     display: flex;
     justify-content: center;
@@ -67,7 +68,49 @@
     padding: 0 10px;
 }
 
-/* 🟢 ESTILO DEL BOTÓN RESET [x] - Más estético y alineado */
+.filter-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    background: var(--color-background);
+    border: 3px solid var(--color-primary);
+    padding: 10px;
+    display: none; 
+    flex-direction: column;
+    text-align: left;
+}
+
+.filter-dropdown-menu.visible {
+    display: flex;
+}
+
+.filter-group-title {
+    font-weight: var(--font-weight-extrabold);
+    margin: 10px 0 5px 0;
+    padding-top: 5px;
+    border-top: 1px dashed var(--color-primary);
+}
+
+.filter-button {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    text-transform: lowercase;
+    transition: background 0.2s ease;
+}
+
+.filter-button:hover, .filter-button.active {
+    background: var(--color-primary);
+    color: var(--color-background);
+}
+
+/* ESTILO DEL BOTÓN RESET [x] */
 .filter-reset-btn {
     display: inline-flex; 
     justify-content: center;
@@ -82,7 +125,6 @@
     font-size: 1.1rem;
     cursor: pointer;
     
-    /* Alineación */
     vertical-align: middle; 
     margin-left: 10px;
     
@@ -105,9 +147,8 @@
 
 /* Aseguramos que el contenido de texto dentro de la ficha tenga el color y fuente correctos */
 .archive-card * {
-    /* Anulamos cualquier estilo de color heredado de enlaces */
     color: var(--color-text) !important;
-    font-weight: var(--font-weight-regular); /* Establecemos el peso normal por defecto */
+    font-weight: var(--font-weight-regular); 
 }
 
 .project-thumbnail {
@@ -118,7 +159,7 @@
     border: 1px solid var(--color-primary);
 }
 
-/* 🟢 Estilo del Rol (la pestaña) - Estética de Pestaña de Archivador */
+/* Estilo del Rol (la pestaña) - Estética de Pestaña de Archivador */
 .role-filter-tag {
     position: absolute;
     top: -15px; 
@@ -134,7 +175,7 @@
     transition: background 0.2s ease;
     text-decoration: none !important;
     
-    /* 🟢 CLAVE: Efecto de Corte para la Pestaña */
+    /* Efecto de Corte para la Pestaña */
     clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
 }
 .role-filter-tag:hover {
@@ -159,13 +200,13 @@
 .card-details h3 {
     font-size: 1.1rem; 
     margin-bottom: 10px;
-    font-weight: var(--font-weight-extrabold); /* Título del proyecto más grueso */
+    font-weight: var(--font-weight-extrabold); 
 }
 
 .card-details p {
     font-size: 0.8rem;
     margin-top: 5px;
-    font-weight: var(--font-weight-bold) !important; /* Restauramos el grosor de fuente bold */
+    font-weight: var(--font-weight-bold) !important; 
 }
 
 .client-name {
