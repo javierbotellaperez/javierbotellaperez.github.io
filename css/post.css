@@ -1,6 +1,6 @@
 /* css/post.css */
 
-/* 1. Ajustes de Cuadrícula Específicos */
+/* 1. Estilos de Cuadrícula */
 .post-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     max-width: 1200px; 
@@ -9,72 +9,99 @@
     gap: 30px; 
 }
 
-/* 2. Estilo de la Ficha de Archivador (Ahora es un ENLACE A) */
+/* 2. Estilos de la Ficha de Archivador */
 .archive-card {
     position: relative;
     padding: 25px; 
     background: var(--color-background); 
     border: 3px solid var(--color-primary); 
     box-shadow: 6px 6px 0px var(--color-primary); 
-    transition: all 0.2s ease;
-    
-    /* 🟢 CLAVE: Restaurar el display de bloque si es un <a> */
+    transition: all 0.2s ease, opacity 0.3s ease; /* Añadida transición de opacidad para el filtro */
     display: block; 
-    text-decoration: none; /* Asegurar que no haya subrayado */
-}
-
-/* El artículo (si no tiene enlace) mantiene su estilo */
-article.archive-card {
-    cursor: default;
+    text-decoration: none; 
+    /* Altura mínima para que las fichas vacías no desaparezcan */
+    min-height: 250px; 
 }
 
 .archive-card:hover {
-    /* Efecto al pasar el ratón: levanta la tarjeta */
     transform: translate(-3px, -3px);
     box-shadow: 10px 10px 0px var(--color-primary);
 }
 
-/* 🟢 NUEVO: Estilo para la imagen de thumbnail */
+/* 3. Estilos del Filtro Desplegable */
+.filter-controls-area {
+    text-align: center;
+    position: relative;
+    z-index: 100; /* Asegura que el desplegable esté encima de todo */
+    margin-bottom: 2rem;
+}
+
+.filter-dropdown-toggle h2 {
+    /* Mantiene el estilo de título, actúa como botón principal */
+    font-size: 1.4rem; 
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 10px;
+}
+
+.filter-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    background: var(--color-background);
+    border: 3px solid var(--color-primary);
+    padding: 10px;
+    
+    /* 🟢 CLAVE: Ocultar el menú por defecto */
+    display: none; 
+    flex-direction: column;
+    text-align: left;
+}
+
+.filter-dropdown-menu.visible {
+    /* 🟢 CLAVE: Mostrar el menú cuando el JavaScript añade la clase */
+    display: flex;
+}
+
+.filter-group-title {
+    font-weight: var(--font-weight-extrabold);
+    margin: 10px 0 5px 0;
+    padding-top: 5px;
+    border-top: 1px dashed var(--color-primary);
+}
+
+.filter-button {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    text-transform: lowercase;
+    transition: background 0.2s ease;
+}
+
+.filter-button:hover, .filter-button.active {
+    background: var(--color-primary);
+    color: var(--color-background);
+}
+
+/* 4. Estilo de Contenido de Ficha */
+
 .project-thumbnail {
     width: 100%;
     height: auto;
     display: block;
-    margin-bottom: 15px; /* Espacio antes del texto del proyecto */
+    margin-bottom: 15px; 
     border: 1px solid var(--color-primary);
 }
 
-
-/* 3. Título del Rol (La pestaña de la Ficha) */
-.role-title {
-    position: absolute;
-    top: -15px; 
-    left: 10px;
-    padding: 5px 10px;
-    background: var(--color-primary); 
-    color: var(--color-background); 
-    font-size: 0.75rem;
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase; 
+/* Oculta los elementos que no coinciden con el filtro */
+.archive-card.hidden {
+    display: none !important;
 }
 
-/* 4. Contenido de la Ficha */
-.card-details h3 {
-    font-size: 1.1rem; 
-    margin-bottom: 10px;
-    font-weight: var(--font-weight-extrabold);
-    /* 🟢 El color de texto debe ser explícitamente negro/primary si es un enlace */
-    color: var(--color-text);
-}
-
-.card-details p {
-    font-size: 0.8rem;
-    margin-top: 5px;
-    /* 🟢 El color de texto debe ser explícitamente negro/primary si es un enlace */
-    color: var(--color-text);
-    font-weight: var(--font-weight-regular);
-}
-
-.client-name {
-    font-style: italic;
-    font-weight: var(--font-weight-bold);
-}
+/* ... (resto de los estilos de la ficha) ... */
