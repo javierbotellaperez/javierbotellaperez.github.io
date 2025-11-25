@@ -3,7 +3,7 @@
 /* Contenedor que limita el ancho de la tira de carrusel */
 .carousel-wrapper {
     width: 95vw; 
-    max-width: 1400px; /* Reducido el ancho máximo del wrapper */
+    max-width: 1920px; 
     margin: 3rem auto;
     overflow: hidden; 
     padding: 10px 0;
@@ -26,54 +26,57 @@
     scroll-behavior: auto !important;
 }
 
-/* Cada elemento de video en la tira */
+/* Cada elemento de video en la tira (film-item es ahora la "ficha") */
 .film-item {
     flex: 0 0 auto; 
-    /* 🟢 CORRECCIÓN DE TAMAÑO: Reducido a 700px (un tamaño más común y visible) */
-    width: 700px; 
+    width: 960px; 
     
-    /* CLAVE: Técnica del Padding para forzar el ratio 16:9 */
+    /* Técnica del Padding para forzar el ratio 16:9 */
     height: 0; 
-    padding-bottom: 39.375%; /* 39.375% es (9 / 16) * 700px, adaptado al nuevo ancho */
+    padding-bottom: 56.25%; 
     
     margin-right: 50px; 
     position: relative;
     text-align: center;
     
     background: var(--color-background);
-    border: none; 
     
-    transition: transform 0.3s ease;
+    /* 🟢 CLAVE: MARCO DE ARCHIVADOR */
+    border: 3px solid var(--color-primary); 
+    box-shadow: 6px 6px 0px var(--color-primary); 
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 🟢 CORRECCIÓN: El contenedor de imagen debe ser absoluto para que la información se vea. */
-.film-item img { 
+/* Efecto hover: Levanta la ficha */
+.film-item:hover {
+    transform: translate(-3px, -3px); 
+    box-shadow: 10px 10px 0px var(--color-primary);
+}
+
+/* Imagen/GIF dentro del film-item (Debe ser ABSOLUTA) */
+.film-item img,
+.film-item .video-info,
+.film-item .film-artist-tag /* 🟢 Añadimos la nueva etiqueta */
+{ 
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+/* Imagen/GIF */
+.film-item img {
     object-fit: cover; 
     display: block;
 }
 
-
-/* Efecto hover: Levanta el video */
-.film-item:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* 🟢 CORRECCIÓN DE HOVER: La información debe tener un Z-INDEX más alto para que el hover funcione */
+/* Información del video sobre la miniatura (contenedor principal para el hover) */
 .video-info {
-    position: absolute;
-    top: 0; 
-    left: 0; 
-    width: 100%;
-    height: 100%;
-    z-index: 10; /* 🟢 CLAVE: Asegura que la información esté por encima del GIF/imagen */
-
-    /* Centrado del texto DENTRO del bloque .video-info */
+    z-index: 10; 
+    
+    /* Centrado del TÍTULO DENTRO del bloque */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -82,28 +85,47 @@
     background: none; 
     color: var(--color-light); 
     
-    /* 🟢 Hover y Opacidad */
+    /* Hover y Opacidad */
     opacity: 0;
     transition: opacity 0.4s ease; 
 }
 
+/* 🟢 CLAVE: Mostrar el texto cuando el cursor pasa sobre el ítem */
 .film-item:hover .video-info {
     opacity: 1;
 }
 
 
-/* Título de la Canción (BOLD) */
+/* 🟢 NUEVO: ESTILO DE LA PESTAÑA (ARTISTA) */
+.film-artist-tag {
+    /* CLAVE: Posicionamiento de Pestaña */
+    position: absolute;
+    top: -15px; 
+    left: 10px;
+    padding: 5px 12px;
+    background: var(--color-primary); 
+    color: var(--color-background) !important; 
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase; 
+    z-index: 20; /* Asegura que esté sobre el video y la ficha */
+    
+    /* Efecto de Corte para la Pestaña */
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+    transition: background 0.2s ease;
+}
+
+/* Estilos de los Títulos Centrales */
 .video-info h3 {
-    font-size: 2rem; /* Ajustado al nuevo tamaño */
+    font-size: 2.5rem; 
     margin: 0;
     font-weight: var(--font-weight-extrabold); 
     text-shadow: none; 
     text-transform: lowercase;
 }
 
-/* Nombre del Artista (Debajo) */
 .video-info p {
-    font-size: 1.5rem; /* Ajustado al nuevo tamaño */
+    font-size: 1.8rem; 
     margin: 0;
     font-weight: var(--font-weight-regular); 
     text-shadow: none; 
