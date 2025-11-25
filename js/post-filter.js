@@ -26,15 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. Lógica de Filtrado por Botón
+    // 2. Lógica de Filtrado por Botón del Menú
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const filterValue = button.getAttribute('data-filter');
             
-            // Ocultar el menú después de la selección
             filterMenu.classList.remove('visible');
             
-            // Actualizar el título principal
+            // 🟢 Actualizar el título principal
             currentTitle.textContent = button.textContent;
 
             // Desactivar todos los botones y activar el seleccionado
@@ -45,12 +44,37 @@ document.addEventListener('DOMContentLoaded', () => {
             filterProjects(filterValue);
         });
     });
+    
+    // 🟢 NUEVA FUNCIÓN: Configurar listeners para las etiquetas (tags) de las tarjetas
+    function setupTagListeners() {
+        // Seleccionamos los nuevos enlaces de filtro que están DENTRO de las tarjetas
+        const tagElements = document.querySelectorAll('.role-filter-tag, .category-filter-tag');
 
-    // 3. Función Principal de Filtrado y Ordenación
+        tagElements.forEach(tag => {
+            tag.addEventListener('click', (e) => {
+                e.preventDefault(); // Evitar que el navegador intente navegar
+                const filterValue = tag.getAttribute('data-filter');
+                
+                // Buscar el botón correspondiente en el menú para actualizar el estado
+                const correspondingButton = Array.from(filterButtons).find(btn => btn.getAttribute('data-filter') === filterValue);
+                
+                if (correspondingButton) {
+                    // Simular el clic en el botón del menú para actualizar el estado y filtrar
+                    correspondingButton.click(); 
+                } else {
+                    // Si el filtro no existe en el menú, solo aplicamos la lógica básica
+                    currentTitle.textContent = filterValue;
+                    filterProjects(filterValue);
+                }
+            });
+        });
+    }
+
+
+    // 3. Función Principal de Filtrado
     function filterProjects(filterValue) {
         
         projects.forEach(project => {
-            // Obtenemos los atributos de datos
             const projectRole = project.getAttribute('data-role');
             const projectCategory = project.getAttribute('data-category');
             
@@ -59,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (filterValue === 'all') {
                 isVisible = true; // Mostrar todo
             } 
-            // 🟢 CLAVE: Si el valor del filtro coincide con el Rol O la Categoría
+            // Si el valor del filtro coincide con el Rol O la Categoría
             else if (projectRole === filterValue || projectCategory === filterValue) {
                 isVisible = true; 
             }
@@ -76,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shuffleProjects(projects);
     }
     
-    // 4. Función de Ordenación Aleatoria (Fisher-Yates)
+    // 5. Función de Ordenación Aleatoria
     function shuffleProjects(array) {
         // Obtenemos solo los elementos visibles para mezclar
         const visibleProjects = array.filter(p => !p.classList.contains('hidden'));
@@ -91,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 visibleProjects[randomIndex], visibleProjects[currentIndex]];
         }
         
-        // Reinsertar los elementos en el DOM (los visibles quedan mezclados y al principio)
+        // Reinsertar los elementos mezclados en el DOM
         visibleProjects.forEach(item => {
             projectGrid.appendChild(item);
         });
@@ -102,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Inicializar la página con el filtro "All Work" y orden aleatorio
+    // Inicialización
+    setupTagListeners(); // 🟢 Llamar a la nueva función de listeners
     shuffleProjects(projects);
 });
