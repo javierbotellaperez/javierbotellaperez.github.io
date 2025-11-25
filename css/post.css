@@ -2,20 +2,24 @@
 
 /* 1. Ajustes de Cuadrícula Específicos */
 .post-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* 🟢 CLAVE: Ancho fijo para evitar deformación al filtrar */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     max-width: 1200px; 
     margin: 0 auto;
     padding: 2rem;
     gap: 30px; 
 }
 
-/* 2. Estilo de la Ficha de Archivador (Ahora es ARTICLE) */
+/* 2. Estilo de la Ficha de Archivador (ARTICLE) */
 .archive-card {
     position: relative;
     padding: 25px; 
     background: var(--color-background); 
     
-    /* 🟢 CLAVE: Restaurar Borde y Sombra de la Ficha */
+    /* 🟢 CLAVE: Altura fija para que todas las fichas sean uniformes */
+    height: 400px; 
+    
+    /* Restaurar Borde y Sombra de la Ficha */
     border: 3px solid var(--color-primary); 
     box-shadow: 6px 6px 0px var(--color-primary); 
     
@@ -25,7 +29,7 @@
 
 /* CLAVE: Aplicar el efecto hover a la ficha ARTICLE */
 .archive-card:hover {
-    /* Mantiene el efecto de "levantar la ficha" */
+    /* Efecto de "levantar la ficha" */
     transform: translate(-3px, -3px); 
     box-shadow: 10px 10px 0px var(--color-primary);
 }
@@ -49,6 +53,13 @@
     margin-bottom: 2rem;
 }
 
+/* 🟢 CLAVE: Alineación del Título y Botón de Reset */
+.filter-dropdown-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
 .filter-dropdown-toggle h2 {
     font-size: 1.4rem; 
     cursor: pointer;
@@ -56,47 +67,39 @@
     padding: 0 10px;
 }
 
-.filter-dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    background: var(--color-background);
-    border: 3px solid var(--color-primary);
-    padding: 10px;
-    display: none; 
-    flex-direction: column;
-    text-align: left;
-}
-
-.filter-dropdown-menu.visible {
-    display: flex;
-}
-
-.filter-group-title {
-    font-weight: var(--font-weight-extrabold);
-    margin: 10px 0 5px 0;
-    padding-top: 5px;
-    border-top: 1px dashed var(--color-primary);
-}
-
-.filter-button {
+/* 🟢 ESTILO DEL BOTÓN RESET [x] - Más estético y alineado */
+.filter-reset-btn {
+    display: inline-flex; 
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    
     background: none;
     border: none;
-    padding: 5px 10px;
+    color: var(--color-text); 
+    font-weight: var(--font-weight-bold);
+    font-size: 1.1rem;
     cursor: pointer;
-    text-align: left;
-    font-size: 0.9rem;
-    color: var(--color-text);
-    text-transform: lowercase;
-    transition: background 0.2s ease;
+    
+    /* Alineación */
+    vertical-align: middle; 
+    margin-left: 10px;
+    
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: none; /* Oculto por defecto */
 }
 
-.filter-button:hover, .filter-button.active {
-    background: var(--color-primary);
-    color: var(--color-background);
+.filter-reset-btn:hover {
+    color: red; 
+    transform: rotate(90deg); 
 }
+
+/* Mostrar el botón X solo si hay un filtro activo (añadido por JS) */
+#current-filter-title.filtered + .filter-reset-btn {
+    display: inline-flex;
+}
+
 
 /* 4. Estilo de Contenido de Ficha */
 
@@ -115,6 +118,30 @@
     border: 1px solid var(--color-primary);
 }
 
+/* 🟢 Estilo del Rol (la pestaña) - Estética de Pestaña de Archivador */
+.role-filter-tag {
+    position: absolute;
+    top: -15px; 
+    left: 10px;
+    padding: 5px 12px;
+    background: var(--color-primary); 
+    color: var(--color-background) !important; 
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase; 
+    
+    cursor: pointer;
+    transition: background 0.2s ease;
+    text-decoration: none !important;
+    
+    /* 🟢 CLAVE: Efecto de Corte para la Pestaña */
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+}
+.role-filter-tag:hover {
+     background: #444 !important; 
+}
+
+
 .project-category-info {
     font-size: 0.75rem;
     font-weight: var(--font-weight-bold);
@@ -129,19 +156,6 @@
     display: none !important;
 }
 
-.role-title {
-    position: absolute;
-    top: -15px; 
-    left: 10px;
-    padding: 5px 10px;
-    background: var(--color-primary); 
-    color: var(--color-background); 
-    font-size: 0.75rem;
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase; 
-}
-
-/* 🟢 Restauramos los estilos que SÍ deben ser BOLD/EXTRABOLD */
 .card-details h3 {
     font-size: 1.1rem; 
     margin-bottom: 10px;
@@ -151,8 +165,7 @@
 .card-details p {
     font-size: 0.8rem;
     margin-top: 5px;
-    /* Aplicamos el peso bold para el cliente y fecha */
-    font-weight: var(--font-weight-bold) !important; 
+    font-weight: var(--font-weight-bold) !important; /* Restauramos el grosor de fuente bold */
 }
 
 .client-name {
