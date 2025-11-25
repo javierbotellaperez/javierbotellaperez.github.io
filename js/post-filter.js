@@ -11,12 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('.filter-button');
     const projectGrid = document.getElementById('project-grid');
     
-    // Obtenemos todos los elementos de tarjeta (ahora son <article>s)
+    // Obtenemos todos los elementos de tarjeta (<article>s)
     const projects = Array.from(projectGrid.querySelectorAll('.archive-card')); 
-
-    // Definición de posibles valores de filtro (para saber si es rol o categoría)
-    const roles = ["Post Coordinator", "Prod Coordinator", "Production Manager", "Prod Assistant"];
-    const categories = ["Music Video", "Commercial", "TV & Series"];
 
     // 1. Lógica del Desplegable (Dropdown)
     filterToggle.addEventListener('click', () => {
@@ -62,10 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (filterValue === 'all') {
                 isVisible = true; // Mostrar todo
-            } else if (roles.includes(filterValue) && projectRole === filterValue) {
-                isVisible = true; // Filtrar por Rol
-            } else if (categories.includes(filterValue) && projectCategory === filterValue) {
-                isVisible = true; // Filtrar por Categoría
+            } 
+            // 🟢 CLAVE: Si el valor del filtro coincide con el Rol O la Categoría
+            else if (projectRole === filterValue || projectCategory === filterValue) {
+                isVisible = true; 
             }
 
             // Aplicar la visibilidad
@@ -82,18 +78,26 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 4. Función de Ordenación Aleatoria (Fisher-Yates)
     function shuffleProjects(array) {
-        let currentIndex = array.length, randomIndex;
+        // Obtenemos solo los elementos visibles para mezclar
+        const visibleProjects = array.filter(p => !p.classList.contains('hidden'));
+        
+        let currentIndex = visibleProjects.length, randomIndex;
 
-        // Mientras queden elementos a mezclar.
+        // Mezclamos solo los elementos visibles
         while (currentIndex !== 0) {
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex--;
-            [array[currentIndex], array[randomIndex]] = [
-                array[randomIndex], array[currentIndex]];
+            [visibleProjects[currentIndex], visibleProjects[randomIndex]] = [
+                visibleProjects[randomIndex], visibleProjects[currentIndex]];
         }
         
-        // Reinsertar los elementos mezclados en el DOM
-        array.forEach(item => {
+        // Reinsertar los elementos en el DOM (los visibles quedan mezclados y al principio)
+        visibleProjects.forEach(item => {
+            projectGrid.appendChild(item);
+        });
+
+        // Aseguramos que los elementos ocultos también se reinserten al final
+        array.filter(p => p.classList.contains('hidden')).forEach(item => {
             projectGrid.appendChild(item);
         });
     }
