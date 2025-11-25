@@ -18,23 +18,22 @@
     box-shadow: 6px 6px 0px var(--color-primary); 
     transition: all 0.2s ease, opacity 0.3s ease; 
     
-    /* Es un artículo, por lo que es un bloque por defecto */
+    /* Mantiene el diseño sin el estilo de enlace */
     cursor: default; 
 }
 
-/* 🟢 CLAVE: Aplicar el hover a la ficha ARTICLE */
+/* CLAVE: Aplicar el hover a la ficha ARTICLE */
 .archive-card:hover {
     transform: translate(-3px, -3px);
     box-shadow: 10px 10px 0px var(--color-primary);
 }
 
-/* 🟢 CLAVE: La imagen es el único enlace */
+/* La imagen es el único enlace (restauramos el display de main.css para que no se escale al hacer hover) */
 .archive-card a {
     display: block;
     text-decoration: none;
 }
 .archive-card a:hover {
-    /* Deshabilitar el efecto hover de escala de main.css para este enlace */
     transform: none; 
 }
 
@@ -105,13 +104,12 @@
     border: 1px solid var(--color-primary);
 }
 
-/* 🟢 NUEVO: Estilo para la etiqueta de Categoría */
 .project-category-info {
     font-size: 0.75rem;
     font-weight: var(--font-weight-bold);
     margin-bottom: 5px;
     padding: 3px 5px;
-    background: #f0f0f0; /* Fondo gris suave para destacar */
+    background: #f0f0f0; 
     display: inline-block;
 }
 
@@ -143,7 +141,8 @@
     font-size: 0.8rem;
     margin-top: 5px;
     color: var(--color-text);
-    font-weight: var(--font-weight-regular);
+    /* 🟢 CLAVE: Restauramos el grosor de fuente bold de los enlaces */
+    font-weight: var(--font-weight-bold); 
 }
 
 .client-name {
