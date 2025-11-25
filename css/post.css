@@ -14,27 +14,31 @@
     position: relative;
     padding: 25px; 
     background: var(--color-background); 
+    
+    /* 🟢 CLAVE: Restaurar Borde y Sombra de la Ficha */
     border: 3px solid var(--color-primary); 
     box-shadow: 6px 6px 0px var(--color-primary); 
-    transition: all 0.2s ease, opacity 0.3s ease; 
     
-    /* Mantiene el diseño sin el estilo de enlace */
+    transition: all 0.2s ease, opacity 0.3s ease; 
     cursor: default; 
 }
 
-/* CLAVE: Aplicar el hover a la ficha ARTICLE */
+/* CLAVE: Aplicar el efecto hover a la ficha ARTICLE */
 .archive-card:hover {
-    transform: translate(-3px, -3px);
+    /* Mantiene el efecto de "levantar la ficha" */
+    transform: translate(-3px, -3px); 
     box-shadow: 10px 10px 0px var(--color-primary);
 }
 
-/* La imagen es el único enlace (restauramos el display de main.css para que no se escale al hacer hover) */
+/* El enlace que envuelve solo la imagen */
 .archive-card a {
     display: block;
     text-decoration: none;
 }
+/* Aseguramos que el hover global del enlace no interfiera */
 .archive-card a:hover {
-    transform: none; 
+    transform: none !important; /* Anula el zoom de main.css */
+    font-weight: var(--font-weight-bold);
 }
 
 /* 3. Estilos del Filtro Desplegable */
@@ -96,6 +100,13 @@
 
 /* 4. Estilo de Contenido de Ficha */
 
+/* Aseguramos que el contenido de texto dentro de la ficha tenga el color y fuente correctos */
+.archive-card * {
+    /* Anulamos cualquier estilo de color heredado de enlaces */
+    color: var(--color-text) !important;
+    font-weight: var(--font-weight-regular); /* Establecemos el peso normal por defecto */
+}
+
 .project-thumbnail {
     width: 100%;
     height: auto;
@@ -130,22 +141,21 @@
     text-transform: uppercase; 
 }
 
+/* 🟢 Restauramos los estilos que SÍ deben ser BOLD/EXTRABOLD */
 .card-details h3 {
     font-size: 1.1rem; 
     margin-bottom: 10px;
-    font-weight: var(--font-weight-extrabold);
-    color: var(--color-text);
+    font-weight: var(--font-weight-extrabold); /* Título del proyecto más grueso */
 }
 
 .card-details p {
     font-size: 0.8rem;
     margin-top: 5px;
-    color: var(--color-text);
-    /* 🟢 CLAVE: Restauramos el grosor de fuente bold de los enlaces */
-    font-weight: var(--font-weight-bold); 
+    /* Aplicamos el peso bold para el cliente y fecha */
+    font-weight: var(--font-weight-bold) !important; 
 }
 
 .client-name {
     font-style: italic;
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-bold) !important;
 }
