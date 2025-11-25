@@ -13,7 +13,10 @@
 .film-strip {
     display: flex;
     overflow-x: scroll; 
+    
+    /* ELIMINAMOS SCROLL-SNAP para que JS controle la posición */
     scroll-snap-type: none; 
+    
     -webkit-overflow-scrolling: touch; 
     scrollbar-width: none; 
 }
@@ -29,11 +32,11 @@
 /* Cada elemento de video en la tira (film-item es ahora la "ficha") */
 .film-item {
     flex: 0 0 auto; 
-    width: 960px; 
+    width: 960px; /* Ancho de 960px (Mantiene el ratio 16:9) */
     
     /* Técnica del Padding para forzar el ratio 16:9 */
     height: 0; 
-    padding-bottom: 56.25%; 
+    padding-bottom: 56.25%; /* 56.25% es (9 / 16) * 100, la proporción para 16:9 */
     
     margin-right: 50px; 
     position: relative;
@@ -41,7 +44,7 @@
     
     background: var(--color-background);
     
-    /* 🟢 CLAVE: MARCO DE ARCHIVADOR */
+    /* MARCO DE ARCHIVADOR */
     border: 3px solid var(--color-primary); 
     box-shadow: 6px 6px 0px var(--color-primary); 
     
@@ -54,10 +57,10 @@
     box-shadow: 10px 10px 0px var(--color-primary);
 }
 
-/* Imagen/GIF dentro del film-item (Debe ser ABSOLUTA) */
+/* Imagen/GIF y Contenedores de Texto (Deben ser ABSOLUTOS para ignorar el padding) */
 .film-item img,
 .film-item .video-info,
-.film-item .film-artist-tag /* 🟢 Añadimos la nueva etiqueta */
+.film-item .film-artist-tag 
 { 
     position: absolute;
     top: 0;
@@ -70,6 +73,29 @@
 .film-item img {
     object-fit: cover; 
     display: block;
+}
+
+/* 🟢 AJUSTE DE ESTILO DE LA PESTAÑA (ARTISTA) */
+.film-artist-tag {
+    /* CLAVE: Posicionamiento de Pestaña */
+    position: absolute;
+    top: -1px; /* Ajustado al borde superior */
+    left: -3px; /* Ajustado al borde izquierdo */
+    
+    /* Padding y fuente para tamaño discreto */
+    padding: 3px 10px 5px 12px; 
+    font-size: 0.65rem; 
+    
+    background: var(--color-primary); 
+    color: var(--color-background) !important; 
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase; 
+    z-index: 20; /* Asegura que esté encima de todo */
+    cursor: default;
+    
+    /* Efecto de Corte para la Pestaña */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 95% 100%, 0% 100%);
+    transition: background 0.2s ease;
 }
 
 /* Información del video sobre la miniatura (contenedor principal para el hover) */
@@ -90,30 +116,11 @@
     transition: opacity 0.4s ease; 
 }
 
-/* 🟢 CLAVE: Mostrar el texto cuando el cursor pasa sobre el ítem */
+/* CLAVE: Mostrar el texto cuando el cursor pasa sobre el ítem */
 .film-item:hover .video-info {
     opacity: 1;
 }
 
-
-/* 🟢 NUEVO: ESTILO DE LA PESTAÑA (ARTISTA) */
-.film-artist-tag {
-    /* CLAVE: Posicionamiento de Pestaña */
-    position: absolute;
-    top: -15px; 
-    left: 10px;
-    padding: 5px 12px;
-    background: var(--color-primary); 
-    color: var(--color-background) !important; 
-    font-size: 0.75rem;
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase; 
-    z-index: 20; /* Asegura que esté sobre el video y la ficha */
-    
-    /* Efecto de Corte para la Pestaña */
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
-    transition: background 0.2s ease;
-}
 
 /* Estilos de los Títulos Centrales */
 .video-info h3 {
