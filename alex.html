@@ -6,49 +6,7 @@
     <title>Javier Botella Pérez | Proyecto Alex</title>
     
     <link rel="stylesheet" href="css/main.css">
-    
-    <style>
-        /* Define un contenedor con ancho máximo para la cuadrícula */
-        .content-container {
-            max-width: 1400px;
-            margin: 0 auto; /* Centra el contenedor principal */
-        }
-        
-        /* Asegura que el título no interfiera con el centrado */
-        .content-container h2 {
-            grid-column: 1 / -1; 
-        }
-        
-        /* CLAVE: Estilos llamativos de cuadrícula (Masonry-like layout) */
-        .content-grid {
-            display: grid;
-            /* Columnas automáticas y responsivas: min de 280px por columna */
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 20px;
-            padding: 20px;
-        }
-        
-        /* Estilos para los artículos de proyecto (las fotos) */
-        .project-item {
-            padding: 0;
-            border: none;
-            overflow: hidden; 
-        }
-        
-        /* Las imágenes ocupan todo el espacio del artículo */
-        .project-item img {
-            width: 100%;
-            height: auto;
-            max-height: none; 
-            display: block;
-            margin-bottom: 0;
-        }
-        
-        /* Diseño Destacado: Fotos que ocupan 2 filas */
-        .span-2-rows {
-            grid-row: span 2; 
-        }
-    </style>
+    <link rel="stylesheet" href="css/gallery-base.css">
 </head>
 <body>
     
@@ -56,13 +14,13 @@
         <nav class="header-nav">
             <p class="role-group">
                 <a href="index.html" class="nav-link">home</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                <a href="photographer.html" class="nav-link">photographer</a>
+                <a href="photographer.html" class="nav-link">photographer (stickers)</a>
             </p>
         </nav>
     </header>
 
     <main class="content-container">
-        <h2 style="text-align: center; margin-bottom: 2.5rem;">ALEX</h2>
+        <h2 style="text-align: center; margin-bottom: 2.5rem;">PROYECTO ALEX | Fotografía</h2>
 
         <section class="content-grid">
             
@@ -156,5 +114,6 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/gallery-manager.js"></script>
 </body>
 </html>
