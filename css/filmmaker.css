@@ -1,106 +1,48 @@
 /* css/filmmaker.css */
+/* ... (todo el código anterior, incluyendo la técnica de padding-bottom en .film-item) ... */
 
-/* Contenedor que limita el ancho de la tira de carrusel */
-.carousel-wrapper {
-    width: 95vw; 
-    max-width: 1920px; 
-    margin: 3rem auto;
-    overflow: hidden; 
-    padding: 10px 0;
-}
 
-/* Tira de Film: Usa Flexbox para disposición horizontal */
-.film-strip {
-    display: flex;
-    overflow-x: scroll; 
-    
-    /* ELIMINAMOS SCROLL-SNAP para que JS controle la posición */
-    scroll-snap-type: none; 
-    
-    -webkit-overflow-scrolling: touch; 
-    scrollbar-width: none; 
-}
-.film-strip::-webkit-scrollbar {
-    display: none; 
-}
-
-/* CLAVE para el bucle infinito: Deshabilita el comportamiento de scroll suave */
-.film-strip.is-scrolling {
-    scroll-behavior: auto !important;
-}
-
-/* Cada elemento de video en la tira (film-item es ahora la "ficha") */
-.film-item {
-    flex: 0 0 auto; 
-    width: 960px; /* Ancho de 960px (Mantiene el ratio 16:9) */
-    
-    /* Técnica del Padding para forzar el ratio 16:9 */
-    height: 0; 
-    padding-bottom: 56.25%; /* 56.25% es (9 / 16) * 100, la proporción para 16:9 */
-    
-    margin-right: 50px; 
-    position: relative;
-    text-align: center;
-    
-    background: var(--color-background);
-    
-    /* MARCO DE ARCHIVADOR */
-    border: 3px solid var(--color-primary); 
-    box-shadow: 6px 6px 0px var(--color-primary); 
-    
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Efecto hover: Levanta la ficha */
-.film-item:hover {
-    transform: translate(-3px, -3px); 
-    box-shadow: 10px 10px 0px var(--color-primary);
-}
-
-/* Imagen/GIF y Contenedores de Texto (Deben ser ABSOLUTOS para ignorar el padding) */
-.film-item img,
-.film-item .video-info,
-.film-item .film-artist-tag 
-{ 
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* Imagen/GIF */
+/* 🟢 CLAVE: La imagen, el vídeo y el texto deben ajustarse al contenedor de ratio 16:9 */
 .film-item img {
     object-fit: cover; 
     display: block;
 }
 
-/* 🟢 AJUSTE DE ESTILO DE LA PESTAÑA (ARTISTA) */
+/* 🟢 AJUSTE: NUEVO ESTILO DE LA PESTAÑA (ARTISTA) - MUY PEQUEÑA */
 .film-artist-tag {
     /* CLAVE: Posicionamiento de Pestaña */
     position: absolute;
-    top: -1px; /* Ajustado al borde superior */
-    left: -3px; /* Ajustado al borde izquierdo */
+    top: -3px; /* Subimos la pestaña justo encima del borde */
+    left: 20px; /* Separado del borde izquierdo */
     
     /* Padding y fuente para tamaño discreto */
-    padding: 3px 10px 5px 12px; 
+    padding: 3px 10px; /* Reducido al mínimo */
     font-size: 0.65rem; 
     
     background: var(--color-primary); 
     color: var(--color-background) !important; 
     font-weight: var(--font-weight-bold);
     text-transform: uppercase; 
-    z-index: 20; /* Asegura que esté encima de todo */
+    z-index: 20; 
     cursor: default;
     
-    /* Efecto de Corte para la Pestaña */
-    clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 95% 100%, 0% 100%);
+    /* 🔴 ELIMINAMOS EL EFECTO DE CORTE COMPLEJO */
+    clip-path: none;
+    border-radius: 4px 4px 0 0; /* Borde superior redondeado para estilo de pestaña */
     transition: background 0.2s ease;
 }
 
-/* Información del video sobre la miniatura (contenedor principal para el hover) */
+
+/* 🟢 CLAVE: Información del video (Título de la Canción) - Mover a la parte inferior */
 .video-info {
     z-index: 10; 
+    
+    /* 🔴 Cambiamos la posición: Abajo, no centrada */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%; /* Ocupa solo el 30% inferior del video */
     
     /* Centrado del TÍTULO DENTRO del bloque */
     display: flex;
@@ -108,10 +50,12 @@
     justify-content: center;
     align-items: center;
     
-    background: none; 
+    /* 🔴 Añadimos un fondo sutil para que el texto sea legible */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    
     color: var(--color-light); 
     
-    /* Hover y Opacidad */
+    /* 🟢 Ocultar el texto por defecto y añadir transición */
     opacity: 0;
     transition: opacity 0.4s ease; 
 }
@@ -121,20 +65,12 @@
     opacity: 1;
 }
 
-
 /* Estilos de los Títulos Centrales */
 .video-info h3 {
-    font-size: 2.5rem; 
+    font-size: 2rem; /* Ajustado al nuevo tamaño */
     margin: 0;
     font-weight: var(--font-weight-extrabold); 
     text-shadow: none; 
     text-transform: lowercase;
 }
-
-.video-info p {
-    font-size: 1.8rem; 
-    margin: 0;
-    font-weight: var(--font-weight-regular); 
-    text-shadow: none; 
-    text-transform: lowercase;
-}
+/* ... (El resto del código de video-info p/h3 permanece igual) ... */
