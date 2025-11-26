@@ -3,7 +3,7 @@
 /* Contenedor que limita el ancho de la tira de carrusel */
 .carousel-wrapper {
     width: 95vw; 
-    max-width: 1920px; 
+    max-width: 1280px; /* 🟢 CLAVE: Reducido el max-width del contenedor */
     margin: 3rem auto;
     overflow: hidden; 
     padding: 10px 0;
@@ -29,8 +29,8 @@
 /* Cada elemento de video en la tira (film-item es ahora la "ficha") */
 .film-item {
     flex: 0 0 auto; 
-    /* 🟢 CLAVE: Restauramos el ancho a 960px para que la altura vuelva a ser la original. */
-    width: 960px; 
+    /* 🟢 CLAVE: Nuevo Ancho Base de 640px (La mitad de 1280) */
+    width: 640px; 
     
     /* Técnica del Padding para forzar el ratio 16:9 */
     height: 0; 
@@ -97,6 +97,7 @@
 .video-info {
     z-index: 10; 
     
+    /* POSICIÓN: Abajo, para que se vea el vídeo */
     position: absolute;
     bottom: 0;
     left: 0;
@@ -108,10 +109,12 @@
     justify-content: flex-end; /* Alineamos el contenido en la parte inferior */
     align-items: center;
     
+    /* Fondo sutil en la parte inferior para que el texto sea legible */
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
     
     color: var(--color-light); 
     
+    /* Hover y Opacidad */
     opacity: 0;
     transition: opacity 0.4s ease; 
     padding: 20px;
@@ -123,9 +126,9 @@
 }
 
 
-/* 🟢 TAMAÑO DE TEXTO RESTAURADO A UN VALOR VISIBLE */
+/* 🟢 TAMAÑO DE TEXTO AJUSTADO A LA NUEVA ESCALA (1280x720) */
 .video-info h3 {
-    font-size: 2.5rem; /* Vuelve al tamaño grande original */
+    font-size: 2rem; /* Ajustado proporcionalmente */
     margin: 0;
     font-weight: var(--font-weight-extrabold); 
     text-shadow: none; 
@@ -133,7 +136,7 @@
 }
 
 .video-info p {
-    font-size: 1.8rem; /* Vuelve al tamaño grande original */
+    font-size: 1.4rem; /* Ajustado proporcionalmente */
     margin: 0;
     font-weight: var(--font-weight-regular); 
     text-shadow: none; 
