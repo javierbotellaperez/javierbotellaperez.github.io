@@ -13,10 +13,7 @@
 .film-strip {
     display: flex;
     overflow-x: scroll; 
-    
-    /* ELIMINAMOS SCROLL-SNAP para que JS controle la posición */
     scroll-snap-type: none; 
-    
     -webkit-overflow-scrolling: touch; 
     scrollbar-width: none; 
 }
@@ -32,12 +29,12 @@
 /* Cada elemento de video en la tira (film-item es ahora la "ficha") */
 .film-item {
     flex: 0 0 auto; 
-    /* 🟢 CLAVE: Ancho reducido a 480px (para reducir la altura total manteniendo el ratio) */
-    width: 480px; 
+    /* 🟢 CLAVE: Restauramos el ancho a 960px para que la altura vuelva a ser la original. */
+    width: 960px; 
     
     /* Técnica del Padding para forzar el ratio 16:9 */
     height: 0; 
-    padding-bottom: 56.25%; /* 56.25% es (9 / 16) * 100, la proporción para 16:9 */
+    padding-bottom: 56.25%; /* 56.25% es 16:9 */
     
     margin-right: 50px; 
     position: relative;
@@ -58,7 +55,7 @@
     box-shadow: 10px 10px 0px var(--color-primary);
 }
 
-/* Imagen/GIF y Contenedores de Texto (Deben ser ABSOLUTOS para ignorar el padding) */
+/* Imagen/GIF y Contenedores de Texto */
 .film-item img,
 .film-item .video-info 
 { 
@@ -75,14 +72,12 @@
     display: block;
 }
 
-/* ESTILO DE LA PESTAÑA (ARTISTA) - PEQUEÑA Y DISCRETA */
+/* ESTILO DE LA PESTAÑA (ARTISTA) - Discreta */
 .film-artist-tag {
-    /* CLAVE: Posicionamiento de Pestaña */
     position: absolute;
     top: -3px; 
     left: 20px; 
     
-    /* Padding y fuente para tamaño discreto */
     padding: 3px 10px 5px 12px; 
     font-size: 0.65rem; 
     
@@ -93,7 +88,6 @@
     z-index: 20; 
     cursor: default;
     
-    /* Efecto de Corte para la Pestaña */
     clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 95% 100%, 0% 100%);
     transition: background 0.2s ease;
     border-radius: 4px 4px 0 0; 
@@ -103,25 +97,21 @@
 .video-info {
     z-index: 10; 
     
-    /* POSICIÓN: Abajo, para que se vea el vídeo */
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 100%; 
     
-    /* Centrado del TÍTULO DENTRO del bloque */
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* Alineamos el contenido en la parte inferior */
     align-items: center;
     
-    /* Fondo sutil en la parte inferior para que el texto sea legible */
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
     
     color: var(--color-light); 
     
-    /* Hover y Opacidad */
     opacity: 0;
     transition: opacity 0.4s ease; 
     padding: 20px;
@@ -133,9 +123,9 @@
 }
 
 
-/* 🟢 TAMAÑO DE TEXTO AJUSTADO A LA NUEVA ESCALA */
+/* 🟢 TAMAÑO DE TEXTO RESTAURADO A UN VALOR VISIBLE */
 .video-info h3 {
-    font-size: 1.8rem; /* Ajustado proporcionalmente */
+    font-size: 2.5rem; /* Vuelve al tamaño grande original */
     margin: 0;
     font-weight: var(--font-weight-extrabold); 
     text-shadow: none; 
@@ -143,7 +133,7 @@
 }
 
 .video-info p {
-    font-size: 1.2rem; /* Ajustado proporcionalmente */
+    font-size: 1.8rem; /* Vuelve al tamaño grande original */
     margin: 0;
     font-weight: var(--font-weight-regular); 
     text-shadow: none; 
