@@ -80,6 +80,24 @@ a:not(.interactive-sticker):hover {
     text-decoration-thickness: 2px; 
 }
 
+/* 🟢 CLAVE: Estilo para la página actual */
+.nav-link.current-page {
+    /* Mantenemos el estilo de bold y color, pero reducimos la opacidad */
+    opacity: 0.35; /* 🟢 Opacidad baja (35% en lugar de 70% para que se note la "inactividad") */
+    
+    /* Aseguramos que no tenga efectos hover (zoom o subrayado) */
+    transform: none !important;
+    text-decoration: none !important;
+    font-weight: var(--font-weight-bold) !important;
+    cursor: default;
+}
+
+/* Anulamos cualquier efecto hover en la página actual */
+.nav-link.current-page:hover {
+    opacity: 0.35; 
+    transform: none !important;
+    cursor: default;
+
 /* ===================================== */
 /* 3. ESTILOS DE LA PÁGINA DE INICIO (INDEX) */
 /* ===================================== */
