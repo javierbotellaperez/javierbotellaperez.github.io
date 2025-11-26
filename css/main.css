@@ -75,7 +75,7 @@ a:not(.interactive-sticker):hover {
     font-style: normal;
     cursor: pointer;
     transform: scale(1.05); 
-    /* 🟢 CLAVE: Subrayado sutil restaurado para indicar interacción */
+    /* Subrayado sutil restaurado */
     text-decoration: underline !important; 
     text-decoration-thickness: 2px; 
 }
@@ -170,7 +170,24 @@ footer {
 }
 
 /* ===================================== */
-/* 4. ESTILOS DE GRIDS/PROYECTOS (Secundarios) */
+/* 5. AJUSTES DE NAVEGACIÓN Y SUBPÁGINAS */
+/* ===================================== */
+
+/* 🟢 CLAVE: Anulamos el padding superior en las subpáginas para evitar el doble margen */
+main.content-container {
+    padding-top: 0 !important;
+}
+
+/* AJUSTE PARA EL ESPACIO EN EL ENCABEZADO DE SUBPÁGINAS */
+header .role-group {
+    /* MARGEN SUPERIOR DE SEPARACIÓN EN EL HEADER */
+    margin-top: 1.5rem; 
+    /* MARGEN INFERIOR PARA SEPARARSE DEL CONTENIDO PRINCIPAL */
+    margin-bottom: 1.5rem; 
+}
+
+/* ===================================== */
+/* 6. ESTILOS DE GRIDS/PROYECTOS (Secundarios) */
 /* ===================================== */
 
 .content-grid {
@@ -221,9 +238,3 @@ footer {
     font-size: 0.8rem;
     font-weight: var(--font-weight-regular);
 }
-
-/* AJUSTE PARA EL ESPACIO EN EL ENCABEZADO DE SUBPÁGINAS */
-header .role-group {
-    /* 🟢 CLAVE: Añade un margen superior de 1.5rem */
-    margin-top: 1.5rem; 
-    padding-bottom: 0.5rem;
