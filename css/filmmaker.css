@@ -32,8 +32,8 @@
 /* Cada elemento de video en la tira (film-item es ahora la "ficha") */
 .film-item {
     flex: 0 0 auto; 
-    /* 🟢 CLAVE: Ancho reducido en ~30% (de 960px a 672px) */
-    width: 672px; 
+    /* 🟢 CLAVE: Ancho reducido a 480px (para reducir la altura total manteniendo el ratio) */
+    width: 480px; 
     
     /* Técnica del Padding para forzar el ratio 16:9 */
     height: 0; 
@@ -135,7 +135,7 @@
 
 /* 🟢 TAMAÑO DE TEXTO AJUSTADO A LA NUEVA ESCALA */
 .video-info h3 {
-    font-size: 2rem; /* Ajustado proporcionalmente */
+    font-size: 1.8rem; /* Ajustado proporcionalmente */
     margin: 0;
     font-weight: var(--font-weight-extrabold); 
     text-shadow: none; 
@@ -143,7 +143,7 @@
 }
 
 .video-info p {
-    font-size: 1.4rem; /* Ajustado proporcionalmente */
+    font-size: 1.2rem; /* Ajustado proporcionalmente */
     margin: 0;
     font-weight: var(--font-weight-regular); 
     text-shadow: none; 
