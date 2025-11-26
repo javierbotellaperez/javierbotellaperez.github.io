@@ -7,8 +7,8 @@
     position: relative;
     overflow: hidden; 
     
-    /* 🟢 CLAVE: Añadir el padding para IGUALAR el margen de 1.5rem del header 
-       Esto empuja los stickers hacia abajo y revela el margen del header. */
+    /* 🟢 CLAVE: Añadir el padding-top para EMPUJAR los stickers hacia abajo y 
+       revelar el margen del header, igualando el espaciado percibido. */
     padding-top: 2.5rem; 
 }
 
@@ -56,7 +56,7 @@
     clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
 }
 
-/* Contenedor para el Hint (Sugerencia) */
+/* Contenedor para el Hint (Sugerencia DRAG & ZOOM) */
 .sticker-link::after {
     content: "DRAG & ZOOM"; 
     position: absolute;
