@@ -221,3 +221,9 @@ footer {
     font-size: 0.8rem;
     font-weight: var(--font-weight-regular);
 }
+
+/* AJUSTE PARA EL ESPACIO EN EL ENCABEZADO DE SUBPÁGINAS */
+header .role-group {
+    /* 🟢 CLAVE: Añade un margen superior de 1.5rem */
+    margin-top: 1.5rem; 
+    padding-bottom: 0.5rem;
