@@ -8,28 +8,27 @@
     overflow: hidden; 
 }
 
-/* Estilos base para cada sticker: ¡Ahora respeta la transparencia! */
+/* Estilos base para cada sticker: Ficha Archivador */
 .sticker-link {
     position: absolute; 
-    width: 200px; /* Aumentado ligeramente para mejor interacción */
+    width: 200px; 
     height: auto;
     cursor: grab;
     user-select: none; 
     z-index: 10; 
     
-    /* 🔴 ELIMINAMOS BORDE, SOMBRA Y FONDO para respetar la transparencia del PNG */
-    border: none;
-    box-shadow: none; 
-    background: none; 
-    padding: 0; /* Quitamos el padding para que la caja sea mínima */
+    /* Estilo de Ficha */
+    border: 2px solid var(--color-primary); 
+    box-shadow: 4px 4px 0px var(--color-primary); 
+    background: var(--color-background); 
+    padding: 5px; 
     
-    transition: transform 0.1s ease-out;
+    transition: transform 0.1s ease-out, box-shadow 0.2s ease;
 }
 
-/* 🟢 Efecto Hover/Active: Sombra sutil directamente en el sticker (opcional) */
+/* Efecto Hover/Active */
 .sticker-link:active, .sticker-link:hover {
-    /* Puedes añadir una sombra sutil solo al arrastrar/clicar si lo deseas */
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); */
+    box-shadow: 6px 6px 0px var(--color-primary);
 }
 
 
@@ -41,9 +40,8 @@
     pointer-events: none; 
 }
 
-/* CLAVE: Estilo de la Pestaña de Nombre de Proyecto (MANTENIDA) */
+/* CLAVE: Estilo de la Pestaña de Nombre de Proyecto */
 .project-tag {
-    /* La pestaña es lo único que mantiene el estilo de "archivador" */
     position: absolute;
     top: -15px; 
     left: 10px;
@@ -56,6 +54,26 @@
     text-transform: uppercase; 
     z-index: 20; 
     
-    /* Efecto de Corte para la Pestaña */
     clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+}
+
+/* 🟢 CLAVE: Contenedor para el Hint (Sugerencia) */
+.sticker-link::after {
+    content: "DRAG & ZOOM"; 
+    position: absolute;
+    bottom: 5px; 
+    right: 5px;
+    padding: 2px 5px;
+    background: var(--color-primary);
+    color: var(--color-light);
+    font-size: 0.6rem;
+    font-weight: var(--font-weight-regular);
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+    z-index: 30; 
+}
+
+/* Mostrar la sugerencia solo al hacer hover */
+.sticker-link:hover::after {
+    opacity: 1;
 }
