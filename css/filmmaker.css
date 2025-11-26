@@ -32,7 +32,8 @@
 /* Cada elemento de video en la tira (film-item es ahora la "ficha") */
 .film-item {
     flex: 0 0 auto; 
-    width: 960px; /* Ancho de 960px (Mantiene el ratio 16:9) */
+    /* 🟢 CLAVE: Ancho reducido en ~30% (de 960px a 672px) */
+    width: 672px; 
     
     /* Técnica del Padding para forzar el ratio 16:9 */
     height: 0; 
@@ -59,7 +60,8 @@
 
 /* Imagen/GIF y Contenedores de Texto (Deben ser ABSOLUTOS para ignorar el padding) */
 .film-item img,
-.film-item .video-info { 
+.film-item .video-info 
+{ 
     position: absolute;
     top: 0;
     left: 0;
@@ -73,12 +75,12 @@
     display: block;
 }
 
-/* 🟢 ESTILO DE LA PESTAÑA (ARTISTA) - PEQUEÑA Y DISCRETA */
+/* ESTILO DE LA PESTAÑA (ARTISTA) - PEQUEÑA Y DISCRETA */
 .film-artist-tag {
     /* CLAVE: Posicionamiento de Pestaña */
     position: absolute;
-    top: -3px; /* Ajustado al borde superior */
-    left: 20px; /* Separado del borde izquierdo */
+    top: -3px; 
+    left: 20px; 
     
     /* Padding y fuente para tamaño discreto */
     padding: 3px 10px 5px 12px; 
@@ -88,30 +90,30 @@
     color: var(--color-background) !important; 
     font-weight: var(--font-weight-bold);
     text-transform: uppercase; 
-    z-index: 20; /* Asegura que esté encima de todo */
+    z-index: 20; 
     cursor: default;
     
     /* Efecto de Corte para la Pestaña */
     clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 95% 100%, 0% 100%);
     transition: background 0.2s ease;
-    border-radius: 4px 4px 0 0; /* Borde superior sutil */
+    border-radius: 4px 4px 0 0; 
 }
 
 /* Información del video sobre la miniatura (contenedor principal para el hover) */
 .video-info {
     z-index: 10; 
     
-    /* 🟢 POSICIÓN: Abajo, para que se vea el vídeo */
+    /* POSICIÓN: Abajo, para que se vea el vídeo */
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 100%; /* El bloque es grande, pero el contenido está abajo */
+    height: 100%; 
     
     /* Centrado del TÍTULO DENTRO del bloque */
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* 🟢 CLAVE: Alineamos el contenido en la parte inferior */
+    justify-content: flex-end; /* Alineamos el contenido en la parte inferior */
     align-items: center;
     
     /* Fondo sutil en la parte inferior para que el texto sea legible */
@@ -131,9 +133,9 @@
 }
 
 
-/* Estilos de los Títulos Centrales */
+/* 🟢 TAMAÑO DE TEXTO AJUSTADO A LA NUEVA ESCALA */
 .video-info h3 {
-    font-size: 2.5rem; 
+    font-size: 2rem; /* Ajustado proporcionalmente */
     margin: 0;
     font-weight: var(--font-weight-extrabold); 
     text-shadow: none; 
@@ -141,7 +143,7 @@
 }
 
 .video-info p {
-    font-size: 1.8rem; 
+    font-size: 1.4rem; /* Ajustado proporcionalmente */
     margin: 0;
     font-weight: var(--font-weight-regular); 
     text-shadow: none; 
