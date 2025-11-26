@@ -173,25 +173,26 @@ footer {
 /* 5. AJUSTES DE NAVEGACIÓN Y SUBPÁGINAS */
 /* ===================================== */
 
-/* 🟢 CLAVE: Anulamos el padding/margin superior en los MAIN de subpáginas para evitar el doble margen */
+/* CLAVE 1: Eliminamos el margen/padding superior en los MAIN (Post/Filmmaker) */
 main.content-container,
 main.sticker-area {
-    /* Eliminamos cualquier margen que pueda colapsar con el header */
     padding-top: 0 !important; 
     margin-top: 0 !important; 
-    /* Mantenemos el padding lateral del main */
     padding-left: 5%;
     padding-right: 5%;
 }
 
 /* AJUSTE PARA EL ESPACIO EN EL ENCABEZADO DE SUBPÁGINAS */
-header .role-group {
-    /* 🔴 CLAVE: Eliminamos el margen superior para evitar el conflicto */
-    margin: 0; 
-    /* Usamos padding-top para crear el espacio DEBAJO del header */
+header {
+    /* Aplicamos el margen directamente al header para forzar el espacio superior */
     padding-top: 1.5rem; 
-    /* Margen inferior para separar la navegación del contenido principal */
-    margin-bottom: 1.5rem; 
+    margin-bottom: 0 !important; /* Aseguramos que el header no empuje el main hacia abajo */
+}
+
+header .role-group {
+    /* 🟢 CLAVE: El padding inferior es lo que separa la barra de navegación del contenido principal */
+    margin: 0 !important; 
+    padding-bottom: 0.5rem; 
 }
 
 /* ===================================== */
