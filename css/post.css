@@ -2,7 +2,7 @@
 
 /* 1. Ajustes de Cuadrícula Específicos */
 .post-grid {
-    /* CLAVE: Ancho Fijo de 320px para la ficha, para evitar estiramiento */
+    /* Mantenemos el ancho fijo de 320px para evitar que se estire */
     grid-template-columns: repeat(auto-fit, minmax(320px, 320px));
     max-width: 1200px; 
     margin: 0 auto;
@@ -16,23 +16,19 @@
     padding: 25px; 
     background: var(--color-background); 
     
-    /* Restaurar Borde y Sombra de la Ficha */
     border: 3px solid var(--color-primary); 
     box-shadow: 6px 6px 0px var(--color-primary); 
     
-    /* Altura Mínima para ajustarse al contenido */
     min-height: 300px; 
     height: auto; 
     
-    /* 🟢 CLAVE: Añadir transform a la transición para la inclinación y el hover */
-    transition: all 0.3s ease, opacity 0.3s ease, transform 0.3s ease; 
+    transition: all 0.2s ease, opacity 0.3s ease, transform 0.3s ease; 
     cursor: default; 
 }
 
-/* 🟢 CLAVE: Aplicar el efecto hover a la ficha ARTICLE */
+/* CLAVE: Aplicar el efecto hover a la ficha ARTICLE */
 .archive-card:hover {
-    /* Se endereza (rotate(0deg)) y se levanta */
-    transform: translate(-3px, -5px) rotate(0deg) !important; 
+    transform: translate(-3px, -3px); 
     box-shadow: 10px 10px 0px var(--color-primary);
 }
 
@@ -47,7 +43,7 @@
     font-weight: var(--font-weight-bold);
 }
 
-/* 3. Estilos del Filtro Desplegable */
+/* 3. Estilos del Filtro Desplegable (Mantenemos el JS/HTML de los botones) */
 .filter-controls-area {
     text-align: center;
     position: relative;
@@ -118,17 +114,14 @@
     align-items: center;
     width: 20px;
     height: 20px;
-    
     background: none;
     border: none;
     color: var(--color-text); 
     font-weight: var(--font-weight-bold);
     font-size: 1.1rem;
     cursor: pointer;
-    
     vertical-align: middle; 
     margin-left: 10px;
-    
     transition: color 0.2s ease, transform 0.2s ease;
     display: none; 
 }
@@ -138,15 +131,12 @@
     transform: rotate(90deg); 
 }
 
-/* Mostrar el botón X solo si hay un filtro activo (añadido por JS) */
 #current-filter-title.filtered + .filter-reset-btn {
     display: inline-flex;
 }
 
 
-/* 4. Estilo de Contenido de Ficha */
-
-/* Aseguramos que el contenido de texto dentro de la ficha tenga el color y fuente correctos */
+/* 4. Estilo de Contenido de Ficha (Aseguramos que el texto esté bold) */
 .archive-card * {
     color: var(--color-text) !important;
     font-weight: var(--font-weight-regular); 
@@ -160,8 +150,8 @@
     border: 1px solid var(--color-primary);
 }
 
-/* Estilo del Rol (la pestaña) */
-.role-filter-tag {
+/* 🔴 ROL (Volvemos a la PESTAÑA SIMPLE) */
+.role-title {
     position: absolute;
     top: -15px; 
     left: 10px;
@@ -171,19 +161,13 @@
     font-size: 0.75rem;
     font-weight: var(--font-weight-bold);
     text-transform: uppercase; 
-    
-    cursor: pointer;
-    transition: background 0.2s ease;
-    text-decoration: none !important;
-    
-    /* Efecto de Corte para la Pestaña */
     clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
 }
-.role-filter-tag:hover {
+.role-title:hover { /* 🟢 Se perdió la funcionalidad de filtro, pero mantenemos el estilo */
      background: #444 !important; 
 }
 
-
+/* 🔴 CATEGORÍA (Volvemos a la ETIQUETA SIMPLE) */
 .project-category-info {
     font-size: 0.75rem;
     font-weight: var(--font-weight-bold);
@@ -192,6 +176,7 @@
     background: #f0f0f0; 
     display: inline-block;
 }
+
 
 /* Oculta los elementos que no coinciden con el filtro */
 .archive-card.hidden {
