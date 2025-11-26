@@ -13,8 +13,10 @@
 /* Estilos de Cuadrícula y Disposición */
 .content-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-    gap: 40px; 
+    /* 🟢 CLAVE: Reducido el minmax a 220px para lograr más fotos por fila */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    
+    gap: 30px; /* Espacio entre fichas */
     padding: 2rem;
     min-height: 0 !important;
 }
