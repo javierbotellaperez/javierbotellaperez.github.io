@@ -173,16 +173,24 @@ footer {
 /* 5. AJUSTES DE NAVEGACIÓN Y SUBPÁGINAS */
 /* ===================================== */
 
-/* 🟢 CLAVE: Anulamos el padding superior en las subpáginas para evitar el doble margen */
-main.content-container {
-    padding-top: 0 !important;
+/* 🟢 CLAVE: Anulamos el padding/margin superior en los MAIN de subpáginas para evitar el doble margen */
+main.content-container,
+main.sticker-area {
+    /* Eliminamos cualquier margen que pueda colapsar con el header */
+    padding-top: 0 !important; 
+    margin-top: 0 !important; 
+    /* Mantenemos el padding lateral del main */
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 /* AJUSTE PARA EL ESPACIO EN EL ENCABEZADO DE SUBPÁGINAS */
 header .role-group {
-    /* MARGEN SUPERIOR DE SEPARACIÓN EN EL HEADER */
-    margin-top: 1.5rem; 
-    /* MARGEN INFERIOR PARA SEPARARSE DEL CONTENIDO PRINCIPAL */
+    /* 🔴 CLAVE: Eliminamos el margen superior para evitar el conflicto */
+    margin: 0; 
+    /* Usamos padding-top para crear el espacio DEBAJO del header */
+    padding-top: 1.5rem; 
+    /* Margen inferior para separar la navegación del contenido principal */
     margin-bottom: 1.5rem; 
 }
 
