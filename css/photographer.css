@@ -1,29 +1,59 @@
-/* js/photographer.css */
+/* css/photographer.css */
 
 /* El área de stickers debe ser el viewport completo y relative para posicionar a los hijos */
 .sticker-area {
     width: 100%;
-    height: 100vh; /* Ocupa la altura completa del viewport */
+    height: 100vh; 
     position: relative;
-    overflow: hidden; /* Oculta stickers que se salgan al moverlos */
+    overflow: hidden; 
 }
 
-/* Estilos base para cada sticker */
+/* Estilos base para cada sticker: ¡Ahora es una FICHA! */
 .sticker-link {
-    position: absolute; /* CLAVE: Permite posicionamiento libre */
-    width: 150px; /* Tamaño inicial, ajusta al gusto */
+    position: absolute; 
+    width: 150px; 
     height: auto;
     cursor: grab;
-    user-select: none; /* Evita seleccionar el texto/imagen al arrastrar */
-    
-    /* Asegura que el sticker esté al frente del resto del contenido */
+    user-select: none; 
     z-index: 10; 
+    
+    /* 🟢 CLAVE: Estilo de Ficha de Archivador */
+    border: 2px solid var(--color-primary); /* Borde de ficha */
+    box-shadow: 4px 4px 0px var(--color-primary); /* Sombra de ficha */
+    background: var(--color-background); /* Fondo para que la sombra se vea */
+    padding: 5px; /* Relleno alrededor de la imagen */
+    
+    transition: transform 0.1s ease-out, box-shadow 0.2s ease;
 }
+
+/* 🟢 Efecto Hover/Active (Similar al archivador) */
+.sticker-link:active, .sticker-link:hover {
+    box-shadow: 6px 6px 0px var(--color-primary);
+}
+
 
 /* La imagen dentro del sticker-link debe ocupar todo el espacio */
 .sticker-link img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    pointer-events: none; /* CLAVE: Permite que Hammer.js intercepte el clic en el enlace padre */
+    pointer-events: none; /* Permite que Hammer.js intercepte el clic */
+}
+
+/* 🟢 CLAVE: Estilo de la Pestaña de Nombre de Proyecto */
+.project-tag {
+    position: absolute;
+    top: -15px; 
+    left: 10px;
+    padding: 5px 12px;
+    
+    background: var(--color-primary); 
+    color: var(--color-background) !important; 
+    font-size: 0.6rem; 
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase; 
+    z-index: 20; 
+    
+    /* Efecto de Corte para la Pestaña */
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
 }
