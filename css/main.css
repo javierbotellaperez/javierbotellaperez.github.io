@@ -4,15 +4,18 @@
 /* ===================================== */
 :root {
     /* Paleta de colores */
-    --color-primary: #000000;
+    --color-primary: #000000; 
     --color-text: var(--color-primary);
-    --color-background: #ffffff;
     
-    /* 🟢 CORRECCIÓN CLAVE: Definición del color blanco/claro para usar en contrastes */
+    /* 🟢 CLAVE: Color de fondo global (Tono de Archivador/Papel) */
+    --color-background: #F9F4E9; 
+    
     --color-light: #ffffff; 
 
     /* Tipografía */
-    --font-family: 'Arial', 'Inter', sans-serif;
+    /* 🟢 CLAVE: Tipografía de Archivador/Máquina de Escribir */
+    --font-family: 'Courier New', Courier, monospace; 
+    
     --font-weight-regular: 400; 
     --font-weight-bold: 700;
     --font-weight-extrabold: 900;
@@ -54,7 +57,7 @@ body:not(.interactive-page) {
 a {
     color: var(--color-text); 
     text-decoration: none;
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-bold); 
     transition: transform 0.3s ease-in-out, font-weight 0.3s ease-in-out;
     display: inline-block;
 }
@@ -71,14 +74,14 @@ a:not(.interactive-sticker):hover {
     font-weight: var(--font-weight-extrabold); 
     font-style: normal;
     cursor: pointer;
-    transform: scale(1.05);
+    transform: scale(1.05); 
 }
 
 /* ===================================== */
-/* 3. ESTILOS DE LA PÁGINA DE INICIO (INDEX) - CORRECCIÓN ESPACIADO */
+/* 3. ESTILOS DE LA PÁGINA DE INICIO (INDEX) */
 /* ===================================== */
 
-/* Contenedor principal de la home (ocupa espacio restante) */
+/* Contenedor principal de la home */
 .home-hero {
     flex-grow: 1;
     display: flex;
@@ -89,9 +92,26 @@ a:not(.interactive-sticker):hover {
     padding: 0; 
 }
 
+/* 🟢 CLAVE: Estilo de la Ficha de Archivador para el index */
+.archive-box {
+    /* Define un tamaño máximo para que la caja no ocupe todo el ancho */
+    max-width: 600px;
+    width: 90%; 
+    padding: 3rem 2rem; /* Relleno interno */
+    
+    /* Estilos de Archivador/Ficha */
+    border: 3px solid var(--color-primary); 
+    box-shadow: 10px 10px 0px var(--color-primary); /* Sombra marcada */
+    background: var(--color-background); /* Fondo crema claro */
+    
+    /* Ajuste visual para el centrado */
+    margin-top: -5rem; 
+}
+
+/* Aseguramos que el contenido interno no tenga márgenes innecesarios */
 .hero-content {
-    max-width: 800px;
-    padding: 2rem;
+    max-width: none; 
+    padding: 0; 
     font-weight: var(--font-weight-extrabold);
 }
 
@@ -99,39 +119,27 @@ a:not(.interactive-sticker):hover {
 .hero-content h1 {
     font-size: var(--font-size-title);
     color: var(--color-text);
-    /* Se ajusta a 1rem para reducir espacio con la navegación */
     margin-bottom: 1rem; 
     font-weight: var(--font-weight-extrabold);
 }
 
 /* Contenedor de los enlaces de roles */
 .professional-links {
-    /* CLAVE: Aplica un margen superior negativo para acercar los <p> al h1 */
     margin-top: -0.5rem; 
-    /* El margen inferior asegura que el footer no se pegue al contenido */
     margin-bottom: 1.5rem; 
-    
-    /* CLAVE: Elimina el espacio blanco generado por la fuente */
     font-size: 0; 
 }
 
-/* MODIFICACIÓN CLAVE: Restablecemos a display: block y eliminamos los márgenes por defecto */
+/* MODIFICACIÓN CLAVE: Fichas de roles en INDEX */
 .role-group {
-    /* CLAVE: Restablecemos el tamaño de fuente para el contenido */
     font-size: var(--font-size-role); 
-    
-    /* Elimina todo margen vertical (top/bottom) para pegar las líneas */
     margin: 0; 
-    
-    /* Aseguramos que sea un elemento de bloque para forzar el salto de línea */
     display: block; 
-    
     font-weight: var(--font-weight-extrabold);
-    /* Mantenemos el line-height: 1.5 para la separación mínima y legible */
     line-height: 1.5; 
 }
 
-/* NUEVA REGLA: Restablecer el tamaño de fuente en todos los hijos directos del párrafo. */
+/* NUEVA REGLA: Restablecer el tamaño de fuente para los contenidos de las líneas de rol */
 .role-group > * {
     font-size: var(--font-size-role);
 }
@@ -163,9 +171,7 @@ footer {
 /* ===================================== */
 /* 4. ESTILOS DE GRIDS/PROYECTOS (Secundarios) */
 /* ===================================== */
-
-/* Estos estilos se usarán en filmmaker.html o photographer.html, etc. */
-
+/* ... (el resto de estilos de la sección 4 de main.css) ... */
 .content-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
@@ -183,7 +189,6 @@ footer {
     font-weight: var(--font-weight-extrabold);
 }
 
-/* A partir de aquí no hay más cambios en la sección 4 */
 .project-item {
     background: var(--color-background);
     border: 1px solid var(--color-primary);
