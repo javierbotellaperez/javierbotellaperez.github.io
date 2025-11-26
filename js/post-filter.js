@@ -1,7 +1,7 @@
 /**
  * js/post-filter.js
- * Maneja la lógica de filtrado de proyectos por rol y categoría, 
- * y la apertura/cierre del menú desplegable, y la ordenación aleatoria.
+ * Maneja la lógica de filtrado de proyectos, la apertura/cierre del menú desplegable, 
+ * y la ordenación aleatoria con efecto de inclinación de archivador.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,40 +11,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('.filter-button');
     const projectGrid = document.getElementById('project-grid');
     
-    // Obtenemos todos los elementos de tarjeta (<article>s)
     const projects = Array.from(projectGrid.querySelectorAll('.archive-card')); 
 
-    // --- 🟢 NUEVA LÓGICA: Añadir el botón de Reset [x] al DOM ---
+    // --- Lógica del Desplegable y Botón Reset ---
+    
+    // 🟢 CLAVE: Añadir el botón de Reset [x] al DOM
     const resetButton = document.createElement('button');
     resetButton.classList.add('filter-reset-btn');
     resetButton.innerHTML = 'x'; 
     resetButton.setAttribute('aria-label', 'Clear active filter');
     filterToggle.appendChild(resetButton); 
 
-    // 1. Lógica del Desplegable (Dropdown)
     filterToggle.addEventListener('click', (e) => {
-        // Si se hace clic en el botón de reset, no abrimos el menú
         if (e.target === resetButton) return; 
         filterMenu.classList.toggle('visible');
     });
 
-    // Cerrar el menú si se hace click fuera
     document.addEventListener('click', (e) => {
         if (!filterToggle.contains(e.target) && !filterMenu.contains(e.target)) {
             filterMenu.classList.remove('visible');
         }
     });
 
-    // --- Lógica del Botón Reset [x] ---
     resetButton.addEventListener('click', () => {
-        // Simular el clic en el botón 'All Work'
         const allWorkButton = Array.from(filterButtons).find(btn => btn.getAttribute('data-filter') === 'all');
         if (allWorkButton) {
             allWorkButton.click();
         }
     });
 
-    // 2. Lógica de Filtrado por Botón del Menú
+    // --- Lógica de Filtrado por Botón del Menú ---
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const filterValue = button.getAttribute('data-filter');
@@ -61,15 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 currentTitle.classList.add('filtered');
             }
-
-            // Ejecutar el filtrado y ordenación
+            
             filterProjects(filterValue);
         });
     });
     
-    // 🟢 3. Configurar listeners para las etiquetas (tags) de las tarjetas
+    // --- Configurar listeners para las etiquetas (tags) de las tarjetas ---
     function setupTagListeners() {
-        // Seleccionamos los nuevos enlaces de filtro que están DENTRO de las tarjetas
         const tagElements = document.querySelectorAll('.role-filter-tag, .category-filter-tag');
 
         tagElements.forEach(tag => {
@@ -77,14 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault(); 
                 const filterValue = tag.getAttribute('data-filter');
                 
-                // Buscar el botón correspondiente en el menú para actualizar el estado
                 const correspondingButton = Array.from(filterButtons).find(btn => btn.getAttribute('data-filter') === filterValue);
                 
                 if (correspondingButton) {
-                    // Simular el clic en el botón del menú para actualizar el estado y filtrar
                     correspondingButton.click(); 
                 } else {
-                    // Si el filtro no existe en el menú, solo aplicamos la lógica básica
                     currentTitle.textContent = filterValue;
                     currentTitle.classList.add('filtered');
                     filterProjects(filterValue);
@@ -93,8 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
-    // 4. Función Principal de Filtrado
+    // --- Función Principal de Filtrado ---
     function filterProjects(filterValue) {
         
         projects.forEach(project => {
@@ -104,9 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
             let isVisible = false;
 
             if (filterValue === 'all') {
-                isVisible = true; // Mostrar todo
+                isVisible = true; 
             } 
-            // Si el valor del filtro coincide con el Rol O la Categoría
             else if (projectRole === filterValue || projectCategory === filterValue) {
                 isVisible = true; 
             }
@@ -119,18 +108,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // 5. Implementación de Ordenación Aleatoria
+        // Ejecutar ordenación e inclinación
         shuffleProjects(projects);
     }
     
-    // 5. Función de Ordenación Aleatoria
+    // 🟢 NUEVA FUNCIÓN: Aplica una ligera rotación aleatoria a las fichas
+    function applyRandomTilt(projects) {
+        projects.forEach(project => {
+            // Generar un ángulo aleatorio entre -1.5 y 1.5 grados
+            const tilt = (Math.random() * 3) - 1.5; 
+            
+            // Generar una pequeña traslación horizontal aleatoria 
+            const shiftX = (Math.random() * 5) - 2.5; 
+
+            // Aplicar la transformación CSS (transformado + rotación)
+            // Es crucial que el translate y rotate estén en el mismo string
+            project.style.transform = `translateX(${shiftX}px) rotate(${tilt}deg)`;
+        });
+    }
+    
+    // Función de Ordenación Aleatoria
     function shuffleProjects(array) {
-        // Obtenemos solo los elementos visibles para mezclar
         const visibleProjects = array.filter(p => !p.classList.contains('hidden'));
         
         let currentIndex = visibleProjects.length, randomIndex;
 
-        // Mezclamos solo los elementos visibles
         while (currentIndex !== 0) {
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex--;
@@ -147,9 +149,12 @@ document.addEventListener('DOMContentLoaded', () => {
         array.filter(p => p.classList.contains('hidden')).forEach(item => {
             projectGrid.appendChild(item);
         });
+        
+        // 🟢 CLAVE: Aplicamos la inclinación después de la ordenación
+        applyRandomTilt(projects);
     }
 
     // Inicialización
-    setupTagListeners(); // 🟢 Llamar a la nueva función de listeners
+    setupTagListeners(); 
     shuffleProjects(projects);
 });
