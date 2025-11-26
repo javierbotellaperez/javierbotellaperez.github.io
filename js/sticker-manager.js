@@ -1,6 +1,6 @@
 /**
  * js/sticker-manager.js
- * Clase para manejar la interacción (PAN, PINCH, WHEEL) y la gestión de 20 stickers,
+ * Clase para manejar la interacción (PAN, PINCH, WHEEL) y la gestión de stickers ÚNICOS,
  * con funcionalidad de z-index y generación de pestañas de nombre de proyecto.
  */
 
@@ -8,12 +8,13 @@
 let stickerZIndexCounter = 1000; 
 
 class InteractiveSticker {
-    constructor(elementId, initialSize = 150, minScale = 0.5, maxScale = 3) {
+    constructor(elementId, initialSize = 200, minScale = 0.5, maxScale = 3) {
         this.containerLink = document.getElementById(elementId);
         
         if (!this.containerLink) return;
 
-        this.initialSize = initialSize;
+        // Establecemos un tamaño inicial más grande para que la imagen se vea bien en la ficha
+        this.initialSize = initialSize; 
         this.MIN_SCALE = minScale;
         this.MAX_SCALE = maxScale;
         
@@ -144,9 +145,7 @@ class InteractiveSticker {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const totalStickers = 20;
-    
-    // 🟢 CLAVE: Añadimos la propiedad 'name' para la pestaña
+    // 🔴 NO HAY REPETICIÓN: Solo los stickers base
     const stickerTypes = [
         { idBase: 'sticker-arnau', src: 'assets/images/arnau.png', href: 'arnau.html', name: 'Arnau Project' },
         { idBase: 'sticker-alex', src: 'assets/images/alex.png', href: 'alex.html', name: 'Alex Shoot' }
@@ -154,12 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const stickerArea = document.querySelector('.sticker-area');
     
-    // 1. Generar los 20 stickers dinámicamente
-    for (let i = 0; i < totalStickers; i++) {
-        const typeIndex = i % stickerTypes.length;
-        const type = stickerTypes[typeIndex];
-        
-        const uniqueId = `${type.idBase}-${i}`;
+    // 1. Generar los stickers ÚNICOS dinámicamente
+    stickerTypes.forEach((type) => {
+        const uniqueId = type.idBase; 
         
         const a = document.createElement('a');
         a.id = uniqueId;
@@ -178,14 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         a.appendChild(img);
         stickerArea.appendChild(a);
-    }
 
-    // 2. Inicializar la interacción Hammer.js para cada sticker
-    for (let i = 0; i < totalStickers; i++) {
-        const typeIndex = i % stickerTypes.length;
-        const type = stickerTypes[typeIndex];
-        const uniqueId = `${type.idBase}-${i}`;
-        
+        // 2. Inicializar la interacción Hammer.js
         new InteractiveSticker(uniqueId);
-    }
+    });
 });
