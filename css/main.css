@@ -1,4 +1,3 @@
-
 /* css/main.css */
 /* ===================================== */
 /* 1. VARIABLES GLOBALES & RESET */
@@ -8,13 +7,13 @@
     --color-primary: #000000; 
     --color-text: var(--color-primary);
     
-    /* 🟢 CLAVE: Color de fondo global (Tono de Archivador/Papel) */
+    /* CLAVE: Color de fondo global (Tono de Archivador/Papel) */
     --color-background: #F9F4E9; 
     
     --color-light: #ffffff; 
 
     /* Tipografía */
-    /* 🟢 CLAVE: Tipografía de Archivador/Máquina de Escribir */
+    /* CLAVE: Tipografía de Archivador/Máquina de Escribir */
     --font-family: 'Courier New', Courier, monospace; 
     
     --font-weight-regular: 400; 
@@ -76,6 +75,9 @@ a:not(.interactive-sticker):hover {
     font-style: normal;
     cursor: pointer;
     transform: scale(1.05); 
+    /* 🟢 CLAVE: Subrayado sutil restaurado para indicar interacción */
+    text-decoration: underline !important; 
+    text-decoration-thickness: 2px; 
 }
 
 /* ===================================== */
@@ -93,19 +95,17 @@ a:not(.interactive-sticker):hover {
     padding: 0; 
 }
 
-/* 🟢 CLAVE: Estilo de la Ficha de Archivador para el index */
+/* Estilo de la Ficha de Archivador para el index */
 .archive-box {
-    /* Define un tamaño máximo para que la caja no ocupe todo el ancho */
     max-width: 600px;
     width: 90%; 
-    padding: 3rem 2rem; /* Relleno interno */
+    padding: 3rem 2rem; 
     
     /* Estilos de Archivador/Ficha */
     border: 3px solid var(--color-primary); 
-    box-shadow: 10px 10px 0px var(--color-primary); /* Sombra marcada */
-    background: var(--color-background); /* Fondo crema claro */
+    box-shadow: 10px 10px 0px var(--color-primary); 
+    background: var(--color-background); 
     
-    /* Ajuste visual para el centrado */
     margin-top: -5rem; 
 }
 
@@ -172,7 +172,7 @@ footer {
 /* ===================================== */
 /* 4. ESTILOS DE GRIDS/PROYECTOS (Secundarios) */
 /* ===================================== */
-/* ... (el resto de estilos de la sección 4 de main.css) ... */
+
 .content-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
