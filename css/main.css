@@ -120,7 +120,7 @@ a:not(.interactive-sticker):hover {
 .hero-content h1 {
     font-size: var(--font-size-title);
     color: var(--color-text);
-    margin-bottom: 1rem; 
+    margin-bottom: 1.5rem; 
     font-weight: var(--font-weight-extrabold);
 }
 
