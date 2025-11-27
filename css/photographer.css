@@ -3,14 +3,20 @@
 /* El área de stickers debe ser el viewport completo y relative para posicionar a los hijos */
 .sticker-area {
     width: 100%;
-    /* 🟢 CLAVE: Volvemos a la altura min-height para que el footer sea visible */
-    min-height: 100vh; 
-    height: auto;
-    position: relative;
+    height: 100vh; 
+    /* 🟢 CLAVE: Usamos 'fixed' para desvincularlo del flujo normal */
+    position: fixed; 
+    
+    /* 🟢 CLAVE: Empujar el sticker-area hacia abajo para evitar que tape el header.
+       Estimación de la altura total del header con padding (1.5rem + texto + 0.5rem padding-bottom). */
+    top: 65px; 
+    left: 0;
+    
     overflow: hidden; 
     
-    /* 🟢 CLAVE: El padding superior debe ser suficiente para empujar los stickers debajo del header */
-    padding-top: 5rem; 
+    /* Eliminamos padding-top que ya no se necesita, usamos top: 65px */
+    padding-top: 0 !important; 
+    z-index: 5; 
 }
 
 /* Estilos base para cada sticker: ¡Volvemos al diseño que respeta la transparencia! */
