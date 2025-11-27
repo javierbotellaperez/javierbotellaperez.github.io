@@ -27,7 +27,6 @@
 
 /* CLAVE: Aplicar el efecto hover a la ficha ARTICLE */
 .archive-card:hover {
-    /* Corregido: Enderezar la ficha */
     transform: translate(-3px, -3px) rotate(0deg) !important; 
     box-shadow: 10px 10px 0px var(--color-primary);
 }
@@ -226,10 +225,10 @@
     font-weight: var(--font-weight-bold) !important;
 }
 
-
 /* 🟢 CLAVE: ESTILOS MODAL CENTRADO */
 .project-modal {
-    display: none; 
+    /* 🟢 FORZAMOS OCULTO y el contenedor fijo de pantalla completa */
+    display: none !important; 
     position: fixed; 
     z-index: 200; 
     left: 0;
@@ -238,10 +237,16 @@
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.85); 
-    display: flex;
+    
+    /* Centrado del contenido: Solo aparece si JS añade display: flex */
     justify-content: center;
     align-items: center;
     animation: fadeIn 0.3s;
+}
+
+.project-modal[style*="display: flex"] {
+    /* CLAVE: Si JS lo muestra con display: flex, lo hacemos visible */
+    display: flex !important;
 }
 
 .modal-content {
@@ -254,7 +259,6 @@
     box-shadow: 15px 15px 0px var(--color-primary);
     animation: fadeIn 0.3s;
     
-    /* 🟢 CLAVE: El contenido ya no se centra con absolute/translate, sino con el flex del modal */
     top: auto; 
     left: auto;
     transform: none;
@@ -266,11 +270,10 @@
 /* 🟢 CLAVE: Botón de Cerrar (X) */
 .modal-close {
     color: var(--color-primary);
-    font-size: 1.8rem; /* Tamaño más sutil */
+    font-size: 1.8rem; 
     font-weight: var(--font-weight-extrabold);
     cursor: pointer;
     
-    /* 🟢 Posicionamiento en la esquina superior derecha */
     position: absolute; 
     top: 15px; 
     right: 20px;
@@ -279,7 +282,7 @@
     border: none;
     padding: 0;
     transition: color 0.2s ease;
-    z-index: 201; /* Aseguramos que esté encima del contenido */
+    z-index: 201; 
 }
 
 .modal-close:hover {
@@ -325,15 +328,10 @@
     transform: none !important;
 }
 
-/* 🟢 Aseguramos que la imagen dentro del modal mantenga sus proporciones (aspect-ratio) */
+/* Aseguramos que la imagen dentro del modal mantenga sus proporciones (aspect-ratio) */
 #modal-details img {
     width: 100%;
     height: auto;
-    max-height: 60vh; /* Limita la altura de la imagen dentro del modal */
-    object-fit: contain; /* Mantiene las proporciones sin deformar */
-}
-
-#modal-details .archive-card .role-filter-tag {
-    font-size: 1rem;
-    top: -20px;
+    max-height: 60vh; 
+    object-fit: contain; 
 }
