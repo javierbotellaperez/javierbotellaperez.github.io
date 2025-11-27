@@ -1,7 +1,7 @@
 /**
  * js/post-filter.js
  * Maneja la lógica de filtrado de proyectos, la apertura/cierre del menú desplegable, 
- * y la ordenación aleatoria con efecto de inclinación de archivador.
+ * la ordenación aleatoria y la VISTA DETALLADA (MODAL/LIGHTBOX) con navegación.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,26 +13,119 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const projects = Array.from(projectGrid.querySelectorAll('.archive-card')); 
 
-    // --- Lógica del Desplegable y Botón Reset ---
+    const modal = document.getElementById('project-modal');
+    const modalDetails = document.getElementById('modal-details');
+    const closeBtn = document.querySelector('.modal-close');
+    const prevBtn = document.getElementById('modal-prev');
+    const nextBtn = document.getElementById('modal-next');
     
-    // 🟢 CLAVE: Añadir el botón de Reset [x] al DOM
+    const roles = ["Post Coordinator", "Prod Coordinator", "Production Manager", "Prod Assistant"];
+    const categories = ["Music Video", "Commercial", "TV & Series"];
+
+    let currentProjectIndex = 0;
+
+    // --- LÓGICA DE LIGHTBOX / MODAL ---
+    
+    function openModal(index) {
+        // Obtenemos los proyectos VISIBLES en el orden actual del DOM
+        const visibleProjects = projects.filter(p => !p.classList.contains('hidden'));
+        
+        if (visibleProjects.length === 0) return;
+        
+        currentProjectIndex = index;
+
+        // 1. Clonamos el contenido del proyecto seleccionado
+        const projectToDisplay = visibleProjects[currentProjectIndex].cloneNode(true);
+        
+        // 2. Removemos los enlaces de la imagen y tags clonados (para que no interfieran en el modal)
+        const imageLink = projectToDisplay.querySelector('a:not(.role-filter-tag):not(.category-filter-tag)');
+        if (imageLink) {
+            imageLink.outerHTML = imageLink.innerHTML; // Reemplazamos el <a> por el contenido <img>
+        }
+        
+        // 3. Limpiamos y añadimos el contenido al modal
+        modalDetails.innerHTML = '';
+        modalDetails.appendChild(projectToDisplay);
+        
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    function navigateModal(direction) {
+        const visibleProjects = projects.filter(p => !p.classList.contains('hidden'));
+        if (visibleProjects.length === 0) return;
+
+        // Calculamos el nuevo índice (el módulo asegura que el índice siempre esté en el rango)
+        currentProjectIndex = (currentProjectIndex + direction + visibleProjects.length) % visibleProjects.length;
+        
+        // Reabrimos el modal con el nuevo proyecto
+        openModal(currentProjectIndex);
+    }
+
+    // --- Lógica de Inicialización de Eventos ---
+
+    // Asignar listeners a cada ficha para abrir el modal
+    projects.forEach((card, index) => {
+        card.addEventListener('click', (e) => {
+            // No abrimos el modal si estamos clicando en el tag de filtro
+            if (e.target.classList.contains('role-filter-tag') || e.target.classList.contains('category-filter-tag')) {
+                return;
+            }
+            
+            e.preventDefault();
+            
+            // Encontramos el índice del proyecto clicado DENTRO de los visibles
+            const visibleProjects = projects.filter(p => !p.classList.contains('hidden'));
+            const visibleIndex = visibleProjects.indexOf(card);
+
+            if (visibleIndex !== -1) {
+                openModal(visibleIndex);
+            }
+        });
+    });
+    
+    // Eventos de navegación del modal
+    closeBtn.addEventListener('click', closeModal);
+    prevBtn.addEventListener('click', () => navigateModal(-1));
+    nextBtn.addEventListener('click', () => navigateModal(1));
+    
+    // Navegación con teclado (cursor entre proyectos y ESC)
+    document.addEventListener('keydown', (e) => {
+        if (modal.style.display === 'flex') {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') navigateModal(-1);
+            if (e.key === 'ArrowRight') navigateModal(1);
+        }
+    });
+
+    // --- Lógica del Desplegable y Filtrado (El resto del código se mantiene) ---
+
+    // Botón de Reset [x]
     const resetButton = document.createElement('button');
     resetButton.classList.add('filter-reset-btn');
     resetButton.innerHTML = 'x'; 
     resetButton.setAttribute('aria-label', 'Clear active filter');
     filterToggle.appendChild(resetButton); 
 
+    // Lógica del Desplegable (Dropdown)
     filterToggle.addEventListener('click', (e) => {
         if (e.target === resetButton) return; 
         filterMenu.classList.toggle('visible');
     });
 
+    // Cerrar el menú si se hace click fuera
     document.addEventListener('click', (e) => {
         if (!filterToggle.contains(e.target) && !filterMenu.contains(e.target)) {
             filterMenu.classList.remove('visible');
         }
     });
 
+    // Lógica del Botón Reset [x]
     resetButton.addEventListener('click', () => {
         const allWorkButton = Array.from(filterButtons).find(btn => btn.getAttribute('data-filter') === 'all');
         if (allWorkButton) {
@@ -40,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Lógica de Filtrado por Botón del Menú ---
+    // Lógica de Filtrado por Botón del Menú
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const filterValue = button.getAttribute('data-filter');
@@ -51,18 +144,18 @@ document.addEventListener('DOMContentLoaded', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
 
-            // Marcar si hay un filtro activo (para mostrar el botón X)
+            // Marcar si hay un filtro activo
             if (filterValue === 'all') {
                 currentTitle.classList.remove('filtered');
             } else {
                 currentTitle.classList.add('filtered');
             }
-            
+
             filterProjects(filterValue);
         });
     });
     
-    // --- Configurar listeners para las etiquetas (tags) de las tarjetas ---
+    // Configurar listeners para las etiquetas (tags) de las tarjetas
     function setupTagListeners() {
         const tagElements = document.querySelectorAll('.role-filter-tag, .category-filter-tag');
 
@@ -84,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Función Principal de Filtrado ---
+    // Función Principal de Filtrado
     function filterProjects(filterValue) {
         
         projects.forEach(project => {
@@ -100,7 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 isVisible = true; 
             }
 
-            // Aplicar la visibilidad
             if (isVisible) {
                 project.classList.remove('hidden');
             } else {
@@ -112,22 +204,15 @@ document.addEventListener('DOMContentLoaded', () => {
         shuffleProjects(projects);
     }
     
-    // 🟢 NUEVA FUNCIÓN: Aplica una ligera rotación aleatoria a las fichas
+    // Función de Ordenación Aleatoria y Inclinación
     function applyRandomTilt(projects) {
         projects.forEach(project => {
-            // Generar un ángulo aleatorio entre -1.5 y 1.5 grados
             const tilt = (Math.random() * 3) - 1.5; 
-            
-            // Generar una pequeña traslación horizontal aleatoria 
             const shiftX = (Math.random() * 5) - 2.5; 
-
-            // Aplicar la transformación CSS (transformado + rotación)
-            // Es crucial que el translate y rotate estén en el mismo string
             project.style.transform = `translateX(${shiftX}px) rotate(${tilt}deg)`;
         });
     }
-    
-    // Función de Ordenación Aleatoria
+
     function shuffleProjects(array) {
         const visibleProjects = array.filter(p => !p.classList.contains('hidden'));
         
@@ -140,17 +225,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 visibleProjects[randomIndex], visibleProjects[currentIndex]];
         }
         
-        // Reinsertar los elementos mezclados en el DOM
         visibleProjects.forEach(item => {
             projectGrid.appendChild(item);
         });
 
-        // Aseguramos que los elementos ocultos también se reinserten al final
         array.filter(p => p.classList.contains('hidden')).forEach(item => {
             projectGrid.appendChild(item);
         });
         
-        // 🟢 CLAVE: Aplicamos la inclinación después de la ordenación
         applyRandomTilt(projects);
     }
 
