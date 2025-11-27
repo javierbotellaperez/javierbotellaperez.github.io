@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.querySelector('.modal-close');
     const prevBtn = document.getElementById('modal-prev');
     const nextBtn = document.getElementById('modal-next');
-    const dropdownIcon = document.getElementById('dropdown-icon'); // 🟢 Ícono
+    const dropdownIcon = document.getElementById('dropdown-icon');
 
     let currentProjectIndex = 0;
 
@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Removemos los enlaces de la imagen y tags clonados
         const imageLink = projectToDisplay.querySelector('a:not(.role-filter-tag):not(.category-filter-tag)');
         if (imageLink) {
+            // Quitamos el <a> que lleva a YouTube, dejamos solo el <img>
             imageLink.outerHTML = imageLink.innerHTML; 
         }
         
@@ -59,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentProjectIndex = (currentProjectIndex + direction + visibleProjects.length) % visibleProjects.length;
         
-        // Reabrimos el modal con el nuevo proyecto
         openModal(currentProjectIndex);
     }
     
@@ -110,9 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
     filterToggle.addEventListener('click', (e) => {
         if (e.target === resetButton) return; 
         
-        // 🟢 CLAVE: Toggle de la clase 'visible' en el menú Y rotación del ícono
         filterMenu.classList.toggle('visible');
-        filterToggle.classList.toggle('is-open'); // Añadido para rotar el icono si es necesario
+        filterToggle.classList.toggle('is-open'); 
 
         if (filterMenu.classList.contains('visible')) {
             dropdownIcon.style.transform = 'rotate(180deg)';
@@ -148,7 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
 
-            // Marcar si hay un filtro activo
             if (filterValue === 'all') {
                 currentTitle.classList.remove('filtered');
             } else {
