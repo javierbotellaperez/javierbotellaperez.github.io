@@ -2,6 +2,7 @@
 
 /* 1. Ajustes de Cuadrícula Específicos */
 .post-grid {
+    /* Mantenemos el ancho fijo de 320px para la ficha, para evitar estiramiento */
     grid-template-columns: repeat(auto-fit, minmax(320px, 320px));
     max-width: 1200px; 
     margin: 0 auto;
@@ -15,6 +16,7 @@
     padding: 25px; 
     background: var(--color-background); 
     
+    /* Restaurar Borde y Sombra de la Ficha */
     border: 3px solid var(--color-primary); 
     box-shadow: 6px 6px 0px var(--color-primary); 
     
@@ -27,7 +29,6 @@
 
 /* CLAVE: Aplicar el efecto hover a la ficha ARTICLE */
 .archive-card:hover {
-    /* Corregido: Usa !important para anular la rotación de JS y enderezar */
     transform: translate(-3px, -3px) rotate(0deg) !important; 
     box-shadow: 10px 10px 0px var(--color-primary);
 }
@@ -37,6 +38,7 @@
     display: block;
     text-decoration: none;
 }
+/* Aseguramos que el hover global del enlace no interfiera */
 .archive-card a:hover {
     transform: none !important; 
     font-weight: var(--font-weight-bold);
@@ -72,12 +74,12 @@
     transition: transform 0.3s ease;
 }
 
-/* 🟢 Rotación del ícono cuando el menú está abierto */
+/* Rotación del ícono cuando el menú está abierto */
 .filter-dropdown-toggle.is-open #dropdown-icon {
     transform: rotate(180deg);
 }
 
-
+/* 🟢 CLAVE: Diseño del Menú Desplegable */
 .filter-dropdown-menu {
     position: absolute;
     top: 100%;
@@ -85,7 +87,11 @@
     transform: translateX(-50%);
     width: 300px;
     background: var(--color-background);
+    
+    /* Estilo de archivador */
     border: 3px solid var(--color-primary);
+    box-shadow: 4px 4px 0px var(--color-primary);
+    
     padding: 10px;
     display: none; 
     flex-direction: column;
@@ -96,82 +102,138 @@
     display: flex;
 }
 
-/* ... (resto de estilos de botones y filtros) ... */
+.filter-group-title {
+    font-weight: var(--font-weight-extrabold);
+    margin: 10px 0 5px 0;
+    padding-top: 5px;
+    /* Línea punteada de archivador */
+    border-top: 1px dashed var(--color-primary); 
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
 
-/* 🟢 ESTILOS DEL MODAL DE DETALLE DE PROYECTO */
-.project-modal {
-    display: none; 
-    position: fixed; 
-    z-index: 200; 
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.85); 
+.filter-button {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    text-transform: lowercase;
+    transition: background 0.2s ease;
+}
+
+.filter-button:hover, .filter-button.active {
+    background: var(--color-primary);
+    color: var(--color-background);
+}
+
+/* 🟢 CLAVE: Estilo del Botón Reset [x] */
+.filter-reset-btn {
+    display: inline-flex; 
     justify-content: center;
     align-items: center;
-    animation: fadeIn 0.3s;
-}
-
-.modal-content {
-    background-color: var(--color-background);
-    margin: 10% auto;
-    padding: 30px;
-    border: 3px solid var(--color-primary);
-    width: 90%;
-    max-width: 800px; 
-    position: relative;
-    box-shadow: 15px 15px 0px var(--color-primary);
-    animation: fadeIn 0.3s;
-}
-
-.modal-close {
-    color: var(--color-primary);
-    float: right;
-    font-size: 30px;
-    font-weight: var(--font-weight-extrabold);
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-}
-
-.modal-close:hover {
-    color: red;
-}
-
-.modal-nav {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.modal-nav-btn {
-    background: var(--color-primary);
-    color: var(--color-light);
+    width: 20px;
+    height: 20px;
+    
+    background: none;
     border: none;
-    padding: 10px 20px;
-    margin: 0 10px;
-    cursor: pointer;
+    color: var(--color-text); 
     font-weight: var(--font-weight-bold);
+    font-size: 1.1rem;
+    cursor: pointer;
+    
+    vertical-align: middle; 
+    margin-left: 10px;
+    
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: none; /* 🔴 Oculto por defecto */
 }
 
-#modal-details .archive-card {
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
+.filter-reset-btn:hover {
+    color: red; 
+    transform: rotate(90deg); 
+}
+
+/* 🟢 CLAVE: Mostrar el botón X solo si hay un filtro activo (NO "All Work") */
+#current-filter-title.filtered + .filter-reset-btn {
+    display: inline-flex;
+}
+
+
+/* 4. Estilo de Contenido de Ficha */
+
+/* Aseguramos que el contenido de texto dentro de la ficha tenga el color y fuente correctos */
+.archive-card * {
+    color: var(--color-text) !important;
+    font-weight: var(--font-weight-regular); 
+}
+
+.project-thumbnail {
+    width: 100%;
     height: auto;
-    min-height: auto;
-    transform: none !important;
+    display: block;
+    margin-bottom: 15px; 
+    border: 1px solid var(--color-primary);
 }
 
-#modal-details .archive-card .role-filter-tag {
-    font-size: 1rem;
-    top: -20px;
+/* Estilo del Rol (la pestaña) - FILTRO CLICABLE */
+.role-filter-tag {
+    position: absolute;
+    top: -15px; 
+    left: 10px;
+    padding: 5px 12px;
+    background: var(--color-primary); 
+    color: var(--color-background) !important; 
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase; 
+    
+    cursor: pointer;
+    transition: background 0.2s ease;
+    text-decoration: none !important;
+    
+    /* Efecto de Corte para la Pestaña */
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+}
+.role-filter-tag:hover {
+     background: #444 !important; 
 }
 
-@keyframes fadeIn {
-    from {opacity: 0}
-    to {opacity: 1}
+
+.project-category-info {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 5px;
+    padding: 3px 5px;
+    background: #f0f0f0; 
+    display: inline-block;
+}
+.category-filter-tag {
+    cursor: pointer;
+    text-decoration: none !important;
+    color: var(--color-text) !important;
+}
+
+/* Oculta los elementos que no coinciden con el filtro */
+.archive-card.hidden {
+    display: none !important;
+}
+
+.card-details h3 {
+    font-size: 1.1rem; 
+    margin-bottom: 10px;
+    font-weight: var(--font-weight-extrabold); 
+}
+
+.card-details p {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    font-weight: var(--font-weight-bold) !important; 
+}
+
+.client-name {
+    font-style: italic;
+    font-weight: var(--font-weight-bold) !important;
 }
