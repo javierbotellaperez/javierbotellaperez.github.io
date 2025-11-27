@@ -1,7 +1,7 @@
 /**
  * js/post-filter.js
  * Maneja la lógica de filtrado de proyectos, la apertura/cierre del menú desplegable, 
- * la ordenación aleatoria y la VISTA DETALLADA (MODAL/LIGHTBOX) con navegación.
+ * y la ordenación aleatoria, y la funcionalidad de Lightbox de proyectos con navegación.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,16 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.querySelector('.modal-close');
     const prevBtn = document.getElementById('modal-prev');
     const nextBtn = document.getElementById('modal-next');
-    
-    const roles = ["Post Coordinator", "Prod Coordinator", "Production Manager", "Prod Assistant"];
-    const categories = ["Music Video", "Commercial", "TV & Series"];
+    const dropdownIcon = document.getElementById('dropdown-icon'); // 🟢 Ícono
 
     let currentProjectIndex = 0;
 
-    // --- LÓGICA DE LIGHTBOX / MODAL ---
+    // --- Lógica de Lightbox / Modal ---
     
     function openModal(index) {
-        // Obtenemos los proyectos VISIBLES en el orden actual del DOM
         const visibleProjects = projects.filter(p => !p.classList.contains('hidden'));
         
         if (visibleProjects.length === 0) return;
@@ -37,10 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. Clonamos el contenido del proyecto seleccionado
         const projectToDisplay = visibleProjects[currentProjectIndex].cloneNode(true);
         
-        // 2. Removemos los enlaces de la imagen y tags clonados (para que no interfieran en el modal)
+        // 2. Removemos los enlaces de la imagen y tags clonados
         const imageLink = projectToDisplay.querySelector('a:not(.role-filter-tag):not(.category-filter-tag)');
         if (imageLink) {
-            imageLink.outerHTML = imageLink.innerHTML; // Reemplazamos el <a> por el contenido <img>
+            imageLink.outerHTML = imageLink.innerHTML; 
         }
         
         // 3. Limpiamos y añadimos el contenido al modal
@@ -60,15 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const visibleProjects = projects.filter(p => !p.classList.contains('hidden'));
         if (visibleProjects.length === 0) return;
 
-        // Calculamos el nuevo índice (el módulo asegura que el índice siempre esté en el rango)
         currentProjectIndex = (currentProjectIndex + direction + visibleProjects.length) % visibleProjects.length;
         
         // Reabrimos el modal con el nuevo proyecto
         openModal(currentProjectIndex);
     }
-
-    // --- Lógica de Inicialización de Eventos ---
-
+    
     // Asignar listeners a cada ficha para abrir el modal
     projects.forEach((card, index) => {
         card.addEventListener('click', (e) => {
@@ -88,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    
+
     // Eventos de navegación del modal
     closeBtn.addEventListener('click', closeModal);
     prevBtn.addEventListener('click', () => navigateModal(-1));
@@ -103,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Lógica del Desplegable y Filtrado (El resto del código se mantiene) ---
+    // --- Lógica del Desplegable y Filtrado ---
 
     // Botón de Reset [x]
     const resetButton = document.createElement('button');
@@ -112,16 +106,26 @@ document.addEventListener('DOMContentLoaded', () => {
     resetButton.setAttribute('aria-label', 'Clear active filter');
     filterToggle.appendChild(resetButton); 
 
-    // Lógica del Desplegable (Dropdown)
+    // 1. Lógica del Desplegable (Dropdown)
     filterToggle.addEventListener('click', (e) => {
         if (e.target === resetButton) return; 
+        
+        // 🟢 CLAVE: Toggle de la clase 'visible' en el menú Y rotación del ícono
         filterMenu.classList.toggle('visible');
+        filterToggle.classList.toggle('is-open'); // Añadido para rotar el icono si es necesario
+
+        if (filterMenu.classList.contains('visible')) {
+            dropdownIcon.style.transform = 'rotate(180deg)';
+        } else {
+            dropdownIcon.style.transform = 'rotate(0deg)';
+        }
     });
 
     // Cerrar el menú si se hace click fuera
     document.addEventListener('click', (e) => {
         if (!filterToggle.contains(e.target) && !filterMenu.contains(e.target)) {
             filterMenu.classList.remove('visible');
+            dropdownIcon.style.transform = 'rotate(0deg)';
         }
     });
 
@@ -200,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // Ejecutar ordenación e inclinación
         shuffleProjects(projects);
     }
     
