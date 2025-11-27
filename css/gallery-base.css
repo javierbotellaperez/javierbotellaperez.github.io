@@ -13,8 +13,8 @@
 /* Estilos de Cuadrícula y Disposición */
 .content-grid {
     display: grid;
-    /* 🟢 CLAVE: Reducido el minmax a 220px para lograr más fotos por fila */
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    /* 🟢 CLAVE: Reducido el minmax a 180px para mayor densidad (más fotos por fila) */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
     
     gap: 30px; /* Espacio entre fichas */
     padding: 2rem;
@@ -109,7 +109,10 @@
     opacity: 0.8;
 }
 
+/* 🟢 CLAVE: Ocultar los botones de navegación visualmente */
 .lightbox-nav {
+    display: none !important; 
+    /* Mantenemos las reglas anteriores para que el JS sepa dónde buscar el selector */
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
