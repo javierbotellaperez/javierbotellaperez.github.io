@@ -27,7 +27,7 @@
 
 /* CLAVE: Aplicar el efecto hover a la ficha ARTICLE */
 .archive-card:hover {
-    /* Corregido: Usamos !important para anular la rotación de JS y enderezar */
+    /* Corregido: Enderezar la ficha */
     transform: translate(-3px, -3px) rotate(0deg) !important; 
     box-shadow: 10px 10px 0px var(--color-primary);
 }
@@ -151,7 +151,7 @@
 }
 
 
-/* 4. Estilo de Contenido de Ficha */
+/* 4. Estilo de Contenido de Ficha y Modal */
 
 .archive-card * {
     color: var(--color-text) !important;
@@ -226,6 +226,7 @@
     font-weight: var(--font-weight-bold) !important;
 }
 
+
 /* 🟢 CLAVE: ESTILOS MODAL CENTRADO */
 .project-modal {
     display: none; 
@@ -237,7 +238,6 @@
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.85); 
-    /* 🟢 CLAVE: Usamos flex para centrar el contenido */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -254,8 +254,7 @@
     box-shadow: 15px 15px 0px var(--color-primary);
     animation: fadeIn 0.3s;
     
-    /* 🟢 ELIMINAMOS ABSOLUTE/TRANSLATE del modal-content */
-    /* Mantenemos el centrado a través del flex de .project-modal */
+    /* 🟢 CLAVE: El contenido ya no se centra con absolute/translate, sino con el flex del modal */
     top: auto; 
     left: auto;
     transform: none;
@@ -264,10 +263,77 @@
     overflow-y: auto; 
 }
 
+/* 🟢 CLAVE: Botón de Cerrar (X) */
+.modal-close {
+    color: var(--color-primary);
+    font-size: 1.8rem; /* Tamaño más sutil */
+    font-weight: var(--font-weight-extrabold);
+    cursor: pointer;
+    
+    /* 🟢 Posicionamiento en la esquina superior derecha */
+    position: absolute; 
+    top: 15px; 
+    right: 20px;
+    
+    background: none;
+    border: none;
+    padding: 0;
+    transition: color 0.2s ease;
+    z-index: 201; /* Aseguramos que esté encima del contenido */
+}
+
+.modal-close:hover {
+    color: red;
+}
+
+/* 🟢 CLAVE: Flechas de Navegación (Debajo del Contenido) */
+.modal-nav {
+    text-align: center;
+    margin-top: 30px; 
+    border-top: 1px dashed var(--color-primary);
+    padding-top: 15px;
+}
+
+.modal-nav-btn {
+    background: none;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    
+    padding: 8px 15px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-family); 
+    
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-nav-btn:hover {
+    background: var(--color-primary);
+    color: var(--color-light);
+    box-shadow: 2px 2px 0 var(--color-primary);
+}
+
+
+#modal-details .archive-card {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    min-height: auto;
+    transform: none !important;
+}
+
 /* 🟢 Aseguramos que la imagen dentro del modal mantenga sus proporciones (aspect-ratio) */
 #modal-details img {
     width: 100%;
     height: auto;
-    max-height: 50vh; /* Limita la altura de la imagen dentro del modal */
-    object-fit: contain; /* 🟢 CLAVE: Mantiene las proporciones sin deformar */
+    max-height: 60vh; /* Limita la altura de la imagen dentro del modal */
+    object-fit: contain; /* Mantiene las proporciones sin deformar */
+}
+
+#modal-details .archive-card .role-filter-tag {
+    font-size: 1rem;
+    top: -20px;
 }
