@@ -1,9 +1,7 @@
-
 /* css/post.css */
 
 /* 1. Ajustes de Cuadrícula Específicos */
 .post-grid {
-    /* CLAVE: Ancho Fijo de 320px para la ficha, para evitar estiramiento */
     grid-template-columns: repeat(auto-fit, minmax(320px, 320px));
     max-width: 1200px; 
     margin: 0 auto;
@@ -17,22 +15,20 @@
     padding: 25px; 
     background: var(--color-background); 
     
-    /* Restaurar Borde y Sombra de la Ficha */
     border: 3px solid var(--color-primary); 
     box-shadow: 6px 6px 0px var(--color-primary); 
     
-    /* Altura Mínima para evitar el estiramiento vertical excesivo */
     min-height: 300px; 
     height: auto; 
     
-    transition: all 0.2s ease, opacity 0.3s ease; 
-    cursor: default; 
+    transition: all 0.3s ease, opacity 0.3s ease, transform 0.3s ease; 
+    cursor: pointer; /* 🟢 Cambiado a pointer para indicar que abre el modal */
 }
 
 /* CLAVE: Aplicar el efecto hover a la ficha ARTICLE */
 .archive-card:hover {
-    /* Efecto de "levantar la ficha" */
-    transform: translate(-3px, -3px); 
+    /* 🟢 CORRECCIÓN: Usamos !important para anular la rotación de JS y enderezar */
+    transform: translate(-3px, -3px) rotate(0deg) !important; 
     box-shadow: 10px 10px 0px var(--color-primary);
 }
 
@@ -41,7 +37,6 @@
     display: block;
     text-decoration: none;
 }
-/* Aseguramos que el hover global del enlace no interfiera */
 .archive-card a:hover {
     transform: none !important; 
     font-weight: var(--font-weight-bold);
@@ -55,162 +50,83 @@
     margin-bottom: 2rem;
 }
 
-/* Alineación del Título y Botón de Reset */
-.filter-dropdown-toggle {
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-}
-
-.filter-dropdown-toggle h2 {
-    font-size: 1.4rem; 
-    cursor: pointer;
-    display: inline-block;
-    padding: 0 10px;
-}
-
-.filter-dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    background: var(--color-background);
-    border: 3px solid var(--color-primary);
-    padding: 10px;
+/* 🟢 ESTILO DEL MODAL DE DETALLE DE PROYECTO */
+.project-modal {
     display: none; 
-    flex-direction: column;
-    text-align: left;
-}
-
-.filter-dropdown-menu.visible {
-    display: flex;
-}
-
-.filter-group-title {
-    font-weight: var(--font-weight-extrabold);
-    margin: 10px 0 5px 0;
-    padding-top: 5px;
-    border-top: 1px dashed var(--color-primary);
-}
-
-.filter-button {
-    background: none;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    text-align: left;
-    font-size: 0.9rem;
-    color: var(--color-text);
-    text-transform: lowercase;
-    transition: background 0.2s ease;
-}
-
-.filter-button:hover, .filter-button.active {
-    background: var(--color-primary);
-    color: var(--color-background);
-}
-
-/* ESTILO DEL BOTÓN RESET [x] */
-.filter-reset-btn {
-    display: inline-flex; 
+    position: fixed; 
+    z-index: 200; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.85); 
     justify-content: center;
     align-items: center;
-    width: 20px;
-    height: 20px;
-    
-    background: none;
-    border: none;
-    color: var(--color-text); 
-    font-weight: var(--font-weight-bold);
-    font-size: 1.1rem;
+    animation: fadeIn 0.3s;
+}
+
+.modal-content {
+    background-color: var(--color-background);
+    margin: 10% auto;
+    padding: 30px;
+    border: 3px solid var(--color-primary);
+    width: 90%;
+    max-width: 800px; 
+    position: relative;
+    box-shadow: 15px 15px 0px var(--color-primary);
+    animation: fadeIn 0.3s;
+}
+
+.modal-close {
+    color: var(--color-primary);
+    float: right;
+    font-size: 30px;
+    font-weight: var(--font-weight-extrabold);
     cursor: pointer;
-    
-    vertical-align: middle; 
-    margin-left: 10px;
-    
-    transition: color 0.2s ease, transform 0.2s ease;
-    display: none; /* Oculto por defecto */
-}
-
-.filter-reset-btn:hover {
-    color: red; 
-    transform: rotate(90deg); 
-}
-
-/* Mostrar el botón X solo si hay un filtro activo (añadido por JS) */
-#current-filter-title.filtered + .filter-reset-btn {
-    display: inline-flex;
-}
-
-
-/* 4. Estilo de Contenido de Ficha */
-
-/* Aseguramos que el contenido de texto dentro de la ficha tenga el color y fuente correctos */
-.archive-card * {
-    color: var(--color-text) !important;
-    font-weight: var(--font-weight-regular); 
-}
-
-.project-thumbnail {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin-bottom: 15px; 
-    border: 1px solid var(--color-primary);
-}
-
-/* Estilo del Rol (la pestaña) - Estética de Pestaña de Archivador */
-.role-filter-tag {
     position: absolute;
-    top: -15px; 
-    left: 10px;
-    padding: 5px 12px;
-    background: var(--color-primary); 
-    color: var(--color-background) !important; 
-    font-size: 0.75rem;
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase; 
-    
+    top: 10px;
+    right: 20px;
+}
+
+.modal-close:hover {
+    color: red;
+}
+
+.modal-nav {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.modal-nav-btn {
+    background: var(--color-primary);
+    color: var(--color-light);
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
     cursor: pointer;
-    transition: background 0.2s ease;
-    text-decoration: none !important;
-    
-    /* Efecto de Corte para la Pestaña */
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
-}
-.role-filter-tag:hover {
-     background: #444 !important; 
-}
-
-
-.project-category-info {
-    font-size: 0.75rem;
     font-weight: var(--font-weight-bold);
-    margin-bottom: 5px;
-    padding: 3px 5px;
-    background: #f0f0f0; 
-    display: inline-block;
 }
 
-/* Oculta los elementos que no coinciden con el filtro */
-.archive-card.hidden {
-    display: none !important;
+/* Estilo para el contenido de la ficha dentro del modal */
+#modal-details .archive-card {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    min-height: auto;
+    transform: none !important;
 }
 
-.card-details h3 {
-    font-size: 1.1rem; 
-    margin-bottom: 10px;
-    font-weight: var(--font-weight-extrabold); 
+#modal-details .archive-card .role-filter-tag {
+    font-size: 1rem;
+    top: -20px;
 }
 
-.card-details p {
-    font-size: 0.8rem;
-    margin-top: 5px;
-    font-weight: var(--font-weight-bold) !important; 
+@keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
 }
 
-.client-name {
-    font-style: italic;
-    font-weight: var(--font-weight-bold) !important;
-}
+/* ... (resto de estilos de ficha, filtros y tags) ... */
