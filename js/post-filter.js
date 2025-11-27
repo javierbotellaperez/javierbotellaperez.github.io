@@ -1,7 +1,7 @@
 /**
  * js/post-filter.js
  * Maneja la lógica de filtrado de proyectos, la apertura/cierre del menú desplegable, 
- * y la ordenación aleatoria, y la funcionalidad de Lightbox de proyectos con navegación.
+ * y la funcionalidad de Lightbox de proyectos con navegación.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -37,8 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Removemos los enlaces de la imagen y tags clonados
         const imageLink = projectToDisplay.querySelector('a:not(.role-filter-tag):not(.category-filter-tag)');
         if (imageLink) {
-            // Quitamos el <a> que lleva a YouTube, dejamos solo el <img>
-            imageLink.outerHTML = imageLink.innerHTML; 
+            imageLink.outerHTML = `<img src="${imageLink.querySelector('img').src}" class="project-thumbnail" alt="Project Image">`;
         }
         
         // 3. Limpiamos y añadimos el contenido al modal
@@ -113,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         filterMenu.classList.toggle('visible');
         filterToggle.classList.toggle('is-open'); 
 
+        // 🟢 CLAVE: Rotación del ícono
         if (filterMenu.classList.contains('visible')) {
             dropdownIcon.style.transform = 'rotate(180deg)';
         } else {
