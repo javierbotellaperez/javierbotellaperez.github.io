@@ -44,11 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
         modalDetails.innerHTML = '';
         modalDetails.appendChild(projectToDisplay);
         
+        // 🟢 CLAVE: Hacemos el modal visible
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
+        // 🟢 Ocultamos el modal
         modal.style.display = 'none';
         document.body.style.overflow = '';
     }
@@ -65,14 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Asignar listeners a cada ficha para abrir el modal
     projects.forEach((card, index) => {
         card.addEventListener('click', (e) => {
-            // No abrimos el modal si estamos clicando en el tag de filtro
+            // 🟢 CLAVE: Solo abrir el modal si NO se clica un elemento de filtro
             if (e.target.classList.contains('role-filter-tag') || e.target.classList.contains('category-filter-tag')) {
                 return;
             }
             
             e.preventDefault();
             
-            // Encontramos el índice del proyecto clicado DENTRO de los visibles
             const visibleProjects = projects.filter(p => !p.classList.contains('hidden'));
             const visibleIndex = visibleProjects.indexOf(card);
 
@@ -112,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
         filterMenu.classList.toggle('visible');
         filterToggle.classList.toggle('is-open'); 
 
-        // 🟢 CLAVE: Rotación del ícono
         if (filterMenu.classList.contains('visible')) {
             dropdownIcon.style.transform = 'rotate(180deg)';
         } else {
