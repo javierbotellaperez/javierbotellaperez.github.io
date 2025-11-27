@@ -22,12 +22,12 @@
     height: auto; 
     
     transition: all 0.3s ease, opacity 0.3s ease, transform 0.3s ease; 
-    cursor: pointer; /* 🟢 Cambiado a pointer para indicar que abre el modal */
+    cursor: pointer;
 }
 
 /* CLAVE: Aplicar el efecto hover a la ficha ARTICLE */
 .archive-card:hover {
-    /* 🟢 CORRECCIÓN: Usamos !important para anular la rotación de JS y enderezar */
+    /* Corregido: Usa !important para anular la rotación de JS y enderezar */
     transform: translate(-3px, -3px) rotate(0deg) !important; 
     box-shadow: 10px 10px 0px var(--color-primary);
 }
@@ -50,7 +50,55 @@
     margin-bottom: 2rem;
 }
 
-/* 🟢 ESTILO DEL MODAL DE DETALLE DE PROYECTO */
+/* Alineación del Título y Botón de Reset */
+.filter-dropdown-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.filter-dropdown-toggle h2 {
+    font-size: 1.4rem; 
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 10px;
+}
+
+/* 🟢 ÍCONO DESPLEGABLE */
+.dropdown-icon {
+    font-size: 1.1rem;
+    color: var(--color-text);
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* 🟢 Rotación del ícono cuando el menú está abierto */
+.filter-dropdown-toggle.is-open #dropdown-icon {
+    transform: rotate(180deg);
+}
+
+
+.filter-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    background: var(--color-background);
+    border: 3px solid var(--color-primary);
+    padding: 10px;
+    display: none; 
+    flex-direction: column;
+    text-align: left;
+}
+
+.filter-dropdown-menu.visible {
+    display: flex;
+}
+
+/* ... (resto de estilos de botones y filtros) ... */
+
+/* 🟢 ESTILOS DEL MODAL DE DETALLE DE PROYECTO */
 .project-modal {
     display: none; 
     position: fixed; 
@@ -108,7 +156,6 @@
     font-weight: var(--font-weight-bold);
 }
 
-/* Estilo para el contenido de la ficha dentro del modal */
 #modal-details .archive-card {
     border: none;
     box-shadow: none;
@@ -128,5 +175,3 @@
     from {opacity: 0}
     to {opacity: 1}
 }
-
-/* ... (resto de estilos de ficha, filtros y tags) ... */
