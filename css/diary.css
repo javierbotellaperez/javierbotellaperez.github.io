@@ -1,6 +1,6 @@
 /* css/diary.css */
 
-/* Limitamos el ancho del contenido del diario */
+/* Limitamos el ancho del contenido del diario y lo centramos */
 .diary-page .diary-list {
     max-width: 800px;
     margin: 0 auto;
@@ -15,6 +15,13 @@
     
     /* 🟢 CLAVE: Separador punteado de estilo archivador/documento */
     border-bottom: 1px dashed var(--color-primary); 
+    
+    /* Espacio sutil al hacer hover para indicar interacción */
+    transition: background-color 0.2s ease;
+}
+
+.diary-entry:hover {
+    background-color: #F0EADF; /* Tono ligeramente más oscuro para el hover */
 }
 
 .diary-entry:last-child {
