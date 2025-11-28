@@ -3,7 +3,7 @@
 /* Contenedor que limita el ancho de la tira de carrusel */
 .carousel-wrapper {
     width: 95vw; 
-    max-width: 1280px; 
+    max-width: 1280px; /* Base 1280x720 */
     margin: 3rem auto;
     overflow: hidden; 
     padding: 10px 0;
@@ -13,10 +13,7 @@
 .film-strip {
     display: flex;
     overflow-x: scroll; 
-    
-    /* ELIMINAMOS SCROLL-SNAP para que JS controle la posición */
     scroll-snap-type: none; 
-    
     -webkit-overflow-scrolling: touch; 
     scrollbar-width: none; 
 }
@@ -32,7 +29,7 @@
 /* Cada elemento de video en la tira (film-item es ahora la "ficha") */
 .film-item {
     flex: 0 0 auto; 
-    width: 640px; 
+    width: 640px; /* Ancho base de 640px para ratio 16:9 */
     
     /* Técnica del Padding para forzar el ratio 16:9 */
     height: 0; 
@@ -58,7 +55,7 @@
     box-shadow: 10px 10px 0px var(--color-primary);
 }
 
-/* Imagen/GIF/Video Preview */
+/* Imagen/Video Preview y Contenedores de Texto */
 .film-item video,
 .film-item .video-info { 
     position: absolute;
@@ -106,15 +103,13 @@
     
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* Alineamos el contenido en la parte inferior */
+    justify-content: flex-end; 
     align-items: center;
     
-    /* Fondo sutil en la parte inferior para que el texto sea legible */
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
     
     color: var(--color-light); 
     
-    /* Hover y Opacidad */
     opacity: 0;
     transition: opacity 0.4s ease; 
     padding: 20px;
@@ -142,7 +137,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.95);
-    display: flex;
+    display: none; /* 🟢 Oculto por defecto, JS lo muestra con display: flex */
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -154,6 +149,7 @@
     max-width: 1200px;
 }
 
+/* 🟢 Botón de Cerrar (X) Estético */
 .video-close-btn {
     position: absolute;
     top: -20px; 
