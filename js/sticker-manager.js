@@ -143,12 +143,17 @@ class InteractiveSticker {
     }
 }
 
+// ... (código existente de la clase InteractiveSticker) ...
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 🔴 NO HAY REPETICIÓN: Solo los stickers base
+    // Definimos solo los stickers base (ya no repetimos)
     const stickerTypes = [
+        // Stickers existentes
         { idBase: 'sticker-arnau', src: 'assets/images/arnau.png', href: 'arnau.html', name: 'Arnau Project' },
-        { idBase: 'sticker-alex', src: 'assets/images/alex.png', href: 'alex.html', name: 'Alex Shoot' }
+        { idBase: 'sticker-alex', src: 'assets/images/alex.png', href: 'alex.html', name: 'Alex Shoot' },
+        
+        // 🟢 NUEVO STICKER DE DIARIO
+        { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Photo Diary' }
     ];
     
     const stickerArea = document.querySelector('.sticker-area');
@@ -162,14 +167,14 @@ document.addEventListener('DOMContentLoaded', () => {
         a.href = type.href; 
         a.classList.add('sticker-link', 'interactive-sticker');
 
-        // 🟢 Añadir la Pestaña de Nombre
+        // Añadir la Pestaña de Nombre
         const tag = document.createElement('span');
         tag.classList.add('project-tag');
         tag.textContent = type.name;
         a.appendChild(tag);
         
         const img = document.createElement('img');
-        img.src = type.src; 
+        img.src = type.src; // Ruta al PNG del diario
         img.alt = `Sticker ${type.idBase}`;
         
         a.appendChild(img);
@@ -179,3 +184,4 @@ document.addEventListener('DOMContentLoaded', () => {
         new InteractiveSticker(uniqueId);
     });
 });
+
