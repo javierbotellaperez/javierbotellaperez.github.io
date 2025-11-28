@@ -1,129 +1,150 @@
 /**
  * js/film-carousel.js
- * Solución definitiva y robusta para el bucle infinito y el autoplay inteligente.
+ * (Incluye funcionalidad de Autoplay Inteligente y Modal de Video Lightbox)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     const filmStrip = document.getElementById('film-strip-carousel');
     
     if (!filmStrip) {
-        console.error("No se encontró el elemento #film-strip-carousel.");
+        // Inicializa el autoplay solo si no es la página de stickers (que usa otro script)
+        const videos = document.querySelectorAll('.video-preview');
+        videos.forEach(v => v.play()); 
         return;
     }
     
-    // Configuración
     const AUTO_SCROLL_SPEED = 1; 
     const AUTO_SCROLL_INTERVAL = 10; 
-    const RESUME_DELAY = 500; // 🟢 CLAVE: 0.5 segundos antes de reanudar el Autoplay
+    const RESUME_DELAY = 500; 
     
     let autoScrollTimer = null;
     let resumeTimer = null;
     let originalWidth = 0; 
-
-    // 1. Configuración del Bucle y Clonación
-    const originalItems = Array.from(filmStrip.children);
     
-    // Duplicamos el contenido (solo una vez)
+    // Clonación (El resto de la lógica de bucle se mantiene)
+    const originalItems = Array.from(filmStrip.children);
     originalItems.forEach(item => {
-        filmStrip.appendChild(item.cloneNode(true)); 
+        filmStrip.appendChild(item.cloneNode(true));
+        filmStrip.appendChild(item.cloneNode(true));
     });
 
-    // --- Lógica del Bucle Infinito (SIEMPRE ACTIVA) ---
-    
-    // Esta función se encarga del salto invisible cuando el usuario o el autoplay llegan al límite.
-    function handleLoopingScroll() {
-        if (originalWidth === 0) {
-            // Calculamos el ancho del primer set de elementos si aún no se ha hecho
-             originalWidth = filmStrip.scrollWidth / 2;
-        }
 
-        // Condición de Salto hacia adelante
-        if (filmStrip.scrollLeft >= originalWidth) {
-            filmStrip.scrollLeft -= originalWidth;
-        }
-        
-        // Condición de Salto Inverso (para el scroll manual hacia atrás)
-        else if (filmStrip.scrollLeft < 1) { 
-            filmStrip.scrollLeft += originalWidth;
-        }
-    }
+    // --- FUNCIONES DE SCROLL/AUTOPLAY ---
     
-    // Función para iniciar el movimiento automático
     function startAutoScroll() {
         if (autoScrollTimer !== null) return; 
         clearTimeout(resumeTimer); 
 
         autoScrollTimer = setInterval(() => {
-            
-            // 1. Mueve el scroll (trigger el evento 'scroll' y el bucle)
+            if (originalWidth === 0) { originalWidth = filmStrip.scrollWidth / 3; }
             filmStrip.scrollLeft += AUTO_SCROLL_SPEED;
-            
+
+            if (filmStrip.scrollLeft >= originalWidth) {
+                filmStrip.scrollLeft -= originalWidth;
+            } 
         }, AUTO_SCROLL_INTERVAL);
+        
+        // Iniciar todas las previews
+        filmStrip.querySelectorAll('.video-preview').forEach(v => v.play());
     }
     
-    // Función para detener el movimiento automático y preparar la reanudación
-    function stopAutoScrollAndPrepareResume() {
+    function stopAutoScroll() {
         if (autoScrollTimer !== null) {
             clearInterval(autoScrollTimer);
             autoScrollTimer = null;
         }
-        
+        // Pausar todas las previews
+        filmStrip.querySelectorAll('.video-preview').forEach(v => v.pause());
+
         clearTimeout(resumeTimer); 
-        
-        // 🟢 CLAVE: Iniciamos un temporizador para reanudar el scroll después del RESUME_DELAY
         resumeTimer = setTimeout(() => {
             startAutoScroll();
         }, RESUME_DELAY);
     }
     
-    // --- Lógica de Interacción del Usuario ---
+    // --- LÓGICA DE APERTURA DE VIDEO MODAL (LIGHTBOX) ---
 
-    function handleManualScrollStart() {
-        // Al detectar el inicio de la interacción manual (wheel/touchstart), detenemos el autoplay.
-        stopAutoScrollAndPrepareResume(); 
-        
-        // 🟢 Añadimos un listener temporal para detectar el final de la inercia del scroll
-        filmStrip.addEventListener('scroll', handleScrollActivity);
+    function openVideoModal(url) {
+        // Pausamos el carrusel
+        stopAutoScroll(); // Pausa el autoplay
+
+        // Creamos el modal dinámicamente
+        const modal = document.createElement('div');
+        modal.classList.add('video-lightbox');
+        modal.innerHTML = `
+            <div class="video-lightbox-content">
+                <span class="video-close-btn">x</span>
+                
+                <video src="${url}" controls autoplay playsinline class="full-screen-video"></video>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+
+        // Eventos de cerrar y stop video
+        const closeBtn = modal.querySelector('.video-close-btn');
+        const videoElement = modal.querySelector('.full-screen-video');
+
+        const closeModal = () => {
+            videoElement.pause();
+            modal.remove();
+            document.body.style.overflow = '';
+            startAutoScroll(); // 🟢 Reanudar el carrusel al cerrar
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal(); // Cerrar si se clica fuera del contenido
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
     }
 
-    let scrollActivityTimer = null;
+    // --- LÓGICA DE INTERACCIÓN Y AUTOPLAY INTELIGENTE ---
 
+    function handleManualScrollStart() {
+        stopAutoScroll(); 
+        filmStrip.addEventListener('scroll', handleScrollActivity);
+    }
+    
+    let scrollActivityTimer = null;
     function handleScrollActivity() {
-        // 1. Cancelamos el temporizador de reanudación (el RESUME_DELAY) si el usuario sigue scrolleando.
         clearTimeout(resumeTimer); 
         
-        // 2. Ejecutamos la lógica de bucle inmediatamente para mantenerlo infinito
-        handleLoopingScroll();
+        // Lógica de salto de bucle
+        if (originalWidth !== 0) {
+            if (filmStrip.scrollLeft >= originalWidth) {
+                filmStrip.scrollLeft -= originalWidth;
+            } 
+        }
 
-        // 3. Reiniciamos el temporizador de actividad. Esto se ejecuta si el usuario para de scrollear.
         clearTimeout(scrollActivityTimer);
 
         scrollActivityTimer = setTimeout(() => {
-            // Si pasan 150ms sin actividad de scroll, volvemos a llamar a stopAutoScroll para iniciar el RESUME_DELAY.
-            stopAutoScrollAndPrepareResume(); 
+            startAutoScroll(); 
             filmStrip.removeEventListener('scroll', handleScrollActivity);
         }, 150); 
     }
-
-
-    // --- Inicialización ---
-
+    
+    // Inicialización
     function initializeScroll() {
-        // Calculamos el ancho inicial
-        originalWidth = filmStrip.scrollWidth / 2;
+        // Calculamos el ancho inicial después de que se rendericen los clones
+        originalWidth = filmStrip.scrollWidth / 3;
         filmStrip.scrollLeft = originalWidth;
 
-        // Establecemos el listener del bucle (salto) para que funcione con el scroll manual
         filmStrip.addEventListener('scroll', handleLoopingScroll);
-
-        // Establecemos los listeners para detectar la interacción manual
         filmStrip.addEventListener('wheel', handleManualScrollStart, false);
         filmStrip.addEventListener('touchstart', handleManualScrollStart, false);
         
-        // Iniciamos el Autoplay
+        // Eventos Hover para Previews (Para navegadores que no inician el video por defecto)
+        filmStrip.querySelectorAll('.video-preview').forEach(video => {
+            video.addEventListener('mouseenter', () => { video.play(); });
+            video.addEventListener('mouseleave', () => { video.pause(); });
+        });
+        
         startAutoScroll();
     }
     
-    // Iniciamos la configuración después de asegurar que el DOM ha medido los anchos
     setTimeout(initializeScroll, 200); 
 });
