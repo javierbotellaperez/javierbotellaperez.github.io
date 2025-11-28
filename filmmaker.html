@@ -3,106 +3,1530 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Javier Botella Pérez | Filmmaker Portfolio</title>
+    <title>Javier Botella Pérez | Post Coordinator</title>
     
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/filmmaker.css">
+    <link rel="stylesheet" href="css/post.css">
 </head>
-<body class="interactive-page"> 
+<body>
     
-<header>
-    <nav class="header-nav">
-        <p class="role-group">
-            <a href="index.html" class="nav-link">home</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            
-            <a href="photographer.html" class="nav-link">photographer</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            
-            <a href="filmmaker.html" class="nav-link">filmmaker</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="post.html" class="nav-link">post&nbsp;coordinator</a>
-        </p>
-    </nav>
-</header>
+    <header>
+        <nav class="header-nav">
+            <p class="role-group">
+                <a href="index.html" class="nav-link">home</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="photographer.html" class="nav-link">photographer</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="filmmaker.html" class="nav-link">filmmaker</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="post.html" class="nav-link current-page">post&nbsp;coordinator</a>
+            </p>
+        </nav>
+    </header>
 
     <main class="content-container">
-        <h2 style="text-align: center; margin-bottom: 2.5rem;">FILMMAKER</h2>
-
-        <div class="carousel-wrapper">
-            <section class="film-strip" id="film-strip-carousel">
-                
-                <a href="https://www.youtube.com/watch?v=bAkYRo36s7U" target="_blank" rel="noopener noreferrer" class="film-item">
-                    <p class="film-artist-tag">Warmi</p>
-                    <img src="assets/gif/borracho.gif" alt="Borracho - Warmi GIF Preview">
-                    <div class="video-info">
-                        <h3>borracho</h3>
-                    </div>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=8Yk3PuncyFY" target="_blank" rel="noopener noreferrer" class="film-item">
-                     <p class="film-artist-tag">Warmi</p>
-                    <img src="assets/gif/hiel.gif" alt="Hiel - Warmi GIF Preview">
-                    <div class="video-info">
-                        <h3>hiel</h3> 
-                    </div>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=xx7r1FGA_fY" target="_blank" rel="noopener noreferrer" class="film-item">
-                    <p class="film-artist-tag">Turista Sueca</p>
-                    <img src="assets/gif/turista-sueca.gif" alt="Turista Sueca Thumbnail">
-                    <div class="video-info">
-                        <h3>turista sueca</h3>
-                    </div>
-                </a>
-                
-                <a href="https://www.youtube.com/watch?v=sMNaBv9eEjI" target="_blank" rel="noopener noreferrer" class="film-item">
-                    <p class="film-artist-tag">Rocío Saíz y Tauro</p>
-                    <img src="assets/gif/autoboicot.gif" alt="Autoboicot y Descanso GIF Preview">
-                    <div class="video-info">
-                        <h3>autoboicot y descanso</h3> 
-                    </div>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=QXPbI_17EqE" target="_blank" rel="noopener noreferrer" class="film-item">
-                    <p class="film-artist-tag">Futurachicapop</p>
-                    <img src="assets/gif/historiadesadiegirl.gif" alt="Historias de Sadie Girl GIF Preview">
-                    <div class="video-info">
-                        <h3>historias de sadie girl</h3>
-                    </div>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=W1P7inSARhs" target="_blank" rel="noopener noreferrer" class="film-item">
-                    <p class="film-artist-tag">Jabeat ft Okamiluke</p>
-                    <img src="assets/gif/moneyqueer.gif" alt="Money Queer GIF Preview">
-                    <div class="video-info">
-                        <h3>money queer</h3>
-                    </div>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=vmq9GrxNNoI" target="_blank" rel="noopener noreferrer" class="film-item">
-                    <p class="film-artist-tag">Jabeat</p>
-                    <img src="assets/gif/quienquieraperdon.gif" alt="Quién quiera perdón que se lo pida a Dios GIF Preview">
-                    <div class="video-info">
-                        <h3>quién quiera perdón que se lo pida a dios</h3>
-                    </div>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=ETdMUg6bDDI" target="_blank" rel="noopener noreferrer" class="film-item">
-                    <p class="film-artist-tag">Futurachicapop</p>
-                    <img src="assets/gif/sexoconvexo.gif" alt="El Sexo Convexo GIF Preview">
-                    <div class="video-info">
-                        <h3>el sexo convexo</h3>
-                    </div>
-                </a>
-                
-                </section>
-        </div>
         
-    </main>
+        <section class="filter-controls-area">
+            
+            <div class="filter-dropdown-toggle" id="filter-toggle">
+                <h2 id="current-filter-title">All Work</h2>
+                <span class="dropdown-icon" id="dropdown-icon">▼</span>
+            </div>
+            
+            <div class="filter-dropdown-menu" id="filter-menu">
+                
+                <button class="filter-button active" data-filter="all">All Work</button>
 
+                <p class="filter-group-title">Roles</p>
+                <button class="filter-button" data-filter="Post Coordinator">Post Coordinator</button>
+                <button class="filter-button" data-filter="Prod Coordinator">Prod Coordinator</button>
+                <button class="filter-button" data-filter="Production Manager">Production Manager</button>
+                <button class="filter-button" data-filter="Prod Assistant">Prod Assistant</button>
+                
+                <p class="filter-group-title">Categories</p>
+                <button class="filter-button" data-filter="Music Video">Music Video</button>
+                <button class="filter-button" data-filter="Commercial">Commercial</button>
+                <button class="filter-button" data-filter="TV & Series">TV & Series</button>
+                
+            </div>
+        </section>
+        
+        <section class="content-grid post-grid" id="project-grid">
+            
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+                
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=kEF_94qf03A" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/motomami.jpg" alt="Thumbnail de Motomami" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Motomami</h3>
+                    <p class="client-name">Cliente: Rosalía</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Stillz</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=BC19kwABFwc" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/loveagain.jpg" alt="Thumbnail de Love Again" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Love Again</h3>
+                    <p class="client-name">Cliente: Dua Lipa</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Lope Serrano</p>
+                </div>
+            </article>
+            
+            <article class="archive-card project-item" 
+                     data-role="Production Manager" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Production Manager">Production Manager</a>
+                
+                <a href="https://www.youtube.com/watch?v=W7tkbyfWSKs" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/corten.jpg" alt="Thumbnail de ¡Corten!" class="project-thumbnail">
+                </a>
+
+                <div class="card-details">
+                    <h3>Proyecto: ¡Corten!</h3>
+                    <p class="client-name">Cliente: Marc Ferrer</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Marc Ferrer</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=GK-VAQ9lJTo" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/cuoredipanna.jpg" alt="Thumbnail de Cuore di panna" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Cuore di panna</h3>
+                    <p class="client-name">Cliente: Cornetto</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Marc Oller</p>
+                </div>
+            </article>
+            
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=Rht7rBHuXW8" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/malamente.jpg" alt="Thumbnail de Malamente" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Malamente</h3>
+                    <p class="client-name">Cliente: Rosalía</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Nicolás Méndez</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=V6YMCjpfH0c" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/exit.jpg" alt="Thumbnail de Exits" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Exits</h3>
+                    <p class="client-name">Cliente: Foals</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Albert Moya</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=9HDEHj2yzew" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/physical.jpg" alt="Thumbnail de Physical" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Physical</h3>
+                    <p class="client-name">Cliente: Dua Lipa</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Lope Serrano</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=p_4coiRG_BI" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/piensoentumira.jpg" alt="Thumbnail de Pienso en tu mira'" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Pienso en tu mira'</h3>
+                    <p class="client-name">Cliente: Rosalía</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Nicolás Méndez</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Coordinator">Prod Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=UHVi1ri3DeQ" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/prontollegara.jpg" alt="Thumbnail de Pronto llegará" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Pronto llegará</h3>
+                    <p class="client-name">Cliente: C.Tangana</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Santos</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=p8lSOppeiys" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/laprohibida.jpg" alt="Thumbnail de La pubblicità" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: La pubblicità</h3>
+                    <p class="client-name">Cliente: La Prohibida</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Marc Ferrer</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=SJcm2dLUjVo" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/mequedo.jpg" alt="Thumbnail de Me quedo" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Me quedo</h3>
+                    <p class="client-name">Cliente: Aitana ft Lola Indigo</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Réalité</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=x9hnVf_UKvM" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/royalbliss.jpg" alt="Thumbnail de Royal Bliss" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Royal Bliss</h3>
+                    <p class="client-name">Cliente: Royal Bliss</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Gerson Aguerri</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=TtZdKaMecHY" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/lacancion.jpg" alt="Thumbnail de La canción que no quiero cantarte" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: La canción que no quiero cantarte</h3>
+                    <p class="client-name">Cliente: Amaia ft Aitana</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Virgili Jubero</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=JFDo0qqLyHA" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/nohope.jpg" alt="Thumbnail de No hope generation" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: No hope generation</h3>
+                    <p class="client-name">Cliente: Mura Masa</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Yoni Lappin</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Coordinator" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Coordinator">Prod Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=3NnMw9_Aw5I" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/dreamstv.jpg" alt="Thumbnail de Dreams TV" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Dreams TV</h3>
+                    <p class="client-name">Cliente: Bimba Y Lola</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Eduardo Casanova</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Coordinator">Prod Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=wNwzjh_7Ryo" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/yosigoiual.jpg" alt="Thumbnail de Yo Sigo Iual" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Yo Sigo Iual</h3>
+                    <p class="client-name">Cliente: Bad Gyal</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Cyprien Clement-Delmas</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Coordinator" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Coordinator">Prod Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=u58UB202XtQ" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/valentia.jpg" alt="Thumbnail de Valentia" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Valentia</h3>
+                    <p class="client-name">Cliente: Puma</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Réalité</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=6s-MQzPZ6IE" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/aunqueesdenoche.jpg" alt="Thumbnail de Aunque es de noche" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Aunque es de noche</h3>
+                    <p class="client-name">Cliente: Rosalia</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Ignasi Monreal</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=wc3r-Is5AIs" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/tversky.jpg" alt="Thumbnail de 1985" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: 1985</h3>
+                    <p class="client-name">Cliente: Tversky</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Ferran Capo</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Coordinator" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Coordinator">Prod Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=hOppUvUXG-8" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/afrojuice.jpg" alt="Thumbnail de The uprising of Afrojuice" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: The uprising of Afrojuice</h3>
+                    <p class="client-name">Cliente: Puma</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Cyprien Clement-Delmas</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Coordinator" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Coordinator">Prod Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=CaS_gr5qhUg" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/auditori.jpg" alt="Thumbnail de Temporada 19-20" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Temporada 19-20</h3>
+                    <p class="client-name">Cliente: L'auditori</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Hector Herce</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Coordinator" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Coordinator">Prod Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=k-G_N-TCilw" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/laliga.jpg" alt="Thumbnail de Liga Ball" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Liga Ball</h3>
+                    <p class="client-name">Cliente: Puma</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Cyprien Clement-Delmas</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=U8rLBE_rvU8" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/nochance.jpg" alt="Thumbnail de No chance" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: No chance</h3>
+                    <p class="client-name">Cliente: Jarami</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Pensacola</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=TevCrDecmGQ" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/crush.jpg" alt="Thumbnail de Crush" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Crush</h3>
+                    <p class="client-name">Cliente: Cornetto</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Marc Oller</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=CLXhSRpmQM4" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/crowns.jpg" alt="Thumbnail de Crowns" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Crowns</h3>
+                    <p class="client-name">Cliente: North State</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Nur Casadevall</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=6I3mMi85G1M" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/saturn.jpg" alt="Thumbnail de Saturn is not that far away" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Saturn is not that far away</h3>
+                    <p class="client-name">Cliente: Stella McCartney</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Roger Guàrdia</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Coordinator" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Coordinator">Prod Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=H7wGwmqiQss" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/eye.jpg" alt="Thumbnail de Eye" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Eye</h3>
+                    <p class="client-name">Cliente: Loewe</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: MANSON</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=QG-r8kBuECc" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/laedad.jpg" alt="Thumbnail de Edad del Polo" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Edad del Polo</h3>
+                    <p class="client-name">Cliente: Volkswagen</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: MANSON</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=cH_4G1tghz0" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/volver.jpg" alt="Thumbnail de Volver" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Volver</h3>
+                    <p class="client-name">Cliente: El Almendro</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Roger Guàrdia</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=c0kxwdDifPU" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/frigochuches.jpg" alt="Thumbnail de Frigochuches" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Frigochuches</h3>
+                    <p class="client-name">Cliente: Frigochuches</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: MANSON</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=hq_3N26H-OY" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/meister.jpg" alt="Thumbnail de Be the Meister" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Be the Meister</h3>
+                    <p class="client-name">Cliente: Jäggermeister</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Rogelio</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Coordinator">Prod Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=dzrwsUHc9fs" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/intuicion.jpg" alt="Thumbnail de Intuición" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Intuición</h3>
+                    <p class="client-name">Cliente: Javiera Mena</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Virgili Jubero</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Coordinator">Prod Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=pgNxaFAwyrw" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/unsecreto.jpg" alt="Thumbnail de Un Secreto Mal guardado" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Un Secreto Mal guardado</h3>
+                    <p class="client-name">Cliente: el último vecino</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Trinity</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=giZNWcC_dSI" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/cubits.jpg" alt="Thumbnail de Cubits" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Cubits</h3>
+                    <p class="client-name">Cliente: El Almendro</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Roger Guàrdia</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=mnnbwGtI07k" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/cancionesdesobra.jpg" alt="Thumbnail de Canciones de sobra" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Canciones de sobra</h3>
+                    <p class="client-name">Cliente: Calavento</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Hawaii Please</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Coordinator" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Coordinator">Prod Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=j4JhXr-Pa8Q" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/moute.jpg" alt="Thumbnail de Mou'te" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Mou'te</h3>
+                    <p class="client-name">Cliente: Carnet Jove</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Nur Casadevall</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Prod Assistant" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Prod Assistant">Prod Assistant</a>
+                
+                <a href="https://www.youtube.com/watch?v=sRrK9p9IOPM" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/lungs.jpg" alt="Thumbnail de Lungs" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Lungs</h3>
+                    <p class="client-name">Cliente: Shy Luv</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Humans</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=agKcuwxd3q8" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/elprincep.jpg" alt="Thumbnail de El Princep" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: El Princep</h3>
+                    <p class="client-name">Cliente: Alex Sardà</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Alex Sardà</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=ZFD85d5aJBo" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/tuttopassa.jpg" alt="Thumbnail de Tutto Passa" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Tutto Passa</h3>
+                    <p class="client-name">Cliente: Coldplay</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Stillz</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=6gUiQ8CqLcY" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/sirens.jpg" alt="Thumbnail de Sirens" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Sirens</h3>
+                    <p class="client-name">Cliente: Travis Scott</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Nicolás Méndez</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=OiC1rgCPmUQ" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/dancethenight.jpg" alt="Thumbnail de Dance The Night Away" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Dance The Night Away</h3>
+                    <p class="client-name">Cliente: Dua Lipa</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Lope Serrano</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=D8fG1hJ4kL7" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/diosa.jpg" alt="Thumbnail de Diosa" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Diosa</h3>
+                    <p class="client-name">Cliente: Cyprien Clement-Delmas</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Cyprien Clement-Delmas</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=M0nB3vC6xZ9" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/inbocca.jpeg" alt="Thumbnail de In Bocca Al Lupo" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: In Bocca Al Lupo</h3>
+                    <p class="client-name">Cliente: Adriana Roslin</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Adriana Roslin</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=HkG1m9sSojI" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/colmillo.jpg" alt="Thumbnail de Colmillo" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Colmillo</h3>
+                    <p class="client-name">Cliente: Tainy, JBalvin, Young Miko, Jowell & Randy</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Pau Carreté</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=21xNk2eD77o" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/vampiros.jpg" alt="Thumbnail de Vampiros" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Vampiros</h3>
+                    <p class="client-name">Cliente: Rosalia ft Rauw Alejandro</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Stillz</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=V4bN7mC0xZ3" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/grrr.jpg" alt="Thumbnail de Grrr" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Grrr</h3>
+                    <p class="client-name">Cliente: Elena Martín Gimeno</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Elena Martín Gimeno</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=cbRdw2m7Ku4" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/intothinair.jpg" alt="Thumbnail de Into Thin Air" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Into Thin Air</h3>
+                    <p class="client-name">Cliente: Marc Oller</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Marc Oller</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=uiyAh8LHG2U" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/buenosaires.jpg" alt="Thumbnail de buenos aires" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: buenos aires</h3>
+                    <p class="client-name">Cliente: tini</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Bàrbara Farré</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=uA_lWK3VecE" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/posta.jpg" alt="Thumbnail de posta" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: posta</h3>
+                    <p class="client-name">Cliente: tini</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Bàrbara Farré</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=FaQiQ3zuzPg" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/pa.jpg" alt="Thumbnail de pa" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: pa</h3>
+                    <p class="client-name">Cliente: tini</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Bàrbara Farré</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=3zb9X_unuqo" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/arlo.jpg" alt="Thumbnail de weightless" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: weightless</h3>
+                    <p class="client-name">Cliente: arlo parks</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Marc Oller</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=K9mTSekTktw" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/desesperado.jpg" alt="Thumbnail de desesperados" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: desesperados</h3>
+                    <p class="client-name">Cliente: Rauw Alejandro Ft Chencho Corleone</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: MANSON</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=E7lr7pU9fYA" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/mirror.jpg" alt="Thumbnail de Mirror" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Mirror</h3>
+                    <p class="client-name">Cliente: Sigrid</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Femke Huurdeman</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=IuUagFR-g1Q" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/perra.jpg" alt="Thumbnail de Perra" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Perra</h3>
+                    <p class="client-name">Cliente: Rigoberta Bandini</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Irene Moray, Elena Martín Gimeno</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=tIBLRTakqMM" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/yanovales.jpg" alt="Thumbnail de Ya no vales" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Ya no vales</h3>
+                    <p class="client-name">Cliente: Alizz ft C.Tangana</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Felix Bollain</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=DmbtMwFG_V0" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/najwa.jpg" alt="Thumbnail de Muñequita Linda" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Muñequita Linda</h3>
+                    <p class="client-name">Cliente: Najwa</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Bàrbara Farré</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=k35Rgmhmtgw" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/nieve.jpg" alt="Thumbnail de Nieve" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Nieve</h3>
+                    <p class="client-name">Cliente: Aron</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: MANSON</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=rUoZ5JGTGuc" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/disimulao.jpg" alt="Thumbnail de Disimulao" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Disimulao</h3>
+                    <p class="client-name">Cliente: Alizz</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Felix Bollain</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=KJvmdDBrXNU" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/resilient.jpg" alt="Thumbnail de Resilient" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Resilient</h3>
+                    <p class="client-name">Cliente: Katy Perry ft Aitana ft Tiësto</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Chloe Wallace</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=HJ1S_cTe04A" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/gaudir.jpg" alt="Thumbnail de Gaudir" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Gaudir</h3>
+                    <p class="client-name">Cliente: Marçal Forés</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Marçal Forés</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=xbb2voPsJkI" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/hotchip.jpg" alt="Thumbnail de Straight to the morning" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Straight to the morning</h3>
+                    <p class="client-name">Cliente: Hot chip</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Réalité</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=j85U0qr_WZ8" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/claudiavalentina.jpg" alt="Thumbnail de 4:15" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: 4:15</h3>
+                    <p class="client-name">Cliente: Claudia Valentina</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Bàrbara Farré</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=yvxNQiqaQ3k" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/icex.jpg" alt="Thumbnail de La causa del accidente que causó el incendio" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: La causa del accidente que causó el incendio</h3>
+                    <p class="client-name">Cliente: ICEX</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Lope Serrano</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=ANwcarodEDw" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/elnoidelamare.jpg" alt="Thumbnail de El noi de la mare" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: El noi de la mare</h3>
+                    <p class="client-name">Cliente: Merce</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Nicolás Méndez</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=BrjR3cTekYc" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/nittropical.jpg" alt="Thumbnail de Nit tropical" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Nit tropical</h3>
+                    <p class="client-name">Cliente: Renaldo i Clara</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Angie Bolea</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=wcVXVKJeNq0" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/mora.jpg" alt="Thumbnail de Pista de aterrizaje" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Pista de aterrizaje</h3>
+                    <p class="client-name">Cliente: Mora</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Stillz</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=jNTMfto5g3M" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/deinmediato.jpg" alt="Thumbnail de De inmediato" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: De inmediato</h3>
+                    <p class="client-name">Cliente: Mora</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Stillz</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=fhsfy-nLapA" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/chama.jpg" alt="Thumbnail de Chama" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Chama</h3>
+                    <p class="client-name">Cliente: Arca ft Tokisha</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Stillz</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=teXioGnM0-0" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/circles.jpg" alt="Thumbnail de Circles" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Circles</h3>
+                    <p class="client-name">Cliente: Snt Jhn</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Àlex Gargot</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=c-QlUwphGI8" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/bodyonme.jpg" alt="Thumbnail de Body On Me" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Body On Me</h3>
+                    <p class="client-name">Cliente: Snt Jhn</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Àlex Gargot</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=nVJXUAcT-OA" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/glitching.jpg" alt="Thumbnail de Glitching" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Glitching</h3>
+                    <p class="client-name">Cliente: Snt Jhn</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Àlex Gargot</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=BWCAYiuoOHQ" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/caballos.jpg" alt="Thumbnail de Caballos" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Caballos</h3>
+                    <p class="client-name">Cliente: Venecia Fluor</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Jonathan Cremades</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=i7YauUWmAIs" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/flmin.jpg" alt="Thumbnail de Patiño Your Life" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Patiño Your Life</h3>
+                    <p class="client-name">Cliente: Filmin</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Julieta Lasarte</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=dNjHfgGHlKQ" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/vogel.jpg" alt="Thumbnail de ARCO" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: ARCO</h3>
+                    <p class="client-name">Cliente: Alicia Vogel</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Toro</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=Eb3zur0WewU" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/squid.jpg" alt="Thumbnail de Cro-magnon Men" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Cro-magnon Men</h3>
+                    <p class="client-name">Cliente: Squid</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Rory Alexander</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=Id_0DsBctYg" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/cuntissimo.jpg" alt="Thumbnail de Cuntissimo" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Cuntissimo</h3>
+                    <p class="client-name">Cliente: MARINA</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Olivia De camps</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=dNjHfgGHlKQ" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/feelsomething.jpg" alt="Thumbnail de Feel something" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Feel something</h3>
+                    <p class="client-name">Cliente: Sasha Keable</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Billy King</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Commercial">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=c912Ol0cWes" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/polaroid.jpg" alt="Thumbnail de The imperfectionists" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: The imperfectionists</h3>
+                    <p class="client-name">Cliente: Polaroid</p>
+                    <a href="#" class="category-filter-tag" data-filter="Commercial">Category: Commercial</a>
+                    <p class="project-date">Director: Luo Jian</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=9aXKxM75NNA" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/paenamorar.jpg" alt="Thumbnail de Paenamorar" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Paenamorar</h3>
+                    <p class="client-name">Cliente: Paula Cendejas</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Adriana Roslin</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="TV & Series">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=9aXKxM75NNA" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/plancton.jpg" alt="Thumbnail de Plàncton" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: Plàncton</h3>
+                    <p class="client-name">Cliente: Irene Moray</p>
+                    <a href="#" class="category-filter-tag" data-filter="TV & Series">Category: TV & Series</a>
+                    <p class="project-date">Director: Irene Moray</p>
+                </div>
+            </article>
+
+            <article class="archive-card project-item" 
+                     data-role="Post Coordinator" 
+                     data-category="Music Video">
+
+                <a href="#" class="role-filter-tag" data-filter="Post Coordinator">Post Coordinator</a>
+                
+                <a href="https://www.youtube.com/watch?v=4j7LGMc9ZGU" target="_blank" rel="noopener noreferrer">
+                    <img src="assets/images/post/itgetsdark.jpg" alt="Thumbnail de It Gets Dark" class="project-thumbnail">
+                </a>
+                
+                <div class="card-details">
+                    <h3>Proyecto: It Gets Dark</h3>
+                    <p class="client-name">Cliente: Sigrid</p>
+                    <a href="#" class="category-filter-tag" data-filter="Music Video">Category: Music Video</a>
+                    <p class="project-date">Director: Femke Huurdeman</p>
+                </div>
+            </article>
+            
+        </section>
+    </main>
+    
+    <div id="project-modal" class="project-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modal-details">
+                </div>
+            <div class="modal-nav">
+                <button id="modal-prev" class="modal-nav-btn">←</button>
+                <button id="modal-next" class="modal-nav-btn">→</button>
+            </div>
+        </div>
+    </div>
     <footer>
         <p>&copy; <span id="current-year"></span> javier botella pérez. all rights reserved.</p>
     </footer>
 
     <script src="js/main.js"></script>
-    <script src="js/film-carousel.js"></script>
+    <script src="js/post-filter.js"></script> 
 </body>
 </html>
