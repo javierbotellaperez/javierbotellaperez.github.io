@@ -149,11 +149,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Definimos solo los stickers base (ya no repetimos)
     const stickerTypes = [
         // Stickers existentes
-        { idBase: 'sticker-arnau', src: 'assets/images/arnau.png', href: 'arnau.html', name: 'Arnau Project' },
-        { idBase: 'sticker-alex', src: 'assets/images/alex.png', href: 'alex.html', name: 'Alex Shoot' },
+        { idBase: 'sticker-arnau', src: 'assets/images/arnau.png', href: 'arnau.html', name: 'Arnau' },
+        { idBase: 'sticker-alex', src: 'assets/images/alex.png', href: 'alex.html', name: 'Alex' },
         
         // 🟢 NUEVO STICKER DE DIARIO
-        { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Photo Diary' }
+        { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Diary' }
     ];
     
     const stickerArea = document.querySelector('.sticker-area');
