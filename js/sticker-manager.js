@@ -153,8 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { idBase: 'sticker-alex', src: 'assets/images/alex.png', href: 'alex.html', name: 'Alex' },
         
         // 🟢 NUEVO STICKER DE DIARIO
-        { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Diary' }
-        { idBase: 'sticker-diary', src: 'assets/images/paris.png', href: 'paris.html', name: 'Paris' }
+        { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Diary' },
+        { idBase: 'sticker-paris', src: 'assets/images/paris.png', href: 'paris.html', name: 'Paris' }
     ];
     
     const stickerArea = document.querySelector('.sticker-area');
