@@ -100,6 +100,7 @@
     padding: 20px;
 }
 
+/* CLAVE: Mostrar el texto cuando el cursor pasa sobre el ítem */
 .film-item:hover .video-info {
     opacity: 1;
 }
@@ -121,7 +122,7 @@
     text-transform: lowercase;
 }
 
-/* 🟢 CLAVE: ESTILOS MODAL DE VIDEO (CENTRADOS Y OCULTOS) */
+/* 🟢 CLAVE: ESTILOS MODAL DE VIDEO (SOLUCIONA VISIBILIDAD) */
 .video-lightbox {
     position: fixed;
     top: 0;
@@ -129,7 +130,6 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.95);
-    /* 🟢 CLAVE: Oculto por defecto y con Flexbox para centrar */
     display: none; 
     justify-content: center;
     align-items: center; 
@@ -140,16 +140,16 @@
     position: relative;
     width: 90vw;
     max-width: 1200px;
-    margin: auto; /* Centrado si el navegador falla el flex */
+    /* 🟢 CLAVE: Centrado con margen y altura limitada */
+    margin: auto; 
     padding: 20px;
+    box-shadow: 8px 8px 0px var(--color-primary);
 }
 
-/* 🟢 CLAVE: Botón de Cerrar (X) Estético y Centrado */
 .video-close-btn {
     position: absolute;
     top: -20px; 
-    right: -20px; /* Anclado a la esquina superior derecha del contenido */
-    
+    right: -20px; 
     color: white; 
     font-size: 2.5rem; 
     font-weight: var(--font-weight-extrabold);
@@ -169,31 +169,14 @@
 
 .full-screen-video {
     width: 100%;
-    height: auto;
+    /* 🟢 CLAVE: Damos al video una altura máxima para que no se salga */
+    max-height: 90vh;
+    height: auto; 
     display: block;
     border: 3px solid var(--color-primary); 
-    box-shadow: 8px 8px 0px var(--color-primary);
-
-    /* Corrección: Asegurar que el video se muestre delante del fondo del modal */
-.full-screen-video {
-    /* Mantenemos tus estilos existentes... */
-    width: 100%;
-    height: auto;
-    display: block;
-    border: 3px solid var(--color-primary); 
-    box-shadow: 8px 8px 0px var(--color-primary);
-    
-    /* 🟢 CLAVE: Forzar la visibilidad y z-index alto */
-    z-index: 100; 
-    opacity: 1 !important;
-}
-
-/* 🟢 Asegurar que el fondo del modal-content no se suba delante del video */
-.video-lightbox-content {
-    /* Establecemos la posición relativa para que los z-index funcionen bien internamente */
-    position: relative; 
-    
-    /* El background-color: var(--color-background) del modal-content puede estar tapando el video. 
-       Aseguraremos que el video se cargue delante. */
-}
+    /* 🟢 ELIMINAMOS BOX-SHADOW para que solo el MODAL-CONTENT tenga la sombra */
+    box-shadow: none; 
+    /* 🟢 FORZAMOS LA VISIBILIDAD */
+    z-index: 100;
+    background: black; /* Fondo negro para videos */
 }
