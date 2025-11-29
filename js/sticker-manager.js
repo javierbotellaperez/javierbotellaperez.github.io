@@ -154,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 🟢 NUEVO STICKER DE DIARIO
         { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Diary' }
+        { idBase: 'sticker-diary', src: 'assets/images/paris.png', href: 'paris.html', name: 'Paris' }
     ];
     
     const stickerArea = document.querySelector('.sticker-area');
