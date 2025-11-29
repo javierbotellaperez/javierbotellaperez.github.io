@@ -3,7 +3,7 @@
 /* Contenedor que limita el ancho de la tira de carrusel */
 .carousel-wrapper {
     width: 95vw; 
-    max-width: 1280px; /* Base 1280x720 */
+    max-width: 1280px; 
     margin: 3rem auto;
     overflow: hidden; 
     padding: 10px 0;
@@ -129,7 +129,15 @@
     text-transform: lowercase;
 }
 
-/* 🟢 ESTILOS PARA EL MODAL DE VIDEO (LIGHTBOX) */
+.video-info p {
+    font-size: 1.4rem; 
+    margin: 0;
+    font-weight: var(--font-weight-regular); 
+    text-shadow: none; 
+    text-transform: lowercase;
+}
+
+/* 🟢 CLAVE: ESTILOS MODAL DE VIDEO (CENTRADOS) */
 .video-lightbox {
     position: fixed;
     top: 0;
@@ -137,16 +145,21 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.95);
-    display: none; /* 🟢 Oculto por defecto, JS lo muestra con display: flex */
+    display: flex;
+    /* 🟢 CLAVE: Centrado con Flexbox */
     justify-content: center;
-    align-items: center;
+    align-items: center; 
     z-index: 1000;
 }
 
 .video-lightbox-content {
     position: relative;
+    /* Usamos el margen automático para garantizar el centrado si el navegador falla el flex */
+    margin: auto; 
     width: 90vw;
     max-width: 1200px;
+    /* Añadimos un pequeño espacio para que no se pegue al borde */
+    padding: 20px; 
 }
 
 /* 🟢 Botón de Cerrar (X) Estético */
