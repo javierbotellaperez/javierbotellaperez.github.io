@@ -1,6 +1,6 @@
 /**
  * js/film-carousel.js
- * Solución final: Bucle Infinito, Autoplay Inteligente y Modal de Video.
+ * Solución final: Bucle Infinito, Autoplay Inteligente y Modal de Video (Are.na).
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,14 +16,53 @@ document.addEventListener('DOMContentLoaded', () => {
     let resumeTimer = null;
     let originalWidth = 0; 
     
-    // 1. Clonación del contenido
     const originalItems = Array.from(filmStrip.children);
+    
+    // Clonación del contenido
     originalItems.forEach(item => {
         filmStrip.appendChild(item.cloneNode(true));
     });
 
 
-    // --- FUNCIONES DE SCROLL/AUTOPLAY ---
+    // --- FUNCIÓN LIGHTBOX DE VIDEO ---
+
+    function openVideoModal(url) {
+        stopAutoScroll(); 
+
+        const modal = document.createElement('div');
+        modal.classList.add('video-lightbox');
+        modal.innerHTML = `
+            <div class="video-lightbox-content">
+                <span class="video-close-btn">x</span>
+                
+                <video controls autoplay playsinline class="full-screen-video">
+                    <source src="${url}" type="video/mp4">
+                    Tu navegador no soporta el formato de video.
+                </video>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+
+        const videoElement = modal.querySelector('.full-screen-video');
+
+        const closeModal = () => {
+            videoElement.pause();
+            modal.remove();
+            document.body.style.overflow = '';
+            startAutoScroll(); 
+        };
+
+        modal.querySelector('.video-close-btn').addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal(); // Cerrar si se clica fuera
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    }
+
+    // --- LÓGICA DE SCROLL Y AUTOPLAY ---
     
     function startAutoScroll() {
         if (autoScrollTimer !== null) return; 
@@ -37,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             filmStrip.scrollLeft += AUTO_SCROLL_SPEED;
 
-            // Condición de Bucle Infinito: Si el scroll pasa el ancho original, saltamos.
             if (filmStrip.scrollLeft >= originalWidth) {
                 filmStrip.scrollLeft -= originalWidth;
             } 
@@ -87,49 +125,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleScrollActivity() {
         clearTimeout(resumeTimer); 
-        handleLoopingScroll(); // Mantiene el bucle infinito al hacer scroll manual
+        handleLoopingScroll(); 
 
         clearTimeout(scrollActivityTimer);
 
         scrollActivityTimer = setTimeout(() => {
             stopAutoScrollAndPrepareResume(); 
             filmStrip.removeEventListener('scroll', handleScrollActivity);
-        }, 150); // Detecta que la inercia del scroll ha terminado
-    }
-
-
-    // --- Lógica de Apertura de Video Modal ---
-    
-    function openVideoModal(url) {
-        stopAutoScroll(); 
-
-        const modal = document.createElement('div');
-        modal.classList.add('video-lightbox');
-        modal.innerHTML = `
-            <div class="video-lightbox-content">
-                <span class="video-close-btn">x</span>
-                <video src="${url}" controls autoplay playsinline class="full-screen-video"></video>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        document.body.style.overflow = 'hidden';
-
-        const videoElement = modal.querySelector('.full-screen-video');
-
-        const closeModal = () => {
-            videoElement.pause();
-            modal.remove();
-            document.body.style.overflow = '';
-            startAutoScroll(); 
-        };
-
-        modal.querySelector('.video-close-btn').addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal(); 
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
+        }, 150); 
     }
 
 
@@ -143,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const previewVideo = link.querySelector('.video-preview');
             if (previewVideo) {
-                previewVideo.pause(); // Pausa la preview en el carrusel
+                previewVideo.pause();
             }
             
             openVideoModal(videoUrl);
@@ -151,14 +154,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function initializeScroll() {
-        // Calculamos el ancho inicial
-        originalWidth = filmStrip.scrollWidth / 2;
-        filmStrip.scrollLeft = originalWidth;
+        if (filmStrip.scrollWidth > filmStrip.clientWidth) { // Solo inicializar si hay scroll
+             originalWidth = filmStrip.scrollWidth / 2;
+             filmStrip.scrollLeft = originalWidth;
 
-        filmStrip.addEventListener('scroll', handleLoopingScroll);
-
-        filmStrip.addEventListener('wheel', handleManualScrollStart, false);
-        filmStrip.addEventListener('touchstart', handleManualScrollStart, false);
+             filmStrip.addEventListener('scroll', handleLoopingScroll);
+             filmStrip.addEventListener('wheel', handleManualScrollStart, false);
+             filmStrip.addEventListener('touchstart', handleManualScrollStart, false);
+        }
         
         startAutoScroll();
     }
