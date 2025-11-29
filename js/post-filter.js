@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Removemos los enlaces de la imagen y tags clonados
         const imageLink = projectToDisplay.querySelector('a:not(.role-filter-tag):not(.category-filter-tag)');
         if (imageLink) {
+            // Quitamos el <a> que lleva a YouTube, dejando solo el <img>
             imageLink.outerHTML = `<img src="${imageLink.querySelector('img').src}" class="project-thumbnail" alt="Project Image">`;
         }
         
@@ -44,13 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
         modalDetails.innerHTML = '';
         modalDetails.appendChild(projectToDisplay);
         
-        // 🟢 CLAVE: Hacemos el modal visible
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
-        // 🟢 Ocultamos el modal
         modal.style.display = 'none';
         document.body.style.overflow = '';
     }
@@ -67,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Asignar listeners a cada ficha para abrir el modal
     projects.forEach((card, index) => {
         card.addEventListener('click', (e) => {
-            // 🟢 CLAVE: Solo abrir el modal si NO se clica un elemento de filtro
+            // No abrimos el modal si estamos clicando en el tag de filtro
             if (e.target.classList.contains('role-filter-tag') || e.target.classList.contains('category-filter-tag')) {
                 return;
             }
