@@ -2,18 +2,19 @@
  * js/sticker-manager.js
  * Clase para manejar la interacción (PAN, PINCH, WHEEL) y la gestión de stickers ÚNICOS,
  * con funcionalidad de z-index y generación de pestañas de nombre de proyecto.
+ * * Versión corregida: Soluciona la anulación accidental de clicks (navegación).
  */
 
 // Contador global para asegurar que el sticker seleccionado siempre tenga el z-index más alto.
 let stickerZIndexCounter = 1000; 
 
 class InteractiveSticker {
-    constructor(elementId, initialSize = 200, minScale = 0.5, maxScale = 3) {
+    constructor(elementId, initialSize = 150, minScale = 0.5, maxScale = 3) {
         this.containerLink = document.getElementById(elementId);
         
         if (!this.containerLink) return;
 
-        // Establecemos un tamaño inicial más grande para que la imagen se vea bien en la ficha
+        // Restauramos el tamaño inicial a 150px
         this.initialSize = initialSize; 
         this.MIN_SCALE = minScale;
         this.MAX_SCALE = maxScale;
@@ -54,10 +55,13 @@ class InteractiveSticker {
 
         this.setupWheelZoom();
 
-        // --- GESTIÓN de Clicks / Enlaces ---
+        // --- GESTIÓN de Clicks / Enlaces (Corrección de navegación) ---
         this.containerLink.addEventListener('click', (e) => {
+            // 🟢 CLAVE: Si hubo movimiento (arrastre o zoom), cancelamos la navegación.
             if (this.isMoving) {
                 e.preventDefault();
+                // Resetear el isMoving para que el siguiente click SÍ funcione.
+                this.isMoving = false; 
             }
         }, true);
 
@@ -108,6 +112,7 @@ class InteractiveSticker {
     }
 
     handlePanMove(ev) {
+        // Marcamos movimiento si supera el threshold de 2px
         if (Math.abs(ev.deltaX) > 2 || Math.abs(ev.deltaY) > 2) { 
             this.isMoving = true;
         }
@@ -119,6 +124,8 @@ class InteractiveSticker {
 
     handlePanEnd(ev) {
         this.containerLink.style.transition = this.QUICK_TRANSITION;
+        
+        // El isMoving ya se marcó en panmove si hubo movimiento real.
         this.currentX += ev.deltaX;
         this.currentY += ev.deltaY;
     }
@@ -143,17 +150,14 @@ class InteractiveSticker {
     }
 }
 
-// ... (código existente de la clase InteractiveSticker) ...
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Definimos solo los stickers base (ya no repetimos)
+    
+    // 🟢 CLAVE: Array de stickers ÚNICOS
     const stickerTypes = [
-        // Stickers existentes
         { idBase: 'sticker-arnau', src: 'assets/images/arnau.png', href: 'arnau.html', name: 'Arnau' },
         { idBase: 'sticker-alex', src: 'assets/images/alex.png', href: 'alex.html', name: 'Alex' },
-        
-        // 🟢 NUEVO STICKER DE DIARIO
-        { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Diary' },
+        { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Diary' }, 
         { idBase: 'sticker-paris', src: 'assets/images/paris.png', href: 'paris.html', name: 'Paris' }
     ];
     
@@ -175,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         a.appendChild(tag);
         
         const img = document.createElement('img');
-        img.src = type.src; // Ruta al PNG del diario
+        img.src = type.src; 
         img.alt = `Sticker ${type.idBase}`;
         
         a.appendChild(img);
@@ -185,4 +189,3 @@ document.addEventListener('DOMContentLoaded', () => {
         new InteractiveSticker(uniqueId);
     });
 });
-
