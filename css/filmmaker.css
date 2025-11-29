@@ -122,7 +122,7 @@
     text-transform: lowercase;
 }
 
-/* 🟢 CLAVE: ESTILOS MODAL DE VIDEO (SOLUCIONA VISIBILIDAD) */
+/* 🟢 CLAVE: ESTILOS MODAL DE VIDEO (SOLUCIONA VISIBILIDAD Y POSICIÓN) */
 .video-lightbox {
     position: fixed;
     top: 0;
@@ -130,10 +130,11 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.95);
-    display: none; /* 🟢 CLAVE: Oculto por defecto */
+    display: none; /* Oculto por defecto */
     justify-content: center;
     align-items: center; 
-    z-index: 1000;
+    /* 🟢 CLAVE: Forzar Z-INDEX MÁXIMO para que esté encima de todo */
+    z-index: 9999; 
 }
 
 /* Contenido del Modal (el video y el botón de cierre) */
@@ -141,15 +142,15 @@
     position: relative;
     width: 90vw;
     max-width: 1200px;
-    /* 🔴 ELIMINAMOS EL MARGEN Y FONDO para que solo se vea el video */
-    background: none; 
+    margin: auto; 
     padding: 0; 
+    background: none; 
 }
 
 /* Botón de Cerrar (X) Estético */
 .video-close-btn {
     position: absolute;
-    top: -30px; /* Movido un poco más arriba y fuera del video */
+    top: -30px; 
     right: -30px; 
     
     color: white; 
@@ -158,7 +159,7 @@
     cursor: pointer;
     background: none;
     border: none;
-    z-index: 1001;
+    z-index: 10001;
     line-height: 1;
     opacity: 0.8;
     transition: opacity 0.2s ease, color 0.2s ease;
@@ -173,10 +174,11 @@
 .full-screen-video {
     width: 100%;
     height: auto;
-    max-height: 95vh; /* Limitamos la altura máxima */
+    max-height: 95vh; 
     display: block;
     border: 3px solid var(--color-primary); 
     box-shadow: 8px 8px 0px var(--color-primary);
-    z-index: 100;
+    /* 🟢 Z-index alto para asegurar que se dibuje encima del fondo */
+    z-index: 999;
     background: black; 
 }
