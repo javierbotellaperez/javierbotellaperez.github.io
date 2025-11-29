@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const originalItems = Array.from(filmStrip.children);
     
-    // Clonación del contenido
+    // 1. Clonación del contenido
     originalItems.forEach(item => {
         filmStrip.appendChild(item.cloneNode(true));
     });
@@ -27,10 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FUNCIÓN LIGHTBOX DE VIDEO ---
 
     function openVideoModal(url) {
+        // Pausamos el carrusel
         stopAutoScroll(); 
 
         const modal = document.createElement('div');
         modal.classList.add('video-lightbox');
+        
+        // 🟢 CLAVE: Solo añadimos el HTML del contenido si el modal se va a mostrar
         modal.innerHTML = `
             <div class="video-lightbox-content">
                 <span class="video-close-btn">x</span>
@@ -43,6 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         document.body.appendChild(modal);
         document.body.style.overflow = 'hidden';
+        
+        // 🟢 Mostramos el modal (ya no está oculto por defecto en el JS, solo en el CSS)
+        modal.style.display = 'flex';
+
 
         const videoElement = modal.querySelector('.full-screen-video');
 
@@ -55,14 +62,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modal.querySelector('.video-close-btn').addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal(); // Cerrar si se clica fuera
+            if (e.target === modal) closeModal(); 
         });
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
         });
     }
 
-    // --- LÓGICA DE SCROLL Y AUTOPLAY ---
+    // --- LÓGICA DE SCROLL Y AUTOPLAY (Las funciones se mantienen) ---
     
     function startAutoScroll() {
         if (autoScrollTimer !== null) return; 
@@ -125,14 +132,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleScrollActivity() {
         clearTimeout(resumeTimer); 
-        handleLoopingScroll(); 
+        handleLoopingScroll(); // Mantiene el bucle infinito al hacer scroll manual
 
         clearTimeout(scrollActivityTimer);
 
         scrollActivityTimer = setTimeout(() => {
             stopAutoScrollAndPrepareResume(); 
             filmStrip.removeEventListener('scroll', handleScrollActivity);
-        }, 150); 
+        }, 150); // Detecta que la inercia del scroll ha terminado
     }
 
 
@@ -149,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 previewVideo.pause();
             }
             
-            openVideoModal(videoUrl);
+            openVideoModal(videoUrl); // 🟢 Abrir el modal de video
         }
     });
 
@@ -162,6 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
              filmStrip.addEventListener('wheel', handleManualScrollStart, false);
              filmStrip.addEventListener('touchstart', handleManualScrollStart, false);
         }
+        
+        // 🟢 CLAVE: Iniciar los videos preview
+        filmStrip.querySelectorAll('.video-preview').forEach(v => v.play());
         
         startAutoScroll();
     }
