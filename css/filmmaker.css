@@ -29,22 +29,15 @@
 /* Cada elemento de video en la tira (film-item es ahora la "ficha") */
 .film-item {
     flex: 0 0 auto; 
-    width: 640px; /* Ancho base de 640px para ratio 16:9 */
-    
-    /* Técnica del Padding para forzar el ratio 16:9 */
+    width: 640px; 
     height: 0; 
     padding-bottom: 56.25%; 
-    
     margin-right: 50px; 
     position: relative;
     text-align: center;
-    
     background: var(--color-background);
-    
-    /* MARCO DE ARCHIVADOR */
     border: 3px solid var(--color-primary); 
     box-shadow: 6px 6px 0px var(--color-primary); 
-    
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
@@ -75,17 +68,14 @@
     position: absolute;
     top: -3px; 
     left: 20px; 
-    
     padding: 3px 10px 5px 12px; 
     font-size: 0.65rem; 
-    
     background: var(--color-primary); 
     color: var(--color-background) !important; 
     font-weight: var(--font-weight-bold);
     text-transform: uppercase; 
     z-index: 20; 
     cursor: default;
-    
     clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 95% 100%, 0% 100%);
     transition: background 0.2s ease;
     border-radius: 4px 4px 0 0; 
@@ -94,33 +84,27 @@
 /* Información del video sobre la miniatura (contenedor principal para el hover) */
 .video-info {
     z-index: 10; 
-    
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 100%; 
-    
     display: flex;
     flex-direction: column;
     justify-content: flex-end; 
     align-items: center;
-    
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-    
     color: var(--color-light); 
-    
     opacity: 0;
     transition: opacity 0.4s ease; 
     padding: 20px;
 }
 
-/* CLAVE: Mostrar el texto cuando el cursor pasa sobre el ítem */
 .film-item:hover .video-info {
     opacity: 1;
 }
 
-/* TAMAÑO DE TEXTO AJUSTADO A LA NUEVA ESCALA */
+/* TAMAÑO DE TEXTO AJUSTADO */
 .video-info h3 {
     font-size: 2rem; 
     margin: 0;
@@ -137,7 +121,7 @@
     text-transform: lowercase;
 }
 
-/* 🟢 CLAVE: ESTILOS MODAL DE VIDEO (CENTRADOS) */
+/* 🟢 CLAVE: ESTILOS MODAL DE VIDEO (CENTRADOS Y OCULTOS) */
 .video-lightbox {
     position: fixed;
     top: 0;
@@ -145,8 +129,8 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.95);
-    display: flex;
-    /* 🟢 CLAVE: Centrado con Flexbox */
+    /* 🟢 CLAVE: Oculto por defecto y con Flexbox para centrar */
+    display: none; 
     justify-content: center;
     align-items: center; 
     z-index: 1000;
@@ -154,19 +138,17 @@
 
 .video-lightbox-content {
     position: relative;
-    /* Usamos el margen automático para garantizar el centrado si el navegador falla el flex */
-    margin: auto; 
     width: 90vw;
     max-width: 1200px;
-    /* Añadimos un pequeño espacio para que no se pegue al borde */
-    padding: 20px; 
+    margin: auto; /* Centrado si el navegador falla el flex */
+    padding: 20px;
 }
 
-/* 🟢 Botón de Cerrar (X) Estético */
+/* 🟢 CLAVE: Botón de Cerrar (X) Estético y Centrado */
 .video-close-btn {
     position: absolute;
     top: -20px; 
-    right: -20px; 
+    right: -20px; /* Anclado a la esquina superior derecha del contenido */
     
     color: white; 
     font-size: 2.5rem; 
