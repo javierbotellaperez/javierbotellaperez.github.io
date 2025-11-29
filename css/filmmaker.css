@@ -130,26 +130,28 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.95);
-    display: none; 
+    display: none; /* 🟢 CLAVE: Oculto por defecto */
     justify-content: center;
     align-items: center; 
     z-index: 1000;
 }
 
+/* Contenido del Modal (el video y el botón de cierre) */
 .video-lightbox-content {
     position: relative;
     width: 90vw;
     max-width: 1200px;
-    /* 🟢 CLAVE: Centrado con margen y altura limitada */
-    margin: auto; 
-    padding: 20px;
-    box-shadow: 8px 8px 0px var(--color-primary);
+    /* 🔴 ELIMINAMOS EL MARGEN Y FONDO para que solo se vea el video */
+    background: none; 
+    padding: 0; 
 }
 
+/* Botón de Cerrar (X) Estético */
 .video-close-btn {
     position: absolute;
-    top: -20px; 
-    right: -20px; 
+    top: -30px; /* Movido un poco más arriba y fuera del video */
+    right: -30px; 
+    
     color: white; 
     font-size: 2.5rem; 
     font-weight: var(--font-weight-extrabold);
@@ -167,16 +169,14 @@
     color: red;
 }
 
+/* El Reproductor de Video Grande */
 .full-screen-video {
     width: 100%;
-    /* 🟢 CLAVE: Damos al video una altura máxima para que no se salga */
-    max-height: 90vh;
-    height: auto; 
+    height: auto;
+    max-height: 95vh; /* Limitamos la altura máxima */
     display: block;
     border: 3px solid var(--color-primary); 
-    /* 🟢 ELIMINAMOS BOX-SHADOW para que solo el MODAL-CONTENT tenga la sombra */
-    box-shadow: none; 
-    /* 🟢 FORZAMOS LA VISIBILIDAD */
+    box-shadow: 8px 8px 0px var(--color-primary);
     z-index: 100;
-    background: black; /* Fondo negro para videos */
+    background: black; 
 }
