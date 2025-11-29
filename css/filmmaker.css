@@ -173,4 +173,27 @@
     display: block;
     border: 3px solid var(--color-primary); 
     box-shadow: 8px 8px 0px var(--color-primary);
+
+    /* Corrección: Asegurar que el video se muestre delante del fondo del modal */
+.full-screen-video {
+    /* Mantenemos tus estilos existentes... */
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 3px solid var(--color-primary); 
+    box-shadow: 8px 8px 0px var(--color-primary);
+    
+    /* 🟢 CLAVE: Forzar la visibilidad y z-index alto */
+    z-index: 100; 
+    opacity: 1 !important;
+}
+
+/* 🟢 Asegurar que el fondo del modal-content no se suba delante del video */
+.video-lightbox-content {
+    /* Establecemos la posición relativa para que los z-index funcionen bien internamente */
+    position: relative; 
+    
+    /* El background-color: var(--color-background) del modal-content puede estar tapando el video. 
+       Aseguraremos que el video se cargue delante. */
+}
 }
