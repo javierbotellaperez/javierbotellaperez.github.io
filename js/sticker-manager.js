@@ -158,7 +158,18 @@ document.addEventListener('DOMContentLoaded', () => {
         { idBase: 'sticker-arnau', src: 'assets/images/arnau.png', href: 'arnau.html', name: 'Arnau' },
         { idBase: 'sticker-alex', src: 'assets/images/alex.png', href: 'alex.html', name: 'Alex' },
         { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Diary' }, 
-        { idBase: 'sticker-paris', src: 'assets/images/paris.png', href: 'paris.html', name: 'Paris' }
+        { idBase: 'sticker-paris', src: 'assets/images/paris.png', href: 'paris.html', name: 'Paris' }, 
+        { idBase: 'sticker-adria', src: 'assets/images/adria.png', href: 'adria.html', name: 'adia' }, 
+        { idBase: 'sticker-aldo', src: 'assets/images/aldo.png', href: 'aldo.html', name: 'aldo' }, 
+        { idBase: 'sticker-budapest', src: 'assets/images/budapest.png', href: 'budapest.html', name: 'budapest' }, 
+        { idBase: 'sticker-cruising', src: 'assets/images/cruising.png', href: 'cruising.html', name: 'cruising' }, 
+        { idBase: 'sticker-elio', src: 'assets/images/elio.png', href: 'elio.html', name: 'elio' }, 
+        { idBase: 'sticker-jabeat', src: 'assets/images/jabeat.png', href: 'jabeat.html', name: 'jabeat' }, 
+        { idBase: 'sticker-jordi', src: 'assets/images/jordi.png', href: 'jordi.html', name: 'jordi' }, 
+        { idBase: 'sticker-lloret', src: 'assets/images/lloret.png', href: 'lloret.html', name: 'lloret' }, 
+        { idBase: 'sticker-luis', src: 'assets/images/luis.png', href: 'luis.html', name: 'luis' }, 
+        { idBase: 'sticker-usa', src: 'assets/images/usa.png', href: 'usa.html', name: 'usa' }, 
+        { idBase: 'sticker-walden', src: 'assets/images/walden.png', href: 'walden.html', name: 'walden' }
     ];
     
     const stickerArea = document.querySelector('.sticker-area');
