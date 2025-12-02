@@ -13,7 +13,7 @@
 /* Estilos de Cuadrícula y Disposición */
 .content-grid {
     display: grid;
-    /* 🟢 CLAVE: Reducido el minmax a 180px para mayor densidad (más fotos por fila) */
+    /* CLAVE: Reducido el minmax a 180px para mayor densidad (más fotos por fila) */
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
     
     gap: 30px; /* Espacio entre fichas */
@@ -46,7 +46,12 @@
     width: 100%;
     height: auto;
     max-height: none; 
-    display: block;
+    
+    /* 🟢 CLAVE: Forzamos la visualización y anulación de estilos que la ocultan */
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    
     margin: 0;
     border: none;
     cursor: pointer;
@@ -112,7 +117,7 @@
 /* 🟢 CLAVE: Ocultar los botones de navegación visualmente */
 .lightbox-nav {
     display: none !important; 
-    /* Mantenemos las reglas anteriores para que el JS sepa dónde buscar el selector */
+    
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
