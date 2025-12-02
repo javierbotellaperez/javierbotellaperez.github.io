@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { idBase: 'sticker-jordi', src: 'assets/images/jordi.png', href: 'jordi.html', name: 'jordi' }, 
         { idBase: 'sticker-lloret', src: 'assets/images/lloret.png', href: 'lloret.html', name: 'lloret' }, 
         { idBase: 'sticker-luis', src: 'assets/images/luis.png', href: 'luis.html', name: 'luis' }, 
-        { idBase: 'sticker-usa', src: 'assets/images/usa.png', href: 'usa.html', name: 'usa' }, 
+        { idBase: 'sticker-usa', src: 'assets/images/usa.png', href: 'nyc.html', name: 'usa' }, 
         { idBase: 'sticker-walden', src: 'assets/images/walden.png', href: 'walden.html', name: 'walden' }
     ];
     
