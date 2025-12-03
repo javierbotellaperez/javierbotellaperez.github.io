@@ -1,7 +1,6 @@
 /**
  * js/sticker-manager.js
- * Clase para manejar la interacción (PAN, PINCH, WHEEL) y la gestión de stickers ÚNICOS,
- * con verificación de edad, filtrado de contenido y generación de pestañas de nombre de proyecto.
+ * CLAVE: Solución final al bug de renderizado y posicionamiento.
  */
 
 // Contador global para asegurar que el sticker seleccionado siempre tenga el z-index más alto.
@@ -26,16 +25,17 @@ class InteractiveSticker {
         this.QUICK_TRANSITION = 'transform 0.1s ease-out';
 
         this.setupHammer();
-        // 🔴 Se llama a setupInitialPosition al final de filterAndShow, no aquí.
+        // 🔴 setupInitialPosition SE LLAMA AL FINAL DE filterAndShow
     }
     
+    // 🟢 Esta función es llamada manualmente después del filtro
     setupInitialPosition() {
         this.containerLink.style.width = `${this.initialSize}px`;
 
         const anchoViewport = window.innerWidth - this.initialSize;
         const altoViewport = window.innerHeight - this.initialSize;
 
-        // Añadimos un pequeño offset para evitar solapamiento con el header/footer
+        // Añadimos un offset para que no tape el header/footer.
         const verticalOffset = 100;
         
         this.currentX = Math.random() * anchoViewport;
@@ -154,15 +154,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnYes = document.getElementById('disclaimer-yes');
     const btnNo = document.getElementById('disclaimer-no');
     
-    // 🟢 CLAVE: Lista de stickers con SINTAXIS CORREGIDA
+    // --- Definición de Stickers (Sintaxis Corregida) ---
     const stickerTypes = [
         { idBase: 'sticker-arnau', src: 'assets/images/arnau.png', href: 'arnau.html', name: 'Arnau', ageRestricted: true},
         { idBase: 'sticker-alex', src: 'assets/images/alex.png', href: 'alex.html', name: 'Alex', ageRestricted: true },
         { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Diary', ageRestricted: false }, 
-        
-        // 🔴 CORRECCIÓN: Coma añadida aquí
         { idBase: 'sticker-paris', src: 'assets/images/paris.png', href: 'paris.html', name: 'Paris', ageRestricted: false }, 
-        
         { idBase: 'sticker-adria', src: 'assets/images/adria.png', href: 'adria.html', name: 'adria', ageRestricted: true },  
         { idBase: 'sticker-aldo', src: 'assets/images/aldo.png', href: 'aldo.html', name: 'aldo', ageRestricted: true },  
         { idBase: 'sticker-budapest', src: 'assets/images/budapest.png', href: 'budapest.html', name: 'budapest', ageRestricted: false },  
@@ -176,15 +173,18 @@ document.addEventListener('DOMContentLoaded', () => {
         { idBase: 'sticker-walden', src: 'assets/images/walden.png', href: 'walden.html', name: 'walden', ageRestricted: false }
     ];
 
+    // 🟢 Nueva lista para almacenar instancias de InteractiveSticker
+    let stickerInstances = []; 
+
     // --- Funciones de Filtrado y Visualización ---
 
     function filterAndShow(isAdult) {
         if (modal) {
-            modal.style.display = 'none'; 
+            modal.style.display = 'none'; // Ocultar el modal
         }
         
         stickerArea.innerHTML = '';
-        const stickerInstances = []; // 🟢 Limpiamos y recreamos las instancias
+        stickerInstances = []; // 🟢 Limpiamos la lista de instancias
         
         stickerTypes.forEach((type) => {
             const shouldShow = isAdult || (type.ageRestricted === false); 
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Inicializar la interacción
                 const sticker = new InteractiveSticker(uniqueId);
-                stickerInstances.push(sticker); // 🟢 Guardamos la instancia
+                stickerInstances.push(sticker); 
             }
         });
         
@@ -221,37 +221,58 @@ document.addEventListener('DOMContentLoaded', () => {
             stickerInstances.forEach(sticker => {
                 sticker.setupInitialPosition();
             });
-        }, 100); // Pequeño retraso para que el navegador termine de renderizar
-
-        // Mostrar alerta de pie de página si es menor de 18
+        }, 100); // 100ms para que el navegador renderice los elementos
+        
         if (!isAdult) {
             displayAgeAlert();
         }
     }
 
     function displayAgeAlert() {
-        // ... (resto de la función displayAgeAlert) ...
-        // (Asume que el cuerpo de esta función está definido en tu archivo)
+        let footerAlert = document.querySelector('.age-restriction-alert');
+        if (!footerAlert) {
+             footerAlert = document.createElement('div');
+             footerAlert.classList.add('age-restriction-alert');
+             document.body.appendChild(footerAlert);
+        }
+        footerAlert.innerHTML = "Contenido restringido (+18) oculto. <span style='text-decoration: underline; cursor: pointer;' id='recheck-age'>Volver a verificar la edad.</span>";
+        footerAlert.style.display = 'block'; 
+        
+        document.getElementById('recheck-age').addEventListener('click', () => {
+            localStorage.removeItem('isAdult');
+            window.location.reload();
+        });
     }
 
+
+    // --- Función de Verificación Inicial ---
+
     function checkAgeRestriction() {
-        // ... (resto de la función checkAgeRestriction) ...
-        // (Asume que el cuerpo de esta función está definido en tu archivo)
+        const isAdultStored = localStorage.getItem('isAdult');
+
+        if (isAdultStored === 'true') {
+            filterAndShow(true);
+        } else if (isAdultStored === 'false') {
+            filterAndShow(false);
+        } else {
+            // Si nunca ha respondido, mostrar el modal
+            if (modal) modal.style.display = 'flex';
+        }
     }
 
     // --- Listeners del Modal ---
+
     if (btnYes && btnNo) {
         btnYes.addEventListener('click', () => {
             localStorage.setItem('isAdult', 'true');
-            checkAgeRestriction();
+            checkAgeRestriction(); 
         });
 
         btnNo.addEventListener('click', () => {
             localStorage.setItem('isAdult', 'false');
-            checkAgeRestriction();
+            checkAgeRestriction(); 
         });
     }
 
-    // Iniciar la verificación
     checkAgeRestriction(); 
 });
