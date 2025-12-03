@@ -154,10 +154,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Definición de Stickers ---
     const stickerTypes = [
         // 🟢 CLAVE: Etiquetar con ageRestricted: true/false
-        { idBase: 'sticker-arnau', src: 'assets/images/arnau.png', href: 'arnau.html', name: 'Arnau Project', ageRestricted: true },
-        { idBase: 'sticker-alex', src: 'assets/images/alex.png', href: 'alex.html', name: 'Alex Shoot', ageRestricted: false },
-        { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Photo Diary', ageRestricted: false }, 
-        { idBase: 'sticker-paris', src: 'assets/images/paris.png', href: 'paris.html', name: 'Paris Session', ageRestricted: true },
+        { idBase: 'sticker-arnau', src: 'assets/images/arnau.png', href: 'arnau.html', name: 'Arnau', ageRestricted: true},
+        { idBase: 'sticker-alex', src: 'assets/images/alex.png', href: 'alex.html', name: 'Alex', ageRestricted: true },
+        { idBase: 'sticker-diary', src: 'assets/images/diary.png', href: 'diary.html', name: 'Diary' }, 
+        { idBase: 'sticker-paris', src: 'assets/images/paris.png', href: 'paris.html', name: 'Paris', ageRestricted: false }, 
+        { idBase: 'sticker-adria', src: 'assets/images/adria.png', href: 'adria.html', name: 'adria', ageRestricted: true }, 
+        { idBase: 'sticker-aldo', src: 'assets/images/aldo.png', href: 'aldo.html', name: 'aldo', ageRestricted: true }, 
+        { idBase: 'sticker-budapest', src: 'assets/images/budapest.png', href: 'budapest.html', name: 'budapest', ageRestricted: false }, 
+        { idBase: 'sticker-cruising', src: 'assets/images/cruising.png', href: 'cruising.html', name: 'cruising', ageRestricted: true }, 
+        { idBase: 'sticker-elio', src: 'assets/images/elio.png', href: 'elio.html', name: 'elio', ageRestricted: true }, 
+        { idBase: 'sticker-jabeat', src: 'assets/images/jabeat.png', href: 'jabeat.html', name: 'jabeat', ageRestricted: false }, 
+        { idBase: 'sticker-jordi', src: 'assets/images/jordi.png', href: 'jordi.html', name: 'jordi', ageRestricted: true}, 
+        { idBase: 'sticker-lloret', src: 'assets/images/lloret.png', href: 'lloret.html', name: 'lloret', ageRestricted: false}, 
+        { idBase: 'sticker-luis', src: 'assets/images/luis.png', href: 'luis.html', name: 'luis', ageRestricted: true }, 
+        { idBase: 'sticker-usa', src: 'assets/images/usa.png', href: 'nyc.html', name: 'usa', ageRestricted: false }, 
+        { idBase: 'sticker-walden', src: 'assets/images/walden.png', href: 'walden.html', name: 'walden', ageRestricted: false }
         // Puedes añadir más stickers aquí siguiendo el patrón.
     ];
 
