@@ -10,6 +10,17 @@
 </head>
 <body class="interactive-page"> 
     
+    <div id="age-disclaimer-modal" class="age-disclaimer-modal">
+        <div class="disclaimer-content">
+            <h3>AVISO DE CONTENIDO</h3>
+            <p>Este portafolio contiene material fotográfico con desnudos o contenido de naturaleza erótica.</p>
+            <p><strong>¿Eres mayor de 18 años?</strong></p>
+            <div class="disclaimer-actions">
+                <button id="disclaimer-yes" data-age="true">Sí, soy mayor de 18</button>
+                <button id="disclaimer-no" data-age="false">No, soy menor de 18</button>
+            </div>
+        </div>
+    </div>
     <header>
         <nav class="header-nav">
             <p class="role-group">
@@ -24,6 +35,8 @@
     <main class="sticker-area full-screen-interactive">
         
     </main>
+
+    <div class="age-restriction-alert"></div> 
 
     <footer>
         <p>&copy; <span id="current-year"></span> javier botella pérez. all rights reserved.</p>
