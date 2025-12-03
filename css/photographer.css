@@ -3,18 +3,13 @@
 /* El área de stickers debe ser el viewport completo y relative para posicionar a los hijos */
 .sticker-area {
     width: 100%;
-    /* 🟢 CLAVE: Restauramos min-height y position: relative para que el footer se vea */
+    /* 🟢 CLAVE: Volvemos a min-height: 100vh para que el footer sea visible */
     min-height: 100vh; 
     height: auto;
     position: relative; 
-    
-    /* Eliminamos top/left fijos */
-    left: auto;
-    top: auto;
-    
     overflow: hidden; 
     
-    /* Compensación de padding para que los stickers no cubran el header */
+    /* 🟢 CLAVE: El padding superior debe compensar la altura total del header */
     padding-top: 5rem; 
 }
 
@@ -81,4 +76,75 @@
 /* Mostrar la sugerencia solo al hacer hover */
 .sticker-link:hover::after {
     opacity: 1;
+}
+
+
+/* 🟢 ESTILO DEL MODAL DE VERIFICACIÓN +18 (POP-UP ARCHIVADOR) */
+.age-disclaimer-modal {
+    /* 🟢 CLAVE: Posicionamiento Fixed y Fondo Oscuro */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente para indicar inactividad */
+    z-index: 10000;
+    display: none; /* Oculto por defecto, JS lo hace 'flex' */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.disclaimer-content {
+    /* 🟢 Diseño de ficha de archivador flotante */
+    background: var(--color-background);
+    padding: 30px 40px;
+    border: 3px solid var(--color-primary);
+    box-shadow: 15px 15px 0px var(--color-primary); /* Sombra marcada */
+    max-width: 450px; /* Tamaño del pop-up */
+    
+    font-family: var(--font-family); 
+}
+
+.disclaimer-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: var(--font-weight-extrabold);
+    text-transform: uppercase;
+}
+
+.disclaimer-content p {
+    margin: 10px 0;
+    font-size: 0.9rem;
+}
+
+.disclaimer-actions button {
+    background: var(--color-primary);
+    color: var(--color-light);
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-family);
+    transition: opacity 0.2s;
+}
+
+.disclaimer-actions button:hover {
+    opacity: 0.8;
+}
+
+/* 🟢 ESTILO DEL FOOTER DE ALERTA (Oculto por defecto) */
+.age-restriction-alert {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: red; /* Fondo de alerta */
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 0.8rem;
+    z-index: 999; 
+    display: none;
 }
