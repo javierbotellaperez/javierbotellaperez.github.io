@@ -83,3 +83,31 @@
     color: var(--color-primary);
     box-shadow: 2px 2px 0 var(--color-primary);
 }
+
+
+/* 🟢 ESTILOS PARA REDES SOCIALES */
+.social-links-area {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--color-primary); /* Separador sutil */
+    text-align: center;
+}
+
+.social-title {
+    font-weight: var(--font-weight-extrabold);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espacio entre los links */
+    flex-wrap: wrap;
+}
+
+.social-link {
+    /* Usamos el estilo de enlace global (bold, underline-on-hover) */
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+}
