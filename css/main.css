@@ -75,7 +75,7 @@ a:not(.interactive-sticker):hover {
     font-style: normal;
     cursor: pointer;
     transform: scale(1.05); 
-    /* Subrayado sutil */
+    /* Subrayado sutil restaurado */
     text-decoration: underline !important; 
     text-decoration-thickness: 2px; 
 }
@@ -145,30 +145,6 @@ a:not(.interactive-sticker):hover {
     font-size: var(--font-size-role);
 }
 
-/* 🟢 CLAVE: Estilo de Botón de Llamada a la Acción (CTA) en el Index */
-a.contact-cta-button {
-    transform: none;
-    background: var(--color-primary);
-    color: var(--color-light);
-    border: 2px solid var(--color-primary);
-    padding: 8px 16px;
-    
-    font-size: 0.9rem;
-    font-weight: var(--font-weight-extrabold);
-    text-transform: uppercase;
-    display: inline-block;
-    margin-top: 1rem; 
-    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-}
-
-a.contact-cta-button:hover {
-    background: var(--color-background);
-    color: var(--color-primary);
-    box-shadow: 3px 3px 0 var(--color-primary); 
-    text-decoration: none !important; 
-    transform: none !important;
-}
-
 /* Estilo para el separador '|' si se usa */
 .separator {
     display: none; 
@@ -183,6 +159,32 @@ main:not(.full-screen-interactive) {
     align-items: center;
     padding: 1.5rem 5%;
     width: 100%;
+}
+
+/* 🟢 CLAVE: Estilo de Botón de Llamada a la Acción (CTA) en el Index */
+a.contact-cta-button {
+    transform: none;
+    background: var(--color-primary);
+    color: var(--color-light);
+    border: 2px solid var(--color-primary);
+    
+    /* 🟢 CLAVE: Reducción del tamaño en ~25% */
+    font-size: 0.7rem; /* Reducido de 0.9rem */
+    padding: 6px 12px; /* Reducido de 8px 16px */
+    
+    font-weight: var(--font-weight-extrabold);
+    text-transform: uppercase;
+    display: inline-block;
+    margin-top: 0.5rem; /* Margen ya corregido */
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+a.contact-cta-button:hover {
+    background: var(--color-background);
+    color: var(--color-primary);
+    box-shadow: 3px 3px 0 var(--color-primary); 
+    text-decoration: none !important; 
+    transform: none !important;
 }
 
 /* --- Pie de página --- */
