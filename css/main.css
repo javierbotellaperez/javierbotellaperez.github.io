@@ -157,7 +157,7 @@ a.contact-cta-button {
     font-weight: var(--font-weight-extrabold);
     text-transform: uppercase;
     display: inline-block;
-    margin-top: 2rem; 
+    margin-top: 1rem; 
     transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
