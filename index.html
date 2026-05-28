@@ -3,20 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería en Blanco y Negro</title>
+    <!-- El nombre de tu portfolio aparecerá en la pestaña del navegador -->
+    <title>Javier Botella Pérez - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+    <!-- Encabezado del Portfolio (Opcional, añade presencia profesional) -->
+    <header style="position: absolute; top: 40px; text-align: center; width: 100%; z-index: 20;">
+        <h1 style="color: #ffffff; font-family: 'Segoe UI', sans-serif; font-weight: 300; letter-spacing: 3px; font-size: 24px; text-transform: uppercase;">
+            Javier Botella Pérez
+        </h1>
+        <p style="color: #888888; font-family: 'Segoe UI', sans-serif; font-size: 14px; letter-spacing: 2px; margin-top: 5px; text-transform: uppercase;">
+            Portfolio Fotográfico
+        </p>
+    </header>
+
+    <!-- Contenedor del Carrusel Horizontal -->
     <div class="carousel-container">
+        <!-- Las 75 imágenes en blanco y negro se inyectan aquí dinámicamente -->
         <div class="carousel-track" id="carouselTrack"></div>
 
-        <button class="btn prev" id="prevBtn">&#10094;</button>
-        <button class="btn next" id="nextBtn">&#10095;</button>
+        <!-- Botones de navegación (Flechas) -->
+        <button class="btn prev" id="prevBtn" aria-label="Fotografía anterior">&#10094;</button>
+        <button class="btn next" id="nextBtn" aria-label="Siguiente fotografía">&#10095;</button>
         
+        <!-- Contador de posición (ej. 1 / 75) -->
         <div class="counter" id="carouselCounter">1 / 75</div>
     </div>
 
+    <!-- Enlace al archivo lógico de JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
