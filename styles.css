@@ -1,4 +1,4 @@
-/* --- Reset absoluto --- */
+/* --- Reset y Base --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -8,61 +8,60 @@
 html, body {
     width: 100%;
     height: 100%;
-    background-color: #ffffff; /* Fondo blanco tipo galería de arte */
+    background-color: #ffffff; /* Fondo blanco de galería */
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
 }
 
-/* --- Ventana del Carrusel (Más pequeña y centrada) --- */
+/* --- El Contenedor Ventana --- */
 .carousel-container {
     position: relative;
-    width: 80vw;       /* Ocupa el 80% del ancho de la pantalla */
-    max-width: 900px;  /* Límite para que no se vea gigante en ordenadores */
-    height: 60vh;      /* Ocupa el 60% del alto de la pantalla */
-    max-height: 550px;
-    overflow: hidden;
+    width: 100vw;       /* Ocupa todo el ancho de la pantalla */
+    height: 50vh;       /* Altura de la cinta de fotos (ajustable) */
+    max-height: 450px;
+    overflow: hidden;   /* Recorta lo que sale por los lados */
+    display: flex;
+    align-items: center;
 }
 
-/* --- Tira Horizontal --- */
+/* --- La Tira que se mueve infinitamente --- */
 .carousel-track {
     display: flex;
-    height: 100%;
-    width: 100%;
-    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); /* Desplazamiento muy suave */
-    will-change: transform;
+    width: max-content; /* Fuerza a la tira a expandirse tanto como midan las fotos */
+    animation: scrollContinuo 180s linear infinite; /* 180 segundos en dar la vuelta completa (ajusta si lo quieres más rápido/lento) */
 }
 
-/* --- Estilo de las Imágenes --- */
+/* Pausar el movimiento si el usuario pone el cursor encima de cualquier foto */
+.carousel-container:hover .carousel-track {
+    animation-play-state: paused;
+}
+
+/* --- Las Fotos dentro de la Cinta --- */
 .carousel-image {
-    width: 100%; 
-    height: 100%;
-    flex-shrink: 0;
-    object-fit: contain; /* CLAVE: Ajusta la foto entera sin recortarla, dejando aire alrededor */
+    height: 40vh;       /* Las fotos no tocan el borde superior ni inferior, dando "aire" */
+    max-height: 380px;
+    width: auto;        /* Mantiene la proporción real de la foto (ya sea vertical u horizontal) */
+    padding: 0 25px;    /* El espacio/margen limpio entre foto y foto */
+    object-fit: contain;
     filter: grayscale(100%); /* Blanco y negro */
-}
-
-/* --- Botones Minimalistas Oscuros (Para fondo blanco) --- */
-.btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    color: rgba(0, 0, 0, 0.2); /* Gris muy suave para no distraer */
-    border: none;
-    font-size: 35px;
-    cursor: pointer;
-    padding: 15px;
-    z-index: 10;
-    transition: color 0.3s ease, scale 0.2s ease;
     user-select: none;
+    pointer-events: none; /* Evita que se puedan arrastrar con el mouse por error */
 }
 
-.btn:hover {
-    color: #000000; /* Negro puro al pasar el cursor */
-    scale: 1.1;
+/* --- Definición de la Animación en Bucle --- */
+@keyframes scrollContinuo {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Se desplaza exactamente hacia la mitad (donde termina el bloque original y empieza el clonado) */
+        transform: translateX(-50%); 
+    }
 }
 
-.prev { left: 0px; }
-.next { right: 0px; }
+/* Ocultamos las flechas viejas ya que ahora el flujo es automático e infinito */
+.btn {
+    display: none;
+}
