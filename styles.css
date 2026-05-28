@@ -8,60 +8,109 @@
 html, body {
     width: 100%;
     height: 100%;
-    background-color: #ffffff; /* Fondo blanco de galería */
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
 }
 
-/* --- El Contenedor Ventana --- */
+/* --- La Cinta Continua (Sin Márgenes) --- */
 .carousel-container {
     position: relative;
-    width: 100vw;       /* Ocupa todo el ancho de la pantalla */
-    height: 50vh;       /* Altura de la cinta de fotos (ajustable) */
+    width: 100vw;
+    height: 50vh;
     max-height: 450px;
-    overflow: hidden;   /* Recorta lo que sale por los lados */
+    overflow: hidden;
     display: flex;
     align-items: center;
 }
 
-/* --- La Tira que se mueve infinitamente --- */
 .carousel-track {
     display: flex;
-    width: max-content; /* Fuerza a la tira a expandirse tanto como midan las fotos */
-    animation: scrollContinuo 180s linear infinite; /* 180 segundos en dar la vuelta completa (ajusta si lo quieres más rápido/lento) */
+    width: max-content;
+    animation: scrollContinuo 180s linear infinite;
 }
 
-/* Pausar el movimiento si el usuario pone el cursor encima de cualquier foto */
+/* Pausa al pasar el ratón */
 .carousel-container:hover .carousel-track {
     animation-play-state: paused;
 }
 
-/* --- Las Fotos dentro de la Cinta --- */
+/* Fotos pegadas una al lado de la otra */
 .carousel-image {
-    height: 40vh;       /* Las fotos no tocan el borde superior ni inferior, dando "aire" */
-    max-height: 380px;
-    width: auto;        /* Mantiene la proporción real de la foto (ya sea vertical u horizontal) */
-    padding: 0 25px;    /* El espacio/margen limpio entre foto y foto */
+    height: 45vh;
+    max-height: 420px;
+    width: auto;
+    padding: 0; /* ELIMINADO EL MARGEN: fotos totalmente juntas */
     object-fit: contain;
-    filter: grayscale(100%); /* Blanco y negro */
-    user-select: none;
-    pointer-events: none; /* Evita que se puedan arrastrar con el mouse por error */
+    filter: grayscale(100%);
+    cursor: pointer; /* Mano al pasar por encima para indicar que es clicable */
+    transition: filter 0.3s ease;
 }
 
-/* --- Definición de la Animación en Bucle --- */
+.carousel-image:hover {
+    filter: grayscale(100%) brightness(110%);
+}
+
 @keyframes scrollContinuo {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        /* Se desplaza exactamente hacia la mitad (donde termina el bloque original y empieza el clonado) */
-        transform: translateX(-50%); 
-    }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
-/* Ocultamos las flechas viejas ya que ahora el flujo es automático e infinito */
-.btn {
-    display: none;
+/* --- VISOR EN PANTALLA COMPLETA (LIGHTBOX) --- */
+.lightbox {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.95); /* Fondo negro puro para destacar la foto grande */
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
 }
+
+/* Clase que activará JavaScript para mostrarlo */
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-content {
+    max-width: 85%;
+    max-height: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+/* Botones del Visor */
+.lightbox-btn, .close-btn {
+    position: absolute;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 40px;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s;
+    z-index: 110;
+    user-select: none;
+}
+
+.lightbox-btn:hover, .close-btn:hover {
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.lightbox-btn.prev { left: 30px; top: 50%; transform: translateY(-50%); }
+.lightbox-btn.next { right: 30px; top: 50%; transform: translateY(-50%); }
+.close-btn { top: 20px; right: 30px; font-size: 50px; }
