@@ -1,4 +1,4 @@
-/* --- Reset absoluto para eliminar márgenes del navegador --- */
+/* --- Reset absoluto --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -8,55 +8,61 @@
 html, body {
     width: 100%;
     height: 100%;
-    background-color: #000000;
-    overflow: hidden; /* Evita barras de desplazamiento */
-}
-
-/* --- Contenedor al 100% de la pantalla (Sin márgenes laterales) --- */
-.carousel-container {
-    position: relative;
-    width: 100vw;  /* Toma el 100% del ancho de la pantalla */
-    height: 100vh; /* Toma el 100% del alto de la pantalla */
+    background-color: #ffffff; /* Fondo blanco tipo galería de arte */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 }
 
-/* --- Tira Horizontal Perfecta --- */
+/* --- Ventana del Carrusel (Más pequeña y centrada) --- */
+.carousel-container {
+    position: relative;
+    width: 80vw;       /* Ocupa el 80% del ancho de la pantalla */
+    max-width: 900px;  /* Límite para que no se vea gigante en ordenadores */
+    height: 60vh;      /* Ocupa el 60% del alto de la pantalla */
+    max-height: 550px;
+    overflow: hidden;
+}
+
+/* --- Tira Horizontal --- */
 .carousel-track {
-    display: flex; /* Fuerza la línea horizontal de fotos */
+    display: flex;
     height: 100%;
     width: 100%;
-    transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); /* Desplazamiento muy suave */
     will-change: transform;
 }
 
-/* --- Imágenes a Pantalla Completa --- */
+/* --- Estilo de las Imágenes --- */
 .carousel-image {
-    width: 100vw;  /* Cada foto mide exactamente lo mismo que tu pantalla */
-    height: 100vh;
-    flex-shrink: 0; /* Impide que se aplasten en vertical */
-    object-fit: cover; /* Ajusta la foto cubriendo toda la pantalla */
-    filter: grayscale(100%);
+    width: 100%; 
+    height: 100%;
+    flex-shrink: 0;
+    object-fit: contain; /* CLAVE: Ajusta la foto entera sin recortarla, dejando aire alrededor */
+    filter: grayscale(100%); /* Blanco y negro */
 }
 
-/* --- Flechas minimalistas flotando sobre la imagen --- */
+/* --- Botones Minimalistas Oscuros (Para fondo blanco) --- */
 .btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     background: none;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(0, 0, 0, 0.2); /* Gris muy suave para no distraer */
     border: none;
     font-size: 35px;
     cursor: pointer;
-    padding: 20px;
+    padding: 15px;
     z-index: 10;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, scale 0.2s ease;
     user-select: none;
 }
 
 .btn:hover {
-    color: #ffffff;
+    color: #000000; /* Negro puro al pasar el cursor */
+    scale: 1.1;
 }
 
-.prev { left: 15px; }
-.next { right: 15px; }
+.prev { left: 0px; }
+.next { right: 0px; }
