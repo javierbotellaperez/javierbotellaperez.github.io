@@ -1,4 +1,4 @@
-/* --- Estilos Generales --- */
+/* --- Reset y Estilo Base Minimalista --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,98 +6,70 @@
 }
 
 body {
-    background-color: #121212; /* Fondo oscuro */
+    background-color: #000000; /* Negro absoluto para resaltar la fotografía */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow: hidden; /* Evita barras de desplazamiento */
+    overflow: hidden; /* Evita cualquier barra de scroll molesta */
 }
 
-/* --- Contenedor Principal (La Ventana) --- */
+/* --- Ventana del Carrusel --- */
 .carousel-container {
     position: relative;
-    /* Ajuste de tamaño: más ancho que alto para formato horizontal */
-    width: 90vw; /* 90% del ancho de la pantalla */
-    max-width: 1000px; /* Ancho máximo en pantallas grandes */
-    height: 60vh; /* 60% del alto de la pantalla */
-    max-height: 600px;
-    overflow: hidden; /* Oculta las fotos que están "fuera" a la derecha */
-    border-radius: 12px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
-    border: 1px solid #333;
+    width: 85vw;       /* Ocupa el 85% del ancho de la pantalla */
+    max-width: 1100px; 
+    height: 65vh;      /* Ocupa el 65% del alto de la pantalla */
+    max-height: 650px;
+    overflow: hidden;  /* Esconde las fotos que están a la derecha esperando su turno */
 }
 
-/* --- La Pista (La tira larga de fotos) --- */
+/* --- La Tira Horizontal de Fotos --- */
 .carousel-track {
-    display: flex; /* Alinea las fotos en una fila horizontal */
+    display: flex; /* Fuerza a las fotos a colocarse una al lado de la otra en horizontal */
     height: 100%;
-    /* Movimiento suave al desplazarse */
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    will-change: transform; /* Optimización de rendimiento */
+    transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); /* Movimiento suave y elegante */
+    will-change: transform;
 }
 
-/* --- Estilo de CADA Imagen --- */
+/* --- Estilo de las Imágenes --- */
 .carousel-image {
-    /* CLAVE PARA EL HORIZONTAL: */
-    width: 100%; /* Cada foto ocupa EXACTAMENTE el ancho del contenedor */
-    flex-shrink: 0; /* Evita que las fotos se compriman */
-    
+    width: 100%;     /* Cada foto toma exactamente el ancho de la ventana */
     height: 100%;
-    object-fit: cover; /* Ajusta la imagen sin deformarla (recorta bordes si es necesario) */
+    flex-shrink: 0;  /* Evita que se aplasten entre sí */
+    object-fit: cover; /* Ajusta la imagen elegantemente sin deformarla */
     
-    /* Filtro Blanco y Negro */
-    filter: grayscale(100%) contrast(105%) brightness(90%);
-    transition: filter 0.4s ease;
+    /* Filtro Blanco y Negro Puro */
+    filter: grayscale(100%) brightness(90%);
+    transition: filter 0.5s ease;
 }
 
-/* Pequeño realce al pasar el mouse */
+/* Al pasar el cursor sobre el carrusel, la foto se ilumina sutilmente */
 .carousel-container:hover .carousel-image {
-    filter: grayscale(100%) contrast(115%) brightness(100%);
+    filter: grayscale(100%) brightness(100%);
 }
 
-/* --- Botones y Contador (Igual que antes) --- */
+/* --- Botones de Navegación Flexibles (Flechas) --- */
 .btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.15);
-    color: white;
+    background: none;
+    color: rgba(255, 255, 255, 0.3); /* Semi-invisibles para mantener el minimalismo */
     border: none;
-    font-size: 28px;
-    width: 50px;
-    height: 50px;
+    font-size: 32px;
     cursor: pointer;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    user-select: none;
+    padding: 10px;
     z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    transition: color 0.3s ease, scale 0.2s ease;
+    user-select: none;
 }
 
+/* Las flechas se vuelven blancas al pasar el mouse por encima */
 .btn:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #121212;
+    color: rgba(255, 255, 255, 0.9);
     scale: 1.1;
 }
 
-.prev { left: 20px; }
-.next { right: 20px; }
-
-.counter {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: bold;
-    z-index: 10;
-    letter-spacing: 1px;
-}
+.prev { left: 10px; }
+.next { right: 10px; }
