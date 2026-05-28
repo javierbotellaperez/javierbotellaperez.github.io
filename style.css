@@ -1,75 +1,62 @@
-/* --- Reset y Estilo Base Minimalista --- */
+/* --- Reset absoluto para eliminar márgenes del navegador --- */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
-    background-color: #000000; /* Negro absoluto para resaltar la fotografía */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow: hidden; /* Evita cualquier barra de scroll molesta */
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    overflow: hidden; /* Evita barras de desplazamiento */
 }
 
-/* --- Ventana del Carrusel --- */
+/* --- Contenedor al 100% de la pantalla (Sin márgenes laterales) --- */
 .carousel-container {
     position: relative;
-    width: 85vw;       /* Ocupa el 85% del ancho de la pantalla */
-    max-width: 1100px; 
-    height: 65vh;      /* Ocupa el 65% del alto de la pantalla */
-    max-height: 650px;
-    overflow: hidden;  /* Esconde las fotos que están a la derecha esperando su turno */
+    width: 100vw;  /* Toma el 100% del ancho de la pantalla */
+    height: 100vh; /* Toma el 100% del alto de la pantalla */
+    overflow: hidden;
 }
 
-/* --- La Tira Horizontal de Fotos --- */
+/* --- Tira Horizontal Perfecta --- */
 .carousel-track {
-    display: flex; /* Fuerza a las fotos a colocarse una al lado de la otra en horizontal */
+    display: flex; /* Fuerza la línea horizontal de fotos */
     height: 100%;
-    transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); /* Movimiento suave y elegante */
+    width: 100%;
+    transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
     will-change: transform;
 }
 
-/* --- Estilo de las Imágenes --- */
+/* --- Imágenes a Pantalla Completa --- */
 .carousel-image {
-    width: 100%;     /* Cada foto toma exactamente el ancho de la ventana */
-    height: 100%;
-    flex-shrink: 0;  /* Evita que se aplasten entre sí */
-    object-fit: cover; /* Ajusta la imagen elegantemente sin deformarla */
-    
-    /* Filtro Blanco y Negro Puro */
-    filter: grayscale(100%) brightness(90%);
-    transition: filter 0.5s ease;
+    width: 100vw;  /* Cada foto mide exactamente lo mismo que tu pantalla */
+    height: 100vh;
+    flex-shrink: 0; /* Impide que se aplasten en vertical */
+    object-fit: cover; /* Ajusta la foto cubriendo toda la pantalla */
+    filter: grayscale(100%);
 }
 
-/* Al pasar el cursor sobre el carrusel, la foto se ilumina sutilmente */
-.carousel-container:hover .carousel-image {
-    filter: grayscale(100%) brightness(100%);
-}
-
-/* --- Botones de Navegación Flexibles (Flechas) --- */
+/* --- Flechas minimalistas flotando sobre la imagen --- */
 .btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     background: none;
-    color: rgba(255, 255, 255, 0.3); /* Semi-invisibles para mantener el minimalismo */
+    color: rgba(255, 255, 255, 0.3);
     border: none;
-    font-size: 32px;
+    font-size: 35px;
     cursor: pointer;
-    padding: 10px;
+    padding: 20px;
     z-index: 10;
-    transition: color 0.3s ease, scale 0.2s ease;
+    transition: color 0.3s ease;
     user-select: none;
 }
 
-/* Las flechas se vuelven blancas al pasar el mouse por encima */
 .btn:hover {
-    color: rgba(255, 255, 255, 0.9);
-    scale: 1.1;
+    color: #ffffff;
 }
 
-.prev { left: 10px; }
-.next { right: 10px; }
+.prev { left: 15px; }
+.next { right: 15px; }
