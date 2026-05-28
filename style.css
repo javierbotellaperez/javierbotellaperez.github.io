@@ -1,4 +1,4 @@
-/* Estilos Generales */
+/* --- Estilos Generales --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,85 +6,98 @@
 }
 
 body {
-    background-color: #121212; /* Fondo oscuro para resaltar las fotos */
+    background-color: #121212; /* Fondo oscuro */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden; /* Evita barras de desplazamiento */
 }
 
-/* Contenedor del Carrusel */
+/* --- Contenedor Principal (La Ventana) --- */
 .carousel-container {
     position: relative;
-    width: 80%;
-    max-width: 800px;
-    height: 500px;
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    /* Ajuste de tamaño: más ancho que alto para formato horizontal */
+    width: 90vw; /* 90% del ancho de la pantalla */
+    max-width: 1000px; /* Ancho máximo en pantallas grandes */
+    height: 60vh; /* 60% del alto de la pantalla */
+    max-height: 600px;
+    overflow: hidden; /* Oculta las fotos que están "fuera" a la derecha */
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    border: 1px solid #333;
 }
 
-/* La pista que se mueve de izquierda a derecha */
+/* --- La Pista (La tira larga de fotos) --- */
 .carousel-track {
-    display: flex;
+    display: flex; /* Alinea las fotos en una fila horizontal */
     height: 100%;
-    transition: transform 0.5s ease-in-out;
+    /* Movimiento suave al desplazarse */
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform; /* Optimización de rendimiento */
 }
 
-/* Estilo de cada imagen */
+/* --- Estilo de CADA Imagen --- */
 .carousel-image {
-    width: 100%;
+    /* CLAVE PARA EL HORIZONTAL: */
+    width: 100%; /* Cada foto ocupa EXACTAMENTE el ancho del contenedor */
+    flex-shrink: 0; /* Evita que las fotos se compriman */
+    
     height: 100%;
-    object-fit: cover; /* Ajusta la imagen sin deformarla */
-    flex-shrink: 0;
-    /* Fuerza el efecto Blanco y Negro */
-    filter: grayscale(100%) contrast(110%);
-    transition: filter 0.3s ease;
+    object-fit: cover; /* Ajusta la imagen sin deformarla (recorta bordes si es necesario) */
+    
+    /* Filtro Blanco y Negro */
+    filter: grayscale(100%) contrast(105%) brightness(90%);
+    transition: filter 0.4s ease;
 }
 
-/* Un pequeño efecto al pasar el mouse (opcional) */
-.carousel-image:hover {
-    filter: grayscale(100%) contrast(130%);
+/* Pequeño realce al pasar el mouse */
+.carousel-container:hover .carousel-image {
+    filter: grayscale(100%) contrast(115%) brightness(100%);
 }
 
-/* Botones de navegación (Flechas) */
+/* --- Botones y Contador (Igual que antes) --- */
 .btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.15);
     color: white;
     border: none;
-    font-size: 24px;
-    padding: 16px;
+    font-size: 28px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
     border-radius: 50%;
-    transition: background-color 0.3s, scale 0.2s;
+    transition: all 0.3s ease;
     user-select: none;
     z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn:hover {
-    background-color: rgba(255, 255, 255, 0.6);
-    color: black;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #121212;
     scale: 1.1;
 }
 
 .prev { left: 20px; }
 .next { right: 20px; }
 
-/* Contador de imágenes */
 .counter {
     position: absolute;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     color: white;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 20px;
     font-size: 14px;
+    font-weight: bold;
     z-index: 10;
+    letter-spacing: 1px;
 }
