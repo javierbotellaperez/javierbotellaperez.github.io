@@ -6,31 +6,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.getElementById("lightboxPrev");
     const nextBtn = document.getElementById("lightboxNext");
 
-    // ⚠️ PON AQUÍ EL NÚMERO EXACTO DE FOTOS QUE TIENES AHORA (Ej: 85, 90, 100...)
+    // Configuración exacta de tus archivos actuales
     const totalImages = 102; 
     let activeIndex = 1;
 
-    // Función para crear las imágenes de la cinta
+    // Función mágica para convertir el número 1 en "00001", el 12 en "00012", etc.
+    function formatNumber(num) {
+        return String(num).padStart(5, '0');
+    }
+
+    // Función segura para crear imágenes
     function createImg(index) {
         const img = document.createElement("img");
-        img.src = `assets/Asset_${index}.jpg`; // Cambia a .png si tus fotos usan ese formato
-        img.alt = `Fotografía ${index}`;
+        const formattedIndex = formatNumber(index);
+        
+        // Ahora la ruta buscará exactamente: /assets/Asset_00001.jpg
+        img.src = `/assets/Asset_${formattedIndex}.jpg`; 
+        img.alt = `Fotografía ${formattedIndex}`;
         img.classList.add("carousel-image");
         
-        // Al hacer clic en una foto de la cinta, abre el visor a pantalla completa
+        // Al hacer clic, abre el visor
         img.addEventListener("click", () => {
             openLightbox(index);
         });
 
+        // Si alguna foto de la secuencia falta, se oculta para no romper la web
         img.onerror = () => { 
-            img.style.display = 'none'; // Si no existe la foto, la oculta para no romper el diseño
+            img.remove(); 
         };
+        
         return img;
     }
 
-    // 1. Inyectamos la tanda original y su clon para el bucle infinito
-    for (let i = 1; i <= totalImages; i++) track.appendChild(createImg(i));
-    for (let i = 1; i <= totalImages; i++) track.appendChild(createImg(i));
+    // 1. Inyectamos las 102 fotos originales y sus 102 clones para el bucle infinito
+    for (let i = 1; i <= totalImages; i++) {
+        track.appendChild(createImg(i));
+    }
+    for (let i = 1; i <= totalImages; i++) {
+        track.appendChild(createImg(i));
+    }
 
     // 2. Lógica del Visor (Lightbox)
     function openLightbox(index) {
@@ -44,46 +58,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateLightboxImage() {
-        lightboxImg.src = `assets/Asset_${activeIndex}.jpg`;
+        const formattedIndex = formatNumber(activeIndex);
+        lightboxImg.src = `/assets/Asset_${formattedIndex}.jpg`;
     }
 
     function nextPhoto() {
         if (activeIndex < totalImages) {
             activeIndex++;
         } else {
-            activeIndex = 1; // Vuelve a la primera foto
+            activeIndex = 1;
         }
         updateLightboxImage();
     }
 
+    // Corregido el retroceso para que vaya a la 102 si estás en la 1
     function prevPhoto() {
         if (activeIndex > 1) {
             activeIndex--;
         } else {
-            activeIndex = totalImages; // Va a la última foto
+            activeIndex = totalImages;
         }
         updateLightboxImage();
     }
 
-    // 3. Eventos del Visor (Clicks y Teclado)
-    nextBtn.addEventListener("click", (e) => { e.stopPropagation(); nextPhoto(); });
-    prevBtn.addEventListener("click", (e) => { e.stopPropagation(); prevPhoto(); });
-    closeBtn.addEventListener("click", closeLightbox);
-    lightbox.addEventListener("click", closeLightbox); // Cierra también si clicas al fondo negro
+    // 3. Eventos del visor y teclado
+    if(nextBtn) nextBtn.addEventListener("click", (e) => { e.stopPropagation(); nextPhoto(); });
+    if(prevBtn) prevBtn.addEventListener("click", (e) => { e.stopPropagation(); prevPhoto(); });
+    if(closeBtn) closeBtn.addEventListener("click", closeLightbox);
+    if(lightbox) lightbox.addEventListener("click", closeLightbox);
 
-    // Evita cerrar el visor si clicas justo encima de la foto grande
-    lightboxImg.addEventListener("click", (e) => { e.stopPropagation(); });
+    if(lightboxImg) {
+        lightboxImg.addEventListener("click", (e) => { e.stopPropagation(); });
+        lightboxImg.onerror = () => { nextPhoto(); };
+    }
 
-    // CONTROL POR TECLADO (ESC, Flecha Izquierda, Flecha Derecha)
     document.addEventListener("keydown", (e) => {
-        if (!lightbox.classList.contains("active")) return; // Si el visor está cerrado, no hace nada
-        
-        if (e.key === "Escape") {
-            closeLightbox();
-        } else if (e.key === "ArrowRight") {
-            nextPhoto();
-        } else if (e.key === "ArrowLeft") {
-            prevPhoto();
-        }
+        if (!lightbox.classList.contains("active")) return;
+        if (e.key === "Escape") closeLightbox();
+        else if (e.key === "ArrowRight") nextPhoto();
+        else if (e.key === "ArrowLeft") prevPhoto();
     });
 });
