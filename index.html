@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- El nombre que aparecerá en la pestaña del navegador -->
     <title>Javier Botella Pérez - Portfolio</title>
-    
-    <!-- RUTA CORREGIDA: Fuerza al navegador a buscar el diseño en la raíz -->
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
     <div class="carousel-container">
-        <!-- Las fotos se alinearán aquí en horizontal -->
         <div class="carousel-track" id="carouselTrack"></div>
-
-        <!-- Flechas de navegación -->
-        <button class="btn prev" id="prevBtn" aria-label="Anterior">&#10094;</button>
-        <button class="btn next" id="nextBtn" aria-label="Siguiente">&#10095;</button>
     </div>
 
-    <!-- Enlace al archivo de JavaScript -->
+    <div class="lightbox" id="lightbox">
+        <button class="close-btn" id="closeBtn">&times;</button>
+        
+        <button class="lightbox-btn prev" id="lightboxPrev">&#10094;</button>
+        <div class="lightbox-content">
+            <img src="" alt="Visor" id="lightboxImg">
+        </div>
+        <button class="lightbox-btn next" id="lightboxNext">&#10095;</button>
+    </div>
+
     <script src="/script.js"></script>
 </body>
 </html>
