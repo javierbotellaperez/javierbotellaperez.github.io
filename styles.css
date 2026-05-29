@@ -27,10 +27,12 @@ html, body {
     z-index: 10;
 }
 
+/* CLAVE: La tira y todo lo que tiene dentro reacciona a los clics del usuario */
 .carousel-track {
     display: flex;
     width: max-content;
     will-change: transform;
+    pointer-events: all; 
 }
 
 /* --- Ajuste de las Fotos (Blanco y Negro) --- */
@@ -60,15 +62,24 @@ html, body {
     transform: scale(1.01);
 }
 
-/* --- Zonas de Hover Quirúrgicas (Solo dentro de cada fila) --- */
+/* --- Zonas de Hover Quirúrgicas (CORREGIDAS) --- */
 .row-hover-zone {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 25vw; /* Ocupa el 25% izquierdo o derecho de la fila */
-    z-index: 30;  /* Por encima de las imágenes/videos de esa fila */
-    pointer-events: all;
+    width: 25vw;
+    z-index: 30;
+    /* ¡EL TRUCO!: Hacemos que la zona detecte el movimiento del ratón 
+       pero deje pasar los clics hacia las fotos y vídeos de abajo */
+    pointer-events: none; 
 }
+
+/* Forzamos que las zonas laterales vuelvan a escuchar los eventos del ratón para acelerar,
+   pero el truco anterior ya permite que el "clic" baje a la foto */
+.carousel-container .row-hover-zone {
+    pointer-events: auto;
+}
+
 .zone-left { left: 0; }
 .zone-right { right: 0; }
 
