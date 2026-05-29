@@ -62,24 +62,16 @@ html, body {
     transform: scale(1.01);
 }
 
-/* --- Zonas de Hover Quirúrgicas (CORREGIDAS) --- */
+/* --- Zonas de Hover Quirúrgicas --- */
 .row-hover-zone {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 25vw;
-    z-index: 30;
-    /* ¡EL TRUCO!: Hacemos que la zona detecte el movimiento del ratón 
-       pero deje pasar los clics hacia las fotos y vídeos de abajo */
-    pointer-events: none; 
+    width: 25vw; /* Ocupa el 25% izquierdo o derecho de la fila */
+    z-index: 30; /* Se queda arriba para capturar el movimiento y el clic */
+    pointer-events: auto; /* Activado para que JS lea todo */
+    cursor: pointer;      /* Muestra la mano de clic en toda la fila */
 }
-
-/* Forzamos que las zonas laterales vuelvan a escuchar los eventos del ratón para acelerar,
-   pero el truco anterior ya permite que el "clic" baje a la foto */
-.carousel-container .row-hover-zone {
-    pointer-events: auto;
-}
-
 .zone-left { left: 0; }
 .zone-right { right: 0; }
 
