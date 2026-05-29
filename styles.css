@@ -60,13 +60,13 @@ html, body {
     transform: scale(1.01);
 }
 
-/* --- Zonas de Hover para Aceleración Interactiva --- */
-.hover-zone {
-    position: fixed;
+/* --- Zonas de Hover Quirúrgicas (Solo dentro de cada fila) --- */
+.row-hover-zone {
+    position: absolute;
     top: 0;
     bottom: 0;
-    width: 25vw; /* Ocupa el 25% lateral de la pantalla */
-    z-index: 20; /* Por encima de los carruseles */
+    width: 25vw; /* Ocupa el 25% izquierdo o derecho de la fila */
+    z-index: 30;  /* Por encima de las imágenes/videos de esa fila */
     pointer-events: all;
 }
 .zone-left { left: 0; }
@@ -95,7 +95,7 @@ html, body {
 }
 
 .menu-item:hover {
-    color: #000000; /* Se vuelve negro puro al pasar por encima */
+    color: #000000;
 }
 
 .menu-separator {
