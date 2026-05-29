@@ -8,11 +8,11 @@
 html, body {
     width: 100%;
     height: 100%;
-    background-color: #ffffff; /* Fondo blanco de galería */
+    background-color: #ffffff; /* Fondo blanco */
     display: flex;
-    flex-direction: column;    /* Apila las dos filas horizontalmente */
+    flex-direction: column;
     justify-content: center;
-    overflow: hidden;          /* Evita barras de scroll molestas */
+    overflow: hidden;
 }
 
 /* --- Contenedores Flexibles de las Filas --- */
@@ -22,7 +22,7 @@ html, body {
     overflow: hidden;
     display: flex;
     align-items: center;
-    padding: 15px 0; /* Espacio limpio entre filas */
+    padding: 15px 0;
 }
 
 .carousel-track {
@@ -30,18 +30,20 @@ html, body {
     width: max-content;
 }
 
-/* Pausa el carrusel de la fila si el ratón se pone encima */
+/* Pausa al pasar el ratón */
 .carousel-container:hover .carousel-track {
     animation-play-state: paused;
 }
 
-/* --- Animaciones de Movimiento Opuesto --- */
+/* --- Animaciones de Movimiento Opuesto (Velocidad reducida al 20%) --- */
 .scroll-left {
-    animation: scrollL 150s linear infinite;
+    /* De 150s a 750s para ir 5 veces más despacio */
+    animation: scrollL 750s linear infinite;
 }
 
 .scroll-right {
-    animation: scrollR 60s linear infinite; /* Va más rápido al tener menos elementos */
+    /* De 60s a 300s para ir 5 veces más despacio */
+    animation: scrollR 300s linear infinite;
 }
 
 @keyframes scrollL {
@@ -54,31 +56,36 @@ html, body {
     100% { transform: translateX(0); }
 }
 
-/* --- Ajuste de las Fotos (Fila Superior) --- */
+/* --- Ajuste de las Fotos (MANTIENEN Blanco y Negro) --- */
 .carousel-image {
     height: 35vh;
     width: auto;
     padding: 0;
     object-fit: cover;
-    filter: grayscale(100%);
+    filter: grayscale(100%); /* Fotos en B/N */
     cursor: pointer;
     transition: filter 0.3s ease;
 }
 
-/* --- Ajuste Fijo de los Videos: 640x360 (Fila Inferior) --- */
+/* Al pasar el ratón por la foto, se ilumina sutilmente pero sigue en B/N */
+.carousel-image:hover {
+    filter: grayscale(100%) brightness(110%);
+}
+
+/* --- Ajuste Fijo de los Videos (AHORA EN COLOR) --- */
 .carousel-video-thumb {
     width: 640px !important;
     height: 360px !important;
     padding: 0;
-    object-fit: cover; /* Recorta suavemente los bordes si el formato original varía */
-    filter: grayscale(100%);
+    object-fit: cover;
+    /* ELIMINADO EL FILTRO GRAYSCALE PARA MANTENER COLOR */
     cursor: pointer;
-    transition: filter 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
-/* Devuelve el color real al pasar el ratón por encima (Opcional, queda muy profesional) */
-.carousel-image:hover, .carousel-video-thumb:hover {
-    filter: grayscale(0%);
+/* Efecto sutil al pasar el ratón por el video */
+.carousel-video-thumb:hover {
+    transform: scale(1.02); /* Pequeño zoom en lugar de cambio de color */
 }
 
 /* --- DISEÑO DEL VISOR GRANDE (LIGHTBOX) --- */
@@ -89,13 +96,12 @@ html, body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.98); /* Fondo negro puro para destacar la pieza */
+    background-color: rgba(0, 0, 0, 0.98);
     z-index: 1000;
     justify-content: center;
     align-items: center;
 }
 
-/* Clases activadas por JS para despertar el visor */
 .lightbox.active { display: flex; }
 
 .lightbox-content {
@@ -109,13 +115,15 @@ html, body {
 .lightbox-content img, .lightbox-content video {
     max-width: 100%;
     max-height: 100%;
-    display: none; /* Se ocultan por defecto y JS activa el correcto */
+    display: none;
 }
 
+/* Foto grande en B/N */
 .lightbox.show-img #lightboxImg { display: block; filter: grayscale(100%); }
+/* Video grande en COLOR */
 .lightbox.show-vid #lightboxVid { display: block; }
 
-/* Controles flotantes del Visor */
+/* Controles del Visor */
 .lightbox-btn, .close-btn {
     position: absolute;
     background: none;
@@ -123,14 +131,12 @@ html, body {
     color: rgba(255, 255, 255, 0.5);
     font-size: 40px;
     cursor: pointer;
-    transition: color 0.3s ease, transform 0.2s;
+    transition: 0.2s;
     z-index: 1100;
-    user-select: none;
 }
 
 .lightbox-btn:hover, .close-btn:hover {
     color: #ffffff;
-    transform: scale(1.1);
 }
 
 .prev { left: 30px; top: 50%; transform: translateY(-50%); }
