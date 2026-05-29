@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let posPhotos = 0;
     let posVideos = 0;
     
-    // Velocidades base naturales (Videos un 10% más rápidos que antes)
     const baseSpeedPhotos = -0.3; 
     const baseSpeedVideos = 0.55; 
 
@@ -36,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const img = document.createElement("img");
                 img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
                 img.classList.add("carousel-image");
-                img.onclick = () => openLightbox('photo', i);
+                img.dataset.index = i; // Guardamos su número real
                 img.onerror = () => img.remove();
                 photoTrack.appendChild(img);
             }
@@ -49,8 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const vid = document.createElement("video");
                 vid.src = `/videos/Video_${formatNumber(i)}.mp4`;
                 vid.classList.add("carousel-video-thumb");
+                vid.dataset.index = i; // Guardamos su número real
                 vid.muted = true; vid.autoplay = true; vid.loop = true; vid.playsInline = true;
-                vid.onclick = () => openLightbox('video', i);
                 vid.onerror = () => vid.remove();
                 videoTrack.appendChild(vid);
             }
@@ -76,30 +75,64 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(animate);
     }
 
-    // --- ESCUCHA DE HOVERS INDEPENDIENTES POR FILA ---
+    // --- TRUCO MAESTRO: TRASTOCAR EL CLIC AL ELEMENTO DE ABAJO ---
+    function setupSmartClick(zone, mode) {
+        zone.addEventListener("click", (e) => {
+            // Ocultamos la zona un microsegundo para ver qué hay debajo
+            zone.style.pointerEvents = "none";
+            const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
+            zone.style.pointerEvents = "auto";
+
+            // Si lo que había debajo es una foto o un video del carrusel, lo abrimos
+            if (elementBelow && (elementBelow.classList.contains("carousel-image") || elementBelow.classList.contains("carousel-video-thumb"))) {
+                const index = parseInt(elementBelow.dataset.index);
+                if (index) openLightbox(mode, index);
+            }
+        });
+    }
+
+    // --- ESCUCHA DE HOVERS E INTERSECCIÓN DE CLICS ---
     
-    // FILA DE FOTOS
+    // Fila de Fotos
     const photoLeftZone = containerPhotos.querySelector(".zone-left");
     const photoRightZone = containerPhotos.querySelector(".zone-right");
 
     photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * 4);
     photoRightZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -4);
-    
     containerPhotos.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
-    photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0); // Pausa quirúrgica en la foto concreta
-    photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
+    
+    // Activamos el clic inteligente en las zonas de las fotos
+    setupSmartClick(photoLeftZone, 'photo');
+    setupSmartClick(photoRightZone, 'photo');
 
-    // FILA DE VIDEOS
+    // Fila de Videos
     const videoLeftZone = containerVideos.querySelector(".zone-left");
     const videoRightZone = containerVideos.querySelector(".zone-right");
 
-    videoLeftZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * -4); // Invierte marcha
-    videoRightZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * 4);  // Acelera avance
-    
+    videoLeftZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * -4);
+    videoRightZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * 4);
     containerVideos.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
-    videoTrack.addEventListener("mouseenter", () => currentSpeedVideos = 0); // Pausa quirúrgica en el video concreto
-    videoTrack.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
 
+    // Activamos el clic inteligente en las zonas de los videos
+    setupSmartClick(videoLeftZone, 'video');
+    setupSmartClick(videoRightZone, 'video');
+
+    // Pausa si el ratón se queda fijo en el centro (directamente sobre los tracks)
+    photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
+    photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
+    photoTrack.addEventListener("click", (e) => {
+        if(e.target.classList.contains("carousel-image")) {
+            openLightbox('photo', parseInt(e.target.dataset.index));
+        }
+    });
+
+    videoTrack.addEventListener("mouseenter", () => currentSpeedVideos = 0);
+    videoTrack.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
+    videoTrack.addEventListener("click", (e) => {
+        if(e.target.classList.contains("carousel-video-thumb")) {
+            openLightbox('video', parseInt(e.target.dataset.index));
+        }
+    });
 
     // --- LÓGICA VISOR ---
     function openLightbox(mode, index) {
