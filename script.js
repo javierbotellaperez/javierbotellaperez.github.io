@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const photoTrack = document.getElementById("photoTrack");
     const videoTrack = document.getElementById("videoTrack");
+    const containerPhotos = document.getElementById("containerPhotos");
+    const containerVideos = document.getElementById("containerVideos");
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightboxImg");
     const lightboxVid = document.getElementById("lightboxVid");
     const nextBtn = document.getElementById("lightboxNext");
     const prevBtn = document.getElementById("lightboxPrev");
     const closeBtn = document.getElementById("closeBtn");
-    const zoneLeft = document.getElementById("zoneLeft");
-    const zoneRight = document.getElementById("zoneRight");
 
     const totalImages = 102;
     const totalVideos = 8;
@@ -16,16 +16,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentMode = 'photo';
     let currentIndex = 1;
 
-    // --- VARIABLES DE ANIMACIÓN POR SOFTWARE ---
+    // --- VARIABLES DE ANIMACIÓN ---
     let posPhotos = 0;
     let posVideos = 0;
     
-    // Velocidades base naturales (Reducidas y ajustadas, video +10%)
-    let speedPhotos = -0.3; 
-    let speedVideos = 0.55; 
+    // Velocidades base naturales (Videos un 10% más rápidos que antes)
+    const baseSpeedPhotos = -0.3; 
+    const baseSpeedVideos = 0.55; 
 
-    let currentSpeedPhotos = speedPhotos;
-    let currentSpeedVideos = speedVideos;
+    let currentSpeedPhotos = baseSpeedPhotos;
+    let currentSpeedVideos = baseSpeedVideos;
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
@@ -57,17 +57,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // --- MOTOR DE MOVIMIENTO CONTINUO ANIMADO ---
+    // --- MOTOR DE MOVIMIENTO ---
     function animate() {
         if (!lightbox.classList.contains("active")) {
             posPhotos += currentSpeedPhotos;
             posVideos += currentSpeedVideos;
 
-            // Bucles infinitos invisibles al llegar al 50% del ancho
             const halfPhotosWidth = photoTrack.scrollWidth / 2;
             if (Math.abs(posPhotos) >= halfPhotosWidth) posPhotos = 0;
-            if (posVideos >= 0) posVideos = -halfPhotosWidth;
-            if (Math.abs(posVideos) >= photoTrack.scrollWidth) posVideos = -halfPhotosWidth;
+            
+            const halfVideosWidth = videoTrack.scrollWidth / 2;
+            if (posVideos >= 0) posVideos = -halfVideosWidth;
+            if (Math.abs(posVideos) >= videoTrack.scrollWidth) posVideos = -halfVideosWidth;
 
             photoTrack.style.transform = `translateX(${posPhotos}px)`;
             videoTrack.style.transform = `translateX(${posVideos}px)`;
@@ -75,30 +76,30 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(animate);
     }
 
-    // --- INTERACCIÓN DE VELOCIDAD POR ZONAS (HOVER) ---
-    zoneLeft.addEventListener("mouseenter", () => {
-        currentSpeedPhotos = speedPhotos * 4; // Acelera a la izquierda
-        currentSpeedVideos = speedVideos * -4; // Invierte y acelera
-    });
+    // --- ESCUCHA DE HOVERS INDEPENDIENTES POR FILA ---
+    
+    // FILA DE FOTOS
+    const photoLeftZone = containerPhotos.querySelector(".zone-left");
+    const photoRightZone = containerPhotos.querySelector(".zone-right");
 
-    zoneRight.addEventListener("mouseenter", () => {
-        currentSpeedPhotos = speedPhotos * -4; // Invierte y acelera
-        currentSpeedVideos = speedVideos * 4;  // Acelera a la derecha
-    });
+    photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * 4);
+    photoRightZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -4);
+    
+    containerPhotos.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
+    photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0); // Pausa quirúrgica en la foto concreta
+    photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
 
-    // Al salir de los extremos, vuelve al ritmo relajado de galería
-    function resetSpeed() {
-        currentSpeedPhotos = speedPhotos;
-        currentSpeedVideos = speedVideos;
-    }
-    zoneLeft.addEventListener("mouseleave", resetSpeed);
-    zoneRight.addEventListener("mouseleave", resetSpeed);
+    // FILA DE VIDEOS
+    const videoLeftZone = containerVideos.querySelector(".zone-left");
+    const videoRightZone = containerVideos.querySelector(".zone-right");
 
-    // Pausar si el ratón se posa sobre un elemento específico para ver la pieza
-    photoTrack.addEventListener("mouseenter", () => { currentSpeedPhotos = 0; currentSpeedVideos = 0; });
-    photoTrack.addEventListener("mouseleave", resetSpeed);
-    videoTrack.addEventListener("mouseenter", () => { currentSpeedPhotos = 0; currentSpeedVideos = 0; });
-    videoTrack.addEventListener("mouseleave", resetSpeed);
+    videoLeftZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * -4); // Invierte marcha
+    videoRightZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * 4);  // Acelera avance
+    
+    containerVideos.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
+    videoTrack.addEventListener("mouseenter", () => currentSpeedVideos = 0); // Pausa quirúrgica en el video concreto
+    videoTrack.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
+
 
     // --- LÓGICA VISOR ---
     function openLightbox(mode, index) {
@@ -107,6 +108,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function closeLightbox() { lightbox.classList.remove("active"); lightboxVid.pause(); }
+
+    document.getElementById("closeBtn").onclick = closeLightbox;
+    lightbox.onclick = closeLightbox;
+    lightboxImg.onclick = (e) => e.stopPropagation();
+    lightboxVid.onclick = (e) => e.stopPropagation();
 
     function updateContent() {
         const formatted = formatNumber(currentIndex);
@@ -127,10 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if(nextBtn) nextBtn.onclick = (e) => { e.stopPropagation(); change(1); };
     if(prevBtn) prevBtn.onclick = (e) => { e.stopPropagation(); change(-1); };
-    if(closeBtn) closeBtn.onclick = closeLightbox;
-    lightbox.onclick = closeLightbox;
-    lightboxImg.onclick = (e) => e.stopPropagation();
-    lightboxVid.onclick = (e) => e.stopPropagation();
 
     document.addEventListener("keydown", (e) => {
         if (!lightbox.classList.contains("active")) return;
