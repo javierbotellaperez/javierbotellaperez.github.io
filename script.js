@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.getElementById("lightboxPrev");
     const closeBtn = document.getElementById("closeBtn");
 
-    // Mantengo tus 114 fotos actuales
     const totalImages = 114;
     const totalVideos = 8;
     
@@ -91,20 +90,51 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- ESCUCHA DE HOVERS (Direcciones corregidas y velocidad x8) ---
-    
-    // FILA DE FOTOS (Invertido el sentido del hover según lo solicitado)
+    // --- INTERACCIÓN TÁCTIL EN MÓVILES (NUEVO) ---
+    function setupTouchScroll(container, type) {
+        let startX = 0;
+        let isDragging = false;
+
+        container.addEventListener("touchstart", (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        }, { passive: true });
+
+        container.addEventListener("touchmove", (e) => {
+            if (!isDragging) return;
+            const currentX = e.touches[0].clientX;
+            const diffX = currentX - startX;
+
+            // Modificamos temporalmente la velocidad según la fuerza del arrastre
+            if (type === 'photo') {
+                currentSpeedPhotos = baseSpeedPhotos + (diffX * 0.15);
+            } else {
+                currentSpeedVideos = baseSpeedVideos + (diffX * 0.15);
+            }
+            
+            // Actualizamos el punto de inicio para que el movimiento sea fluido
+            startX = currentX; 
+        }, { passive: true });
+
+        container.addEventListener("touchend", () => {
+            isDragging = false;
+            // Al soltar el dedo, devuelve progresivamente la velocidad base
+            if (type === 'photo') currentSpeedPhotos = baseSpeedPhotos;
+            if (type === 'video') currentSpeedVideos = baseSpeedVideos;
+        });
+    }
+
+    // --- ESCUCHA DE HOVERS (Ordenador) ---
     const photoLeftZone = containerPhotos.querySelector(".zone-left");
     const photoRightZone = containerPhotos.querySelector(".zone-right");
 
-    photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -8); // Ahora va hacia el otro lado más rápido
-    photoRightZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * 8);  // Ahora va hacia el otro lado más rápido
+    photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -8); 
+    photoRightZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * 8);  
     containerPhotos.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     
     setupSmartClick(photoLeftZone, 'photo');
     setupSmartClick(photoRightZone, 'photo');
 
-    // FILA DE VIDEOS (Mismo sentido pero velocidad acelerada a x8)
     const videoLeftZone = containerVideos.querySelector(".zone-left");
     const videoRightZone = containerVideos.querySelector(".zone-right");
 
@@ -115,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupSmartClick(videoLeftZone, 'video');
     setupSmartClick(videoRightZone, 'video');
 
-    // Pausas quirúrgicas en el centro
+    // Pausas quirúrgicas en el centro (Ordenador)
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     photoTrack.addEventListener("click", (e) => {
@@ -131,6 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
             openLightbox('video', parseInt(e.target.dataset.index));
         }
     });
+
+    // ACTIVAMOS EL RADAR TÁCTIL PARA MÓVILES
+    setupTouchScroll(containerPhotos, 'photo');
+    setupTouchScroll(containerVideos, 'video');
 
     // --- LÓGICA VISOR ---
     function openLightbox(mode, index) {
