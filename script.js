@@ -10,8 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.getElementById("lightboxPrev");
     const closeBtn = document.getElementById("closeBtn");
 
+    // Configuración exacta de archivos
     const totalImages = 114;
-    const totalVideos = 8; // Tus 8 proyectos de vídeo
+    const totalVideos = 8;
     
     let currentMode = 'photo';
     let currentIndex = 1;
@@ -26,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSpeedPhotos = baseSpeedPhotos;
     let currentSpeedVideos = baseSpeedVideos;
 
+    // Variables de inercia para lanzamiento ágil
     let inertiaPhotos = 0;
     let inertiaVideos = 0;
     const friction = 0.95; 
@@ -46,24 +48,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Ahora la fila inferior carga imágenes fijas ultraligeras de tus vídeos
     function loadVideos() {
         for (let j = 0; j < 4; j++) {
             for (let i = 1; i <= totalVideos; i++) {
+                const container = document.createElement("div");
+                container.classList.add("carousel-image-container");
+
                 const img = document.createElement("img");
-                img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`; // Tu miniatura fija
-                img.classList.add("carousel-image"); // Reutiliza la clase estética de las fotos
+                img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`;
+                img.classList.add("carousel-image");
                 img.dataset.index = i;
-                img.onerror = () => img.remove();
-                videoTrack.appendChild(img);
+                img.onerror = () => container.remove();
+
+                container.appendChild(img);
+                videoTrack.appendChild(container);
             }
         }
     }
 
-    // --- MOTOR DE MOVIMIENTO ---
+    // --- MOTOR DE MOVIMIENTO CON FÍSICAS ---
     function animate() {
         if (!lightbox.classList.contains("active")) {
             
+            // Si el usuario aplicó un lanzamiento, rueda por inercia
             if (Math.abs(inertiaPhotos) > 0.05) {
                 posPhotos += inertiaPhotos;
                 inertiaPhotos *= friction;
@@ -78,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 posVideos += currentSpeedVideos;
             }
 
+            // Reseteos infinitos estables
             const halfPhotosWidth = photoTrack.scrollWidth / 2;
             if (posPhotos >= 0) posPhotos = -halfPhotosWidth;
             if (Math.abs(posPhotos) >= photoTrack.scrollWidth) posPhotos = -halfPhotosWidth;
@@ -92,21 +100,24 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(animate);
     }
 
-    // --- TRUCO MAESTRO: TRASPASAR EL CLIC AL ELEMENTO DE ABAJO ---
+    // --- TRUCO MAESTRO: TRASPASAR EL CLIC DESDE LAS ZONAS INVISIBLES DE HOVER ---
     function setupSmartClick(zone, mode) {
         zone.addEventListener("click", (e) => {
             zone.style.pointerEvents = "none";
             const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
             zone.style.pointerEvents = "auto";
 
-            if (elementBelow && elementBelow.classList.contains("carousel-image")) {
-                const index = parseInt(elementBelow.dataset.index);
-                if (index) openLightbox(mode, index);
+            if (elementBelow) {
+                const img = elementBelow.classList.contains("carousel-image") ? elementBelow : elementBelow.querySelector(".carousel-image");
+                if (img) {
+                    const index = parseInt(img.dataset.index);
+                    if (index) openLightbox(mode, index);
+                }
             }
         });
     }
 
-    // --- SISTEMA TÁCTIL ÁGIL ---
+    // --- SISTEMA TÁCTIL MÓVIL (LANZAMIENTO EFECTO INERCIA FLICK) ---
     function setupTouchScroll(container, type) {
         let startX = 0;
         let lastX = 0;
@@ -133,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const timeDiff = currentTime - lastTime;
 
             if (timeDiff > 0) {
-                speedX = diffX / timeDiff * 15; 
+                speedX = diffX / timeDiff * 15; // Factor de respuesta de empuje
             }
 
             if (type === 'photo') posPhotos += diffX;
@@ -156,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- ESCUCHA DE HOVERS (Ordenador) ---
+    // --- ESCUCHA DE HOVERS (Modo Escritorio Ordenador) ---
     const photoLeftZone = containerPhotos.querySelector(".zone-left");
     const photoRightZone = containerPhotos.querySelector(".zone-right");
 
@@ -177,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupSmartClick(videoLeftZone, 'video');
     setupSmartClick(videoRightZone, 'video');
 
-    // Pausas quirúrgicas en el centro
+    // Pausas y clics de escritorio en el eje central
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     photoTrack.addEventListener("click", (e) => {
@@ -189,15 +200,17 @@ document.addEventListener("DOMContentLoaded", () => {
     videoTrack.addEventListener("mouseenter", () => currentSpeedVideos = 0);
     videoTrack.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
     videoTrack.addEventListener("click", (e) => {
-        if(e.target.classList.contains("carousel-image")) {
-            openLightbox('video', parseInt(e.target.dataset.index)); // Abre el vídeo real
+        const img = e.target.classList.contains("carousel-image") ? e.target : e.target.querySelector(".carousel-image");
+        if(img) {
+            openLightbox('video', parseInt(img.dataset.index));
         }
     });
 
+    // Encendemos el motor táctil físico para móviles
     setupTouchScroll(containerPhotos, 'photo');
     setupTouchScroll(containerVideos, 'video');
 
-    // --- LÓGICA VISOR ---
+    // --- LÓGICA REPRODUCTOR VISOR (LIGHTBOX) ---
     function openLightbox(mode, index) {
         currentMode = mode; currentIndex = index;
         updateContent(); lightbox.classList.add("active");
@@ -217,7 +230,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentMode === 'photo') {
             lightboxImg.src = `/assets/Asset_${formatted}.jpg`; lightbox.classList.add("show-img");
         } else {
-            // El visor sigue buscando tu archivo de vídeo real en la carpeta /videos
             lightboxVid.src = `/videos/Video_${formatted}.mp4`; lightbox.classList.add("show-vid"); lightboxVid.play();
         }
     }
