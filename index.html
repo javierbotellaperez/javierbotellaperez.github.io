@@ -8,16 +8,30 @@
 </head>
 <body>
 
-    <div class="carousel-container">
-        <div class="carousel-track" id="carouselTrack"></div>
+    <div class="carousel-container row-photos" id="containerPhotos">
+        <div class="row-hover-zone zone-left"></div>
+        <div class="row-hover-zone zone-right"></div>
+        <div class="carousel-track" id="photoTrack"></div>
     </div>
+
+    <div class="carousel-container row-videos" id="containerVideos">
+        <div class="row-hover-zone zone-left"></div>
+        <div class="row-hover-zone zone-right"></div>
+        <div class="carousel-track" id="videoTrack"></div>
+    </div>
+
+    <footer class="minimal-menu">
+        <a href="/about.html" class="menu-item">About</a>
+        <span class="menu-separator">•</span>
+        <a href="/contacto.html" class="menu-item">Contact</a>
+    </footer>
 
     <div class="lightbox" id="lightbox">
         <button class="close-btn" id="closeBtn">&times;</button>
-        
         <button class="lightbox-btn prev" id="lightboxPrev">&#10094;</button>
         <div class="lightbox-content">
-            <img src="" alt="Visor" id="lightboxImg">
+            <img src="" alt="Visor Foto" id="lightboxImg">
+            <video src="" id="lightboxVid" controls autoplay></video>
         </div>
         <button class="lightbox-btn next" id="lightboxNext">&#10095;</button>
     </div>
