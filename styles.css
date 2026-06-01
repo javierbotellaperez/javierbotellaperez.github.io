@@ -59,7 +59,7 @@ html, body {
     overflow: hidden;
     display: flex;
     align-items: center;
-    padding: 15px 0; /* Un pelín más de aire entre filas */
+    padding: 10px 0;
     z-index: 10;
 }
 
@@ -67,21 +67,21 @@ html, body {
     display: flex;
     width: max-content;
     will-change: transform;
-    gap: 10px; /* Añade una pequeña separación elegante entre las imágenes */
+    gap: 0; /* Totalmente pegadas, sin espacio entre elementos */
 }
 
-/* --- AJUSTE MAESTRO DE PROPORCIÓN --- */
+/* --- ESTILO DE LAS IMÁGENES (A color y proporcionales) --- */
 .carousel-image {
-    height: 33vh;       /* Altura fija idéntica basada en la pantalla (puedes subir a 35vh si las quieres más grandes) */
-    width: auto;        /* La anchura se calcula sola de forma proporcional */
-    object-fit: cover;  /* Evita que la imagen se estire o se deforme */
-    filter: grayscale(100%);
+    height: 33vh;       /* Altura idéntica y fija para ambas filas */
+    width: auto;        /* Ancho proporcional nativo del archivo */
+    object-fit: cover;  /* Protege la proporción sin estirar */
     cursor: pointer;
     transition: filter 0.3s ease;
+    /* Hemos eliminado el filtro de escala de grises para mostrar el color real */
 }
 
 .carousel-image:hover {
-    filter: grayscale(100%) brightness(110%);
+    filter: brightness(110%); /* Sutil iluminación al pasar el cursor */
 }
 
 /* ==========================================================================
@@ -162,7 +162,7 @@ html, body {
     display: none;
 }
 
-.lightbox.show-img #lightboxImg { display: block; filter: grayscale(100%); }
+.lightbox.show-img #lightboxImg { display: block; } /* Eliminado escala de grises del visor */
 .lightbox.show-vid #lightboxVid { display: block; }
 
 .lightbox-btn, .close-btn {
@@ -190,15 +190,15 @@ html, body {
 
     .carousel-container { padding: 5px 0; }
     
-    /* Configuración proporcional idéntica para móviles */
+    /* Configuración proporcional continua para móviles */
     .row-photos .carousel-image,
     .row-videos .carousel-image {
-        height: 20vh;  /* Altura más bajita y equilibrada en pantallas de smartphone */
-        width: auto;   /* Mantiene la anchura proporcional en móvil también */
+        height: 20vh;
+        width: auto;
     }
 
     .carousel-track {
-        gap: 6px;      /* Separación un poco más estrecha en móviles */
+        gap: 0; /* Sin espacios también en las pantallas móviles */
     }
 
     .row-hover-zone { display: none !important; }
