@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.getElementById("lightboxPrev");
     const closeBtn = document.getElementById("closeBtn");
 
-    // Configuración exacta de archivos
+    // Configuración de volumen de archivos
     const totalImages = 114;
     const totalVideos = 8;
     
@@ -27,50 +27,70 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSpeedPhotos = baseSpeedPhotos;
     let currentSpeedVideos = baseSpeedVideos;
 
-    // Variables de inercia para lanzamiento ágil
+    // Variables de inercia para lanzamiento táctil
     let inertiaPhotos = 0;
     let inertiaVideos = 0;
     const friction = 0.95; 
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
-    // --- CARGA MULTIMEDIA OPTIMIZADA ---
+    // --- FUNCIÓN ALGORÍTMICA PARA MEZCLAR EL ORDEN (Fisher-Yates Shuffle) ---
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[array[j]]] = [array[j], array[array[i]]];
+        }
+        return array;
+    }
+
+    // --- CARGA MULTIMEDIA ALEATORIA ---
     function loadPhotos() {
+        // Creamos una lista base ordenada del 1 al 114
+        let textIndexes = Array.from({length: totalImages}, (_, i) => i + 1);
+        
+        // Multiplicamos por 2 para el efecto de bucle infinito, barajando en cada tanda
         for (let j = 0; j < 2; j++) {
-            for (let i = 1; i <= totalImages; i++) {
+            let shuffledIndexes = shuffleArray([...textIndexes]);
+            
+            shuffledIndexes.forEach(i => {
                 const img = document.createElement("img");
                 img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
                 img.classList.add("carousel-image");
-                img.dataset.index = i;
+                img.dataset.index = i; // Guardamos el número real para el Lightbox
                 img.onerror = () => img.remove();
                 photoTrack.appendChild(img);
-            }
+            });
         }
     }
 
     function loadVideos() {
+        // Creamos una lista base ordenada del 1 al 8
+        let videoIndexes = Array.from({length: totalVideos}, (_, i) => i + 1);
+        
         for (let j = 0; j < 4; j++) {
-            for (let i = 1; i <= totalVideos; i++) {
+            let shuffledIndexes = shuffleArray([...videoIndexes]);
+            
+            shuffledIndexes.forEach(i => {
                 const container = document.createElement("div");
                 container.classList.add("carousel-image-container");
 
                 const img = document.createElement("img");
                 img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`;
                 img.classList.add("carousel-image");
-                img.dataset.index = i;
+                img.dataset.index = i; // Guardamos el número real para el Lightbox
                 img.onerror = () => container.remove();
 
                 container.appendChild(img);
                 videoTrack.appendChild(container);
-            }
+            });
         }
     }
 
-    // --- MOTOR DE MOVIMIENTO CON FÍSICAS ---
+    // --- MOTOR DE MOVIMIENTO CON FÍSICAS DE INERCIA ---
     function animate() {
         if (!lightbox.classList.contains("active")) {
             
-            // Si el usuario aplicó un lanzamiento, rueda por inercia
+            // Aplicamos inercia si el usuario ha lanzado la fila con el dedo
             if (Math.abs(inertiaPhotos) > 0.05) {
                 posPhotos += inertiaPhotos;
                 inertiaPhotos *= friction;
@@ -85,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 posVideos += currentSpeedVideos;
             }
 
-            // Reseteos infinitos estables
+            // Reseteos para que el carrusel sea infinito y no se corte
             const halfPhotosWidth = photoTrack.scrollWidth / 2;
             if (posPhotos >= 0) posPhotos = -halfPhotosWidth;
             if (Math.abs(posPhotos) >= photoTrack.scrollWidth) posPhotos = -halfPhotosWidth;
@@ -100,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(animate);
     }
 
-    // --- TRUCO MAESTRO: TRASPASAR EL CLIC DESDE LAS ZONAS INVISIBLES DE HOVER ---
+    // --- TRUCO MAESTRO: TRASPASAR EL CLIC EN ZONAS HOVER INVISIBLES ---
     function setupSmartClick(zone, mode) {
         zone.addEventListener("click", (e) => {
             zone.style.pointerEvents = "none";
@@ -117,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- SISTEMA TÁCTIL MÓVIL (LANZAMIENTO EFECTO INERCIA FLICK) ---
+    // --- GESTOR TÁCTIL (MOVIMIENTO ÁGIL Y LANZAMIENTO) ---
     function setupTouchScroll(container, type) {
         let startX = 0;
         let lastX = 0;
@@ -144,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const timeDiff = currentTime - lastTime;
 
             if (timeDiff > 0) {
-                speedX = diffX / timeDiff * 15; // Factor de respuesta de empuje
+                speedX = diffX / timeDiff * 15; 
             }
 
             if (type === 'photo') posPhotos += diffX;
@@ -167,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- ESCUCHA DE HOVERS (Modo Escritorio Ordenador) ---
+    // --- CONTROL DE ACELERACIÓN POR CURSOR (Escritorio) ---
     const photoLeftZone = containerPhotos.querySelector(".zone-left");
     const photoRightZone = containerPhotos.querySelector(".zone-right");
 
@@ -188,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupSmartClick(videoLeftZone, 'video');
     setupSmartClick(videoRightZone, 'video');
 
-    // Pausas y clics de escritorio en el eje central
+    // Pausas físicas al poner el cursor en el centro (Escritorio)
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     photoTrack.addEventListener("click", (e) => {
@@ -206,11 +226,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Encendemos el motor táctil físico para móviles
+    // Activamos las funciones de arrastre táctil para smartphone
     setupTouchScroll(containerPhotos, 'photo');
     setupTouchScroll(containerVideos, 'video');
 
-    // --- LÓGICA REPRODUCTOR VISOR (LIGHTBOX) ---
+    // --- GESTIÓN INTERNA DEL VISOR (LIGHTBOX) ---
     function openLightbox(mode, index) {
         currentMode = mode; currentIndex = index;
         updateContent(); lightbox.classList.add("active");
@@ -250,6 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.key === "ArrowLeft") change(-1);
     });
 
+    // Inicializamos las cargas y el bucle de renderizado
     loadPhotos();
     loadVideos();
     animate();
