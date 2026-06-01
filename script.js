@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
-    // --- CARGA MULTIMEDIA LIMPIA ---
+    // --- CARGA MULTIMEDIA ---
     function loadPhotos() {
         for (let j = 0; j < 2; j++) {
             for (let i = 1; i <= totalImages; i++) {
@@ -46,8 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let j = 0; j < 4; j++) {
             for (let i = 1; i <= totalVideos; i++) {
                 const img = document.createElement("img");
-                img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`; // Tu miniatura fija
-                img.classList.add("carousel-video-thumb"); // Clase específica para vídeos
+                img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`; // Carga tus miniaturas fijas JPG
+                img.classList.add("carousel-image"); // Usa la misma clase que las fotos para clonar su comportamiento
                 img.dataset.index = i;
                 img.onerror = () => img.remove();
                 videoTrack.appendChild(img);
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
             zone.style.pointerEvents = "auto";
 
-            if (elementBelow && (elementBelow.classList.contains("carousel-image") || elementBelow.classList.contains("carousel-video-thumb"))) {
+            if (elementBelow && elementBelow.classList.contains("carousel-image")) {
                 const index = parseInt(elementBelow.dataset.index);
                 if (index) openLightbox(mode, index);
             }
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupSmartClick(videoLeftZone, 'video');
     setupSmartClick(videoRightZone, 'video');
 
-    // Pausas al poner el ratón encima
+    // Pausas al poner el ratón encima del eje central
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     photoTrack.addEventListener("click", (e) => {
@@ -153,15 +153,15 @@ document.addEventListener("DOMContentLoaded", () => {
     videoTrack.addEventListener("mouseenter", () => currentSpeedVideos = 0);
     videoTrack.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
     videoTrack.addEventListener("click", (e) => {
-        if(e.target.classList.contains("carousel-video-thumb")) {
-            openLightbox('video', parseInt(e.target.dataset.index));
+        if(e.target.classList.contains("carousel-image")) {
+            openLightbox('video', parseInt(e.target.dataset.index)); // Abre el archivo de vídeo real
         }
     });
 
     setupTouchScroll(containerPhotos, 'photo');
     setupTouchScroll(containerVideos, 'video');
 
-    // --- LIGHTBOX ---
+    // --- LIGHTBOX VISOR ---
     function openLightbox(mode, index) {
         currentMode = mode; currentIndex = index;
         updateContent(); lightbox.classList.add("active");
