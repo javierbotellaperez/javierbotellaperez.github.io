@@ -70,16 +70,22 @@ html, body {
     gap: 0; /* Bloque continuo sin espacios */
 }
 
-/* --- ESTILO DE LAS IMÁGENES COMPARTIDO (Alturas blindadas) --- */
-.carousel-image {
+/* --- TIRA SUPERIOR: FOTOS (Control de brillo al 10%) --- */
+.row-photos .carousel-image {
     height: 33vh;       
     width: auto;        
     object-fit: cover;  
     cursor: pointer;
     display: block;
+    filter: brightness(10%); /* Forzado al 10% de brillo por defecto */
+    transition: filter 0.4s ease;
 }
 
-/* --- CONTENEDOR ESPECIAL DE VÍDEO CON PLAY SUPERPUESTO --- */
+.row-photos .carousel-image:hover {
+    filter: brightness(110%); /* Enciende la foto al pasar el cursor */
+}
+
+/* --- TIRA INFERIOR: VÍDEOS (Contenedor con Play flotante) --- */
 .video-item-wrapper {
     position: relative;
     height: 33vh;
@@ -88,9 +94,13 @@ html, body {
     cursor: pointer;
 }
 
-/* Filtro sutil oscuro sobre la miniatura del vídeo para resaltar el Play */
+/* Mantenemos las miniaturas de vídeo al 85% para que no compitan con el 10% de arriba */
 .video-item-wrapper .carousel-image {
-    filter: brightness(85%);
+    height: 33vh;
+    width: auto;
+    object-fit: cover;
+    display: block;
+    filter: brightness(85%); 
     transition: filter 0.3s ease;
 }
 
@@ -103,20 +113,20 @@ html, body {
     content: '';
     position: absolute;
     top: 50%;
-    left: 54%; /* Ligero desfase a la derecha para equilibrar visualmente el triángulo */
+    left: 54%; /* Equilibrio visual del triángulo */
     transform: translate(-50%, -50%);
     width: 0;
     height: 0;
     border-top: 12px solid transparent;
     border-bottom: 12px solid transparent;
-    border-left: 20px solid rgba(255, 255, 255, 0.8); /* Blanco elegante traslúcido */
+    border-left: 20px solid rgba(255, 255, 255, 0.8);
     z-index: 20;
-    pointer-events: none; /* Traspasa los clics al elemento real */
+    pointer-events: none;
     transition: border-left-color 0.3s ease;
 }
 
 .video-item-wrapper:hover::after {
-    border-left-color: rgba(255, 255, 255, 1); /* Brilla al pasar el ratón */
+    border-left-color: rgba(255, 255, 255, 1);
 }
 
 /* ==========================================================================
@@ -236,7 +246,6 @@ html, body {
         width: auto;
     }
 
-    /* Reducimos ligeramente el tamaño del play en móviles para que no sature */
     .video-item-wrapper::after {
         border-top: 8px solid transparent;
         border-bottom: 8px solid transparent;
