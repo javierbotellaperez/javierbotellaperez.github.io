@@ -16,7 +16,7 @@ html, body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* --- Cabecera con tu Nombre (Estilo a juego con el menú) --- */
+/* --- Cabecera con tu Nombre (Estilo Marca Personal) --- */
 .main-header {
     position: fixed;
     top: 40px;
@@ -35,7 +35,18 @@ html, body {
     font-weight: 300;
 }
 
-/* --- Contenedores de las Filas --- */
+.main-header h1 a {
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+}
+
+.main-header h1 a:hover {
+    color: #888888;
+    transition: color 0.3s ease;
+}
+
+/* --- Contenedores de las Filas de Carruseles --- */
 .carousel-container {
     position: relative;
     width: 100vw;
@@ -52,7 +63,7 @@ html, body {
     will-change: transform;
 }
 
-/* --- Ajuste de las Fotos (Blanco y Negro) --- */
+/* --- Estilo de las Imágenes y Portadas --- */
 .carousel-image {
     height: 35vh;
     width: auto;
@@ -66,20 +77,35 @@ html, body {
     filter: grayscale(100%) brightness(110%);
 }
 
-/* --- Ajuste de los Videos (Color) --- */
-.carousel-video-thumb {
-    width: 640px !important;
-    height: 360px !important;
-    object-fit: cover;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+/* --- CONTENEDORES DE PORTADA PARA LOS VÍDEOS (Para montar el icono de Play encima) --- */
+#videoTrack .carousel-image-container {
+    position: relative;
+    display: inline-block;
+    height: 35vh; /* Mismo alto que la imagen base */
 }
 
-.carousel-video-thumb:hover {
-    transform: scale(1.01);
+/* --- EL ICONO DE PLAY CINEMATOGRÁFICO GEOMÉTRICO --- */
+#videoTrack .carousel-image-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 16px solid rgba(255, 255, 255, 0.75); /* Blanco traslúcido elegante */
+    z-index: 20;
+    pointer-events: none; /* No entorpece los clics del usuario */
+    transition: opacity 0.3s ease, border-left-color 0.3s ease;
 }
 
-/* --- Zonas de Hover Quirúrgicas --- */
+#videoTrack .carousel-image-container:hover::after {
+    border-left-color: rgba(255, 255, 255, 1); /* Se ilumina completo al pasar el ratón */
+}
+
+/* --- Zonas de Hover Quirúrgicas (Escritorio) --- */
 .row-hover-zone {
     position: absolute;
     top: 0;
@@ -169,113 +195,41 @@ html, body {
 .next { right: 30px; top: 50%; transform: translateY(-50%); }
 .close-btn { top: 20px; right: 30px; font-size: 60px; }
 
-/* --- Ajuste para el enlace de la cabecera principal --- */
-.main-header h1 a {
-    color: inherit;         /* Hereda el color negro del h1 */
-    text-decoration: none;  /* Elimina el subrayado por defecto */
-    outline: none;
-}
-
-.main-header h1 a:hover {
-    color: #888888;         /* Un sutil cambio a gris al pasar el cursor para indicar que es clicable */
-    transition: color 0.3s ease;
-}
 
 /* ==========================================================================
-   MÓVIL Y TABLET (Pantallas de menos de 768px)
+   MÓVIL Y TABLET (Media Queries Adaptativas)
    ========================================================================== */
 @media (max-width: 767px) {
+    .main-header { top: 25px; }
+    .main-header h1 { font-size: 11px; letter-spacing: 1.5px; }
+
+    .carousel-container { padding: 5px 0; }
     
-    /* --- Cabecera con tu Nombre --- */
-    .main-header {
-        top: 25px; /* Lo bajamos un pelín para que no quede pegado al borde del teléfono */
+    /* Alturas diferenciadas en móvil */
+    .row-photos .carousel-image {
+        height: 22vh;
     }
-    
-    .main-header h1 {
-        font-size: 11px; /* Letra un poco más compacta y fina */
-        letter-spacing: 1.5px;
+    .row-videos .carousel-image {
+        height: 18vh;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
     }
-
-    /* --- Carruseles (Main Page) --- */
-    .carousel-container {
-        padding: 5px 0; /* Menos espacio entre filas */
+    #videoTrack .carousel-image-container {
+        height: 18vh; /* Adaptamos el contenedor del play en móviles */
     }
 
-    .carousel-image {
-        height: 22vh; /* Reducimos la altura de las fotos para que convivan bien las dos filas */
-    }
+    /* Ocultamos las aceleraciones automáticas por hover en teléfonos */
+    .row-hover-zone { display: none !important; }
 
-    .carousel-video-thumb {
-        /* Ajustamos los vídeos para que mantengan el formato 16:9 sin romper el ancho del móvil */
-        width: 280px !important;
-        height: 157px !important;
-    }
+    body { padding: 90px 24px 80px 24px; }
+    .about-container, .contact-container { margin-bottom: 20px; }
+    .language-block { margin-bottom: 35px; }
+    .about-title, .contact-title { font-size: 13px; letter-spacing: 1.5px; margin-bottom: 8px; }
+    .about-text, .contact-text { font-size: 11px; line-height: 1.8; letter-spacing: 1.2px; }
 
-    /* Desactivamos las zonas invisibles de aceleración en móviles ya que no hay ratón */
-    .row-hover-zone {
-        display: none !important;
-    }
+    .prev, .next { display: none !important; }
+    .close-btn { top: 15px; right: 20px; font-size: 45px; }
 
-    /* --- Páginas de Texto (About / Contacto) --- */
-    body {
-        padding: 90px 24px 80px 24px; /* Ajustamos márgenes para que respiren la cabecera y el menú */
-    }
-
-    .about-container, .contact-container {
-        margin-bottom: 20px;
-    }
-
-    .language-block {
-        margin-bottom: 35px; /* Bloques de idiomas ligeramente más juntos */
-    }
-
-    .about-title, .contact-title {
-        font-size: 13px;
-        letter-spacing: 1.5px;
-        margin-bottom: 8px;
-    }
-
-    .about-text, .contact-text {
-        font-size: 11px; /* Tipografía más pequeña de estilo editorial y legible */
-        line-height: 1.8;
-        letter-spacing: 1.2px;
-    }
-
-    /* --- Páginas de Proyectos (Producción / Postproducción) --- */
-    .section-page-title {
-        font-size: 12px;
-        margin-bottom: 30px;
-    }
-
-    .projects-grid {
-        gap: 30px; /* Menor separación entre proyectos en cascada vertical */
-    }
-
-    .project-info {
-        font-size: 10px; /* Reducimos un punto la ficha técnica */
-        line-height: 1.6;
-        margin-top: 10px;
-    }
-
-    /* --- Menú Inferior Fijo --- */
-    .minimal-menu {
-        bottom: 25px; /* Lo subimos ligeramente para evitar las barras de navegación nativas de los móviles */
-        gap: 15px;
-    }
-
-    .menu-item {
-        font-size: 11px;
-        letter-spacing: 1.5px;
-    }
-    
-    /* --- Visor Grande (Lightbox) --- */
-    .prev, .next {
-        display: none !important; /* En móviles es mejor quitar las flechas laterales para que no pisen la imagen */
-    }
-    
-    .close-btn {
-        top: 15px;
-        right: 20px;
-        font-size: 45px; /* Botón de cerrar más cómodo para el dedo */
-    }
+    .minimal-menu { bottom: 25px; gap: 15px; }
+    .menu-item { font-size: 11px; letter-spacing: 1.5px; }
 }
