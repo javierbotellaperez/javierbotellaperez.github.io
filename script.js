@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.getElementById("lightboxPrev");
     const closeBtn = document.getElementById("closeBtn");
 
+    // Mantengo tus 114 fotos actuales
     const totalImages = 114;
     const totalVideos = 8;
     
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const img = document.createElement("img");
                 img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
                 img.classList.add("carousel-image");
-                img.dataset.index = i; // Guardamos su número real
+                img.dataset.index = i;
                 img.onerror = () => img.remove();
                 photoTrack.appendChild(img);
             }
@@ -48,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const vid = document.createElement("video");
                 vid.src = `/videos/Video_${formatNumber(i)}.mp4`;
                 vid.classList.add("carousel-video-thumb");
-                vid.dataset.index = i; // Guardamos su número real
+                vid.dataset.index = i;
                 vid.muted = true; vid.autoplay = true; vid.loop = true; vid.playsInline = true;
                 vid.onerror = () => vid.remove();
                 videoTrack.appendChild(vid);
@@ -63,7 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
             posVideos += currentSpeedVideos;
 
             const halfPhotosWidth = photoTrack.scrollWidth / 2;
-            if (Math.abs(posPhotos) >= halfPhotosWidth) posPhotos = 0;
+            if (posPhotos >= 0) posPhotos = -halfPhotosWidth;
+            if (Math.abs(posPhotos) >= photoTrack.scrollWidth) posPhotos = -halfPhotosWidth;
             
             const halfVideosWidth = videoTrack.scrollWidth / 2;
             if (posVideos >= 0) posVideos = -halfVideosWidth;
@@ -75,15 +77,13 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(animate);
     }
 
-    // --- TRUCO MAESTRO: TRASTOCAR EL CLIC AL ELEMENTO DE ABAJO ---
+    // --- TRUCO MAESTRO: TRASPASAR EL CLIC AL ELEMENTO DE ABAJO ---
     function setupSmartClick(zone, mode) {
         zone.addEventListener("click", (e) => {
-            // Ocultamos la zona un microsegundo para ver qué hay debajo
             zone.style.pointerEvents = "none";
             const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
             zone.style.pointerEvents = "auto";
 
-            // Si lo que había debajo es una foto o un video del carrusel, lo abrimos
             if (elementBelow && (elementBelow.classList.contains("carousel-image") || elementBelow.classList.contains("carousel-video-thumb"))) {
                 const index = parseInt(elementBelow.dataset.index);
                 if (index) openLightbox(mode, index);
@@ -91,33 +91,31 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- ESCUCHA DE HOVERS E INTERSECCIÓN DE CLICS ---
+    // --- ESCUCHA DE HOVERS (Direcciones corregidas y velocidad x8) ---
     
-    // Fila de Fotos
+    // FILA DE FOTOS (Invertido el sentido del hover según lo solicitado)
     const photoLeftZone = containerPhotos.querySelector(".zone-left");
     const photoRightZone = containerPhotos.querySelector(".zone-right");
 
-    photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * 4);
-    photoRightZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -4);
+    photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -8); // Ahora va hacia el otro lado más rápido
+    photoRightZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * 8);  // Ahora va hacia el otro lado más rápido
     containerPhotos.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     
-    // Activamos el clic inteligente en las zonas de las fotos
     setupSmartClick(photoLeftZone, 'photo');
     setupSmartClick(photoRightZone, 'photo');
 
-    // Fila de Videos
+    // FILA DE VIDEOS (Mismo sentido pero velocidad acelerada a x8)
     const videoLeftZone = containerVideos.querySelector(".zone-left");
     const videoRightZone = containerVideos.querySelector(".zone-right");
 
-    videoLeftZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * -4);
-    videoRightZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * 4);
+    videoLeftZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * -8); 
+    videoRightZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * 8);  
     containerVideos.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
 
-    // Activamos el clic inteligente en las zonas de los videos
     setupSmartClick(videoLeftZone, 'video');
     setupSmartClick(videoRightZone, 'video');
 
-    // Pausa si el ratón se queda fijo en el centro (directamente sobre los tracks)
+    // Pausas quirúrgicas en el centro
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     photoTrack.addEventListener("click", (e) => {
