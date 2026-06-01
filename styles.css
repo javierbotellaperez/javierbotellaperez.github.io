@@ -77,7 +77,7 @@ html, body {
     object-fit: cover;  
     cursor: pointer;
     display: block;
-    filter: brightness(10%); /* Forzado al 10% de brillo por defecto */
+    filter: brightness(90%); /* Forzado al 10% de brillo por defecto */
     transition: filter 0.4s ease;
 }
 
