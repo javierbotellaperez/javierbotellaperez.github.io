@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Javier Botella Pérez</title>
+    <!-- Reutilizamos tus estilos base del proyecto -->
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Ajustamos el cuerpo para que todo el contenido se centre vertical y horizontalmente */
+        body {
+            overflow-y: auto;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 20px 80px 20px; /* Añadimos más margen arriba para que la cabecera no pise el texto */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .about-container {
+            max-width: 650px;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 40px; 
+        }
+
+        .language-block {
+            margin-bottom: 45px;
+        }
+
+        /* Indicador de idioma (CAT / ENG / CAST) */
+        .lang-indicator {
+            font-size: 11px;
+            color: #c0c0c0;
+            letter-spacing: 2px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Títulos en mayúsculas por CSS para asegurar el estilo */
+        .about-title {
+            font-size: 15px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            color: #000000;
+        }
+
+        /* Texto principal en mayúsculas, con tipografía algo más pequeña y espaciada */
+        .about-text {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #444444;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Hipervínculos minimalistas */
+        .about-link {
+            color: #000000;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .about-link:hover {
+            color: #888888;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nombre de cabecera fijo (Idéntico al del index) -->
+    <header class="main-header">
+        <h1>Javier Botella Pérez</h1>
+    </header>
+
+    <div class="about-container">
+
+        <!-- BLOQUE 1: CATALÀ -->
+        <section class="language-block">
+            <span class="lang-indicator">CAT</span>
+            <h2 class="about-title">Director i Fotògraf</h2>
+            <p class="about-text">
+                Obrint-me camí com a fotògraf i director, amb un sòlid bagatge en 
+                <a href="/produccion.html" class="about-link">producció</a> i 
+                <a href="/postproduccion.html" class="about-link">postproducció</a> 
+                que em permet entendre a fons cada fase del procés.
+            </p>
+        </section>
+
+        <!-- BLOQUE 2: ENGLISH -->
+        <section class="language-block">
+            <span class="lang-indicator">ENG</span>
+            <h2 class="about-title">Director & Photographer</h2>
+            <p class="about-text">
+                Building my path as a photographer and director, backed by a solid background in 
+                <a href="/produccion.html" class="about-link">production</a> and 
+                <a href="/postproduccion.html" class="about-link">post-production</a> 
+                that allows me to deeply understand every stage of the process.
+            </p>
+        </section>
+
+        <!-- BLOQUE 3: CASTELLANO -->
+        <section class="language-block">
+            <span class="lang-indicator">CAST</span>
+            <h2 class="about-title">Director y Fotógrafo</h2>
+            <p class="about-text">
+                Abriéndome paso como fotógrafo y director, con un sólido bagaje en 
+                <a href="/produccion.html" class="about-link">producción</a> y 
+                <a href="/postproduccion.html" class="about-link">postproducción</a> 
+                que me permite entender a fondo cada fase del proceso.
+            </p>
+        </section>
+
+    </div>
+
+    <!-- Menú Inferior Fijo (Idéntico al del index) -->
+    <footer class="minimal-menu">
+        <a href="/index.html" class="menu-item">Main Page</a>
+        <span class="menu-separator">•</span>
+        <a href="/contact.html" class="menu-item">Contact</a>
+    </footer>
+
+</body>
+</html>

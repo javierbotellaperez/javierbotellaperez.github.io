@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javier Botella Pérez</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            overflow-y: auto; /* Permitimos scroll para navegar por los proyectos */
+            justify-content: flex-start;
+            padding: 140px 40px 100px 40px; /* Espacio para cabecera y menú */
+            align-items: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Título de la sección */
+        .section-page-title {
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #888888;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        /* Cuadrícula de proyectos (Se adapta a ordenador y móvil) */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 40px;
+            width: 100%;
+            max-width: 1100px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 600px) {
+            .projects-grid {
+                grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+            }
+        }
+
+        .project-item {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        /* Contenedor multimedia estático */
+        .project-media-wrapper {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+
+        .project-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .project-media-wrapper:hover .project-thumb {
+            transform: scale(1.02); /* Sutil zoom de enfoque al pasar el ratón */
+        }
+
+        /* Ficha Técnica (Tu guía: Cliente, Campaña, Rol) */
+        .project-info {
+            margin-top: 15px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            line-height: 1.8;
+            color: #444444;
+        }
+
+        .project-info span {
+            color: #c0c0c0; /* Los nombres de las etiquetas en gris más claro */
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+  <!-- Nombre de cabecera como enlace a la página principal -->
+    <header class="main-header">
+        <h1><a href="/index.html">Javier Botella Pérez</a></h1>
+    </header>
+    
+    <!-- Título de sección indicando dónde está el usuario -->
+    <div class="section-page-title">POST</div>
+
+    <!-- Rejilla de Proyectos Estáticos -->
+    <main class="projects-grid">
+
+        <!-- PROYECTO 1 -->
+        <article class="project-item">
+            <div class="project-media-wrapper" onclick="openProjectLightbox('/videos/Video_00001.mp4', 'video')">
+                <video src="/videos/Video_00001.mp4" class="project-thumb" muted loop playsinline></video>
+            </div>
+            <div class="project-info">
+                <div><span>CLIENTE:</span> Sony Music</div>
+                <div><span>CAMPAÑA:</span> Videoclip Oficial "Nombre Artista"</div>
+                <div><span>ROL:</span> Director de Producción</div>
+            </div>
+        </article>
+
+        <!-- PROYECTO 2 -->
+        <article class="project-item">
+            <div class="project-media-wrapper" onclick="openProjectLightbox('/assets/Asset_00001.jpg', 'photo')">
+                <img src="/assets/Asset_00001.jpg" alt="Proyecto 2" class="project-thumb">
+            </div>
+            <div class="project-info">
+                <div><span>CLIENTE:</span> Netflix España</div>
+                <div><span>CAMPAÑA:</span> Promo Serie Ficción</div>
+                <div><span>ROL:</span> Jefe de Producción</div>
+            </div>
+        </article>
+
+        <!-- PROYECTO 3 (Añade tantos como quieras duplicando este bloque) -->
+        <article class="project-item">
+            <div class="project-media-wrapper" onclick="openProjectLightbox('/videos/Video_00002.mp4', 'video')">
+                <video src="/videos/Video_00002.mp4" class="project-thumb" muted loop playsinline></video>
+            </div>
+            <div class="project-info">
+                <div><span>CLIENTE:</span> Nike</div>
+                <div><span>CAMPAÑA:</span> Run Free 2026</div>
+                <div><span>ROL:</span> Producer Executivo</div>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Menú Inferior Fijo de Navegación Cruzada -->
+    <footer class="minimal-menu">
+        <a href="/index.html" class="menu-item">Main Page</a>
+        <span class="menu-separator">•</span>
+        <a href="/aboutme.html" class="menu-item">About</a>
+        <span class="menu-separator">•</span>
+        <a href="/contact.html" class="menu-item">Contact</a>
+    </footer>
+
+    <!-- REUTILIZAMOS TU VISOR INTERACTIVO (Lightbox) -->
+    <div class="lightbox" id="projectLightbox">
+        <button class="close-btn" onclick="closeProjectLightbox()">&times;</button>
+        <div class="lightbox-content">
+            <img src="" alt="Visor" id="pLightboxImg">
+            <video src="" id="pLightboxVid" controls autoplay></video>
+        </div>
+    </div>
+
+    <!-- Pequeño script exclusivo para controlar el visor de esta página -->
+    <script>
+        // Hacer que los pequeños vídeos de la cuadrícula se reproduzcan solos al pasar el ratón por encima
+        document.querySelectorAll('video.project-thumb').forEach(video => {
+            video.parentElement.addEventListener('mouseenter', () => video.play());
+            video.parentElement.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+        });
+
+        const lightbox = document.getElementById("projectLightbox");
+        const lightboxImg = document.getElementById("pLightboxImg");
+        const lightboxVid = document.getElementById("pLightboxVid");
+
+        function openProjectLightbox(src, type) {
+            lightboxImg.style.display = "none";
+            lightboxVid.style.display = "none";
+            lightboxVid.pause();
+
+            if (type === 'photo') {
+                lightboxImg.src = src;
+                lightboxImg.style.display = "block";
+                lightbox.style.display = "flex";
+            } else {
+                lightboxVid.src = src;
+                lightboxVid.style.display = "block";
+                lightbox.style.display = "flex";
+                lightboxVid.play();
+            }
+        }
+
+        function closeProjectLightbox() {
+            lightbox.style.display = "none";
+            lightboxVid.pause();
+        }
+
+        lightbox.onclick = closeProjectLightbox;
+        lightboxImg.onclick = (e) => e.stopPropagation();
+        lightboxVid.onclick = (e) => e.stopPropagation();
+    </script>
+
+</body>
+</html>

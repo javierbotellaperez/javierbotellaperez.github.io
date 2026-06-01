@@ -28,14 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
-    // --- CARGA MULTIMEDIA ---
+    // --- CARGA MULTIMEDIA LIMPIA ---
     function loadPhotos() {
         for (let j = 0; j < 2; j++) {
             for (let i = 1; i <= totalImages; i++) {
                 const img = document.createElement("img");
                 img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
                 img.classList.add("carousel-image");
-                img.dataset.index = i; // Guardamos su número real
+                img.dataset.index = i;
                 img.onerror = () => img.remove();
                 photoTrack.appendChild(img);
             }
@@ -45,13 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function loadVideos() {
         for (let j = 0; j < 4; j++) {
             for (let i = 1; i <= totalVideos; i++) {
-                const vid = document.createElement("video");
-                vid.src = `/videos/Video_${formatNumber(i)}.mp4`;
-                vid.classList.add("carousel-video-thumb");
-                vid.dataset.index = i; // Guardamos su número real
-                vid.muted = true; vid.autoplay = true; vid.loop = true; vid.playsInline = true;
-                vid.onerror = () => vid.remove();
-                videoTrack.appendChild(vid);
+                const img = document.createElement("img");
+                img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`; // Tu miniatura fija
+                img.classList.add("carousel-video-thumb"); // Clase específica para vídeos
+                img.dataset.index = i;
+                img.onerror = () => img.remove();
+                videoTrack.appendChild(img);
             }
         }
     }
@@ -63,7 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
             posVideos += currentSpeedVideos;
 
             const halfPhotosWidth = photoTrack.scrollWidth / 2;
-            if (Math.abs(posPhotos) >= halfPhotosWidth) posPhotos = 0;
+            if (posPhotos >= 0) posPhotos = -halfPhotosWidth;
+            if (Math.abs(posPhotos) >= photoTrack.scrollWidth) posPhotos = -halfPhotosWidth;
             
             const halfVideosWidth = videoTrack.scrollWidth / 2;
             if (posVideos >= 0) posVideos = -halfVideosWidth;
@@ -75,15 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(animate);
     }
 
-    // --- TRUCO MAESTRO: TRASTOCAR EL CLIC AL ELEMENTO DE ABAJO ---
+    // --- TRUCO MAESTRO: TRASPASAR EL CLIC DESDE LAS ZONAS DE ACELERACIÓN ---
     function setupSmartClick(zone, mode) {
         zone.addEventListener("click", (e) => {
-            // Ocultamos la zona un microsegundo para ver qué hay debajo
             zone.style.pointerEvents = "none";
             const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
             zone.style.pointerEvents = "auto";
 
-            // Si lo que había debajo es una foto o un video del carrusel, lo abrimos
             if (elementBelow && (elementBelow.classList.contains("carousel-image") || elementBelow.classList.contains("carousel-video-thumb"))) {
                 const index = parseInt(elementBelow.dataset.index);
                 if (index) openLightbox(mode, index);
@@ -91,33 +89,59 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- ESCUCHA DE HOVERS E INTERSECCIÓN DE CLICS ---
-    
-    // Fila de Fotos
+    // --- INTERACCIÓN TÁCTIL PARA MÓVILES ---
+    function setupTouchScroll(container, type) {
+        let startX = 0;
+        let isDragging = false;
+
+        container.addEventListener("touchstart", (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        }, { passive: true });
+
+        container.addEventListener("touchmove", (e) => {
+            if (!isDragging) return;
+            const currentX = e.touches[0].clientX;
+            const diffX = currentX - startX;
+
+            if (type === 'photo') {
+                currentSpeedPhotos = baseSpeedPhotos + (diffX * 0.25);
+            } else {
+                currentSpeedVideos = baseSpeedVideos + (diffX * 0.25);
+            }
+            
+            startX = currentX; 
+        }, { passive: true });
+
+        container.addEventListener("touchend", () => {
+            isDragging = false;
+            if (type === 'photo') currentSpeedPhotos = baseSpeedPhotos;
+            if (type === 'video') currentSpeedVideos = baseSpeedVideos;
+        });
+    }
+
+    // --- ESCUCHA DE HOVERS (Ordenador Escritorio) ---
     const photoLeftZone = containerPhotos.querySelector(".zone-left");
     const photoRightZone = containerPhotos.querySelector(".zone-right");
 
-    photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * 4);
-    photoRightZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -4);
+    photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -8); 
+    photoRightZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * 8);  
     containerPhotos.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     
-    // Activamos el clic inteligente en las zonas de las fotos
     setupSmartClick(photoLeftZone, 'photo');
     setupSmartClick(photoRightZone, 'photo');
 
-    // Fila de Videos
     const videoLeftZone = containerVideos.querySelector(".zone-left");
     const videoRightZone = containerVideos.querySelector(".zone-right");
 
-    videoLeftZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * -4);
-    videoRightZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * 4);
+    videoLeftZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * -8); 
+    videoRightZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * 8);  
     containerVideos.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
 
-    // Activamos el clic inteligente en las zonas de los videos
     setupSmartClick(videoLeftZone, 'video');
     setupSmartClick(videoRightZone, 'video');
 
-    // Pausa si el ratón se queda fijo en el centro (directamente sobre los tracks)
+    // Pausas al poner el ratón encima
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     photoTrack.addEventListener("click", (e) => {
@@ -134,7 +158,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- LÓGICA VISOR ---
+    setupTouchScroll(containerPhotos, 'photo');
+    setupTouchScroll(containerVideos, 'video');
+
+    // --- LIGHTBOX ---
     function openLightbox(mode, index) {
         currentMode = mode; currentIndex = index;
         updateContent(); lightbox.classList.add("active");
