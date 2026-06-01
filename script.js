@@ -28,36 +28,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
-    // --- CARGA MULTIMEDIA ---
+    // --- ALGORITMO DE BARAJADO SEGURO (Fisher-Yates) ---
+    // Mezcla los números del porfolio perfectamente antes de crear las etiquetas en pantalla
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[array[j]]] = [array[j], array[array[i]]];
+        }
+        return array;
+    }
+
+    // --- CARGA MULTIMEDIA ALEATORIA ---
     function loadPhotos() {
+        // Creamos una lista base con tus 114 fotos ordenadas
+        let baseIndexes = Array.from({length: totalImages}, (_, i) => i + 1);
+        
+        // Para el efecto infinito, duplicamos la tira (j < 2), barajando de forma distinta cada tanda
         for (let j = 0; j < 2; j++) {
-            for (let i = 1; i <= totalImages; i++) {
+            let shuffledIndexes = shuffleArray([...baseIndexes]);
+            
+            shuffledIndexes.forEach(i => {
                 const img = document.createElement("img");
                 img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
                 img.classList.add("carousel-image");
-                img.dataset.index = i;
+                img.dataset.index = i; // El visor sigue sabiendo qué archivo real abrir
                 img.onerror = () => img.remove();
                 photoTrack.appendChild(img);
-            }
+            });
         }
     }
 
     function loadVideos() {
+        // Creamos una lista base con tus 8 vídeos ordenados
+        let baseIndexes = Array.from({length: totalVideos}, (_, i) => i + 1);
+        
+        // Multiplicamos por 4 para dar longitud al carrusel inferior barajando el orden
         for (let j = 0; j < 4; j++) {
-            for (let i = 1; i <= totalVideos; i++) {
-                // Creamos un contenedor específico para albergar la miniatura y su play flotante
+            let shuffledIndexes = shuffleArray([...baseIndexes]);
+            
+            shuffledIndexes.forEach(i => {
                 const wrapper = document.createElement("div");
                 wrapper.classList.add("video-item-wrapper");
-                wrapper.dataset.index = i; // El contenedor recibe el clic en el track
+                wrapper.dataset.index = i;
 
                 const img = document.createElement("img");
                 img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`;
-                img.classList.add("carousel-image"); // Comparte altura nativa con las fotos
+                img.classList.add("carousel-image");
                 img.onerror = () => wrapper.remove();
 
                 wrapper.appendChild(img);
                 videoTrack.appendChild(wrapper);
-            }
+            });
         }
     }
 
@@ -211,6 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.key === "ArrowLeft") change(-1);
     });
 
+    // Lanzamiento limpio
     loadPhotos();
     loadVideos();
     animate();
