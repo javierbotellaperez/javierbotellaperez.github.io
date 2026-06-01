@@ -59,7 +59,7 @@ html, body {
     overflow: hidden;
     display: flex;
     align-items: center;
-    padding: 10px 0;
+    padding: 15px 0; /* Un pelín más de aire entre filas */
     z-index: 10;
 }
 
@@ -67,13 +67,14 @@ html, body {
     display: flex;
     width: max-content;
     will-change: transform;
+    gap: 10px; /* Añade una pequeña separación elegante entre las imágenes */
 }
 
-/* --- ESTILO PARA AMBAS FILAS (Garantiza que NUNCA desaparezcan) --- */
+/* --- AJUSTE MAESTRO DE PROPORCIÓN --- */
 .carousel-image {
-    height: 35vh;
-    width: auto;
-    object-fit: cover;
+    height: 33vh;       /* Altura fija idéntica basada en la pantalla (puedes subir a 35vh si las quieres más grandes) */
+    width: auto;        /* La anchura se calcula sola de forma proporcional */
+    object-fit: cover;  /* Evita que la imagen se estire o se deforme */
     filter: grayscale(100%);
     cursor: pointer;
     transition: filter 0.3s ease;
@@ -189,11 +190,15 @@ html, body {
 
     .carousel-container { padding: 5px 0; }
     
-    /* Configuración proporcional idéntica para ambas filas en móviles */
+    /* Configuración proporcional idéntica para móviles */
     .row-photos .carousel-image,
     .row-videos .carousel-image {
-        height: 20vh;
-        width: auto;
+        height: 20vh;  /* Altura más bajita y equilibrada en pantallas de smartphone */
+        width: auto;   /* Mantiene la anchura proporcional en móvil también */
+    }
+
+    .carousel-track {
+        gap: 6px;      /* Separación un poco más estrecha en móviles */
     }
 
     .row-hover-zone { display: none !important; }
