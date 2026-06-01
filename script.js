@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.getElementById("lightboxPrev");
     const closeBtn = document.getElementById("closeBtn");
 
-    // Configuración de volumen de archivos
+    // Volumen de tus archivos reales
     const totalImages = 114;
     const totalVideos = 8;
     
@@ -27,85 +27,45 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSpeedPhotos = baseSpeedPhotos;
     let currentSpeedVideos = baseSpeedVideos;
 
-    // Variables de inercia para lanzamiento táctil
-    let inertiaPhotos = 0;
-    let inertiaVideos = 0;
-    const friction = 0.95; 
-
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
-    // --- FUNCIÓN ALGORÍTMICA PARA MEZCLAR EL ORDEN (Fisher-Yates Shuffle) ---
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[array[j]]] = [array[j], array[array[i]]];
-        }
-        return array;
-    }
-
-    // --- CARGA MULTIMEDIA ALEATORIA ---
+    // --- CARGA MULTIMEDIA OPTIMIZADA ---
     function loadPhotos() {
-        // Creamos una lista base ordenada del 1 al 114
-        let textIndexes = Array.from({length: totalImages}, (_, i) => i + 1);
-        
-        // Multiplicamos por 2 para el efecto de bucle infinito, barajando en cada tanda
         for (let j = 0; j < 2; j++) {
-            let shuffledIndexes = shuffleArray([...textIndexes]);
-            
-            shuffledIndexes.forEach(i => {
+            for (let i = 1; i <= totalImages; i++) {
                 const img = document.createElement("img");
                 img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
                 img.classList.add("carousel-image");
-                img.dataset.index = i; // Guardamos el número real para el Lightbox
+                img.dataset.index = i;
                 img.onerror = () => img.remove();
                 photoTrack.appendChild(img);
-            });
+            }
         }
     }
 
+    // Usamos etiquetas de vídeo pero congeladas con tu miniatura fija (poster) para carga instantánea
     function loadVideos() {
-        // Creamos una lista base ordenada del 1 al 8
-        let videoIndexes = Array.from({length: totalVideos}, (_, i) => i + 1);
-        
         for (let j = 0; j < 4; j++) {
-            let shuffledIndexes = shuffleArray([...videoIndexes]);
-            
-            shuffledIndexes.forEach(i => {
-                const container = document.createElement("div");
-                container.classList.add("carousel-image-container");
-
-                const img = document.createElement("img");
-                img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`;
-                img.classList.add("carousel-image");
-                img.dataset.index = i; // Guardamos el número real para el Lightbox
-                img.onerror = () => container.remove();
-
-                container.appendChild(img);
-                videoTrack.appendChild(container);
-            });
+            for (let i = 1; i <= totalVideos; i++) {
+                const vid = document.createElement("video");
+                vid.src = `/videos/Video_${formatNumber(i)}.mp4`;
+                vid.poster = `/assets/VidThumb_${formatNumber(i)}.jpg`; // Tu miniatura fija actúa de escudo de carga
+                vid.classList.add("carousel-video-thumb");
+                vid.dataset.index = i;
+                vid.preload = "none"; // Le dice al navegador que NO descargue el vídeo en segundo plano
+                vid.playsInline = true;
+                vid.onerror = () => vid.remove();
+                videoTrack.appendChild(vid);
+            }
         }
     }
 
-    // --- MOTOR DE MOVIMIENTO CON FÍSICAS DE INERCIA ---
+    // --- MOTOR DE MOVIMIENTO ---
     function animate() {
         if (!lightbox.classList.contains("active")) {
-            
-            // Aplicamos inercia si el usuario ha lanzado la fila con el dedo
-            if (Math.abs(inertiaPhotos) > 0.05) {
-                posPhotos += inertiaPhotos;
-                inertiaPhotos *= friction;
-            } else {
-                posPhotos += currentSpeedPhotos;
-            }
+            posPhotos += currentSpeedPhotos;
+            posVideos += currentSpeedVideos;
 
-            if (Math.abs(inertiaVideos) > 0.05) {
-                posVideos += inertiaVideos;
-                inertiaVideos *= friction;
-            } else {
-                posVideos += currentSpeedVideos;
-            }
-
-            // Reseteos para que el carrusel sea infinito y no se corte
             const halfPhotosWidth = photoTrack.scrollWidth / 2;
             if (posPhotos >= 0) posPhotos = -halfPhotosWidth;
             if (Math.abs(posPhotos) >= photoTrack.scrollWidth) posPhotos = -halfPhotosWidth;
@@ -120,74 +80,52 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(animate);
     }
 
-    // --- TRUCO MAESTRO: TRASPASAR EL CLIC EN ZONAS HOVER INVISIBLES ---
+    // --- TRUCO MAESTRO: TRASPASAR EL CLIC DESDE LAS ZONAS DE ACELERACIÓN ---
     function setupSmartClick(zone, mode) {
         zone.addEventListener("click", (e) => {
             zone.style.pointerEvents = "none";
             const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
             zone.style.pointerEvents = "auto";
 
-            if (elementBelow) {
-                const img = elementBelow.classList.contains("carousel-image") ? elementBelow : elementBelow.querySelector(".carousel-image");
-                if (img) {
-                    const index = parseInt(img.dataset.index);
-                    if (index) openLightbox(mode, index);
-                }
+            if (elementBelow && (elementBelow.classList.contains("carousel-image") || elementBelow.classList.contains("carousel-video-thumb"))) {
+                const index = parseInt(elementBelow.dataset.index);
+                if (index) openLightbox(mode, index);
             }
         });
     }
 
-    // --- GESTOR TÁCTIL (MOVIMIENTO ÁGIL Y LANZAMIENTO) ---
+    // --- INTERACCIÓN TÁCTIL PARA MÓVILES (Deslizamiento fluido) ---
     function setupTouchScroll(container, type) {
         let startX = 0;
-        let lastX = 0;
-        let lastTime = 0;
-        let speedX = 0;
         let isDragging = false;
 
         container.addEventListener("touchstart", (e) => {
             startX = e.touches[0].clientX;
-            lastX = startX;
-            lastTime = performance.now();
             isDragging = true;
-            
-            if (type === 'photo') inertiaPhotos = 0;
-            if (type === 'video') inertiaVideos = 0;
         }, { passive: true });
 
         container.addEventListener("touchmove", (e) => {
             if (!isDragging) return;
-            
             const currentX = e.touches[0].clientX;
-            const currentTime = performance.now();
-            const diffX = currentX - lastX;
-            const timeDiff = currentTime - lastTime;
+            const diffX = currentX - startX;
 
-            if (timeDiff > 0) {
-                speedX = diffX / timeDiff * 15; 
+            if (type === 'photo') {
+                currentSpeedPhotos = baseSpeedPhotos + (diffX * 0.25);
+            } else {
+                currentSpeedVideos = baseSpeedVideos + (diffX * 0.25);
             }
-
-            if (type === 'photo') posPhotos += diffX;
-            else posVideos += diffX;
-
-            lastX = currentX;
-            lastTime = currentTime;
+            
+            startX = currentX; 
         }, { passive: true });
 
         container.addEventListener("touchend", () => {
             isDragging = false;
-            if (type === 'photo') {
-                inertiaPhotos = speedX;
-                if (Math.abs(inertiaPhotos) < 1) inertiaPhotos = 0;
-            } else {
-                inertiaVideos = speedX;
-                if (Math.abs(inertiaVideos) < 1) inertiaVideos = 0;
-            }
-            speedX = 0;
+            if (type === 'photo') currentSpeedPhotos = baseSpeedPhotos;
+            if (type === 'video') currentSpeedVideos = baseSpeedVideos;
         });
     }
 
-    // --- CONTROL DE ACELERACIÓN POR CURSOR (Escritorio) ---
+    // --- ESCUCHA DE HOVERS (Ordenador Escritorio) ---
     const photoLeftZone = containerPhotos.querySelector(".zone-left");
     const photoRightZone = containerPhotos.querySelector(".zone-right");
 
@@ -208,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupSmartClick(videoLeftZone, 'video');
     setupSmartClick(videoRightZone, 'video');
 
-    // Pausas físicas al poner el cursor en el centro (Escritorio)
+    // Pausas al poner el ratón en el centro de una pieza
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     photoTrack.addEventListener("click", (e) => {
@@ -220,17 +158,16 @@ document.addEventListener("DOMContentLoaded", () => {
     videoTrack.addEventListener("mouseenter", () => currentSpeedVideos = 0);
     videoTrack.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
     videoTrack.addEventListener("click", (e) => {
-        const img = e.target.classList.contains("carousel-image") ? e.target : e.target.querySelector(".carousel-image");
-        if(img) {
-            openLightbox('video', parseInt(img.dataset.index));
+        if(e.target.classList.contains("carousel-video-thumb")) {
+            openLightbox('video', parseInt(e.target.dataset.index));
         }
     });
 
-    // Activamos las funciones de arrastre táctil para smartphone
+    // Activamos las funciones táctiles en dispositivos móviles
     setupTouchScroll(containerPhotos, 'photo');
     setupTouchScroll(containerVideos, 'video');
 
-    // --- GESTIÓN INTERNA DEL VISOR (LIGHTBOX) ---
+    // --- LÓGICA DEL VISOR GRANDE (LIGHTBOX) ---
     function openLightbox(mode, index) {
         currentMode = mode; currentIndex = index;
         updateContent(); lightbox.classList.add("active");
@@ -270,7 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.key === "ArrowLeft") change(-1);
     });
 
-    // Inicializamos las cargas y el bucle de renderizado
     loadPhotos();
     loadVideos();
     animate();
