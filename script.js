@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.getElementById("lightboxPrev");
     const closeBtn = document.getElementById("closeBtn");
 
-    // Volumen de tus archivos reales
     const totalImages = 114;
     const totalVideos = 8;
     
@@ -29,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
-    // --- CARGA MULTIMEDIA OPTIMIZADA ---
+    // --- CARGA MULTIMEDIA LIMPIA ---
     function loadPhotos() {
         for (let j = 0; j < 2; j++) {
             for (let i = 1; i <= totalImages; i++) {
@@ -43,19 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Usamos etiquetas de vídeo pero congeladas con tu miniatura fija (poster) para carga instantánea
     function loadVideos() {
         for (let j = 0; j < 4; j++) {
             for (let i = 1; i <= totalVideos; i++) {
-                const vid = document.createElement("video");
-                vid.src = `/videos/Video_${formatNumber(i)}.mp4`;
-                vid.poster = `/assets/VidThumb_${formatNumber(i)}.jpg`; // Tu miniatura fija actúa de escudo de carga
-                vid.classList.add("carousel-video-thumb");
-                vid.dataset.index = i;
-                vid.preload = "none"; // Le dice al navegador que NO descargue el vídeo en segundo plano
-                vid.playsInline = true;
-                vid.onerror = () => vid.remove();
-                videoTrack.appendChild(vid);
+                const img = document.createElement("img");
+                img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`; // Tu miniatura fija
+                img.classList.add("carousel-video-thumb"); // Clase específica para vídeos
+                img.dataset.index = i;
+                img.onerror = () => img.remove();
+                videoTrack.appendChild(img);
             }
         }
     }
@@ -94,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- INTERACCIÓN TÁCTIL PARA MÓVILES (Deslizamiento fluido) ---
+    // --- INTERACCIÓN TÁCTIL PARA MÓVILES ---
     function setupTouchScroll(container, type) {
         let startX = 0;
         let isDragging = false;
@@ -146,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupSmartClick(videoLeftZone, 'video');
     setupSmartClick(videoRightZone, 'video');
 
-    // Pausas al poner el ratón en el centro de una pieza
+    // Pausas al poner el ratón encima
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     photoTrack.addEventListener("click", (e) => {
@@ -163,11 +158,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Activamos las funciones táctiles en dispositivos móviles
     setupTouchScroll(containerPhotos, 'photo');
     setupTouchScroll(containerVideos, 'video');
 
-    // --- LÓGICA DEL VISOR GRANDE (LIGHTBOX) ---
+    // --- LIGHTBOX ---
     function openLightbox(mode, index) {
         currentMode = mode; currentIndex = index;
         updateContent(); lightbox.classList.add("active");
