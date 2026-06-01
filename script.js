@@ -28,58 +28,77 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
-    // --- ALGORITMO DE BARAJADO SEGURO (Fisher-Yates) ---
-    // Mezcla los números del porfolio perfectamente antes de crear las etiquetas en pantalla
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[array[j]]] = [array[j], array[array[i]]];
+    // --- ALGORITMO DE BARAJADO ANTIREPETICIÓN ---
+    function getSmartShuffledSequence(totalCount, duplicatesNeeded) {
+        let base = Array.from({length: totalCount}, (_, i) => i + 1);
+        
+        // Función interna Fisher-Yates
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
         }
-        return array;
+
+        let fullSequence = [];
+        let lastBatch = [];
+
+        for (let d = 0; d < duplicatesNeeded; d++) {
+            let currentBatch = shuffle([...base]);
+            
+            // Si el primer elemento de esta tanda coincide con el último de la anterior, lo movemos al final
+            if (lastBatch.length > 0 && currentBatch[0] === lastBatch[lastBatch.length - 1]) {
+                const first = currentBatch.shift();
+                currentBatch.push(first);
+            }
+            
+            fullSequence = fullSequence.concat(currentBatch);
+            lastBatch = currentBatch;
+        }
+
+        // Validación final de seguridad para el salto del bucle infinito (Fin del carrusel con el principio)
+        if (fullSequence[fullSequence.length - 1] === fullSequence[0]) {
+            // Intercambiamos el último elemento con el penúltimo para romper la coincidencia
+            const len = fullSequence.length;
+            [fullSequence[len - 1], fullSequence[len - 2]] = [fullSequence[len - 2], fullSequence[len - 1]];
+        }
+
+        return fullSequence;
     }
 
-    // --- CARGA MULTIMEDIA ALEATORIA ---
+    // --- CARGA MULTIMEDIA CONTROLADA ---
     function loadPhotos() {
-        // Creamos una lista base con tus 114 fotos ordenadas
-        let baseIndexes = Array.from({length: totalImages}, (_, i) => i + 1);
+        // Generamos la secuencia larga aleatoria sin colisiones de extremos
+        const photoSequence = getSmartShuffledSequence(totalImages, 2);
         
-        // Para el efecto infinito, duplicamos la tira (j < 2), barajando de forma distinta cada tanda
-        for (let j = 0; j < 2; j++) {
-            let shuffledIndexes = shuffleArray([...baseIndexes]);
-            
-            shuffledIndexes.forEach(i => {
-                const img = document.createElement("img");
-                img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
-                img.classList.add("carousel-image");
-                img.dataset.index = i; // El visor sigue sabiendo qué archivo real abrir
-                img.onerror = () => img.remove();
-                photoTrack.appendChild(img);
-            });
-        }
+        photoSequence.forEach(i => {
+            const img = document.createElement("img");
+            img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
+            img.classList.add("carousel-image");
+            img.dataset.index = i;
+            img.onerror = () => img.remove();
+            photoTrack.appendChild(img);
+        });
     }
 
     function loadVideos() {
-        // Creamos una lista base con tus 8 vídeos ordenados
-        let baseIndexes = Array.from({length: totalVideos}, (_, i) => i + 1);
+        // Generamos la secuencia larga de miniaturas de vídeo sin colisiones
+        const videoSequence = getSmartShuffledSequence(totalVideos, 4);
         
-        // Multiplicamos por 4 para dar longitud al carrusel inferior barajando el orden
-        for (let j = 0; j < 4; j++) {
-            let shuffledIndexes = shuffleArray([...baseIndexes]);
-            
-            shuffledIndexes.forEach(i => {
-                const wrapper = document.createElement("div");
-                wrapper.classList.add("video-item-wrapper");
-                wrapper.dataset.index = i;
+        videoSequence.forEach(i => {
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("video-item-wrapper");
+            wrapper.dataset.index = i;
 
-                const img = document.createElement("img");
-                img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`;
-                img.classList.add("carousel-image");
-                img.onerror = () => wrapper.remove();
+            const img = document.createElement("img");
+            img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`;
+            img.classList.add("carousel-image");
+            img.onerror = () => wrapper.remove();
 
-                wrapper.appendChild(img);
-                videoTrack.appendChild(wrapper);
-            });
-        }
+            wrapper.appendChild(img);
+            videoTrack.appendChild(wrapper);
+        });
     }
 
     // --- MOTOR DE MOVIMIENTO ---
@@ -232,7 +251,6 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.key === "ArrowLeft") change(-1);
     });
 
-    // Lanzamiento limpio
     loadPhotos();
     loadVideos();
     animate();
