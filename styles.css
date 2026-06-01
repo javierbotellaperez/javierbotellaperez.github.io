@@ -51,7 +51,7 @@ html, body {
 }
 
 /* ==========================================================================
-   3. ESTRUCTURA DE LOS CARRUSELES (INDEX)
+   3. ESTRUCTURA DE LOS CARRUSELES (INDEX) - ESCRITORIO
    ========================================================================== */
 .carousel-container {
     position: relative;
@@ -69,7 +69,7 @@ html, body {
     will-change: transform;
 }
 
-/* --- Estilo de las Imágenes --- */
+/* --- Tira Superior: Fotos --- */
 .carousel-image {
     height: 35vh;
     width: auto;
@@ -83,33 +83,19 @@ html, body {
     filter: grayscale(100%) brightness(110%);
 }
 
-/* --- CONTENEDORES DE PORTADA PARA LOS VÍDEOS (Fila inferior) --- */
-#videoTrack .carousel-image-container {
-    position: relative;
-    display: inline-block;
-    height: 35vh; /* Forzamos la misma altura que las fotos en escritorio */
+/* --- Tira Inferior: Vídeos (Carga con Poster Fijo) --- */
+.carousel-video-thumb {
+    height: 35vh;
     width: auto;
+    object-fit: cover;
+    filter: grayscale(100%);
+    cursor: pointer;
+    transition: filter 0.3s ease;
+    background-color: #000000; /* Fondo de seguridad mientras carga el póster */
 }
 
-/* --- ICONO DE PLAY GEOMÉTRICO (Sutil y minimalista) --- */
-#videoTrack .carousel-image-container::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 16px solid rgba(255, 255, 255, 0.75); /* Blanco traslúcido */
-    z-index: 20;
-    pointer-events: none; /* No bloquea el clic hacia la imagen */
-    transition: border-left-color 0.3s ease;
-}
-
-#videoTrack .carousel-image-container:hover::after {
-    border-left-color: rgba(255, 255, 255, 1); /* Se ilumina al pasar el ratón */
+.carousel-video-thumb:hover {
+    filter: grayscale(100%) brightness(110%);
 }
 
 /* ==========================================================================
@@ -219,32 +205,28 @@ html, body {
 
     .carousel-container { padding: 5px 0; }
     
-    /* Proporciones optimizadas para la cuadrícula móvil */
+    /* Proporciones adaptadas a pantallas móviles */
     .row-photos .carousel-image {
         height: 22vh;
     }
-    .row-videos .carousel-image {
-        height: 18vh;
-        aspect-ratio: 16 / 9;
+    
+    .carousel-video-thumb {
+        width: 280px !important;
+        height: 157px !important; /* Relación de aspecto panorámica 16:9 limpia */
         object-fit: cover;
     }
-    #videoTrack .carousel-image-container {
-        height: 18vh; /* Corregido: Mismo alto que la imagen del vídeo en móvil */
-        display: inline-block;
-        width: auto;
-    }
 
-    /* Ocultamos aceleradores de cursor innecesarios en pantallas táctiles */
+    /* Ocultamos aceleradores laterales en smartphone para no interferir con los dedos */
     .row-hover-zone { display: none !important; }
 
-    /* Páginas internas estructuradas (About / Contacto) */
+    /* Páginas internas (About / Contacto) */
     body { padding: 90px 24px 80px 24px; }
     .about-container, .contact-container { margin-bottom: 20px; }
     .language-block { margin-bottom: 35px; }
     .about-title, .contact-title { font-size: 13px; letter-spacing: 1.5px; margin-bottom: 8px; }
     .about-text, .contact-text { font-size: 11px; line-height: 1.8; letter-spacing: 1.2px; }
 
-    /* Controles de visor optimizados para dedos */
+    /* Visor simplificado táctil */
     .prev, .next { display: none !important; }
     .close-btn { top: 15px; right: 20px; font-size: 45px; }
 
