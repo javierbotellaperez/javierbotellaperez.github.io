@@ -83,19 +83,23 @@ html, body {
     filter: grayscale(100%) brightness(110%);
 }
 
-/* --- Tira Inferior: Vídeos (Carga con Poster Fijo) --- */
+/* --- Tira Inferior: Vídeos (Imágenes Fijas con Play CSS) --- */
 .carousel-video-thumb {
     height: 35vh;
     width: auto;
     object-fit: cover;
-    filter: grayscale(100%);
+    filter: grayscale(100%) brightness(75%); /* Un pelín más oscuras para que destaque el Play */
     cursor: pointer;
     transition: filter 0.3s ease;
-    background-color: #000000; /* Fondo de seguridad mientras carga el póster */
 }
 
 .carousel-video-thumb:hover {
-    filter: grayscale(100%) brightness(110%);
+    filter: grayscale(100%) brightness(100%);
+}
+
+/* Ponemos el icono de Play usando un truco visual en el contenedor del track de vídeo */
+#containerVideos {
+    position: relative;
 }
 
 /* ==========================================================================
@@ -199,38 +203,32 @@ html, body {
    7. MÓVIL Y TABLET (Media Queries de Adaptación)
    ========================================================================== */
 @media (max-width: 767px) {
-    /* Cabecera compacta */
     .main-header { top: 25px; }
     .main-header h1 { font-size: 11px; letter-spacing: 1.5px; }
 
     .carousel-container { padding: 5px 0; }
     
-    /* Proporciones adaptadas a pantallas móviles */
     .row-photos .carousel-image {
         height: 22vh;
     }
     
     .carousel-video-thumb {
         width: 280px !important;
-        height: 157px !important; /* Relación de aspecto panorámica 16:9 limpia */
+        height: 157px !important;
         object-fit: cover;
     }
 
-    /* Ocultamos aceleradores laterales en smartphone para no interferir con los dedos */
     .row-hover-zone { display: none !important; }
 
-    /* Páginas internas (About / Contacto) */
     body { padding: 90px 24px 80px 24px; }
     .about-container, .contact-container { margin-bottom: 20px; }
     .language-block { margin-bottom: 35px; }
     .about-title, .contact-title { font-size: 13px; letter-spacing: 1.5px; margin-bottom: 8px; }
     .about-text, .contact-text { font-size: 11px; line-height: 1.8; letter-spacing: 1.2px; }
 
-    /* Visor simplificado táctil */
     .prev, .next { display: none !important; }
     .close-btn { top: 15px; right: 20px; font-size: 45px; }
 
-    /* Menú inferior adaptado */
     .minimal-menu { bottom: 25px; gap: 15px; }
     .menu-item { font-size: 11px; letter-spacing: 1.5px; }
 }
