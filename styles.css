@@ -67,20 +67,66 @@ html, body {
     display: flex;
     width: max-content;
     will-change: transform;
+    gap: 0; /* Bloque continuo sin espacios */
 }
 
-/* --- ESTILO PARA AMBAS FILAS (Garantiza que NUNCA desaparezcan) --- */
-.carousel-image {
-    height: 35vh;
+/* --- TIRA SUPERIOR: FOTOS (Control de brillo al 10%) --- */
+.row-photos .carousel-image {
+    height: 33vh;       
+    width: auto;        
+    object-fit: cover;  
+    cursor: pointer;
+    display: block;
+    filter: brightness(90%); /* Forzado al 10% de brillo por defecto */
+    transition: filter 0.4s ease;
+}
+
+.row-photos .carousel-image:hover {
+    filter: brightness(110%); /* Enciende la foto al pasar el cursor */
+}
+
+/* --- TIRA INFERIOR: VÍDEOS (Contenedor con Play flotante) --- */
+.video-item-wrapper {
+    position: relative;
+    height: 33vh;
+    width: auto;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Mantenemos las miniaturas de vídeo al 85% para que no compitan con el 10% de arriba */
+.video-item-wrapper .carousel-image {
+    height: 33vh;
     width: auto;
     object-fit: cover;
-    filter: grayscale(100%);
-    cursor: pointer;
+    display: block;
+    filter: brightness(85%); 
     transition: filter 0.3s ease;
 }
 
-.carousel-image:hover {
-    filter: grayscale(100%) brightness(110%);
+.video-item-wrapper:hover .carousel-image {
+    filter: brightness(105%);
+}
+
+/* Triángulo geométrico de "Play" flotante centrado */
+.video-item-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 54%; /* Equilibrio visual del triángulo */
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 20px solid rgba(255, 255, 255, 0.8);
+    z-index: 20;
+    pointer-events: none;
+    transition: border-left-color 0.3s ease;
+}
+
+.video-item-wrapper:hover::after {
+    border-left-color: rgba(255, 255, 255, 1);
 }
 
 /* ==========================================================================
@@ -161,7 +207,7 @@ html, body {
     display: none;
 }
 
-.lightbox.show-img #lightboxImg { display: block; filter: grayscale(100%); }
+.lightbox.show-img #lightboxImg { display: block; }
 .lightbox.show-vid #lightboxVid { display: block; }
 
 .lightbox-btn, .close-btn {
@@ -189,11 +235,21 @@ html, body {
 
     .carousel-container { padding: 5px 0; }
     
-    /* Configuración proporcional idéntica para ambas filas en móviles */
     .row-photos .carousel-image,
-    .row-videos .carousel-image {
+    .video-item-wrapper {
         height: 20vh;
         width: auto;
+    }
+    
+    .video-item-wrapper .carousel-image {
+        height: 20vh;
+        width: auto;
+    }
+
+    .video-item-wrapper::after {
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 14px solid rgba(255, 255, 255, 0.85);
     }
 
     .row-hover-zone { display: none !important; }
@@ -209,4 +265,96 @@ html, body {
 
     .minimal-menu { bottom: 25px; gap: 15px; }
     .menu-item { font-size: 11px; letter-spacing: 1.5px; }
+}
+
+/* ==========================================================================
+   8. SECCIÓN DE PROYECTOS (GRID PARA SUBPÁGINAS)
+   ========================================================================== */
+.projects-grid-container {
+    max-width: 1200px;
+    margin: 120px auto 100px auto; /* Margen para no chocar con cabecera ni menú */
+    padding: 0 40px;
+    width: 100%;
+    /* Permitimos el scroll vertical en estas páginas */
+}
+
+/* Forzar que el body permita scroll solo si no estamos en el index */
+body:has(.projects-grid-container) {
+    overflow-y: auto !important;
+    display: block !important;
+    height: auto !important;
+}
+
+.section-title {
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-bottom: 40px;
+    color: #000000;
+}
+
+/* Rejilla de 3 columnas que se adapta sola */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.project-item {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    background-color: #f7f7f7;
+}
+
+.project-thumb {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(85%);
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+/* Efecto elegante al pasar el ratón por encima del proyecto */
+.project-item:hover .project-thumb {
+    filter: brightness(105%);
+    transform: scale(1.02);
+}
+
+.project-info {
+    padding: 15px 0;
+}
+
+.project-info h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+.project-info p {
+    font-size: 11px;
+    color: #888888;
+    letter-spacing: 0.5px;
+}
+
+/* Adaptación para pantallas móviles del Grid */
+@media (max-width: 767px) {
+    .projects-grid-container {
+        margin: 90px auto 80px auto;
+        padding: 0 20px;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr; /* Una sola columna en móvil */
+        gap: 20px;
+    }
+
+    .project-thumb {
+        height: 180px;
+    }
 }

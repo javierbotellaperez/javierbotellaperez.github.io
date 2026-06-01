@@ -28,31 +28,77 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
-    // --- CARGA MULTIMEDIA LIMPIA ---
-    function loadPhotos() {
-        for (let j = 0; j < 2; j++) {
-            for (let i = 1; i <= totalImages; i++) {
-                const img = document.createElement("img");
-                img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
-                img.classList.add("carousel-image");
-                img.dataset.index = i;
-                img.onerror = () => img.remove();
-                photoTrack.appendChild(img);
+    // --- ALGORITMO DE BARAJADO ANTIREPETICIÓN ---
+    function getSmartShuffledSequence(totalCount, duplicatesNeeded) {
+        let base = Array.from({length: totalCount}, (_, i) => i + 1);
+        
+        // Función interna Fisher-Yates
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
+            return array;
         }
+
+        let fullSequence = [];
+        let lastBatch = [];
+
+        for (let d = 0; d < duplicatesNeeded; d++) {
+            let currentBatch = shuffle([...base]);
+            
+            // Si el primer elemento de esta tanda coincide con el último de la anterior, lo movemos al final
+            if (lastBatch.length > 0 && currentBatch[0] === lastBatch[lastBatch.length - 1]) {
+                const first = currentBatch.shift();
+                currentBatch.push(first);
+            }
+            
+            fullSequence = fullSequence.concat(currentBatch);
+            lastBatch = currentBatch;
+        }
+
+        // Validación final de seguridad para el salto del bucle infinito (Fin del carrusel con el principio)
+        if (fullSequence[fullSequence.length - 1] === fullSequence[0]) {
+            // Intercambiamos el último elemento con el penúltimo para romper la coincidencia
+            const len = fullSequence.length;
+            [fullSequence[len - 1], fullSequence[len - 2]] = [fullSequence[len - 2], fullSequence[len - 1]];
+        }
+
+        return fullSequence;
+    }
+
+    // --- CARGA MULTIMEDIA CONTROLADA ---
+    function loadPhotos() {
+        // Generamos la secuencia larga aleatoria sin colisiones de extremos
+        const photoSequence = getSmartShuffledSequence(totalImages, 2);
+        
+        photoSequence.forEach(i => {
+            const img = document.createElement("img");
+            img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
+            img.classList.add("carousel-image");
+            img.dataset.index = i;
+            img.onerror = () => img.remove();
+            photoTrack.appendChild(img);
+        });
     }
 
     function loadVideos() {
-        for (let j = 0; j < 4; j++) {
-            for (let i = 1; i <= totalVideos; i++) {
-                const img = document.createElement("img");
-                img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`; // Tu miniatura fija
-                img.classList.add("carousel-video-thumb"); // Clase específica para vídeos
-                img.dataset.index = i;
-                img.onerror = () => img.remove();
-                videoTrack.appendChild(img);
-            }
-        }
+        // Generamos la secuencia larga de miniaturas de vídeo sin colisiones
+        const videoSequence = getSmartShuffledSequence(totalVideos, 4);
+        
+        videoSequence.forEach(i => {
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("video-item-wrapper");
+            wrapper.dataset.index = i;
+
+            const img = document.createElement("img");
+            img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`;
+            img.classList.add("carousel-image");
+            img.onerror = () => wrapper.remove();
+
+            wrapper.appendChild(img);
+            videoTrack.appendChild(wrapper);
+        });
     }
 
     // --- MOTOR DE MOVIMIENTO ---
@@ -82,9 +128,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
             zone.style.pointerEvents = "auto";
 
-            if (elementBelow && (elementBelow.classList.contains("carousel-image") || elementBelow.classList.contains("carousel-video-thumb"))) {
-                const index = parseInt(elementBelow.dataset.index);
-                if (index) openLightbox(mode, index);
+            if (elementBelow) {
+                const target = elementBelow.closest(".carousel-image, .video-item-wrapper");
+                if (target) {
+                    const index = parseInt(target.dataset.index);
+                    if (index) openLightbox(mode, index);
+                }
             }
         });
     }
@@ -141,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupSmartClick(videoLeftZone, 'video');
     setupSmartClick(videoRightZone, 'video');
 
-    // Pausas al poner el ratón encima
+    // Pausas al poner el ratón encima del eje central
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     photoTrack.addEventListener("click", (e) => {
@@ -153,15 +202,16 @@ document.addEventListener("DOMContentLoaded", () => {
     videoTrack.addEventListener("mouseenter", () => currentSpeedVideos = 0);
     videoTrack.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
     videoTrack.addEventListener("click", (e) => {
-        if(e.target.classList.contains("carousel-video-thumb")) {
-            openLightbox('video', parseInt(e.target.dataset.index));
+        const target = e.target.closest(".video-item-wrapper");
+        if(target) {
+            openLightbox('video', parseInt(target.dataset.index));
         }
     });
 
     setupTouchScroll(containerPhotos, 'photo');
     setupTouchScroll(containerVideos, 'video');
 
-    // --- LIGHTBOX ---
+    // --- LIGHTBOX VISOR ---
     function openLightbox(mode, index) {
         currentMode = mode; currentIndex = index;
         updateContent(); lightbox.classList.add("active");
