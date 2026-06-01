@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — Javier Botella Pérez</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Estructura idéntica al About Me para mantener simetría absoluta */
+        body {
+            overflow-y: auto;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 20px 80px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact-container {
+            max-width: 650px;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 40px; 
+        }
+
+        .language-block {
+            margin-bottom: 45px;
+        }
+
+        /* Indicador de idioma (CAT / ENG / CAST) */
+        .lang-indicator {
+            font-size: 11px;
+            color: #c0c0c0;
+            letter-spacing: 2px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Títulos en mayúsculas */
+        .contact-title {
+            font-size: 15px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            color: #000000;
+        }
+
+        /* Enlaces del bloque principal en mayúsculas y espaciados */
+        .contact-text {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #444444;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Separador estético entre los enlaces de contacto */
+        .contact-separator {
+            color: #e0e0e0;
+            margin: 0 8px;
+            font-weight: 300;
+        }
+
+        /* Hipervínculos minimalistas */
+        .contact-link {
+            color: #000000;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .contact-link:hover {
+            color: #888888;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>Javier Botella Pérez</h1>
+    </header>
+
+    <div class="contact-container">
+
+        <section class="language-block">
+            <span class="lang-indicator">CAT</span>
+            <h2 class="contact-title">Escriu-me</h2>
+            <p class="contact-text">
+                <a href="mailto:javi@botella.eu" class="contact-link">Email</a>
+                <span class="contact-separator">/</span>
+                <a href="https://instagram.com/viero.photo" target="_blank" class="contact-link">Instagram</a>
+                <span class="contact-separator">/</span>
+                <a href="https://bsky.app/profile/javibotella.bsky.social" target="_blank" class="contact-link">Bluesky</a>
+            </p>
+        </section>
+
+        <section class="language-block">
+            <span class="lang-indicator">ENG</span>
+            <h2 class="contact-title">Reach me</h2>
+            <p class="contact-text">
+                <a href="mailto:javi@botella.eu" class="contact-link">Email</a>
+                <span class="contact-separator">/</span>
+                <a href="https://instagram.com/viero.photo" target="_blank" class="contact-link">Instagram</a>
+                <span class="contact-separator">/</span>
+                <a href="https://bsky.app/profile/javibotella.bsky.social" target="_blank" class="contact-link">Bluesky</a>
+            </p>
+        </section>
+
+        <section class="language-block">
+            <span class="lang-indicator">CAST</span>
+            <h2 class="contact-title">Escríbeme</h2>
+            <p class="contact-text">
+                <a href="mailto:javi@botella.eu" class="contact-link">Email</a>
+                <span class="contact-separator">/</span>
+                <a href="https://instagram.com/viero.photo" target="_blank" class="contact-link">Instagram</a>
+                <span class="contact-separator">/</span>
+                <a href="https://bsky.app/profile/javibotella.bsky.social" target="_blank" class="contact-link">Bluesky</a>
+            </p>
+        </section>
+
+    </div>
+
+    <footer class="minimal-menu">
+        <a href="/index.html" class="menu-item">Main Page</a>
+        <span class="menu-separator">•</span>
+        <a href="/about.html" class="menu-item">About</a>
+    </footer>
+
+</body>
+</html>
