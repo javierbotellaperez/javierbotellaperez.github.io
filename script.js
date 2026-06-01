@@ -26,6 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSpeedPhotos = baseSpeedPhotos;
     let currentSpeedVideos = baseSpeedVideos;
 
+    // Inercia añadida
+    let inertiaPhotos = 0;
+    let inertiaVideos = 0;
+    const friction = 0.95; // Controla cuánto tarda en frenarse (0.95 es suave y natural)
+
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
     // --- CARGA MULTIMEDIA ---
@@ -56,12 +61,26 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // --- MOTOR DE MOVIMIENTO ---
+    // --- MOTOR DE MOVIMIENTO CON FÍSICAS ---
     function animate() {
         if (!lightbox.classList.contains("active")) {
-            posPhotos += currentSpeedPhotos;
-            posVideos += currentSpeedVideos;
+            
+            // Si hay inercia (lanzamiento activo), se aplica y se va reduciendo por la fricción
+            if (Math.abs(inertiaPhotos) > 0.05) {
+                posPhotos += inertiaPhotos;
+                inertiaPhotos *= friction;
+            } else {
+                posPhotos += currentSpeedPhotos; // Si no, velocidad base habitual
+            }
 
+            if (Math.abs(inertiaVideos) > 0.05) {
+                posVideos += inertiaVideos;
+                inertiaVideos *= friction;
+            } else {
+                posVideos += currentSpeedVideos;
+            }
+
+            // Bucles infinitos estables
             const halfPhotosWidth = photoTrack.scrollWidth / 2;
             if (posPhotos >= 0) posPhotos = -halfPhotosWidth;
             if (Math.abs(posPhotos) >= photoTrack.scrollWidth) posPhotos = -halfPhotosWidth;
@@ -90,37 +109,58 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- INTERACCIÓN TÁCTIL EN MÓVILES (NUEVO) ---
+    // --- SISTEMA TÁCTIL ÁGIL (CON LANZAMIENTO E INERCIA) ---
     function setupTouchScroll(container, type) {
         let startX = 0;
+        let lastX = 0;
+        let lastTime = 0;
+        let speedX = 0;
         let isDragging = false;
 
         container.addEventListener("touchstart", (e) => {
             startX = e.touches[0].clientX;
+            lastX = startX;
+            lastTime = performance.now();
             isDragging = true;
+            
+            // Al poner el dedo, congelamos la inercia anterior de inmediato
+            if (type === 'photo') inertiaPhotos = 0;
+            if (type === 'video') inertiaVideos = 0;
         }, { passive: true });
 
         container.addEventListener("touchmove", (e) => {
             if (!isDragging) return;
-            const currentX = e.touches[0].clientX;
-            const diffX = currentX - startX;
-
-            // Modificamos temporalmente la velocidad según la fuerza del arrastre
-            if (type === 'photo') {
-                currentSpeedPhotos = baseSpeedPhotos + (diffX * 0.15);
-            } else {
-                currentSpeedVideos = baseSpeedVideos + (diffX * 0.15);
-            }
             
-            // Actualizamos el punto de inicio para que el movimiento sea fluido
-            startX = currentX; 
+            const currentX = e.touches[0].clientX;
+            const currentTime = performance.now();
+            const diffX = currentX - lastX;
+            const timeDiff = currentTime - lastTime;
+
+            // Calculamos la velocidad instantánea del arrastre en este milisegundo
+            if (timeDiff > 0) {
+                speedX = diffX / timeDiff * 15; // El factor multiplicador da la sensación de agilidad
+            }
+
+            // Desplazamiento en vivo pegado al dedo
+            if (type === 'photo') posPhotos += diffX;
+            else posVideos += diffX;
+
+            lastX = currentX;
+            lastTime = currentTime;
         }, { passive: true });
 
         container.addEventListener("touchend", () => {
             isDragging = false;
-            // Al soltar el dedo, devuelve progresivamente la velocidad base
-            if (type === 'photo') currentSpeedPhotos = baseSpeedPhotos;
-            if (type === 'video') currentSpeedVideos = baseSpeedVideos;
+            
+            // Al soltar, inyectamos la última velocidad calculada como fuerza de inercia
+            if (type === 'photo') {
+                inertiaPhotos = speedX;
+                if (Math.abs(inertiaPhotos) < 1) inertiaPhotos = 0; // Si fue un toque sutil, no lances
+            } else {
+                inertiaVideos = speedX;
+                if (Math.abs(inertiaVideos) < 1) inertiaVideos = 0;
+            }
+            speedX = 0; // Reseteamos el medidor
         });
     }
 
@@ -162,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ACTIVAMOS EL RADAR TÁCTIL PARA MÓVILES
+    // ACTIVAMOS EL MOTOR TÁCTIL FÍSICO
     setupTouchScroll(containerPhotos, 'photo');
     setupTouchScroll(containerVideos, 'video');
 
