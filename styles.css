@@ -168,3 +168,15 @@ html, body {
 .prev { left: 30px; top: 50%; transform: translateY(-50%); }
 .next { right: 30px; top: 50%; transform: translateY(-50%); }
 .close-btn { top: 20px; right: 30px; font-size: 60px; }
+
+/* --- Ajuste para el enlace de la cabecera principal --- */
+.main-header h1 a {
+    color: inherit;         /* Hereda el color negro del h1 */
+    text-decoration: none;  /* Elimina el subrayado por defecto */
+    outline: none;
+}
+
+.main-header h1 a:hover {
+    color: #888888;         /* Un sutil cambio a gris al pasar el cursor para indicar que es clicable */
+    transition: color 0.3s ease;
+}
