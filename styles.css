@@ -102,3 +102,153 @@ html, body {
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
+    border-left: 16px solid rgba(255, 255, 255, 0.75); /* Blanco traslúcido */
+    z-index: 20;
+    pointer-events: none; /* No bloquea el clic hacia la imagen */
+    transition: border-left-color 0.3s ease;
+}
+
+#videoTrack .carousel-image-container:hover::after {
+    border-left-color: rgba(255, 255, 255, 1); /* Se ilumina al pasar el ratón */
+}
+
+/* ==========================================================================
+   4. INTERACCIONES DE ESCRITORIO (Zonas Hover Invisibles)
+   ========================================================================== */
+.row-hover-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 25vw;
+    z-index: 30;
+    pointer-events: auto;
+    cursor: pointer;
+}
+.zone-left { left: 0; }
+.zone-right { right: 0; }
+
+/* ==========================================================================
+   5. NAVEGACIÓN INFERIOR (MENÚ MINIMALISTA)
+   ========================================================================== */
+.minimal-menu {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 100;
+}
+
+.menu-item {
+    color: #888888;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 300;
+    transition: color 0.3s ease;
+}
+
+.menu-item:hover {
+    color: #000000;
+}
+
+.menu-separator {
+    color: #e0e0e0;
+    font-size: 10px;
+}
+
+/* ==========================================================================
+   6. VISOR DE PROYECTOS (LIGHTBOX INTERACTIVO)
+   ========================================================================== */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.98);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox.active { display: flex; }
+
+.lightbox-content {
+    max-width: 85%;
+    max-height: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-content img, .lightbox-content video {
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+}
+
+.lightbox.show-img #lightboxImg { display: block; filter: grayscale(100%); }
+.lightbox.show-vid #lightboxVid { display: block; }
+
+.lightbox-btn, .close-btn {
+    position: absolute;
+    background: none; border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 40px;
+    cursor: pointer;
+    transition: 0.2s;
+    z-index: 1100;
+}
+
+.lightbox-btn:hover, .close-btn:hover { color: #ffffff; }
+.prev { left: 30px; top: 50%; transform: translateY(-50%); }
+.next { right: 30px; top: 50%; transform: translateY(-50%); }
+.close-btn { top: 20px; right: 30px; font-size: 60px; }
+
+
+/* ==========================================================================
+   7. MÓVIL Y TABLET (Media Queries de Adaptación)
+   ========================================================================== */
+@media (max-width: 767px) {
+    /* Cabecera compacta */
+    .main-header { top: 25px; }
+    .main-header h1 { font-size: 11px; letter-spacing: 1.5px; }
+
+    .carousel-container { padding: 5px 0; }
+    
+    /* Proporciones optimizadas para la cuadrícula móvil */
+    .row-photos .carousel-image {
+        height: 22vh;
+    }
+    .row-videos .carousel-image {
+        height: 18vh;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+    }
+    #videoTrack .carousel-image-container {
+        height: 18vh; /* Corregido: Mismo alto que la imagen del vídeo en móvil */
+        display: inline-block;
+        width: auto;
+    }
+
+    /* Ocultamos aceleradores de cursor innecesarios en pantallas táctiles */
+    .row-hover-zone { display: none !important; }
+
+    /* Páginas internas estructuradas (About / Contacto) */
+    body { padding: 90px 24px 80px 24px; }
+    .about-container, .contact-container { margin-bottom: 20px; }
+    .language-block { margin-bottom: 35px; }
+    .about-title, .contact-title { font-size: 13px; letter-spacing: 1.5px; margin-bottom: 8px; }
+    .about-text, .contact-text { font-size: 11px; line-height: 1.8; letter-spacing: 1.2px; }
+
+    /* Controles de visor optimizados para dedos */
+    .prev, .next { display: none !important; }
+    .close-btn { top: 15px; right: 20px; font-size: 45px; }
+
+    /* Menú inferior adaptado */
+    .minimal-menu { bottom: 25px; gap: 15px; }
+    .menu-item { font-size: 11px; letter-spacing: 1.5px; }
+}
