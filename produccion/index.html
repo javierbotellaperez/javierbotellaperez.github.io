@@ -4,61 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Javier Botella Pérez</title>
+    <!-- Busca el archivo CSS que está afuera en la raíz -->
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
+    <!-- CABECERA (Ruta directa a la página de inicio de la raíz) -->
     <header class="main-header">
         <h1><a href="../index.html">Javier Botella Pérez</a></h1>
     </header>
 
+    <!-- REJILLA DE PROYECTOS DE PRODUCCIÓN -->
     <main class="projects-grid-container">
-        <h2 class="section-title">PROD</h2>
+        
 
         <div class="projects-grid">
             
+            <!-- Ejemplo Producción 1 -->
             <div class="project-item" data-video="videos/prod_video_01.mp4">
-                <img src="thumbs/prod_thumb_01.jpg" alt="Proyecto Producción 1" class="project-thumb">
+                <img src="thumbs/prod_thumb_01.jpg" alt="Campaña 1" class="project-thumb">
                 <div class="project-info">
-                    <h3>Proyecto Producción 1</h3>
-                    <p>Videoclip / 2026</p>
+                    <h3>Nombre de la Campaña 1</h3>
+                    <p><strong>Cliente:</strong> Nombre del Cliente</p>
+                    <p><strong>Rol:</strong> Tu Rol Aquí</p>
+                    <p><strong>Año:</strong> 2026</p>
                 </div>
             </div>
 
+            <!-- Ejemplo Producción 2 -->
             <div class="project-item" data-video="videos/prod_video_02.mp4">
-                <img src="thumbs/prod_thumb_02.jpg" alt="Proyecto Producción 2" class="project-thumb">
+                <img src="thumbs/prod_thumb_02.jpg" alt="Campaña 2" class="project-thumb">
                 <div class="project-info">
-                    <h3>Proyecto Producción 2</h3>
-                    <p>Publicidad / 2026</p>
+                    <h3>Nombre de la Campaña 2</h3>
+                    <p><strong>Cliente:</strong> Nombre del Cliente</p>
+                    <p><strong>Rol:</strong> Tu Rol Aquí</p>
+                    <p><strong>Año:</strong> 2026</p>
                 </div>
             </div>
 
+            <!-- Ejemplo Producción 3 -->
             <div class="project-item" data-video="videos/prod_video_03.mp4">
-                <img src="thumbs/prod_thumb_03.jpg" alt="Proyecto Producción 3" class="project-thumb">
+                <img src="thumbs/prod_thumb_03.jpg" alt="Campaña 3" class="project-thumb">
                 <div class="project-info">
-                    <h3>Proyecto Producción 3</h3>
-                    <p>Ficción / 2025</p>
+                    <h3>Nombre de la Campaña 3</h3>
+                    <p><strong>Cliente:</strong> Nombre del Cliente</p>
+                    <p><strong>Rol:</strong> Tu Rol Aquí</p>
+                    <p><strong>Año:</strong> 2025</p>
                 </div>
             </div>
 
         </div>
     </main>
 
+    <!-- MENÚ INFERIOR SIMPLIFICADO -->
     <nav class="minimal-menu">
-        <a href="index.html" class="menu-item" style="color: #000000;">Producción</a>
-        <span class="menu-separator">•</span>
-        <a href="../postproduccion/index.html" class="menu-item">Postproducción</a>
-        <span class="menu-separator">•</span>
+        <!-- Salen a la raíz para buscar los archivos correspondientes -->
         <a href="../aboutme.html" class="menu-item">About</a>
+        <span class="menu-separator">•</span>
+        <a href="../contact.html" class="menu-item">Contact</a>
     </nav>
 
+    <!-- VISOR LIGHTBOX CORREGIDO (Para que el vídeo se vea y se escuche) -->
     <div id="projectLightbox" class="lightbox">
         <button class="close-btn" id="closeProjectBtn">&times;</button>
         <div class="lightbox-content">
-            <video id="projectLightboxVid" controls></video>
+            <!-- Forzamos estilos en línea para asegurar que se renderice visible -->
+            <video id="projectLightboxVid" controls style="display: block; width: 100%; height: 100%; max-height: 80vh; object-fit: contain;"></video>
         </div>
     </div>
 
+    <!-- SCRIPT DE NAVEGACIÓN DEL LIGHTBOX -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const lightbox = document.getElementById("projectLightbox");
@@ -71,12 +86,14 @@
                     const videoSrc = item.dataset.video;
                     lightboxVid.src = videoSrc;
                     lightbox.classList.add("active");
+                    lightbox.style.display = "flex";
                     lightboxVid.play();
                 });
             });
 
             function close() {
                 lightbox.classList.remove("active");
+                lightbox.style.display = "none";
                 lightboxVid.pause();
                 lightboxVid.src = "";
             }
