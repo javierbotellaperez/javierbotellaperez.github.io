@@ -180,3 +180,102 @@ html, body {
     color: #888888;         /* Un sutil cambio a gris al pasar el cursor para indicar que es clicable */
     transition: color 0.3s ease;
 }
+
+/* ==========================================================================
+   MÓVIL Y TABLET (Pantallas de menos de 768px)
+   ========================================================================== */
+@media (max-width: 767px) {
+    
+    /* --- Cabecera con tu Nombre --- */
+    .main-header {
+        top: 25px; /* Lo bajamos un pelín para que no quede pegado al borde del teléfono */
+    }
+    
+    .main-header h1 {
+        font-size: 11px; /* Letra un poco más compacta y fina */
+        letter-spacing: 1.5px;
+    }
+
+    /* --- Carruseles (Main Page) --- */
+    .carousel-container {
+        padding: 5px 0; /* Menos espacio entre filas */
+    }
+
+    .carousel-image {
+        height: 22vh; /* Reducimos la altura de las fotos para que convivan bien las dos filas */
+    }
+
+    .carousel-video-thumb {
+        /* Ajustamos los vídeos para que mantengan el formato 16:9 sin romper el ancho del móvil */
+        width: 280px !important;
+        height: 157px !important;
+    }
+
+    /* Desactivamos las zonas invisibles de aceleración en móviles ya que no hay ratón */
+    .row-hover-zone {
+        display: none !important;
+    }
+
+    /* --- Páginas de Texto (About / Contacto) --- */
+    body {
+        padding: 90px 24px 80px 24px; /* Ajustamos márgenes para que respiren la cabecera y el menú */
+    }
+
+    .about-container, .contact-container {
+        margin-bottom: 20px;
+    }
+
+    .language-block {
+        margin-bottom: 35px; /* Bloques de idiomas ligeramente más juntos */
+    }
+
+    .about-title, .contact-title {
+        font-size: 13px;
+        letter-spacing: 1.5px;
+        margin-bottom: 8px;
+    }
+
+    .about-text, .contact-text {
+        font-size: 11px; /* Tipografía más pequeña de estilo editorial y legible */
+        line-height: 1.8;
+        letter-spacing: 1.2px;
+    }
+
+    /* --- Páginas de Proyectos (Producción / Postproducción) --- */
+    .section-page-title {
+        font-size: 12px;
+        margin-bottom: 30px;
+    }
+
+    .projects-grid {
+        gap: 30px; /* Menor separación entre proyectos en cascada vertical */
+    }
+
+    .project-info {
+        font-size: 10px; /* Reducimos un punto la ficha técnica */
+        line-height: 1.6;
+        margin-top: 10px;
+    }
+
+    /* --- Menú Inferior Fijo --- */
+    .minimal-menu {
+        bottom: 25px; /* Lo subimos ligeramente para evitar las barras de navegación nativas de los móviles */
+        gap: 15px;
+    }
+
+    .menu-item {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+    }
+    
+    /* --- Visor Grande (Lightbox) --- */
+    .prev, .next {
+        display: none !important; /* En móviles es mejor quitar las flechas laterales para que no pisen la imagen */
+    }
+    
+    .close-btn {
+        top: 15px;
+        right: 20px;
+        font-size: 45px; /* Botón de cerrar más cómodo para el dedo */
+    }
+}
