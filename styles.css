@@ -67,21 +67,56 @@ html, body {
     display: flex;
     width: max-content;
     will-change: transform;
-    gap: 0; /* Totalmente pegadas, sin espacio entre elementos */
+    gap: 0; /* Bloque continuo sin espacios */
 }
 
-/* --- ESTILO DE LAS IMÁGENES (A color y proporcionales) --- */
+/* --- ESTILO DE LAS IMÁGENES COMPARTIDO (Alturas blindadas) --- */
 .carousel-image {
-    height: 33vh;       /* Altura idéntica y fija para ambas filas */
-    width: auto;        /* Ancho proporcional nativo del archivo */
-    object-fit: cover;  /* Protege la proporción sin estirar */
+    height: 33vh;       
+    width: auto;        
+    object-fit: cover;  
     cursor: pointer;
-    transition: filter 0.3s ease;
-    /* Hemos eliminado el filtro de escala de grises para mostrar el color real */
+    display: block;
 }
 
-.carousel-image:hover {
-    filter: brightness(110%); /* Sutil iluminación al pasar el cursor */
+/* --- CONTENEDOR ESPECIAL DE VÍDEO CON PLAY SUPERPUESTO --- */
+.video-item-wrapper {
+    position: relative;
+    height: 33vh;
+    width: auto;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Filtro sutil oscuro sobre la miniatura del vídeo para resaltar el Play */
+.video-item-wrapper .carousel-image {
+    filter: brightness(85%);
+    transition: filter 0.3s ease;
+}
+
+.video-item-wrapper:hover .carousel-image {
+    filter: brightness(105%);
+}
+
+/* Triángulo geométrico de "Play" flotante centrado */
+.video-item-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 54%; /* Ligero desfase a la derecha para equilibrar visualmente el triángulo */
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 20px solid rgba(255, 255, 255, 0.8); /* Blanco elegante traslúcido */
+    z-index: 20;
+    pointer-events: none; /* Traspasa los clics al elemento real */
+    transition: border-left-color 0.3s ease;
+}
+
+.video-item-wrapper:hover::after {
+    border-left-color: rgba(255, 255, 255, 1); /* Brilla al pasar el ratón */
 }
 
 /* ==========================================================================
@@ -162,7 +197,7 @@ html, body {
     display: none;
 }
 
-.lightbox.show-img #lightboxImg { display: block; } /* Eliminado escala de grises del visor */
+.lightbox.show-img #lightboxImg { display: block; }
 .lightbox.show-vid #lightboxVid { display: block; }
 
 .lightbox-btn, .close-btn {
@@ -190,15 +225,22 @@ html, body {
 
     .carousel-container { padding: 5px 0; }
     
-    /* Configuración proporcional continua para móviles */
     .row-photos .carousel-image,
-    .row-videos .carousel-image {
+    .video-item-wrapper {
+        height: 20vh;
+        width: auto;
+    }
+    
+    .video-item-wrapper .carousel-image {
         height: 20vh;
         width: auto;
     }
 
-    .carousel-track {
-        gap: 0; /* Sin espacios también en las pantallas móviles */
+    /* Reducimos ligeramente el tamaño del play en móviles para que no sature */
+    .video-item-wrapper::after {
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 14px solid rgba(255, 255, 255, 0.85);
     }
 
     .row-hover-zone { display: none !important; }
