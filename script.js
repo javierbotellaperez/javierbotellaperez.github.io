@@ -45,12 +45,18 @@ document.addEventListener("DOMContentLoaded", () => {
     function loadVideos() {
         for (let j = 0; j < 4; j++) {
             for (let i = 1; i <= totalVideos; i++) {
+                // Creamos un contenedor específico para albergar la miniatura y su play flotante
+                const wrapper = document.createElement("div");
+                wrapper.classList.add("video-item-wrapper");
+                wrapper.dataset.index = i; // El contenedor recibe el clic en el track
+
                 const img = document.createElement("img");
-                img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`; // Carga tus miniaturas fijas JPG
-                img.classList.add("carousel-image"); // Usa la misma clase que las fotos para clonar su comportamiento
-                img.dataset.index = i;
-                img.onerror = () => img.remove();
-                videoTrack.appendChild(img);
+                img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`;
+                img.classList.add("carousel-image"); // Comparte altura nativa con las fotos
+                img.onerror = () => wrapper.remove();
+
+                wrapper.appendChild(img);
+                videoTrack.appendChild(wrapper);
             }
         }
     }
@@ -82,9 +88,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
             zone.style.pointerEvents = "auto";
 
-            if (elementBelow && elementBelow.classList.contains("carousel-image")) {
-                const index = parseInt(elementBelow.dataset.index);
-                if (index) openLightbox(mode, index);
+            if (elementBelow) {
+                const target = elementBelow.closest(".carousel-image, .video-item-wrapper");
+                if (target) {
+                    const index = parseInt(target.dataset.index);
+                    if (index) openLightbox(mode, index);
+                }
             }
         });
     }
@@ -153,8 +162,9 @@ document.addEventListener("DOMContentLoaded", () => {
     videoTrack.addEventListener("mouseenter", () => currentSpeedVideos = 0);
     videoTrack.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
     videoTrack.addEventListener("click", (e) => {
-        if(e.target.classList.contains("carousel-image")) {
-            openLightbox('video', parseInt(e.target.dataset.index)); // Abre el archivo de vídeo real
+        const target = e.target.closest(".video-item-wrapper");
+        if(target) {
+            openLightbox('video', parseInt(target.dataset.index));
         }
     });
 
