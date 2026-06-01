@@ -266,3 +266,95 @@ html, body {
     .minimal-menu { bottom: 25px; gap: 15px; }
     .menu-item { font-size: 11px; letter-spacing: 1.5px; }
 }
+
+/* ==========================================================================
+   8. SECCIÓN DE PROYECTOS (GRID PARA SUBPÁGINAS)
+   ========================================================================== */
+.projects-grid-container {
+    max-width: 1200px;
+    margin: 120px auto 100px auto; /* Margen para no chocar con cabecera ni menú */
+    padding: 0 40px;
+    width: 100%;
+    /* Permitimos el scroll vertical en estas páginas */
+}
+
+/* Forzar que el body permita scroll solo si no estamos en el index */
+body:has(.projects-grid-container) {
+    overflow-y: auto !important;
+    display: block !important;
+    height: auto !important;
+}
+
+.section-title {
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-bottom: 40px;
+    color: #000000;
+}
+
+/* Rejilla de 3 columnas que se adapta sola */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.project-item {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    background-color: #f7f7f7;
+}
+
+.project-thumb {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(85%);
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+/* Efecto elegante al pasar el ratón por encima del proyecto */
+.project-item:hover .project-thumb {
+    filter: brightness(105%);
+    transform: scale(1.02);
+}
+
+.project-info {
+    padding: 15px 0;
+}
+
+.project-info h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+.project-info p {
+    font-size: 11px;
+    color: #888888;
+    letter-spacing: 0.5px;
+}
+
+/* Adaptación para pantallas móviles del Grid */
+@media (max-width: 767px) {
+    .projects-grid-container {
+        margin: 90px auto 80px auto;
+        padding: 0 20px;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr; /* Una sola columna en móvil */
+        gap: 20px;
+    }
+
+    .project-thumb {
+        height: 180px;
+    }
+}
