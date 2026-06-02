@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Javier Botella Pérez — About</title>
+    <title>Javier Botella Pérez — About & Contact</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Estilos específicos para la maquetación limpia del About */
+        /* Estilos específicos para la maquetación limpia y minimalista del About + Contact */
         body {
             overflow-y: auto !important;
             display: block !important;
             height: auto !important;
-            padding: 120px 20px 80px 20px;
+            padding: 140px 20px 100px 20px; /* Margen para no pisar cabecera ni menú */
         }
         
         .about-page-container {
             max-width: 650px;
-            margin: 140px auto 120px auto;
+            margin: 0 auto;
             padding: 0 20px;
         }
 
@@ -46,10 +46,10 @@
         .about-text {
             font-size: 12px;
             line-height: 2;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: #444444;
             font-weight: 300;
-            text-transform: uppercase;
+            text-transform: uppercase; /* Forzamos mayúsculas elegantes por CSS */
             text-align: justify;
         }
 
@@ -66,9 +66,11 @@
             color: #888888;
         }
 
-        /* Bloque de Contacto */
+        /* SECCIÓN DE CONTACTO FUSIONADA */
         .contact-section {
-            margin-top: 60px;
+            margin-top: 65px;
+            padding-top: 40px;
+            border-top: 1px solid #f0f0f0; /* Fina línea divisoria minimalista */
             margin-bottom: 60px;
         }
 
@@ -79,14 +81,17 @@
 
         .contact-details li {
             font-size: 12px;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
             color: #444444;
+            text-transform: uppercase; /* Mantenemos la coherencia de las mayúsculas */
+            font-weight: 300;
         }
 
         .contact-details a {
             color: #000000;
             text-decoration: none;
+            font-weight: 400;
             transition: color 0.3s ease;
         }
 
@@ -95,12 +100,18 @@
         }
 
         @media (max-width: 767px) {
+            body {
+                padding: 100px 20px 80px 20px;
+            }
             .about-page-container {
-                margin: 100px auto 100px auto;
                 padding: 0 10px;
             }
             .about-text {
-                text-align: left;
+                text-align: left; /* Desactivamos justificado en móviles para mejor lectura */
+            }
+            .contact-section {
+                margin-top: 45px;
+                padding-top: 30px;
             }
         }
     </style>
@@ -121,16 +132,7 @@
                 <a href="produccion/index.html" class="about-link">producció</a> i 
                 <a href="postproduccion/index.html" class="about-link">postproducció</a> 
                 que em permet entendre a fons cada fase del procés.
-                <p class="contact-text">
-                <a href="mailto:javi@botella.eu" class="contact-link">Email</a>
-                <span class="contact-separator">/</span>
-                <a href="https://instagram.com/viero.photo" target="_blank" class="contact-link">Instagram</a>
-                <span class="contact-separator">/</span>
-                <a href="https://bsky.app/profile/javibotella.bsky.social" target="_blank" class="contact-link">Bluesky</a>
             </p>
-            </p>
-            <h2 class="contact-title">Escriu-me</h2>
-   
         </section>
 
         <section class="language-block">
@@ -142,15 +144,6 @@
                 <a href="postproduccion/index.html" class="about-link">post-production</a> 
                 that allows me to deeply understand every stage of the process.
             </p>
-            <h2 class="contact-title">Reach me</h2>
-            <p class="contact-text">
-                <a href="mailto:javi@botella.eu" class="contact-link">Email</a>
-                <span class="contact-separator">/</span>
-                <a href="https://instagram.com/viero.photo" target="_blank" class="contact-link">Instagram</a>
-                <span class="contact-separator">/</span>
-                <a href="https://bsky.app/profile/javibotella.bsky.social" target="_blank" class="contact-link">Bluesky</a>
-            </p>
-        </section>
         </section>
 
         <section class="language-block">
@@ -160,15 +153,7 @@
                 Abriéndome paso como fotógrafo y director, con un sólido bagaje en 
                 <a href="produccion/index.html" class="about-link">producción</a> y 
                 <a href="postproduccion/index.html" class="about-link">postproducción</a> 
-                que me permite entender a fondo cada fase del proceso.
-            </p>
-            <h2 class="contact-title">Escríbeme</h2>
-            <p class="contact-text">
-                <a href="mailto:javi@botella.eu" class="contact-link">Email</a>
-                <span class="contact-separator">/</span>
-                <a href="https://instagram.com/viero.photo" target="_blank" class="contact-link">Instagram</a>
-                <span class="contact-separator">/</span>
-                <a href="https://bsky.app/profile/javibotella.bsky.social" target="_blank" class="contact-link">Bluesky</a>
+                que me permite entender a fondo cada fase del procés.
             </p>
         </section>
 
@@ -183,13 +168,14 @@
 
     </main>
 
-
     <nav class="minimal-menu">
+        <a href="index.html" class="menu-item">Portfolio</a>
+        <span class="menu-separator">•</span>
         <a href="produccion/index.html" class="menu-item">Producción</a>
         <span class="menu-separator">•</span>
         <a href="postproduccion/index.html" class="menu-item">Postproducción</a>
         <span class="menu-separator">•</span>
-        <a href="about.html" class="menu-item" style="color: #000000;">About</a>
+        <a href="aboutme.html" class="menu-item" style="color: #000000;">About</a>
     </nav>
 
 </body>
