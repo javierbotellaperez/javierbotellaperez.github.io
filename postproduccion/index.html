@@ -305,9 +305,29 @@
     <!-- SCRIPT DE NAVEGACIÓN DEL LIGHTBOX -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            const grid = document.querySelector(".projects-grid");
             const lightbox = document.getElementById("projectLightbox");
             const lightboxVid = document.getElementById("projectLightboxVid");
             const closeBtn = document.getElementById("closeProjectBtn");
+            
+            // 1. Convertimos los proyectos en una lista y los barajamos
+            const projects = Array.from(grid.children);
+            
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            
+            const shuffledProjects = shuffle(projects);
+            
+            // 2. Vaciamos el grid y volvemos a meterlos en el nuevo orden aleatorio
+            grid.innerHTML = "";
+            shuffledProjects.forEach(project => grid.appendChild(project));
+
+            // 3. Volvemos a activar la escucha de clics para el Lightbox en el nuevo orden
             const projectItems = document.querySelectorAll(".project-item");
 
             projectItems.forEach(item => {
