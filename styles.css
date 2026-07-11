@@ -358,3 +358,107 @@ body:has(.projects-grid-container) {
         height: 180px;
     }
 }
+
+/* ==========================================================================
+   9. NUEVA INTERFAZ EDITORIAL PARA VÍDEOS (FONDO BLANCO + CRÉDITOS)
+   ========================================================================== */
+.custom-editorial-lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: #ffffff; /* Fondo blanco impoluto */
+    z-index: 2000;
+    padding: 140px 40px 60px 40px;
+    overflow-y: auto;
+}
+
+.custom-editorial-lightbox.active {
+    display: block;
+}
+
+/* Contenedor de doble columna */
+.editorial-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.7fr 1fr; /* El vídeo tiene prioridad de tamaño */
+    gap: 50px;
+    align-items: start;
+}
+
+.editorial-video-wrapper video {
+    width: 100%;
+    height: auto;
+    max-height: 68vh;
+    object-fit: contain;
+    background-color: #000000; /* Marco del reproductor estricto */
+}
+
+/* Tipografías coordinadas con tu sección About */
+.editorial-meta-wrapper h2 {
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #000000;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.editorial-credits-list p {
+    font-size: 12px;
+    line-height: 2;
+    letter-spacing: 1.5px;
+    color: #444444;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* Botón CLOSE tipográfico minimalista */
+.editorial-close-btn {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    color: #000000;
+    font-weight: 400;
+    transition: color 0.2s ease;
+    z-index: 2100;
+}
+
+.editorial-close-btn:hover {
+    color: #888888;
+}
+
+/* Adaptación fluida para smartphones y tablets verticales */
+@media (max-width: 767px) {
+    .custom-editorial-lightbox {
+        padding: 90px 20px 40px 20px;
+    }
+    .editorial-container {
+        grid-template-columns: 1fr; /* Se apila una columna debajo de otra */
+        gap: 25px;
+    }
+    .editorial-close-btn {
+        top: 25px;
+        right: 20px;
+        font-size: 11px;
+    }
+    .editorial-meta-wrapper h2 {
+        font-size: 13px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+    .editorial-credits-list p {
+        font-size: 11px;
+        line-height: 1.8;
+    }
+}
