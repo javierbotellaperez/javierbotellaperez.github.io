@@ -462,3 +462,150 @@ body:has(.projects-grid-container) {
         line-height: 1.8;
     }
 }
+
+/* ==========================================================================
+   NUEVO VISOR MINIMALISTA EN PANTALLA PARTIDA (SPLIT LIGHTBOX)
+   ========================================================================== */
+.split-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.98); /* Fondo casi blanco muy limpio */
+    z-index: 2000;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.split-lightbox.active {
+    display: flex;
+    opacity: 1;
+}
+
+.split-lightbox-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* Lado Izquierdo: Contenedor del vídeo */
+.lightbox-video-side {
+    flex: 1.6; /* Le da más espacio al contenido visual */
+    background-color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.lightbox-video-side video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Mantiene la proporción original del vídeo */
+}
+
+/* Lado Derecho: Panel lateral de información */
+.lightbox-info-side {
+    flex: 1;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 60px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-left: 1px solid #f0f0f0;
+}
+
+.lightbox-info-content {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Estilos de texto alineados con el diseño general */
+.lt-main-title {
+    font-size: 16px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-bottom: 30px;
+    color: #000000;
+    line-height: 1.4;
+}
+
+.lt-meta-block p, 
+.lt-credits-block p {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    line-height: 2;
+    color: #555555;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 300;
+}
+
+.lt-meta-block strong {
+    font-weight: 400;
+    color: #000000;
+    display: inline-block;
+    width: 90px; /* Alineación perfecta en columnas */
+}
+
+.lt-credits-block {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #f5f5f5;
+}
+
+.lt-credits-block h3 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 400;
+    color: #000000;
+    margin-bottom: 15px;
+}
+
+/* Botón de cierre minimalista y flotante */
+.close-lightbox-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    background: none;
+    border: none;
+    font-size: 35px;
+    font-weight: 200;
+    color: #000000;
+    cursor: pointer;
+    z-index: 2010;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.close-lightbox-btn:hover {
+    color: #888888;
+    transform: scale(1.05);
+}
+
+/* Responsivo para móviles y tablets en formato vertical */
+@media (max-width: 991px) {
+    .split-lightbox-wrapper {
+        flex-direction: column;
+    }
+    
+    .lightbox-video-side {
+        flex: 1.2;
+    }
+    
+    .lightbox-info-side {
+        flex: 1;
+        padding: 40px 25px;
+        align-items: flex-start;
+    }
+    
+    .close-lightbox-btn {
+        top: 15px;
+        right: 20px;
+        color: #ffffff; /* En móvil destaca sobre el fondo negro del vídeo */
+        font-size: 40px;
+    }
+}
