@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Javier Botella Pérez</title>
+    <title>Javier Botella Pérez - Postproducción</title>
     <link rel="stylesheet" href="styles.css">
     
     <style>
@@ -71,6 +71,17 @@
             color: #666666 !important;
         }
 
+        /* LÓGICA DE CONTENIDO EXTRA (OCULTO EN WEB / VISIBLE EN LIGHTBOX) */
+        .project-item .extra-credits {
+            display: none;
+        }
+        .lightbox-credits .extra-credits {
+            display: block;
+            margin-top: 12px;
+            border-top: 1px solid #eeeeee;
+            padding-top: 12px;
+        }
+
         /* Botón de Cierre (X) */
         .close-btn {
             position: absolute;
@@ -132,24 +143,23 @@
     <main class="projects-grid-container">
         <div class="projects-grid">
             
-<div class="project-item" data-video="videos/post_video_00001.mp4">
-    <img src="thumbs/post_thumb_00001.jpg" alt="Dance The Night - Dua Lipa" class="project-thumb">
-    <div class="project-info">
-        <h3>Dance The Night</h3>
-        <p>Dua Lipa</p>
-        <p>Music Video</p>
-        <p>Post Production Coordinator</p>
-        <p>2024</p>
-        
-        <!-- ESTO SOLO SE VERÁ AL ABRIR EL LIGHTBOX -->
-        <span class="extra-credits">
-            <p>Director: Director Name</p>
-            <p>DoP: Director of Photography</p>
-            <p>Editor: Editor Name</p>
-        </span>
-    </div>
-</div>
+            <!-- EJEMPLO 1: CON CRÉDITOS EXTRA -->
+            <div class="project-item" data-video="videos/post_video_00001.mp4">
+                <img src="thumbs/post_thumb_00001.jpg" alt="Dance The Night - Dua Lipa" class="project-thumb">
+                <div class="project-info">
+                    <h3>Dance The Night</h3>
+                    <p>Dua Lipa</p>
+                    <p>Music Video</p>
+                    <p>Post Production Coordinator</p>
+                    <p>2024</p>
+                    <span class="extra-credits">
+                        <p>Director: Greta Gerwig</p>
+                        <p>DoP: Rodrigo Prieto</p>
+                    </span>
+                </div>
+            </div>
 
+            <!-- EJEMPLO 2: CON CRÉDITOS EXTRA -->
             <div class="project-item" data-video="videos/post_video_00002.mp4">
                 <img src="thumbs/post_thumb_00002.jpg" alt="Love Again - Dua Lipa" class="project-thumb">
                 <div class="project-info">
@@ -158,9 +168,14 @@
                     <p>Music Video</p>
                     <p>Post Production Coordinator</p>
                     <p>2022</p>
+                    <span class="extra-credits">
+                        <p>Director: Lope Serrano</p>
+                        <p>DoP: David Procter</p>
+                    </span>
                 </div>
             </div>
 
+            <!-- EJEMPLO 3: CON CRÉDITOS EXTRA -->
             <div class="project-item" data-video="videos/post_video_00003.mp4">
                 <img src="thumbs/post_thumb_00003.jpg" alt="El Príncep - Àlex Sardà" class="project-thumb">
                 <div class="project-info">
@@ -169,6 +184,10 @@
                     <p>Short Film</p>
                     <p>Post Production Coordinator</p>
                     <p>2024</p>
+                    <span class="extra-credits">
+                        <p>Director: Àlex Sardà</p>
+                        <p>DoP: Artur-Pol Camprubí</p>
+                    </span>
                 </div>
             </div>
 
@@ -221,9 +240,11 @@
                 <div class="project-info">
                     <h3>Gaudir</h3>
                     <p>Academia Cinema Català</p>
-                    <p>Short Film</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2020</p>
+                    <span class="project-info">
+                        <p>Short Film</p>
+                        <p>Post Production Coordinator</p>
+                        <p>2020</p>
+                    </span>
                 </div>
             </div>
 
