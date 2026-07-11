@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightboxImg");
     const lightboxVid = document.getElementById("lightboxVid");
+    const lightboxCredits = document.getElementById("lightboxCredits"); // Añadido para la columna de créditos
     const nextBtn = document.getElementById("lightboxNext");
     const prevBtn = document.getElementById("lightboxPrev");
     const closeBtn = document.getElementById("closeBtn");
@@ -138,25 +139,30 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- INTERACCIÓN TÁCTIL PARA MÓVILES ---
+    // --- INTERACCIÓN TÁCTIL PARA MÓVILES (Optimizado: Más rápido y fluido) ---
     function setupTouchScroll(container, type) {
         let startX = 0;
         let isDragging = false;
+        let lastDiffX = 0;
+        let inertiaFrame = null;
 
         container.addEventListener("touchstart", (e) => {
-            startX = e.touches[0].clientX;
             isDragging = true;
+            startX = e.touches[0].clientX;
+            lastDiffX = 0;
+            if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
         }, { passive: true });
 
         container.addEventListener("touchmove", (e) => {
             if (!isDragging) return;
             const currentX = e.touches[0].clientX;
-            const diffX = currentX - startX;
+            // Incrementamos la sensibilidad de respuesta del dedo multiplicando la diferencia
+            lastDiffX = (currentX - startX) * 2.2; 
 
             if (type === 'photo') {
-                currentSpeedPhotos = baseSpeedPhotos + (diffX * 0.25);
+                currentSpeedPhotos = baseSpeedPhotos + lastDiffX;
             } else {
-                currentSpeedVideos = baseSpeedVideos + (diffX * 0.25);
+                currentSpeedVideos = baseSpeedVideos + lastDiffX;
             }
             
             startX = currentX; 
@@ -164,8 +170,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
         container.addEventListener("touchend", () => {
             isDragging = false;
-            if (type === 'photo') currentSpeedPhotos = baseSpeedPhotos;
-            if (type === 'video') currentSpeedVideos = baseSpeedVideos;
+            
+            // Función de inercia para simular un deslizamiento rápido que desacelera de manera orgánica
+            function applyInertia() {
+                if (Math.abs(lastDiffX) < 0.1) {
+                    if (type === 'photo') currentSpeedPhotos = baseSpeedPhotos;
+                    if (type === 'video') currentSpeedVideos = baseSpeedVideos;
+                    return;
+                }
+                
+                lastDiffX *= 0.92; // Factor de fricción (pérdida de velocidad progresiva)
+                
+                if (type === 'photo') {
+                    currentSpeedPhotos = baseSpeedPhotos + lastDiffX;
+                } else {
+                    currentSpeedVideos = baseSpeedVideos + lastDiffX;
+                }
+                
+                inertiaFrame = requestAnimationFrame(applyInertia);
+            }
+            
+            applyInertia();
         });
     }
 
@@ -217,21 +242,64 @@ document.addEventListener("DOMContentLoaded", () => {
         updateContent(); lightbox.classList.add("active");
     }
 
-    function closeLightbox() { lightbox.classList.remove("active"); lightboxVid.pause(); }
+    // FUNCIÓN DE CIERRE OPTIMIZADA: Reinicia el estado completo del visor
+    function closeLightbox() { 
+        lightbox.classList.remove("active", "show-img", "show-vid"); 
+        
+        // Pausamos el vídeo y vaciamos los src de ambos elementos para que no se queden en caché
+        lightboxVid.pause(); 
+        lightboxVid.removeAttribute('src'); 
+        lightboxVid.load(); // Fuerza al navegador a liberar el archivo de vídeo anterior
+        
+        lightboxImg.removeAttribute('src');
+        
+        // Limpiamos los créditos para que no aparezcan los antiguos antes de cargar los nuevos
+        if (lightboxCredits) lightboxCredits.innerHTML = "";
+    }
 
     document.getElementById("closeBtn").onclick = closeLightbox;
     lightbox.onclick = closeLightbox;
     lightboxImg.onclick = (e) => e.stopPropagation();
     lightboxVid.onclick = (e) => e.stopPropagation();
+    if (lightboxCredits) lightboxCredits.onclick = (e) => e.stopPropagation();
 
     function updateContent() {
         const formatted = formatNumber(currentIndex);
+        
+        // Eliminamos las clases de visualización previas y pausamos antes de inyectar lo nuevo
         lightbox.classList.remove("show-img", "show-vid");
         lightboxVid.pause();
+        
         if (currentMode === 'photo') {
-            lightboxImg.src = `/assets/Asset_${formatted}.jpg`; lightbox.classList.add("show-img");
+            lightboxImg.src = `/assets/Asset_${formatted}.jpg`; 
+            lightbox.classList.add("show-img");
+            
+            // Gestión de créditos para fotografías
+            if (lightboxCredits) {
+                lightboxCredits.innerHTML = `
+                    <h3>Fotografía #${currentIndex}</h3>
+                    <p>Javier Botella Pérez</p>
+                    <p>Personal Project</p>
+                `;
+            }
         } else {
-            lightboxVid.src = `/videos/Video_${formatted}.mp4`; lightbox.classList.add("show-vid"); lightboxVid.play();
+            lightboxVid.src = `/videos/Video_${formatted}.mp4`; 
+            lightbox.classList.add("show-vid"); 
+            lightboxVid.play();
+            
+            // Gestión de créditos dinámicos para vídeo con la línea de separación extra
+            if (lightboxCredits) {
+                lightboxCredits.innerHTML = `
+                    <h3>Proyecto de Vídeo #${currentIndex}</h3>
+                    <p>Client / Artist Name</p>
+                    <p>Production Credit</p>
+                    <p>2024</p>
+                    <div class="extra-credits-wrapper">
+                        <p><strong>Director:</strong> Director Name</p>
+                        <p><strong>DoP:</strong> DoP Name</p>
+                    </div>
+                `;
+            }
         }
     }
 
