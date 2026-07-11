@@ -341,16 +341,20 @@
     </div>
 
     <!-- SCRIPT DE NAVEGACIÓN DEL LIGHTBOX Y ALEATORIEDAD -->
-    <script>
+   <script>
         document.addEventListener("DOMContentLoaded", () => {
             const grid = document.querySelector(".projects-grid");
             const lightbox = document.getElementById("projectLightbox");
             const lightboxVid = document.getElementById("projectLightboxVid");
             const closeBtn = document.getElementById("closeProjectBtn");
+            const prevBtn = document.getElementById("prevProjectBtn");
+            const nextBtn = document.getElementById("nextProjectBtn");
             
-            // 1. Convertimos los proyectos en una lista y los barajamos
+            let currentProjectIndex = -1;
+            let orderedProjects = [];
+
+            // 1. Aleatoriedad (Shuffle)
             const projects = Array.from(grid.children);
-            
             function shuffle(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -359,29 +363,71 @@
                 return array;
             }
             
-            const shuffledProjects = shuffle(projects);
-            
-            // 2. Vaciamos el grid y volvemos a meterlos en el nuevo orden aleatorio
+            // Guardamos el nuevo orden en un array global para la navegación
+            orderedProjects = shuffle(projects);
             grid.innerHTML = "";
-            shuffledProjects.forEach(project => grid.appendChild(project));
+            orderedProjects.forEach(project => grid.appendChild(project));
 
-            // 3. Delegación de eventos para optimizar y asegurar el funcionamiento tras el shuffle
+            // 2. Función para cargar un proyecto en el lightbox según su índice actual
+            function openProject(index) {
+                if (index < 0 || index >= orderedProjects.length) return;
+                
+                currentProjectIndex = index;
+                const targetProject = orderedProjects[currentProjectIndex];
+                const videoSrc = targetProject.dataset.video;
+                
+                lightboxVid.src = videoSrc;
+                
+                // Si el lightbox no está visible, lo activamos
+                if (!lightbox.classList.contains("active")) {
+                    lightbox.classList.add("active");
+                    lightbox.style.display = "flex";
+                }
+                
+                lightboxVid.play().catch(err => console.log("Auto-play bloqueado:", err));
+            }
+
+            // 3. Clic en las miniaturas
             grid.addEventListener("click", (e) => {
                 const item = e.target.closest(".project-item");
                 if (item) {
-                    const videoSrc = item.dataset.video;
-                    lightboxVid.src = videoSrc;
-                    lightbox.classList.add("active");
-                    lightbox.style.display = "flex";
-                    lightboxVid.play().catch(err => console.log("Auto-play prevenido por el navegador:", err));
+                    // Buscamos la posición real que ocupa en el array aleatorio
+                    const index = orderedProjects.indexOf(item);
+                    openProject(index);
                 }
             });
 
+            // 4. Controles de navegación (Anterior / Siguiente)
+            function showNext() {
+                let nextIndex = currentProjectIndex + 1;
+                if (nextIndex >= orderedProjects.length) nextIndex = 0; // Bucle al inicio
+                openProject(nextIndex);
+            }
+
+            function showPrev() {
+                let prevIndex = currentProjectIndex - 1;
+                if (prevIndex < 0) prevIndex = orderedProjects.length - 1; // Bucle al final
+                openProject(prevIndex);
+            }
+
+            nextBtn.onclick = (e) => { e.stopPropagation(); showNext(); };
+            prevBtn.onclick = (e) => { e.stopPropagation(); showPrev(); };
+
+            // Soporte para teclado (Flechas izq/der y Escape)
+            document.addEventListener("keydown", (e) => {
+                if (!lightbox.classList.contains("active")) return;
+                if (e.key === "ArrowRight") showNext();
+                if (e.key === "ArrowLeft") showPrev();
+                if (e.key === "Escape") closeLightbox();
+            });
+
+            // 5. Cierre
             function closeLightbox() {
                 lightbox.classList.remove("active");
                 lightbox.style.display = "none";
                 lightboxVid.pause();
                 lightboxVid.src = "";
+                currentProjectIndex = -1;
             }
 
             closeBtn.onclick = closeLightbox;
@@ -389,5 +435,22 @@
             lightboxVid.onclick = (e) => e.stopPropagation();
         });
     </script>
+
+    <!-- NUEVO VISOR LIGHTBOX CON NAVEGACIÓN -->
+    <div id="projectLightbox" class="lightbox" style="display: none;">
+        <!-- Botón Cerrar -->
+        <button class="close-btn" id="closeProjectBtn" aria-label="Cerrar">&times;</button>
+        
+        <!-- Flecha Izquierda -->
+        <button class="nav-btn prev-btn" id="prevProjectBtn" aria-label="Anterior">&#10094;</button>
+        
+        <div class="lightbox-content">
+            <video id="projectLightboxVid" controls style="display: block; width: 100%; height: 100%; max-height: 80vh; object-fit: contain;"></video>
+        </div>
+        
+        <!-- Flecha Derecha -->
+        <button class="nav-btn next-btn" id="nextProjectBtn" aria-label="Siguiente">&#10095;</button>
+    </div>
+    
 </body>
 </html>
