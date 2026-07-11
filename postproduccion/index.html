@@ -7,130 +7,45 @@
     <link rel="stylesheet" href="styles.css">
     
     <style>
-        /* Contenedor principal del Visor */
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #ffffff;
-            z-index: 9999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .lightbox.active {
-            opacity: 1;
-        }
-
-        /* Distribución en dos columnas: Vídeo a un lado, Créditos al otro */
-        .lightbox-content-container {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            width: 85%;
-            max-width: 1200px;
-            gap: 40px;
-        }
-
-        /* Columna Izquierda: Vídeo */
-        .lightbox-content {
-            flex: 1.6;
-            aspect-ratio: 16 / 9;
-            position: relative;
-        }
-        #projectLightboxVid {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: contain;
-        }
-        
-        /* Columna Derecha: Créditos con la estética de la web */
-        .lightbox-credits {
-            flex: 1;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .lightbox-credits h3 {
-            font-size: 24px !important;
-            margin: 0 0 10px 0 !important;
-            font-weight: normal !important;
-            color: #000000 !important;
-            text-transform: uppercase;
-        }
-        .lightbox-credits p {
-            font-size: 14px !important;
-            margin: 4px 0 !important;
-            color: #666666 !important;
-        }
-
-        /* LÓGICA DE CONTENIDO EXTRA (OCULTO EN WEB / VISIBLE EN LIGHTBOX) */
+        /* Oculta los créditos extendidos en la parrilla principal */
         .project-item .extra-credits {
             display: none;
         }
-        .lightbox-credits .extra-credits {
+
+        /* Fuerza a que los créditos extra aparezcan en bloque ordenado dentro del visor */
+        .lightbox-content .extra-credits {
             display: block;
-            margin-top: 12px;
-            border-top: 1px solid #eeeeee;
-            padding-top: 12px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0,0,0,0.05); /* Línea divisoria muy sutil */
         }
 
-        /* Botón de Cierre (X) */
-        .close-btn {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            background: none;
-            border: none;
-            color: #000000;
-            font-size: 40px;
-            font-weight: 300;
-            cursor: pointer;
-            z-index: 10000;
-        }
-
-        /* Flechas Laterales */
-        .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #000000;
-            font-size: 45px;
-            font-weight: 300;
-            cursor: pointer;
-            padding: 20px;
-            z-index: 10000;
-            user-select: none;
-            transition: opacity 0.2s ease;
-        }
-        .nav-btn:hover { opacity: 0.5; }
-        .prev-btn { left: 30px; }
-        .next-btn { right: 30px; }
-
-        /* Adaptabilidad móvil (Formato vertical) */
-        @media (max-width: 900px) {
-            .lightbox-content-container {
-                flex-direction: column;
-                gap: 20px;
-                width: 90%;
+        /* Solo en ordenadores, alineamos el vídeo e info en dos columnas respetando tu CSS */
+        @media (min-width: 901px) {
+            .lightbox {
+                display: none; /* El JS se encarga de cambiarlo a flex/block según tu CSS */
             }
-            .lightbox-credits {
-                text-align: center;
+            /* Si tu CSS usa un contenedor interno para centrar, le aplicamos el formato bilateral */
+            .lightbox-content {
+                display: flex;
+                flex-direction: row;
                 align-items: center;
+                justify-content: center;
+                gap: 40px;
+                max-width: 1200px;
+                width: 85%;
+                margin: 0 auto;
             }
-            .nav-btn { font-size: 30px; padding: 10px; }
-            .prev-btn { left: 10px; }
-            .next-btn { right: 10px; }
-            .close-btn { top: 20px; right: 20px; font-size: 35px; }
+            /* Ajuste de proporciones mutuas */
+            .lightbox-content video {
+                flex: 1.5;
+                max-width: 65%;
+            }
+            .lightbox-content .project-info {
+                flex: 1;
+                text-align: left;
+                min-width: 300px;
+            }
         }
     </style>
 </head>
@@ -191,6 +106,7 @@
                 </div>
             </div>
 
+            <!-- El resto de tus elementos (del 4 al 25) se mantienen exactamente igual -->
             <div class="project-item" data-video="videos/post_video_00004.mp4">
                 <img src="thumbs/post_thumb_00004.jpg" alt="Muñequita Linda - Nawja Nimri" class="project-thumb">
                 <div class="project-info">
@@ -240,11 +156,9 @@
                 <div class="project-info">
                     <h3>Gaudir</h3>
                     <p>Academia Cinema Català</p>
-                    <span class="project-info">
-                        <p>Short Film</p>
-                        <p>Post Production Coordinator</p>
-                        <p>2020</p>
-                    </span>
+                    <p>Short Film</p>
+                    <p>Post Production Coordinator</p>
+                    <p>2020</p>
                 </div>
             </div>
 
@@ -448,16 +362,15 @@
         <a href="aboutme.html" class="menu-item">About</a>
     </nav>
 
-    <!-- LIGHTBOX MAQUETADO EN DOS COLUMNAS -->
+    <!-- VISOR ANIDADOS EXACTAMENTE IGUAL QUE EN TU ORIGINAL -->
     <div id="projectLightbox" class="lightbox">
         <button class="close-btn" id="closeProjectBtn" aria-label="Cerrar">&times;</button>
         <button class="nav-btn prev-btn" id="prevProjectBtn" aria-label="Anterior">&#10094;</button>
         
-        <div class="lightbox-content-container">
-            <div class="lightbox-content">
-                <video id="projectLightboxVid" controls></video>
-            </div>
-            <div id="lightboxCredits" class="lightbox-credits"></div>
+        <!-- Mantiene tus clases nativas de styles.css para que herede fondos, tipografías y botones -->
+        <div class="lightbox-content">
+            <video id="projectLightboxVid" controls></video>
+            <div id="lightboxCredits" class="project-info"></div>
         </div>
         
         <button class="nav-btn next-btn" id="nextProjectBtn" aria-label="Siguiente">&#10095;</button>
@@ -495,18 +408,18 @@
                 currentProjectIndex = index;
                 const targetProject = orderedProjects[currentProjectIndex];
                 
-                const videoSrc = targetProject.dataset.video;
-                lightboxVid.src = videoSrc;
+                lightboxVid.src = targetProject.dataset.video;
                 
                 const infoContainer = targetProject.querySelector(".project-info");
                 if (infoContainer) {
                     lightboxCredits.innerHTML = infoContainer.innerHTML;
                 }
                 
-                lightbox.style.display = "flex";
-                setTimeout(() => {
-                    lightbox.classList.add("active");
-                }, 10);
+                // Muestra el lightbox usando el método nativo que use tu CSS (habitualmente flex o block)
+                lightbox.style.display = "flex"; 
+                
+                // Si tu archivo general usa una clase activa para transiciones:
+                lightbox.classList.add("active");
                 
                 lightboxVid.play().catch(err => console.log("Auto-play prevenido:", err));
             }
@@ -535,7 +448,7 @@
             prevBtn.onclick = (e) => { e.stopPropagation(); showPrev(); };
 
             document.addEventListener("keydown", (e) => {
-                if (!lightbox.classList.contains("active")) return;
+                if (lightbox.style.display === "none" || !lightbox.classList.contains("active")) return;
                 if (e.key === "ArrowRight") showNext();
                 if (e.key === "ArrowLeft") showPrev();
                 if (e.key === "Escape") closeLightbox();
@@ -543,12 +456,10 @@
 
             function closeLightbox() {
                 lightbox.classList.remove("active");
-                setTimeout(() => {
-                    lightbox.style.display = "none";
-                    lightboxVid.pause();
-                    lightboxVid.src = "";
-                    lightboxCredits.innerHTML = "";
-                }, 300);
+                lightbox.style.display = "none";
+                lightboxVid.pause();
+                lightboxVid.src = "";
+                lightboxCredits.innerHTML = "";
                 currentProjectIndex = -1;
             }
 
