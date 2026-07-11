@@ -6,10 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightboxImg");
     const lightboxVid = document.getElementById("lightboxVid");
-    const lightboxCredits = document.getElementById("lightboxCredits"); // Añadido para la columna de créditos
+    const lightboxCredits = document.getElementById("lightboxCredits");
     const nextBtn = document.getElementById("lightboxNext");
     const prevBtn = document.getElementById("lightboxPrev");
-    const closeBtn = document.getElementById("closeBtn");
 
     const totalImages = 114;
     const totalVideos = 8;
@@ -33,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function getSmartShuffledSequence(totalCount, duplicatesNeeded) {
         let base = Array.from({length: totalCount}, (_, i) => i + 1);
         
-        // Función interna Fisher-Yates
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -47,32 +45,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         for (let d = 0; d < duplicatesNeeded; d++) {
             let currentBatch = shuffle([...base]);
-            
-            // Si el primer elemento de esta tanda coincide con el último de la anterior, lo movemos al final
             if (lastBatch.length > 0 && currentBatch[0] === lastBatch[lastBatch.length - 1]) {
                 const first = currentBatch.shift();
                 currentBatch.push(first);
             }
-            
             fullSequence = fullSequence.concat(currentBatch);
             lastBatch = currentBatch;
         }
 
-        // Validación final de seguridad para el salto del bucle infinito (Fin del carrusel con el principio)
         if (fullSequence[fullSequence.length - 1] === fullSequence[0]) {
-            // Intercambiamos el último elemento con el penúltimo para romper la coincidencia
             const len = fullSequence.length;
             [fullSequence[len - 1], fullSequence[len - 2]] = [fullSequence[len - 2], fullSequence[len - 1]];
         }
-
         return fullSequence;
     }
 
     // --- CARGA MULTIMEDIA CONTROLADA ---
     function loadPhotos() {
-        // Generamos la secuencia larga aleatoria sin colisiones de extremos
         const photoSequence = getSmartShuffledSequence(totalImages, 2);
-        
         photoSequence.forEach(i => {
             const img = document.createElement("img");
             img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
@@ -84,9 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function loadVideos() {
-        // Generamos la secuencia larga de miniaturas de vídeo sin colisiones
         const videoSequence = getSmartShuffledSequence(totalVideos, 4);
-        
         videoSequence.forEach(i => {
             const wrapper = document.createElement("div");
             wrapper.classList.add("video-item-wrapper");
@@ -122,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(animate);
     }
 
-    // --- TRUCO MAESTRO: TRASPASAR EL CLIC DESDE LAS ZONAS DE ACELERACIÓN ---
+    // --- TRASPASAR EL CLIC DESDE LAS ZONAS DE ACELERACIÓN ---
     function setupSmartClick(zone, mode) {
         zone.addEventListener("click", (e) => {
             zone.style.pointerEvents = "none";
@@ -139,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- INTERACCIÓN TÁCTIL PARA MÓVILES (Optimizado: Más rápido y fluido) ---
+    // --- INTERACCIÓN TÁCTIL PARA MÓVILES (Inercia + Fluidez) ---
     function setupTouchScroll(container, type) {
         let startX = 0;
         let isDragging = false;
@@ -156,7 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
         container.addEventListener("touchmove", (e) => {
             if (!isDragging) return;
             const currentX = e.touches[0].clientX;
-            // Incrementamos la sensibilidad de respuesta del dedo multiplicando la diferencia
             lastDiffX = (currentX - startX) * 2.2; 
 
             if (type === 'photo') {
@@ -164,58 +151,46 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 currentSpeedVideos = baseSpeedVideos + lastDiffX;
             }
-            
             startX = currentX; 
         }, { passive: true });
 
         container.addEventListener("touchend", () => {
             isDragging = false;
-            
-            // Función de inercia para simular un deslizamiento rápido que desacelera de manera orgánica
             function applyInertia() {
                 if (Math.abs(lastDiffX) < 0.1) {
                     if (type === 'photo') currentSpeedPhotos = baseSpeedPhotos;
                     if (type === 'video') currentSpeedVideos = baseSpeedVideos;
                     return;
                 }
-                
-                lastDiffX *= 0.92; // Factor de fricción (pérdida de velocidad progresiva)
-                
+                lastDiffX *= 0.92;
                 if (type === 'photo') {
                     currentSpeedPhotos = baseSpeedPhotos + lastDiffX;
                 } else {
                     currentSpeedVideos = baseSpeedVideos + lastDiffX;
                 }
-                
                 inertiaFrame = requestAnimationFrame(applyInertia);
             }
-            
             applyInertia();
         });
     }
 
-    // --- ESCUCHA DE HOVERS (Ordenador Escritorio) ---
+    // --- ESCUCHA DE HOVERS ---
     const photoLeftZone = containerPhotos.querySelector(".zone-left");
     const photoRightZone = containerPhotos.querySelector(".zone-right");
-
     photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -8); 
     photoRightZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * 8);  
     containerPhotos.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
-    
     setupSmartClick(photoLeftZone, 'photo');
     setupSmartClick(photoRightZone, 'photo');
 
     const videoLeftZone = containerVideos.querySelector(".zone-left");
     const videoRightZone = containerVideos.querySelector(".zone-right");
-
     videoLeftZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * -8); 
     videoRightZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * 8);  
     containerVideos.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
-
     setupSmartClick(videoLeftZone, 'video');
     setupSmartClick(videoRightZone, 'video');
 
-    // Pausas al poner el ratón encima del eje central
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     photoTrack.addEventListener("click", (e) => {
@@ -236,24 +211,22 @@ document.addEventListener("DOMContentLoaded", () => {
     setupTouchScroll(containerPhotos, 'photo');
     setupTouchScroll(containerVideos, 'video');
 
-    // --- LIGHTBOX VISOR ---
+    // --- VISOR LIGHTBOX ---
     function openLightbox(mode, index) {
-        currentMode = mode; currentIndex = index;
-        updateContent(); lightbox.classList.add("active");
+        currentMode = mode; 
+        currentIndex = index;
+        updateContent(); 
+        lightbox.classList.add("active");
     }
 
-    // FUNCIÓN DE CIERRE OPTIMIZADA: Reinicia el estado completo del visor
     function closeLightbox() { 
         lightbox.classList.remove("active", "show-img", "show-vid"); 
         
-        // Pausamos el vídeo y vaciamos los src de ambos elementos para que no se queden en caché
+        // Purgado completo e inmediato de memoria visual y descriptiva al cerrar
         lightboxVid.pause(); 
         lightboxVid.removeAttribute('src'); 
-        lightboxVid.load(); // Fuerza al navegador a liberar el archivo de vídeo anterior
-        
+        lightboxVid.load(); 
         lightboxImg.removeAttribute('src');
-        
-        // Limpiamos los créditos para que no aparezcan los antiguos antes de cargar los nuevos
         if (lightboxCredits) lightboxCredits.innerHTML = "";
     }
 
@@ -266,15 +239,18 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateContent() {
         const formatted = formatNumber(currentIndex);
         
-        // Eliminamos las clases de visualización previas y pausamos antes de inyectar lo nuevo
+        // Purga preventiva intermedia en cambios "Next/Prev" cruzados
         lightbox.classList.remove("show-img", "show-vid");
         lightboxVid.pause();
+        lightboxVid.removeAttribute('src');
+        lightboxVid.load();
+        lightboxImg.removeAttribute('src');
+        if (lightboxCredits) lightboxCredits.innerHTML = "";
         
         if (currentMode === 'photo') {
             lightboxImg.src = `/assets/Asset_${formatted}.jpg`; 
             lightbox.classList.add("show-img");
             
-            // Gestión de créditos para fotografías
             if (lightboxCredits) {
                 lightboxCredits.innerHTML = `
                     <h3>Fotografía #${currentIndex}</h3>
@@ -287,7 +263,6 @@ document.addEventListener("DOMContentLoaded", () => {
             lightbox.classList.add("show-vid"); 
             lightboxVid.play();
             
-            // Gestión de créditos dinámicos para vídeo con la línea de separación extra
             if (lightboxCredits) {
                 lightboxCredits.innerHTML = `
                     <h3>Proyecto de Vídeo #${currentIndex}</h3>
