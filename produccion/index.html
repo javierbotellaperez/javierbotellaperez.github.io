@@ -79,6 +79,17 @@
             line-height: 1.5;
         }
 
+        /* --- NUEVO: Estilos para el ajuste de Créditos Extra --- */
+        .extra-credits-wrapper {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e5e5; /* Elegante línea divisoria minimalista */
+        }
+        .extra-credits-wrapper p {
+            font-size: 13px !important;
+            color: #333333 !important;
+        }
+
         /* Botón de Cierre (X) superior derecho */
         .close-btn {
             position: absolute;
@@ -119,8 +130,6 @@
 
     <!-- REJILLA DE PROYECTOS DE PRODUCCIÓN -->
     <main class="projects-grid-container">
-        
-
         <div class="projects-grid">
             
             <!-- Ejemplo Producción 1 -->
@@ -128,9 +137,14 @@
                 <img src="thumbs/prod_thumb_00001.jpg" alt="Campaña 1" class="project-thumb">
                 <div class="project-info">
                     <h3>¡Corten!</h3>
-                    <p><strong></strong> Marc Ferrer</p>
-                    <p><strong></strong> Production Manager</p>
-                    <p><strong></strong> 2020</p>
+                    <p>Marc Ferrer</p>
+                    <p>Production Manager</p>
+                    <p>2020</p>
+                    <!-- Bloque de créditos extra inyectable -->
+                    <div class="extra-credits-wrapper">
+                        <p><strong>Director:</strong> Marc Ferrer</p>
+                        <p><strong>DoP:</strong> Name Name</p>
+                    </div>
                 </div>
             </div>
 
@@ -139,9 +153,14 @@
                 <img src="thumbs/prod_thumb_00002.jpg" alt="Campaña 2" class="project-thumb">
                 <div class="project-info">
                     <h3>Physical</h3>
-                    <p><strong></strong> Dua Lipa </p>
-                    <p><strong></strong></strong> Production Assistant</p>
-                    <p><strong></strong> 2019</p>
+                    <p>Dua Lipa</p>
+                    <p>Production Assistant</p>
+                    <p>2019</p>
+                    <!-- Bloque de créditos extra inyectable -->
+                    <div class="extra-credits-wrapper">
+                        <p><strong>Director:</strong> Canada</p>
+                        <p><strong>DoP:</strong> Name Name</p>
+                    </div>
                 </div>
             </div>
 
@@ -150,30 +169,38 @@
                 <img src="thumbs/prod_thumb_00003.jpg" alt="Campaña 3" class="project-thumb">
                 <div class="project-info">
                     <h3>Malamente</h3>
-                    <p><strong></strong>Rosalía</p>
-                    <p><strong></strong></strong> Production Assistant</p>
-                    <p><strong></strong> 2018</p>
+                    <p>Rosalía</p>
+                    <p>Production Assistant</p>
+                    <p>2018</p>
+                    <!-- Bloque de créditos extra inyectable -->
+                    <div class="extra-credits-wrapper">
+                        <p><strong>Director:</strong> Canada</p>
+                        <p><strong>DoP:</strong> Name Name</p>
+                    </div>
                 </div>
             </div>
 
-                        <!-- Ejemplo Producción 3 -->
+            <!-- Ejemplo Producción 4 -->
             <div class="project-item" data-video="videos/prod_video_00004.mp4">
-                <img src="thumbs/prod_thumb_00004.jpg" alt="Campaña 3" class="project-thumb">
+                <img src="thumbs/prod_thumb_00004.jpg" alt="Campaña 4" class="project-thumb">
                 <div class="project-info">
                     <h3>Malamente</h3>
-                    <p><strong></strong>Rosalía</p>
-                    <p><strong></strong></strong> Production Assistant</p>
-                    <p><strong></strong> 2018</p>
+                    <p>Rosalía</p>
+                    <p>Production Assistant</p>
+                    <p>2018</p>
+                    <!-- Bloque de créditos extra inyectable -->
+                    <div class="extra-credits-wrapper">
+                        <p><strong>Director:</strong> Canada</p>
+                        <p><strong>DoP:</strong> Name Name</p>
+                    </div>
                 </div>
             </div>
-
-
 
         </div>
     </main>
 
     <!-- MENÚ INFERIOR SIMPLIFICADO -->
-<nav class="minimal-menu">
+    <nav class="minimal-menu">
         <a href="../index.html" class="menu-item">Portfolio</a>
         <span class="menu-separator">•</span>
         <a href="index.html" class="menu-item" style="color: #000000;">Production</a>
@@ -231,7 +258,7 @@
                     const videoSrc = item.dataset.video;
                     lightboxVid.src = videoSrc;
                     
-                    // Clonamos/Inyectamos los créditos del contenedor de info del elemento clicado
+                    // Clonamos/Inyectamos los créditos del contenedor de info del elemento clicado (incluye los extra)
                     const infoContainer = item.querySelector(".project-info");
                     if (infoContainer) {
                         lightboxCredits.innerHTML = infoContainer.innerHTML;
