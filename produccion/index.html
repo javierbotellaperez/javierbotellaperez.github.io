@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Javier Botella Pérez - Postproducción</title>
+    <title>Javier Botella Pérez</title>
+    <!-- Busca el archivo CSS que está afuera en la raíz -->
     <link rel="stylesheet" href="../styles.css">
     
     <style>
@@ -55,7 +56,7 @@
             background-color: #000000; /* Fondo negro solo para el vídeo si no es 16:9 */
         }
         
-        /* Columna Font/Derecha: Créditos con tipografía e identidad de la web */
+        /* Columna Derecha: Créditos con tipografía e identidad de la web */
         .lightbox-credits {
             flex: 1;
             text-align: left;
@@ -78,13 +79,6 @@
             line-height: 1.5;
         }
 
-        /* Bloque sutil para separar visualmente los créditos extra del bloque principal */
-        .extra-credits-wrapper {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
         /* Botón de Cierre (X) superior derecho */
         .close-btn {
             position: absolute;
@@ -101,26 +95,6 @@
         }
         .close-btn:hover { opacity: 0.5; }
 
-        /* Flechas Laterales de Navegación */
-        .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #000000;
-            font-size: 45px;
-            font-weight: 300;
-            cursor: pointer;
-            padding: 20px;
-            z-index: 10000;
-            user-select: none;
-            transition: opacity 0.2s ease;
-        }
-        .nav-btn:hover { opacity: 0.5; }
-        .prev-btn { left: 30px; }
-        .next-btn { right: 30px; }
-
         /* Adaptabilidad para pantallas móviles (Pasa a formato vertical de una columna) */
         @media (max-width: 900px) {
             .lightbox-content-container {
@@ -132,318 +106,86 @@
                 text-align: center;
                 align-items: center;
             }
-            .nav-btn { font-size: 35px; padding: 10px; }
-            .prev-btn { left: 10px; }
-            .next-btn { right: 10px; }
             .close-btn { top: 20px; right: 20px; font-size: 35px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- CABECERA (Ruta directa a la página de inicio de la raíz) -->
     <header class="main-header">
         <h1><a href="../index.html">Javier Botella Pérez</a></h1>
     </header>
 
+    <!-- REJILLA DE PROYECTOS DE PRODUCCIÓN -->
     <main class="projects-grid-container">
+        
+
         <div class="projects-grid">
             
-            <!-- EJEMPLO 1: CON CRÉDITOS EXTRA INYECTADOS EN ATRIBUTOS -->
-            <div class="project-item" data-video="../videos/post_video_00001.mp4" data-director="Greta Gerwig" data-dop="Rodrigo Prieto">
-                <img src="../thumbs/post_thumb_00001.jpg" alt="Dance The Night - Dua Lipa" class="project-thumb">
+            <!-- Ejemplo Producción 1 -->
+            <div class="project-item" data-video="videos/prod_video_00001.mp4">
+                <img src="thumbs/prod_thumb_00001.jpg" alt="Campaña 1" class="project-thumb">
                 <div class="project-info">
-                    <h3>Dance The Night</h3>
-                    <p>Dua Lipa</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2024</p>
+                    <h3>¡Corten!</h3>
+                    <p><strong></strong> Marc Ferrer</p>
+                    <p><strong></strong> Production Manager</p>
+                    <p><strong></strong> 2020</p>
                 </div>
             </div>
 
-            <!-- EJEMPLO 2: CON CRÉDITOS EXTRA INYECTADOS EN ATRIBUTOS -->
-            <div class="project-item" data-video="../videos/post_video_00002.mp4" data-director="Lope Serrano" data-dop="David Procter">
-                <img src="../thumbs/post_thumb_00002.jpg" alt="Love Again - Dua Lipa" class="project-thumb">
+            <!-- Ejemplo Producción 2 -->
+            <div class="project-item" data-video="videos/prod_video_00002.mp4">
+                <img src="thumbs/prod_thumb_00002.jpg" alt="Campaña 2" class="project-thumb">
                 <div class="project-info">
-                    <h3>Love Again</h3>
-                    <p>Dua Lipa</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2022</p>
+                    <h3>Physical</h3>
+                    <p><strong></strong> Dua Lipa </p>
+                    <p><strong></strong></strong> Production Assistant</p>
+                    <p><strong></strong> 2019</p>
                 </div>
             </div>
 
-            <!-- EJEMPLO 3: CON CRÉDITOS EXTRA INYECTADOS EN ATRIBUTOS -->
-            <div class="project-item" data-video="../videos/post_video_00003.mp4" data-director="Àlex Sardà" data-dop="Artur-Pol Camprubí">
-                <img src="../thumbs/post_thumb_00003.jpg" alt="El Príncep - Àlex Sardà" class="project-thumb">
+            <!-- Ejemplo Producción 3 -->
+            <div class="project-item" data-video="videos/prod_video_00003.mp4">
+                <img src="thumbs/prod_thumb_00003.jpg" alt="Campaña 3" class="project-thumb">
                 <div class="project-info">
-                    <h3>El Príncep</h3>
-                    <p>Àlex Sardà</p>
-                    <p>Short Film</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2024</p>
+                    <h3>Malamente</h3>
+                    <p><strong></strong>Rosalía</p>
+                    <p><strong></strong></strong> Production Assistant</p>
+                    <p><strong></strong> 2018</p>
                 </div>
             </div>
 
-            <!-- Proyectos del 4 al 25 -->
-            <div class="project-item" data-video="../videos/post_video_00004.mp4">
-                <img src="../thumbs/post_thumb_00004.jpg" alt="Muñequita Linda - Nawja Nimri" class="project-thumb">
+                        <!-- Ejemplo Producción 3 -->
+            <div class="project-item" data-video="videos/prod_video_00004.mp4">
+                <img src="thumbs/prod_thumb_00004.jpg" alt="Campaña 3" class="project-thumb">
                 <div class="project-info">
-                    <h3>Muñequita Linda</h3>
-                    <p>Nawja Nimri</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2021</p>
+                    <h3>Malamente</h3>
+                    <p><strong></strong>Rosalía</p>
+                    <p><strong></strong></strong> Production Assistant</p>
+                    <p><strong></strong> 2018</p>
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00005.mp4">
-                <img src="../thumbs/post_thumb_00005.jpg" alt="Plató 3 - Maria Borrell" class="project-thumb">
-                <div class="project-info">
-                    <h3>Plató 3</h3>
-                    <p>Maria Borrell</p>
-                    <p>Documentary</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2026</p>
-                </div>
-            </div>
 
-            <div class="project-item" data-video="../videos/post_video_00006.mp4">
-                <img src="../thumbs/post_thumb_00006.jpg" alt="Berghain - Rosalía" class="project-thumb">
-                <div class="project-info">
-                    <h3>Berghain</h3>
-                    <p>Rosalía</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2025</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00007.mp4">
-                <img src="../thumbs/post_thumb_00007.jpg" alt="Motomami x TikTok - Rosalía" class="project-thumb">
-                <div class="project-info">
-                    <h3>Motomami x TikTok</h3>
-                    <p>Rosalía</p>
-                    <p>Long Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2022</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00008.mp4">
-                <img src="../thumbs/post_thumb_00008.jpg" alt="Gaudir - Academia Cinema Català" class="project-thumb">
-                <div class="project-info">
-                    <h3>Gaudir</h3>
-                    <p>Academia Cinema Català</p>
-                    <p>Short Film</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2020</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00009.mp4">
-                <img src="../thumbs/post_thumb_00009.jpg" alt="Coldplay x FCB - Spotify" class="project-thumb">
-                <div class="project-info">
-                    <h3>Coldplay x FCB</h3>
-                    <p>Spotify</p>
-                    <p>Commercial</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2024</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00010.mp4">
-                <img src="../thumbs/post_thumb_00010.jpg" alt="Disimulao - Alizz" class="project-thumb">
-                <div class="project-info">
-                    <h3>Disimulao</h3>
-                    <p>Alizz</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2021</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00011.mp4">
-                <img src="../thumbs/post_thumb_00011.jpg" alt="Ya no vales - Alizz ft. C. Tangana" class="project-thumb">
-                <div class="project-info">
-                    <h3>Ya no vales</h3>
-                    <p>Alizz ft. C. Tangana</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2021</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00012.mp4">
-                <img src="../thumbs/post_thumb_00012.jpg" alt="Weightless - Arlo Parks" class="project-thumb">
-                <div class="project-info">
-                    <h3>Weightless</h3>
-                    <p>Arlo Parks</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2023</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00013.mp4">
-                <img src="../thumbs/post_thumb_00013.jpg" alt="Nieve - ARON" class="project-thumb">
-                <div class="project-info">
-                    <h3>Nieve</h3>
-                    <p>ARON</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2020</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00014.mp4">
-                <img src="../thumbs/post_thumb_00014.jpg" alt="Sin Carné - Bad Gyal" class="project-thumb">
-                <div class="project-info">
-                    <h3>Sin Carné</h3>
-                    <p>Bad Gyal</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2021</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00015.mp4">
-                <img src="../thumbs/post_thumb_00015.jpg" alt="4:15 - Claudia Valentina" class="project-thumb">
-                <div class="project-info">
-                    <h3>4:15</h3>
-                    <p>Claudia Valentina</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2020</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00016.mp4">
-                <img src="../thumbs/post_thumb_00016.jpg" alt="Colmillo - Young Miko" class="project-thumb">
-                <div class="project-info">
-                    <h3>Colmillo</h3>
-                    <p>Young Miko</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2023</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00017.mp4">
-                <img src="../thumbs/post_thumb_00017.jpg" alt="FAD - FAD" class="project-thumb">
-                <div class="project-info">
-                    <h3>FAD</h3>
-                    <p>FAD</p>
-                    <p>Commercial</p>
-                    <p>Grading Coordinator</p>
-                    <p>2026</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00018.mp4">
-                <img src="../thumbs/post_thumb_00018.jpg" alt="Muy nuestro - Ecoembes" class="project-thumb">
-                <div class="project-info">
-                    <h3>Muy nuestro</h3>
-                    <p>Ecoembes</p>
-                    <p>Commercial</p>
-                    <p>Grading Coordinator</p>
-                    <p>2026</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00019.mp4">
-                <img src="../thumbs/post_thumb_00019.jpg" alt="Karol G x FCB - Spotify" class="project-thumb">
-                <div class="project-info">
-                    <h3>Karol G x FCB</h3>
-                    <p>Spotify</p>
-                    <p>Commercial</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2023</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00020.mp4">
-                <img src="../thumbs/post_thumb_00020.jpg" alt="Straight to the morning - Hot Chip" class="project-thumb">
-                <div class="project-info">
-                    <h3>Straight to the morning</h3>
-                    <p>Hot Chip</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2020</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00021.mp4">
-                <img src="../thumbs/post_thumb_00021.jpg" alt="Resilient - Coca Cola" class="project-thumb">
-                <div class="project-info">
-                    <h3>Resilient</h3>
-                    <p>Coca Cola (Katy Perry ft. Aitana ft. Tiësto)</p>
-                    <p>Commercial</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2020</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00022.mp4">
-                <img src="../thumbs/post_thumb_00022.jpg" alt="La Causa del Accidente... - ICEX" class="project-thumb">
-                <div class="project-info">
-                    <h3>La Causa del Accidente que Provocó el Incendio</h3>
-                    <p>ICEX</p>
-                    <p>Short Film</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2024</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00023.mp4">
-                <img src="../thumbs/post_thumb_00023.jpg" alt="El nen de la mare - Ajuntament de Barcelona" class="project-thumb">
-                <div class="project-info">
-                    <h3>El nen de la mare</h3>
-                    <p>Ajuntament de Barcelona</p>
-                    <p>Short Film</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2024</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00024.mp4">
-                <img src="../thumbs/post_thumb_00024.jpg" alt="Valientes - Allianz Seguros" class="project-thumb">
-                <div class="project-info">
-                    <h3>Valientes</h3>
-                    <p>Allianz Seguros</p>
-                    <p>Commercial</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2025</p>
-                </div>
-            </div>
-
-            <div class="project-item" data-video="../videos/post_video_00025.mp4">
-                <img src="../thumbs/post_thumb_00025.jpg" alt="Cuntissimo - MARINA" class="project-thumb">
-                <div class="project-info">
-                    <h3>Cuntissimo</h3>
-                    <p>MARINA</p>
-                    <p>Music Video</p>
-                    <p>Post Production Coordinator</p>
-                    <p>2025</p>
-                </div>
-            </div>
 
         </div>
     </main>
 
-    <nav class="minimal-menu">
+    <!-- MENÚ INFERIOR SIMPLIFICADO -->
+<nav class="minimal-menu">
         <a href="../index.html" class="menu-item">Portfolio</a>
         <span class="menu-separator">•</span>
-        <a href="../produccion/index.html" class="menu-item">Production</a>
+        <a href="index.html" class="menu-item" style="color: #000000;">Production</a>
         <span class="menu-separator">•</span>
-        <a href="index.html" class="menu-item" style="color: #000000;">Postproduction</a>
+        <a href="../postproduccion/index.html" class="menu-item">Postproduction</a>
         <span class="menu-separator">•</span>
         <a href="../aboutme.html" class="menu-item">About</a>
     </nav>
-
-    <!-- LIGHTBOX MAQUETADO EN DOS COLUMNAS -->
+    
+    <!-- VISOR LIGHTBOX MAQUETADO EN DOS COLUMNAS -->
     <div id="projectLightbox" class="lightbox">
-        <button class="close-btn" id="closeProjectBtn" aria-label="Cerrar">&times;</button>
-        <button class="nav-btn prev-btn" id="prevProjectBtn" aria-label="Anterior">&#10094;</button>
+        <button class="close-btn" id="closeProjectBtn">&times;</button>
         
         <div class="lightbox-content-container">
             <!-- LADO 1: VÍDEO -->
@@ -453,10 +195,9 @@
             <!-- LADO 2: CRÉDITOS -->
             <div id="lightboxCredits" class="lightbox-credits"></div>
         </div>
-        
-        <button class="nav-btn next-btn" id="nextProjectBtn" aria-label="Siguiente">&#10095;</button>
     </div>
 
+    <!-- SCRIPT DE NAVEGACIÓN DEL LIGHTBOX -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const grid = document.querySelector(".projects-grid");
@@ -464,13 +205,10 @@
             const lightboxVid = document.getElementById("projectLightboxVid");
             const lightboxCredits = document.getElementById("lightboxCredits");
             const closeBtn = document.getElementById("closeProjectBtn");
-            const prevBtn = document.getElementById("prevProjectBtn");
-            const nextBtn = document.getElementById("nextProjectBtn");
             
-            let currentProjectIndex = -1;
-            let orderedProjects = [];
-
+            // 1. Convertimos los proyectos en una lista y los barajamos
             const projects = Array.from(grid.children);
+            
             function shuffle(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -479,91 +217,42 @@
                 return array;
             }
             
-            orderedProjects = shuffle(projects);
+            const shuffledProjects = shuffle(projects);
+            
+            // 2. Vaciamos el grid y volvemos a meterlos en el nuevo orden aleatorio
             grid.innerHTML = "";
-            orderedProjects.forEach(project => grid.appendChild(project));
+            shuffledProjects.forEach(project => grid.appendChild(project));
 
-            function openProject(index) {
-                if (index < 0 || index >= orderedProjects.length) return;
-                
-                currentProjectIndex = index;
-                const targetProject = orderedProjects[currentProjectIndex];
-                
-                const videoSrc = targetProject.dataset.video;
-                lightboxVid.src = videoSrc;
-                
-                const infoContainer = targetProject.querySelector(".project-info");
-                if (infoContainer) {
-                    let HTMLContent = infoContainer.innerHTML;
+            // 3. Volvemos a activar la escucha de clics para el Lightbox en el nuevo orden
+            const projectItems = document.querySelectorAll(".project-item");
+
+            projectItems.forEach(item => {
+                item.addEventListener("click", () => {
+                    const videoSrc = item.dataset.video;
+                    lightboxVid.src = videoSrc;
                     
-                    // Procesar dinámicamente si existen los créditos opcionales extra
-                    let extraCreditsHTML = "";
-                    if (targetProject.dataset.director) {
-                        extraCreditsHTML += `<p><strong>Director:</strong> ${targetProject.dataset.director}</p>`;
-                    }
-                    if (targetProject.dataset.dop) {
-                        extraCreditsHTML += `<p><strong>DoP:</strong> ${targetProject.dataset.dop}</p>`;
+                    // Clonamos/Inyectamos los créditos del contenedor de info del elemento clicado
+                    const infoContainer = item.querySelector(".project-info");
+                    if (infoContainer) {
+                        lightboxCredits.innerHTML = infoContainer.innerHTML;
                     }
                     
-                    // Inyección de créditos extra bajo la línea divisoria
-                    if (extraCreditsHTML !== "") {
-                        HTMLContent += `<div class="extra-credits-wrapper">${extraCreditsHTML}</div>`;
-                    }
-
-                    lightboxCredits.innerHTML = HTMLContent;
-                }
-                
-                lightbox.style.display = "flex";
-                setTimeout(() => {
                     lightbox.classList.add("active");
-                }, 10);
-                
-                lightboxVid.play().catch(err => console.log("Auto-play prevenido:", err));
-            }
-
-            grid.addEventListener("click", (e) => {
-                const item = e.target.closest(".project-item");
-                if (item) {
-                    const index = orderedProjects.indexOf(item);
-                    openProject(index);
-                }
+                    lightbox.style.display = "flex";
+                    lightboxVid.play();
+                });
             });
 
-            function showNext() {
-                let nextIndex = currentProjectIndex + 1;
-                if (nextIndex >= orderedProjects.length) nextIndex = 0;
-                openProject(nextIndex);
-            }
-
-            function showPrev() {
-                let prevIndex = currentProjectIndex - 1;
-                if (prevIndex < 0) prevIndex = orderedProjects.length - 1;
-                openProject(prevIndex);
-            }
-
-            nextBtn.onclick = (e) => { e.stopPropagation(); showNext(); };
-            prevBtn.onclick = (e) => { e.stopPropagation(); showPrev(); };
-
-            document.addEventListener("keydown", (e) => {
-                if (!lightbox.classList.contains("active")) return;
-                if (e.key === "ArrowRight") showNext();
-                if (e.key === "ArrowLeft") showPrev();
-                if (e.key === "Escape") closeLightbox();
-            });
-
-            function closeLightbox() {
+            function close() {
                 lightbox.classList.remove("active");
-                setTimeout(() => {
-                    lightbox.style.display = "none";
-                    lightboxVid.pause();
-                    lightboxVid.src = "";
-                    lightboxCredits.innerHTML = "";
-                }, 300);
-                currentProjectIndex = -1;
+                lightbox.style.display = "none";
+                lightboxVid.pause();
+                lightboxVid.src = "";
+                lightboxCredits.innerHTML = "";
             }
 
-            closeBtn.onclick = closeLightbox;
-            lightbox.onclick = closeLightbox;
+            closeBtn.onclick = close;
+            lightbox.onclick = close;
             lightboxVid.onclick = (e) => e.stopPropagation();
             lightboxCredits.onclick = (e) => e.stopPropagation();
         });
