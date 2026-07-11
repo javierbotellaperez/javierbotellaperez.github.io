@@ -119,6 +119,17 @@
             }
             .close-btn { top: 20px; right: 20px; font-size: 35px; }
         }
+
+        /* Oculta los créditos extras en la cuadrícula principal */
+.project-item .project-info .extra-credits-wrapper {
+    display: none;
+}
+
+/* Los vuelve a mostrar única y exclusivamente cuando se inyectan dentro del Lightbox */
+.lightbox-credits .extra-credits-wrapper {
+    display: block !important;
+}
+        
     </style>
 </head>
 <body>
