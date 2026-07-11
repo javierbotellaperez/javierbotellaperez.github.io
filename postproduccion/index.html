@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Javier Botella Pérez - Postproducción</title>
+    <title>Javier Botella Pérez</title>
     <link rel="stylesheet" href="../styles.css">
     
     <style>
@@ -71,6 +71,13 @@
             color: #666666 !important;
         }
 
+        /* Contenedor sutil para separar visualmente los créditos extra del bloque principal */
+        .extra-credits-wrapper {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
         /* Botón de Cierre (X) superior derecho */
         .close-btn {
             position: absolute;
@@ -132,8 +139,9 @@
     <main class="projects-grid-container">
         <div class="projects-grid">
             
-            <div class="project-item" data-video="../videos/post_video_00001.mp4">
-                <img src="../thumbs/post_thumb_00001.jpg" alt="Dance The Night - Dua Lipa" class="project-thumb">
+            <!-- EJEMPLO 1: CON CRÉDITOS EXTRA INYECTADOS EN ATRIBUTOS -->
+            <div class="project-item" data-video="videos/post_video_00001.mp4" data-director="Greta Gerwig" data-dop="Rodrigo Prieto">
+                <img src="thumbs/post_thumb_00001.jpg" alt="Dance The Night - Dua Lipa" class="project-thumb">
                 <div class="project-info">
                     <h3>Dance The Night</h3>
                     <p>Dua Lipa</p>
@@ -143,8 +151,9 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00002.mp4">
-                <img src="../thumbs/post_thumb_00002.jpg" alt="Love Again - Dua Lipa" class="project-thumb">
+            <!-- EJEMPLO 2: CON CRÉDITOS EXTRA INYECTADOS EN ATRIBUTOS -->
+            <div class="project-item" data-video="videos/post_video_00002.mp4" data-director="Lope Serrano" data-dop="David Procter">
+                <img src="thumbs/post_thumb_00002.jpg" alt="Love Again - Dua Lipa" class="project-thumb">
                 <div class="project-info">
                     <h3>Love Again</h3>
                     <p>Dua Lipa</p>
@@ -154,8 +163,9 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00003.mp4">
-                <img src="../thumbs/post_thumb_00003.jpg" alt="El Príncep - Àlex Sardà" class="project-thumb">
+            <!-- EJEMPLO 3: CON CRÉDITOS EXTRA INYECTADOS EN ATRIBUTOS -->
+            <div class="project-item" data-video="videos/post_video_00003.mp4" data-director="Àlex Sardà" data-dop="Artur-Pol Camprubí">
+                <img src="thumbs/post_thumb_00003.jpg" alt="El Príncep - Àlex Sardà" class="project-thumb">
                 <div class="project-info">
                     <h3>El Príncep</h3>
                     <p>Àlex Sardà</p>
@@ -165,8 +175,9 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00004.mp4">
-                <img src="../thumbs/post_thumb_00004.jpg" alt="Muñequita Linda - Nawja Nimri" class="project-thumb">
+            <!-- Proyectos del 4 al 25 (puedes añadirles data-director o data-dop si lo necesitas en el futuro) -->
+            <div class="project-item" data-video="videos/post_video_00004.mp4">
+                <img src="thumbs/post_thumb_00004.jpg" alt="Muñequita Linda - Nawja Nimri" class="project-thumb">
                 <div class="project-info">
                     <h3>Muñequita Linda</h3>
                     <p>Nawja Nimri</p>
@@ -176,8 +187,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00005.mp4">
-                <img src="../thumbs/post_thumb_00005.jpg" alt="Plató 3 - Maria Borrell" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00005.mp4">
+                <img src="thumbs/post_thumb_00005.jpg" alt="Plató 3 - Maria Borrell" class="project-thumb">
                 <div class="project-info">
                     <h3>Plató 3</h3>
                     <p>Maria Borrell</p>
@@ -187,8 +198,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00006.mp4">
-                <img src="../thumbs/post_thumb_00006.jpg" alt="Berghain - Rosalía" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00006.mp4">
+                <img src="thumbs/post_thumb_00006.jpg" alt="Berghain - Rosalía" class="project-thumb">
                 <div class="project-info">
                     <h3>Berghain</h3>
                     <p>Rosalía</p>
@@ -198,8 +209,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00007.mp4">
-                <img src="../thumbs/post_thumb_00007.jpg" alt="Motomami x TikTok - Rosalía" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00007.mp4">
+                <img src="thumbs/post_thumb_00007.jpg" alt="Motomami x TikTok - Rosalía" class="project-thumb">
                 <div class="project-info">
                     <h3>Motomami x TikTok</h3>
                     <p>Rosalía</p>
@@ -209,8 +220,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00008.mp4">
-                <img src="../thumbs/post_thumb_00008.jpg" alt="Gaudir - Academia Cinema Català" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00008.mp4">
+                <img src="thumbs/post_thumb_00008.jpg" alt="Gaudir - Academia Cinema Català" class="project-thumb">
                 <div class="project-info">
                     <h3>Gaudir</h3>
                     <p>Academia Cinema Català</p>
@@ -220,8 +231,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00009.mp4">
-                <img src="../thumbs/post_thumb_00009.jpg" alt="Coldplay x FCB - Spotify" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00009.mp4">
+                <img src="thumbs/post_thumb_00009.jpg" alt="Coldplay x FCB - Spotify" class="project-thumb">
                 <div class="project-info">
                     <h3>Coldplay x FCB</h3>
                     <p>Spotify</p>
@@ -231,8 +242,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00010.mp4">
-                <img src="../thumbs/post_thumb_00010.jpg" alt="Disimulao - Alizz" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00010.mp4">
+                <img src="thumbs/post_thumb_00010.jpg" alt="Disimulao - Alizz" class="project-thumb">
                 <div class="project-info">
                     <h3>Disimulao</h3>
                     <p>Alizz</p>
@@ -242,8 +253,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00011.mp4">
-                <img src="../thumbs/post_thumb_00011.jpg" alt="Ya no vales - Alizz ft. C. Tangana" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00011.mp4">
+                <img src="thumbs/post_thumb_00011.jpg" alt="Ya no vales - Alizz ft. C. Tangana" class="project-thumb">
                 <div class="project-info">
                     <h3>Ya no vales</h3>
                     <p>Alizz ft. C. Tangana</p>
@@ -253,8 +264,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00012.mp4">
-                <img src="../thumbs/post_thumb_00012.jpg" alt="Weightless - Arlo Parks" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00012.mp4">
+                <img src="thumbs/post_thumb_00012.jpg" alt="Weightless - Arlo Parks" class="project-thumb">
                 <div class="project-info">
                     <h3>Weightless</h3>
                     <p>Arlo Parks</p>
@@ -264,8 +275,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00013.mp4">
-                <img src="../thumbs/post_thumb_00013.jpg" alt="Nieve - ARON" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00013.mp4">
+                <img src="thumbs/post_thumb_00013.jpg" alt="Nieve - ARON" class="project-thumb">
                 <div class="project-info">
                     <h3>Nieve</h3>
                     <p>ARON</p>
@@ -275,8 +286,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00014.mp4">
-                <img src="../thumbs/post_thumb_00014.jpg" alt="Sin Carné - Bad Gyal" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00014.mp4">
+                <img src="thumbs/post_thumb_00014.jpg" alt="Sin Carné - Bad Gyal" class="project-thumb">
                 <div class="project-info">
                     <h3>Sin Carné</h3>
                     <p>Bad Gyal</p>
@@ -286,8 +297,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00015.mp4">
-                <img src="../thumbs/post_thumb_00015.jpg" alt="4:15 - Claudia Valentina" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00015.mp4">
+                <img src="thumbs/post_thumb_00015.jpg" alt="4:15 - Claudia Valentina" class="project-thumb">
                 <div class="project-info">
                     <h3>4:15</h3>
                     <p>Claudia Valentina</p>
@@ -297,8 +308,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00016.mp4">
-                <img src="../thumbs/post_thumb_00016.jpg" alt="Colmillo - Young Miko" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00016.mp4">
+                <img src="thumbs/post_thumb_00016.jpg" alt="Colmillo - Young Miko" class="project-thumb">
                 <div class="project-info">
                     <h3>Colmillo</h3>
                     <p>Young Miko</p>
@@ -308,8 +319,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00017.mp4">
-                <img src="../thumbs/post_thumb_00017.jpg" alt="FAD - FAD" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00017.mp4">
+                <img src="thumbs/post_thumb_00017.jpg" alt="FAD - FAD" class="project-thumb">
                 <div class="project-info">
                     <h3>FAD</h3>
                     <p>FAD</p>
@@ -319,8 +330,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00018.mp4">
-                <img src="../thumbs/post_thumb_00018.jpg" alt="Muy nuestro - Ecoembes" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00018.mp4">
+                <img src="thumbs/post_thumb_00018.jpg" alt="Muy nuestro - Ecoembes" class="project-thumb">
                 <div class="project-info">
                     <h3>Muy nuestro</h3>
                     <p>Ecoembes</p>
@@ -330,8 +341,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00019.mp4">
-                <img src="../thumbs/post_thumb_00019.jpg" alt="Karol G x FCB - Spotify" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00019.mp4">
+                <img src="thumbs/post_thumb_00019.jpg" alt="Karol G x FCB - Spotify" class="project-thumb">
                 <div class="project-info">
                     <h3>Karol G x FCB</h3>
                     <p>Spotify</p>
@@ -341,8 +352,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00020.mp4">
-                <img src="../thumbs/post_thumb_00020.jpg" alt="Straight to the morning - Hot Chip" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00020.mp4">
+                <img src="thumbs/post_thumb_00020.jpg" alt="Straight to the morning - Hot Chip" class="project-thumb">
                 <div class="project-info">
                     <h3>Straight to the morning</h3>
                     <p>Hot Chip</p>
@@ -352,8 +363,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00021.mp4">
-                <img src="../thumbs/post_thumb_00021.jpg" alt="Resilient - Coca Cola" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00021.mp4">
+                <img src="thumbs/post_thumb_00021.jpg" alt="Resilient - Coca Cola" class="project-thumb">
                 <div class="project-info">
                     <h3>Resilient</h3>
                     <p>Coca Cola (Katy Perry ft. Aitana ft. Tiësto)</p>
@@ -363,8 +374,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00022.mp4">
-                <img src="../thumbs/post_thumb_00022.jpg" alt="La Causa del Accidente... - ICEX" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00022.mp4">
+                <img src="thumbs/post_thumb_00022.jpg" alt="La Causa del Accidente... - ICEX" class="project-thumb">
                 <div class="project-info">
                     <h3>La Causa del Accidente que Provocó el Incendio</h3>
                     <p>ICEX</p>
@@ -374,8 +385,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00023.mp4">
-                <img src="../thumbs/post_thumb_00023.jpg" alt="El nen de la mare - Ajuntament de Barcelona" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00023.mp4">
+                <img src="thumbs/post_thumb_00023.jpg" alt="El nen de la mare - Ajuntament de Barcelona" class="project-thumb">
                 <div class="project-info">
                     <h3>El nen de la mare</h3>
                     <p>Ajuntament de Barcelona</p>
@@ -385,8 +396,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00024.mp4">
-                <img src="../thumbs/post_thumb_00024.jpg" alt="Valientes - Allianz Seguros" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00024.mp4">
+                <img src="thumbs/post_thumb_00024.jpg" alt="Valientes - Allianz Seguros" class="project-thumb">
                 <div class="project-info">
                     <h3>Valientes</h3>
                     <p>Allianz Seguros</p>
@@ -396,8 +407,8 @@
                 </div>
             </div>
 
-            <div class="project-item" data-video="../videos/post_video_00025.mp4">
-                <img src="../thumbs/post_thumb_00025.jpg" alt="Cuntissimo - MARINA" class="project-thumb">
+            <div class="project-item" data-video="videos/post_video_00025.mp4">
+                <img src="thumbs/post_thumb_00025.jpg" alt="Cuntissimo - MARINA" class="project-thumb">
                 <div class="project-info">
                     <h3>Cuntissimo</h3>
                     <p>MARINA</p>
@@ -474,7 +485,23 @@
                 
                 const infoContainer = targetProject.querySelector(".project-info");
                 if (infoContainer) {
-                    lightboxCredits.innerHTML = infoContainer.innerHTML;
+                    let HTMLContent = infoContainer.innerHTML;
+                    
+                    // Comprobamos si el elemento tiene guardados los créditos extra en los data-attributes
+                    let extraCreditsHTML = "";
+                    if (targetProject.dataset.director) {
+                        extraCreditsHTML += `<p>Director: ${targetProject.dataset.director}</p>`;
+                    }
+                    if (targetProject.dataset.dop) {
+                        extraCreditsHTML += `<p>DoP: ${targetProject.dataset.dop}</p>`;
+                    }
+                    
+                    // Si existen, los concatenamos de manera limpia respetando los estilos de los párrafos comunes
+                    if (extraCreditsHTML !== "") {
+                        HTMLContent += `<div class="extra-credits-wrapper">${extraCreditsHTML}</div>`;
+                    }
+
+                    lightboxCredits.innerHTML = HTMLContent;
                 }
                 
                 lightbox.style.display = "flex";
