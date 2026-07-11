@@ -178,7 +178,7 @@ html, body {
 }
 
 /* ==========================================================================
-   6. VISOR DE PROYECTOS (LIGHTBOX INTERACTIVO)
+   6. VISOR DE PROYECTOS (LIGHTBOX INTERACTIVO DEL INDEX PRINCIPAL)
    ========================================================================== */
 .lightbox {
     display: none;
@@ -201,14 +201,18 @@ html, body {
     align-items: center;
 }
 
-/* Corrección de memoria visual: Ocultación absoluta por defecto */
-.lightbox-content img, .lightbox-content video {
+/* 
+   ¡CORRECCIÓN AQUÍ! 
+   Especificamos los IDs estrictos del INDEX para que NO pise las subpáginas de producción/postpo
+*/
+.lightbox #lightboxImg, 
+.lightbox #lightboxVid {
     max-width: 100%;
     max-height: 100%;
     display: none !important;
 }
 
-/* Mostramos única y exclusivamente el formato correspondiente */
+/* Mostramos en el index según corresponda */
 .lightbox.show-img #lightboxImg { display: block !important; }
 .lightbox.show-vid #lightboxVid { display: block !important; }
 
@@ -226,7 +230,6 @@ html, body {
 .prev { left: 30px; top: 50%; transform: translateY(-50%); }
 .next { right: 30px; top: 50%; transform: translateY(-50%); }
 .close-btn { top: 20px; right: 30px; font-size: 60px; }
-
 
 /* ==========================================================================
    7. MÓVIL Y TABLET (Media Queries de Adaptación)
