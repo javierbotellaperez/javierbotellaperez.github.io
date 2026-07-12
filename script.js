@@ -14,11 +14,102 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalImages = 94; // Modifica este número cuando cambie la cantidad de fotos
     const totalVideos = 8;  // Modifica este número cuando cambie la cantidad de vídeos
     
-    // --- BASE DE DATOS DE CONTENIDOS (Añade aquí la información poco a poco) ---
+    // --- BASE DE DATOS DE CONTENIDOS ---
     const photoData = {
-        1: { title: , location: "Javier Botella Pérez", project: "Personal Project" },
-        2: { title: , location: "Barcelona", project: "Personal Project" },
-        // Puedes seguir añadiendo líneas: 3: { ... }, 4: { ... }, hasta el 94
+        1: { title: "Pere at home" , location: "Barcelona", project: "Personal Project", year: "2026" },
+        2: { title: "Tour Eiffel" , location: "Paris", project: "Personal Project", year: "2021" },
+        3: { title: "La Bastille", location: "Paris", project: "Personal Project", year: "2021" },
+        4: { title: "Laundry with Jordi" , location: "Barcelona", project: "Personal Project", year: "2024" },
+        5: { title: "Jordi" , location: "Barcelona", project: "Personal Project", year: "2024" },
+        6: { title: "Agus" , location: "Barcelona", project: "Personal Project", year: "2025" },
+        7: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        8: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" },    
+        9: { title: "Jordi", location: "Javier Botella Pérez", project: "Personal Project", year: "2024" },
+        10: { title: "Shower", location: "Barcelona", project: "Personal Project", year: "2023" },
+        11: { title: "Cruising", location: "Barcelona", project: "Personal Project", year: "2023" },
+        12: { title: "Wall", location: "Barcelona", project: "Personal Project", year: "2023" },
+        13: { title: "Arnau", location: "Javier Botella Pérez", project: "Personal Project", year: "2024" },
+        14: { title: "Selfportrait", location: "Barcelona", project: "Personal Project", year: "2026" },
+        15: { title: "Futurachicapop", location: "Barcelona", project: "Personal Project", year: "2021" },
+        16: { title: "Futurachicapop", location: "Barcelona", project: "Personal Project", year: "2021" },  
+        17: { title: "Futurachicapop", location: "Javier Botella Pérez", project: "Personal Project", year: "2021" },
+        18: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        19: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        20: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        21: { title: "Agus", location: "Javier Botella Pérez", project: "Personal Project", year: "2025" },
+        22: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        23: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        24: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },    
+        25: { title: "Arnau", location: "Javier Botella Pérez", project: "Personal Project", year: "2024" },
+        26: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" },
+        27: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" },
+        28: { title: "Luis", location: "Madrid", project: "Personal Project", year: "2022" },
+        29: { title: "Luis", location: "Madrid", project: "Personal Project", year: "2022" },
+        30: { title: "Luis", location: "Madrid", project: "Personal Project", year: "2022" },
+        31: { title: "Luis", location: "Madrid", project: "Personal Project", year: "2022" },
+        32: { title: "Luis", location: "Madrid", project: "Personal Project", year: "2022" },
+        33: { title: "Luis", location: "Madrid", project: "Personal Project", year: "2022" },
+        34: { title: "Shower", location: "Barcelona", project: "Personal Project", year: "2023" },
+        35: { title: "Shower", location: "Barcelona", project: "Personal Project", year: "2023" },
+        36: { title: "Alex", location: "Barcelona", project: "Personal Project", year: "2024" },
+        37: { title: "Kiss", location: "Barcelona", project: "Personal Project", year: "2024" },
+        38: { title: "Kiss", location: "Barcelona", project: "Personal Project", year: "2024" },
+        39: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },
+        40: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },    
+        41: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },
+        42: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },
+        43: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },
+        44: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },
+        45: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },
+        46: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },
+        47: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },
+        48: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },  
+        49: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },
+        50: { title: "Alberto", location: "Barcelona", project: "Personal Project", year: "2023" },
+        51: { title: "Cruising", location: "Barcelona", project: "Personal Project", year: "2023" },
+        52: { title: "Cruising", location: "Barcelona", project: "Personal Project", year: "2023" },
+        53: { title: "Wall", location: "Barcelona", project: "Personal Project", year: "2023" },
+        54: { title: "Wall", location: "Barcelona", project: "Personal Project", year: "2023" },
+        55: { title: "Car", location: "Barcelona", project: "Personal Project", year: "2024" },
+        56: { title: "Car", location: "Barcelona", project: "Personal Project", year: "2024" },    
+        57: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" },
+        58: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" },
+        59: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" },
+        60: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" },
+        61: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" },
+        62: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" },
+        63: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" },
+        64: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" }, 
+        65: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" },
+        66: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        67: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        68: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        69: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        70: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        71: { title: "Javi", location: "Barcelona", project: "Personal Project", year: "2024" },
+        72: { title: "Javi", location: "Barcelona", project: "Personal Project", year: "2024" },    
+        73: { title: "Javi", location: "Barcelona", project: "Personal Project", year: "2024" },
+        74: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        75: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        76: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        77: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        78: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        79: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        80: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },  
+        81: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        82: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
+        83: { title: "Jabeat", location: "Barcelona", project: "Personal Project", year: "2025" },
+        84: { title: "Jabeat", location: "Barcelona", project: "Personal Project", year: "2025" },
+        85: { title: "Jabeat", location: "Barcelona", project: "Personal Project", year: "2025" },
+        86: { title: "Jabeat", location: "Barcelona", project: "Personal Project", year: "2025" },
+        87: { title: "Jabeat", location: "Barcelona", project: "Personal Project", year: "2025" },
+        88: { title: "Jabeat", location: "Barcelona", project: "Personal Project", year: "2025" },    
+        89: { title: "Jabeat", location: "Barcelona", project: "Personal Project", year: "2025" },
+        90: { title: "Jabeat", location: "Barcelona", project: "Personal Project", year: "2025" },
+        91: { title: "Jabeat", location: "Barcelona", project: "Personal Project", year: "2025" },
+        92: { title: "Alex", location: "Barcelona", project: "Personal Project", year: "2024" },
+        93: { title: "Alex", location: "Barcelona", project: "Personal Project", year: "2024" },
+        94: { title: "Selfportrait", location: "Barcelona", project: "Personal Project", year: "2026" }
     };
 
     const videoData = {
@@ -29,8 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
         5: { title: "Autoboicot y Descanso", client: "Rocío Saiz & Tauro", role: "Director", year: "2022", director: "Javier Botella Pérez", dop: "Sergio Avellaneda" },
         6: { title: "Turista Sueca", client: "Turista Sueca", role: "Director", year: "2023", director: "Javier Botella Pérez", Camera: "Jordi Terribas & Javier Botella" },
         7: { title: "Borracho", client: "Warmi", role: "Director", year: "2023", director: "Javier Botella Pérez", dop: "Adrian Foj" },
-        8: { title: "Hiel", client: "Warmi", role: "Director", year: "2023", director: "Javier Botella Pérez", dop: "Adrian Foj" },
-        // Puedes seguir añadiendo líneas: 3: { ... }, 4: { ... }, hasta el 8
+        8: { title: "Hiel", client: "Warmi", role: "Director", year: "2023", director: "Javier Botella Pérez", dop: "Adrian Foj" }
     };
 
     // --- VARIABLES DE ESTADO Y ANIMACIÓN ---
@@ -91,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const photoSequence = getSmartShuffledSequence(totalImages, 2);
         photoSequence.forEach(i => {
             const img = document.createElement("img");
-            img.src = `/assets/Asset_${formatNumber(i)}.webp`; // Carrusel usa .webp optimizado
+            img.src = `/assets/Asset_${formatNumber(i)}.webp`;
             img.classList.add("carousel-image");
             img.dataset.index = i;
             img.loading = "lazy";
@@ -108,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
             wrapper.dataset.index = i;
 
             const img = document.createElement("img");
-            img.src = `/assets/VidThumb_${formatNumber(i)}.webp`; // Miniaturas usan .webp optimizado
+            img.src = `/assets/VidThumb_${formatNumber(i)}.webp`;
             img.classList.add("carousel-image");
             img.loading = "lazy";
             img.onerror = () => wrapper.remove();
@@ -274,18 +364,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (lightboxCredits) lightboxCredits.innerHTML = "";
         
         if (currentMode === 'photo') {
-            // Carga el archivo original en .jpg de alta definición
             lightboxImg.src = `/assets/Asset_${formatted}.jpg`; 
             lightbox.classList.add("show-img");
             
             if (lightboxCredits) {
-                // Si la foto no tiene datos específicos en la lista, usa un formato por defecto seguro
-                const data = photoData[currentIndex] || { title: `Fotografía #${currentIndex}`, location: "Javier Botella Pérez", project: "Personal Project" };
+                // Objeto por defecto seguro con la propiedad 'year' incluida por si acaso
+                const data = photoData[currentIndex] || { title: `Fotografía #${currentIndex}`, location: "Javier Botella Pérez", project: "Personal Project", year: "2026" };
                 
                 lightboxCredits.innerHTML = `
                     <h3>${data.title}</h3>
                     <p>${data.location}</p>
                     <p>${data.project}</p>
+                    <p>${data.year}</p>
                 `;
             }
         } else {
@@ -294,7 +384,6 @@ document.addEventListener("DOMContentLoaded", () => {
             lightboxVid.play();
             
             if (lightboxCredits) {
-                // Si el vídeo no tiene datos específicos en la lista, usa un formato por defecto seguro
                 const data = videoData[currentIndex] || { title: `Proyecto de Vídeo #${currentIndex}`, client: "Client / Artist Name", role: "Production Credit", year: "2026", director: "Director Name", dop: "DoP Name" };
                 
                 lightboxCredits.innerHTML = `
