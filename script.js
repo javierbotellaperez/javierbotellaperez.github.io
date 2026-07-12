@@ -509,6 +509,45 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === "Escape") closeLightbox();
         else if (e.key === "ArrowRight") change(1);
         else if (e.key === "ArrowLeft") change(-1);
+
+/* ==========================================================================
+   PROTECCIÓN DE CONTENIDO (Anti-copia y bloqueo de descargas básicas)
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+
+    // 1. Bloquear el click derecho (evita "Guardar imagen como...", "Guardar vídeo...")
+    document.addEventListener('contextmenu', (e) => {
+        // Permitimos el click derecho solo si es un input de texto, por usabilidad
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+        }
+    });
+
+    // 2. Bloquear atajos de teclado típicos de clonación / inspección
+    document.addEventListener('keydown', (e) => {
+        // Bloquear Ctrl+S / Cmd+S (Guardar página)
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+        }
+        // Bloquear Ctrl+U / Cmd+U (Ver código fuente)
+        if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
+            e.preventDefault();
+        }
+        // Bloquear F12 y Ctrl+Shift+I / Cmd+Opt+I (Inspeccionar elemento)
+        if (e.key === 'F12' || ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'I')) {
+            e.preventDefault();
+        }
+    });
+
+    // 3. Evitar que arrastren tus fotos/vídeos al escritorio para guardarlos
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
+            e.preventDefault();
+        }
+    });
+});
+        
+        
     });
 
     loadPhotos(); loadVideos(); animate();
