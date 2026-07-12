@@ -10,13 +10,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextBtn = document.getElementById("lightboxNext");
     const prevBtn = document.getElementById("lightboxPrev");
 
-    const totalImages = 94; // Modifica este número cuando añadas o quites fotos
-    const totalVideos = 8;  // Modifica este número cuando añadas o quites vídeos
+    // --- CONTADORES TOTALES ---
+    const totalImages = 94; // Modifica este número cuando cambie la cantidad de fotos
+    const totalVideos = 8;  // Modifica este número cuando cambie la cantidad de vídeos
     
+    // --- BASE DE DATOS DE CONTENIDOS (Añade aquí la información poco a poco) ---
+    const photoData = {
+        1: { title: , location: "Javier Botella Pérez", project: "Personal Project" },
+        2: { title: , location: "Barcelona", project: "Personal Project" },
+        // Puedes seguir añadiendo líneas: 3: { ... }, 4: { ... }, hasta el 94
+    };
+
+    const videoData = {
+        1: { title: "Quién quiera perdón que se lo pida a Dios", client: "Jabeat", role: "Director ReTakes + Editor", year: "2025", director: "Roger Martínez", Retakes: "Javier Botella", Edit: "Jabeat & Javier Botella" },
+        2: { title: "El Sexo Convexo", client: "Futurachicapop", role: "Director", year: "2021", director: "Javier Botella Pérez", dop: "Lucas Hope" },
+        3: { title: "Historias de Sadie Girl", client: "Futurachicapop", role: "Director", year: "2022", director: "Javier Botella Pérez", dop: "Noun" },
+        4: { title: "Money Queer", client: "Jabeat & Okamiluke", role: "Director", year: "2020", director: "Javier Botella Pérez & David Medina", dop: "Pau Ramirez" },
+        5: { title: "Autoboicot y Descanso", client: "Rocío Saiz & Tauro", role: "Director", year: "2022", director: "Javier Botella Pérez", dop: "Sergio Avellaneda" },
+        6: { title: "Turista Sueca", client: "Turista Sueca", role: "Director", year: "2023", director: "Javier Botella Pérez", Camera: "Jordi Terribas & Javier Botella" },
+        7: { title: "Borracho", client: "Warmi", role: "Director", year: "2023", director: "Javier Botella Pérez", dop: "Adrian Foj" },
+        8: { title: "Hiel", client: "Warmi", role: "Director", year: "2023", director: "Javier Botella Pérez", dop: "Adrian Foj" },
+        // Puedes seguir añadiendo líneas: 3: { ... }, 4: { ... }, hasta el 8
+    };
+
+    // --- VARIABLES DE ESTADO Y ANIMACIÓN ---
     let currentMode = 'photo';
     let currentIndex = 1;
-
-    // --- VARIABLES DE ANIMACIÓN ---
     let posPhotos = 0;
     let posVideos = 0;
     
@@ -72,10 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const photoSequence = getSmartShuffledSequence(totalImages, 2);
         photoSequence.forEach(i => {
             const img = document.createElement("img");
-            img.src = `/assets/Asset_${formatNumber(i)}.webp`; // El carrusel usa el .webp ligero
+            img.src = `/assets/Asset_${formatNumber(i)}.webp`; // Carrusel usa .webp optimizado
             img.classList.add("carousel-image");
             img.dataset.index = i;
-            img.loading = "lazy"; // Carga diferida inteligente
+            img.loading = "lazy";
             img.onerror = () => img.remove();
             photoTrack.appendChild(img);
         });
@@ -89,9 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
             wrapper.dataset.index = i;
 
             const img = document.createElement("img");
-            img.src = `/assets/VidThumb_${formatNumber(i)}.webp`; // Las miniaturas usan .webp ligero
+            img.src = `/assets/VidThumb_${formatNumber(i)}.webp`; // Miniaturas usan .webp optimizado
             img.classList.add("carousel-image");
-            img.loading = "lazy"; // Carga diferida inteligente
+            img.loading = "lazy";
             img.onerror = () => wrapper.remove();
 
             wrapper.appendChild(img);
@@ -244,6 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
     lightboxVid.onclick = (e) => e.stopPropagation();
     if (lightboxCredits) lightboxCredits.onclick = (e) => e.stopPropagation();
 
+    // --- RENDERIZADO INTELIGENTE DE CRÉDITOS ---
     function updateContent() {
         const formatted = formatNumber(currentIndex);
         lightbox.classList.remove("show-img", "show-vid");
@@ -254,15 +274,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (lightboxCredits) lightboxCredits.innerHTML = "";
         
         if (currentMode === 'photo') {
-            // ¡EL TRUCO DE CALIDAD! Abre el archivo .jpg original en alta resolución
+            // Carga el archivo original en .jpg de alta definición
             lightboxImg.src = `/assets/Asset_${formatted}.jpg`; 
             lightbox.classList.add("show-img");
             
             if (lightboxCredits) {
+                // Si la foto no tiene datos específicos en la lista, usa un formato por defecto seguro
+                const data = photoData[currentIndex] || { title: `Fotografía #${currentIndex}`, location: "Javier Botella Pérez", project: "Personal Project" };
+                
                 lightboxCredits.innerHTML = `
-                    <h3>Fotografía #${currentIndex}</h3>
-                    <p>Javier Botella Pérez</p>
-                    <p>Personal Project</p>
+                    <h3>${data.title}</h3>
+                    <p>${data.location}</p>
+                    <p>${data.project}</p>
                 `;
             }
         } else {
@@ -271,14 +294,17 @@ document.addEventListener("DOMContentLoaded", () => {
             lightboxVid.play();
             
             if (lightboxCredits) {
+                // Si el vídeo no tiene datos específicos en la lista, usa un formato por defecto seguro
+                const data = videoData[currentIndex] || { title: `Proyecto de Vídeo #${currentIndex}`, client: "Client / Artist Name", role: "Production Credit", year: "2026", director: "Director Name", dop: "DoP Name" };
+                
                 lightboxCredits.innerHTML = `
-                    <h3>Proyecto de Vídeo #${currentIndex}</h3>
-                    <p>Client / Artist Name</p>
-                    <p>Production Credit</p>
-                    <p>2026</p>
+                    <h3>${data.title}</h3>
+                    <p>${data.client}</p>
+                    <p>${data.role}</p>
+                    <p>${data.year}</p>
                     <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Director Name</p>
-                        <p><strong>DoP:</strong> DoP Name</p>
+                        <p><strong>Director:</strong> ${data.director}</p>
+                        <p><strong>DoP:</strong> ${data.dop}</p>
                     </div>
                 `;
             }
@@ -301,7 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.key === "ArrowLeft") change(-1);
     });
 
-    // Carga secuencial e inicio de bucle de animación
+    // Carga e inicio limpios
     loadPhotos();
     loadVideos();
     animate();
