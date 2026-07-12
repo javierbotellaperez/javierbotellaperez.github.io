@@ -315,6 +315,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Código de carga inicial
+    loadPhotos();
+
     function loadVideos() {
         const videoSequence = getSmartShuffledSequence(totalVideos, 4);
         videoSequence.forEach(i => {
@@ -330,6 +333,8 @@ document.addEventListener("DOMContentLoaded", () => {
             videoTrack.appendChild(wrapper);
         });
     }
+
+    loadVideos();
 
     // --- MOTOR DE MOVIMIENTO ---
     function animate() {
@@ -347,6 +352,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         requestAnimationFrame(animate);
     }
+
+    animate();
 
     function setupSmartClick(zone, mode) {
         zone.addEventListener("click", (e) => {
@@ -366,7 +373,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function setupTouchScroll(container, type) {
         let startTouchX = 0; let isDragging = false; let lastDiffX = 0; let inertiaFrame = null;
         container.addEventListener("touchstart", (e) => {
-            if(e.touches.length > 1) return; // Ignorar si es un gesto multitáctil
+            if(e.touches.length > 1) return; 
             isDragging = true; startTouchX = e.touches[0].clientX; lastDiffX = 0;
             if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
         }, { passive: true });
@@ -448,7 +455,7 @@ document.addEventListener("DOMContentLoaded", () => {
     lightboxVid.onclick = (e) => e.stopPropagation();
     if (lightboxCredits) lightboxCredits.onclick = (e) => e.stopPropagation();
 
-    // --- GESTOS PINCH-TO-ZOOM EN DISPOSITIVOS MÓVILES ---
+    // --- CORRECCIÓN MATEMÁTICA Y LÍMITES PINCH-TO-ZOOM ---
     function getDistance(touches) {
         return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
     }
@@ -458,14 +465,33 @@ document.addEventListener("DOMContentLoaded", () => {
         lightboxImg.style.transform = `translate(0px, 0px) scale(1)`;
     }
 
+    function clampTransforms() {
+        if (scale <= 1) {
+            translateX = 0;
+            translateY = 0;
+            return;
+        }
+        const rect = lightboxImg.getBoundingClientRect();
+        const parentRect = lightbox.getBoundingClientRect();
+
+        const maxTx = Math.max(0, (rect.width - parentRect.width) / 2);
+        const maxTy = Math.max(0, (rect.height - parentRect.height) / 2);
+
+        translateX = Math.min(Math.max(translateX, -maxTx), maxTx);
+        translateY = Math.min(Math.max(translateY, -maxTy), maxTy);
+    }
+
     lightboxImg.addEventListener('touchstart', (e) => {
         if (e.touches.length === 2) {
             isPinching = true;
             startDistance = getDistance(e.touches);
-            startX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - translateX;
-            startY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - translateY;
-        } else if (e.touches.length === 1 && scale > 1) {
-            // Permitir paneo/arrastre si la imagen tiene zoom
+            
+            const touchCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            const touchCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+            
+            startX = touchCenterX - translateX;
+            startY = touchCenterY - translateY;
+        } else if (e.touches.length === 1) {
             isPinching = false;
             startX = e.touches[0].clientX - translateX;
             startY = e.touches[0].clientY - translateY;
@@ -475,18 +501,25 @@ document.addEventListener("DOMContentLoaded", () => {
     lightboxImg.addEventListener('touchmove', (e) => {
         if (e.touches.length === 2 && isPinching) {
             const currentDistance = getDistance(e.touches);
-            // Factor de sensibilidad del zoom
+            const prevScale = scale;
+            
             scale = Math.min(Math.max(1, (currentDistance / startDistance) * scale), 4); 
             
             const currentX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
             const currentY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-            translateX = currentX - startX;
-            translateY = currentY - startY;
+            
+            if (prevScale !== scale) {
+                translateX = currentX - startX;
+                translateY = currentY - startY;
+            }
 
+            clampTransforms();
             lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-        } else if (e.touches.length === 1 && scale > 1) {
+        } else if (e.touches.length === 1 && scale > 1 && !isPinching) {
             translateX = e.touches[0].clientX - startX;
             translateY = e.touches[0].clientY - startY;
+            
+            clampTransforms();
             lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
         }
     }, { passive: true });
@@ -497,6 +530,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (scale <= 1) {
             resetZoom();
+        } else {
+            if(e.touches.length === 1) {
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
+            }
         }
     });
 
@@ -584,28 +622,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 2. Bloquear atajos de teclado típicos de clonación / inspección
+    // 2. Bloquear atajos de teclado típicos de clonación / guardado
     document.addEventListener('keydown', (e) => {
-        // Bloquear Ctrl+S / Cmd+S (Guardar página)
-        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-            e.preventDefault();
-        }
-        // Bloquear Ctrl+U / Cmd+U (Ver código fuente)
-        if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
-            e.preventDefault();
-        }
-        // Bloquear F12 y Ctrl+Shift+I / Cmd+Opt+I (Inspeccionar elemento)
-        if (e.key === 'F12' || ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'I')) {
+        // Bloquea Ctrl+S, Ctrl+U (Ver código fuente), Ctrl+P (Imprimir)
+        if ((e.ctrlKey || e.metaKey) && ['s', 'u', 'p'].includes(e.key.toLowerCase())) {
             e.preventDefault();
         }
     });
-
-    // 3. Evitar que arrastren tus fotos/vídeos al escritorio para guardarlos
-    document.addEventListener('dragstart', (e) => {
-        if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
-            e.preventDefault();
-        }
-    });
-
-    loadPhotos(); loadVideos(); animate();
 });
