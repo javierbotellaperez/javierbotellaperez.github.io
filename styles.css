@@ -709,14 +709,15 @@ body {
 }
 
 /* ==========================================================================
-   12. EFECTO ZOOM INTERACTIVO EN LIGHTBOX
+   12. EFECTO ZOOM INTERACTIVO EN LIGHTBOX (CORREGIDO PARA ESCRITORIO)
    ========================================================================== */
 .lightbox #lightboxImg {
-    cursor: zoom-in; /* Icono de lupa con un más (+) */
-    transition: transform 0.1s ease-out; /* Suavidad al mover el ratón */
+    cursor: zoom-in !important; /* Forzamos el icono de la lupa con el más (+) */
+    pointer-events: auto !important; /* Reactiva las interacciones del cursor bloqueadas por el body */
+    transition: transform 0.1s ease-out; 
     will-change: transform, transform-origin;
 }
 
 .lightbox #lightboxImg.zoomed-in {
-    cursor: zoom-out; /* Al estar ampliada, el icono cambia a menos (-) */
+    cursor: zoom-out !important; /* Forzamos el icono de la lupa con el menos (-) */
 }
