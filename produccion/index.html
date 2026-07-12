@@ -6,6 +6,131 @@
     <title>Javier Botella Pérez</title>
     <!-- Busca el archivo CSS que está afuera en la raíz -->
     <link rel="stylesheet" href="../styles.css">
+    
+    <style>
+        /* ==========================================
+           NORMAS DE DISEÑO PARA EL LIGHTBOX Y CRÉDITOS
+           ========================================== */
+
+        /* Contenedor principal del Visor (Fondo Limpio) */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff; /* Estética blanca y minimalista */
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.active {
+            opacity: 1;
+        }
+
+        /* Distribución en dos columnas: Vídeo a un lado, Créditos al otro */
+        .lightbox-content-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 85%;
+            max-width: 1200px;
+            gap: 40px;
+        }
+
+        /* Columna Izquierda: Vídeo en relación de aspecto nativa */
+        .lightbox-content {
+            flex: 1.6;
+            aspect-ratio: 16 / 9;
+            position: relative;
+        }
+        #projectLightboxVid {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+            background-color: #000000; /* Fondo negro solo para el vídeo si no es 16:9 */
+        }
+        
+        /* Columna Derecha: Créditos con tipografía e identidad de la web */
+        .lightbox-credits {
+            flex: 1;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .lightbox-credits h3 {
+            font-size: 24px !important;
+            margin: 0 0 10px 0 !important;
+            font-weight: normal !important;
+            color: #000000 !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .lightbox-credits p {
+            font-size: 14px !important;
+            margin: 4px 0 !important;
+            color: #666666 !important;
+            line-height: 1.5;
+        }
+
+        /* --- NUEVO: Estilos para el ajuste de Créditos Extra --- */
+        .extra-credits-wrapper {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e5e5; /* Elegante línea divisoria minimalista */
+        }
+        .extra-credits-wrapper p {
+            font-size: 13px !important;
+            color: #333333 !important;
+        }
+
+        /* Botón de Cierre (X) superior derecho */
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            background: none;
+            border: none;
+            color: #000000;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            z-index: 10000;
+            transition: opacity 0.2s ease;
+        }
+        .close-btn:hover { opacity: 0.5; }
+
+        /* Adaptabilidad para pantallas móviles (Pasa a formato vertical de una columna) */
+        @media (max-width: 900px) {
+            .lightbox-content-container {
+                flex-direction: column;
+                gap: 25px;
+                width: 90%;
+            }
+            .lightbox-credits {
+                text-align: center;
+                align-items: center;
+            }
+            .close-btn { top: 20px; right: 20px; font-size: 35px; }
+        }
+
+        /* Oculta los créditos extras en la cuadrícula principal */
+.project-item .project-info .extra-credits-wrapper {
+    display: none;
+}
+
+/* Los vuelve a mostrar única y exclusivamente cuando se inyectan dentro del Lightbox */
+.lightbox-credits .extra-credits-wrapper {
+    display: block !important;
+}
+        
+    </style>
 </head>
 <body>
 
@@ -16,40 +141,69 @@
 
     <!-- REJILLA DE PROYECTOS DE PRODUCCIÓN -->
     <main class="projects-grid-container">
-        
-
         <div class="projects-grid">
             
             <!-- Ejemplo Producción 1 -->
-            <div class="project-item" data-video="videos/prod_video_01.mp4">
-                <img src="thumbs/prod_thumb_01.jpg" alt="Campaña 1" class="project-thumb">
+            <div class="project-item" data-video="videos/prod_video_00001.mp4">
+                <img src="thumbs/prod_thumb_00001.jpg" alt="Campaña 1" class="project-thumb">
                 <div class="project-info">
-                    <h3>Nombre de la Campaña 1</h3>
-                    <p><strong>Cliente:</strong> Nombre del Cliente</p>
-                    <p><strong>Rol:</strong> Tu Rol Aquí</p>
-                    <p><strong>Año:</strong> 2026</p>
+                    <h3>¡Corten!</h3>
+                    <p>Marc Ferrer</p>
+                    <p>Production Manager</p>
+                    <p>2020</p>
+                    <!-- Bloque de créditos extra inyectable -->
+                    <div class="extra-credits-wrapper">
+                        <p><strong>Director:</strong> Marc Ferrer</p>
+                        <p><strong>DoP:</strong> Name Name</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Ejemplo Producción 2 -->
-            <div class="project-item" data-video="videos/prod_video_02.mp4">
-                <img src="thumbs/prod_thumb_02.jpg" alt="Campaña 2" class="project-thumb">
+            <div class="project-item" data-video="videos/prod_video_00002.mp4">
+                <img src="thumbs/prod_thumb_00002.jpg" alt="Campaña 2" class="project-thumb">
                 <div class="project-info">
-                    <h3>Nombre de la Campaña 2</h3>
-                    <p><strong>Cliente:</strong> Nombre del Cliente</p>
-                    <p><strong>Rol:</strong> Tu Rol Aquí</p>
-                    <p><strong>Año:</strong> 2026</p>
+                    <h3>Physical</h3>
+                    <p>Dua Lipa</p>
+                    <p>Production Assistant</p>
+                    <p>2019</p>
+                    <!-- Bloque de créditos extra inyectable -->
+                    <div class="extra-credits-wrapper">
+                        <p><strong>Director:</strong> Canada</p>
+                        <p><strong>DoP:</strong> Name Name</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Ejemplo Producción 3 -->
-            <div class="project-item" data-video="videos/prod_video_03.mp4">
-                <img src="thumbs/prod_thumb_03.jpg" alt="Campaña 3" class="project-thumb">
+            <div class="project-item" data-video="videos/prod_video_00003.mp4">
+                <img src="thumbs/prod_thumb_00003.jpg" alt="Campaña 3" class="project-thumb">
                 <div class="project-info">
-                    <h3>Nombre de la Campaña 3</h3>
-                    <p><strong>Cliente:</strong> Nombre del Cliente</p>
-                    <p><strong>Rol:</strong> Tu Rol Aquí</p>
-                    <p><strong>Año:</strong> 2025</p>
+                    <h3>Malamente</h3>
+                    <p>Rosalía</p>
+                    <p>Production Assistant</p>
+                    <p>2018</p>
+                    <!-- Bloque de créditos extra inyectable -->
+                    <div class="extra-credits-wrapper">
+                        <p><strong>Director:</strong> Canada</p>
+                        <p><strong>DoP:</strong> Name Name</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejemplo Producción 4 -->
+            <div class="project-item" data-video="videos/prod_video_00004.mp4">
+                <img src="thumbs/prod_thumb_00004.jpg" alt="Campaña 4" class="project-thumb">
+                <div class="project-info">
+                    <h3>Malamente</h3>
+                    <p>Rosalía</p>
+                    <p>Production Assistant</p>
+                    <p>2018</p>
+                    <!-- Bloque de créditos extra inyectable -->
+                    <div class="extra-credits-wrapper">
+                        <p><strong>Director:</strong> Canada</p>
+                        <p><strong>DoP:</strong> Name Name</p>
+                    </div>
                 </div>
             </div>
 
@@ -58,33 +212,69 @@
 
     <!-- MENÚ INFERIOR SIMPLIFICADO -->
     <nav class="minimal-menu">
-        <!-- Salen a la raíz para buscar los archivos correspondientes -->
-        <a href="../aboutme.html" class="menu-item">About</a>
+        <a href="../index.html" class="menu-item">Portfolio</a>
         <span class="menu-separator">•</span>
-        <a href="../contact.html" class="menu-item">Contact</a>
+        <a href="index.html" class="menu-item" style="color: #000000;">Production</a>
+        <span class="menu-separator">•</span>
+        <a href="../postproduccion/index.html" class="menu-item">Postproduction</a>
+        <span class="menu-separator">•</span>
+        <a href="../aboutme.html" class="menu-item">About</a>
     </nav>
-
-    <!-- VISOR LIGHTBOX CORREGIDO (Para que el vídeo se vea y se escuche) -->
+    
+    <!-- VISOR LIGHTBOX MAQUETADO EN DOS COLUMNAS -->
     <div id="projectLightbox" class="lightbox">
         <button class="close-btn" id="closeProjectBtn">&times;</button>
-        <div class="lightbox-content">
-            <!-- Forzamos estilos en línea para asegurar que se renderice visible -->
-            <video id="projectLightboxVid" controls style="display: block; width: 100%; height: 100%; max-height: 80vh; object-fit: contain;"></video>
+        
+        <div class="lightbox-content-container">
+            <!-- LADO 1: VÍDEO -->
+            <div class="lightbox-content">
+                <video id="projectLightboxVid" controls></video>
+            </div>
+            <!-- LADO 2: CRÉDITOS -->
+            <div id="lightboxCredits" class="lightbox-credits"></div>
         </div>
     </div>
 
     <!-- SCRIPT DE NAVEGACIÓN DEL LIGHTBOX -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            const grid = document.querySelector(".projects-grid");
             const lightbox = document.getElementById("projectLightbox");
             const lightboxVid = document.getElementById("projectLightboxVid");
+            const lightboxCredits = document.getElementById("lightboxCredits");
             const closeBtn = document.getElementById("closeProjectBtn");
+            
+            // 1. Convertimos los proyectos en una lista y los barajamos
+            const projects = Array.from(grid.children);
+            
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            
+            const shuffledProjects = shuffle(projects);
+            
+            // 2. Vaciamos el grid y volvemos a meterlos en el nuevo orden aleatorio
+            grid.innerHTML = "";
+            shuffledProjects.forEach(project => grid.appendChild(project));
+
+            // 3. Volvemos a activar la escucha de clics para el Lightbox en el nuevo orden
             const projectItems = document.querySelectorAll(".project-item");
 
             projectItems.forEach(item => {
                 item.addEventListener("click", () => {
                     const videoSrc = item.dataset.video;
                     lightboxVid.src = videoSrc;
+                    
+                    // Clonamos/Inyectamos los créditos del contenedor de info del elemento clicado (incluye los extra)
+                    const infoContainer = item.querySelector(".project-info");
+                    if (infoContainer) {
+                        lightboxCredits.innerHTML = infoContainer.innerHTML;
+                    }
+                    
                     lightbox.classList.add("active");
                     lightbox.style.display = "flex";
                     lightboxVid.play();
@@ -96,11 +286,13 @@
                 lightbox.style.display = "none";
                 lightboxVid.pause();
                 lightboxVid.src = "";
+                lightboxCredits.innerHTML = "";
             }
 
             closeBtn.onclick = close;
             lightbox.onclick = close;
             lightboxVid.onclick = (e) => e.stopPropagation();
+            lightboxCredits.onclick = (e) => e.stopPropagation();
         });
     </script>
 </body>

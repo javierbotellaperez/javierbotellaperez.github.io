@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Javier Botella Pérez — About</title>
+    <title>Javier Botella Pérez</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Estilos específicos para la maquetación limpia del About */
+        /* Estilos específicos para la maquetación limpia y minimalista del About + Contact */
         body {
             overflow-y: auto !important;
             display: block !important;
             height: auto !important;
-            padding: 120px 20px 80px 20px;
+            padding: 140px 20px 100px 20px; /* Margen para no pisar cabecera ni menú */
         }
         
         .about-page-container {
             max-width: 650px;
-            margin: 140px auto 120px auto;
+            margin: 0 auto;
             padding: 0 20px;
         }
 
@@ -46,10 +46,10 @@
         .about-text {
             font-size: 12px;
             line-height: 2;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: #444444;
             font-weight: 300;
-            text-transform: uppercase;
+            text-transform: uppercase; /* Forzamos mayúsculas elegantes por CSS */
             text-align: justify;
         }
 
@@ -66,9 +66,11 @@
             color: #888888;
         }
 
-        /* Bloque de Contacto */
+        /* SECCIÓN DE CONTACTO FUSIONADA */
         .contact-section {
-            margin-top: 60px;
+            margin-top: 65px;
+            padding-top: 40px;
+            border-top: 1px solid #f0f0f0; /* Fina línea divisoria minimalista */
             margin-bottom: 60px;
         }
 
@@ -79,14 +81,17 @@
 
         .contact-details li {
             font-size: 12px;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
             color: #444444;
+            text-transform: uppercase; /* Mantenemos la coherencia de las mayúsculas */
+            font-weight: 300;
         }
 
         .contact-details a {
             color: #000000;
             text-decoration: none;
+            font-weight: 400;
             transition: color 0.3s ease;
         }
 
@@ -95,12 +100,18 @@
         }
 
         @media (max-width: 767px) {
+            body {
+                padding: 100px 20px 80px 20px;
+            }
             .about-page-container {
-                margin: 100px auto 100px auto;
                 padding: 0 10px;
             }
             .about-text {
-                text-align: left;
+                text-align: left; /* Desactivamos justificado en móviles para mejor lectura */
+            }
+            .contact-section {
+                margin-top: 45px;
+                padding-top: 30px;
             }
         }
     </style>
@@ -115,9 +126,10 @@
 
         <section class="language-block">
             <span class="lang-indicator">CAT</span>
-            <h2 class="about-title">Director i Fotògraf</h2>
             <p class="about-text">
-                Obrint-me camí com a fotògraf i director, amb un sòlid bagatge en 
+                Obrint-me camí com a 
+                <a href="index.html" class="about-link">fotògraf i director</a>
+                , amb un sòlid bagatge en 
                 <a href="produccion/index.html" class="about-link">producció</a> i 
                 <a href="postproduccion/index.html" class="about-link">postproducció</a> 
                 que em permet entendre a fons cada fase del procés.
@@ -126,9 +138,10 @@
 
         <section class="language-block">
             <span class="lang-indicator">ENG</span>
-            <h2 class="about-title">Director & Photographer</h2>
             <p class="about-text">
-                Building my path as a photographer and director, backed by a solid background in 
+                Building my path as a 
+                <a href="index.html" class="about-link">photographer and director</a>
+                , backed by a solid background in 
                 <a href="produccion/index.html" class="about-link">production</a> and 
                 <a href="postproduccion/index.html" class="about-link">post-production</a> 
                 that allows me to deeply understand every stage of the process.
@@ -137,32 +150,36 @@
 
         <section class="language-block">
             <span class="lang-indicator">CAST</span>
-            <h2 class="about-title">Director y Fotógrafo</h2>
             <p class="about-text">
-                Abriéndome paso como fotógrafo y director, con un sólido bagaje en 
+                Abriéndome paso como
+                 <a href="index.html" class="about-link">fotógrafo y directorn</a>
+                , con un sólido bagaje en 
                 <a href="produccion/index.html" class="about-link">producción</a> y 
                 <a href="postproduccion/index.html" class="about-link">postproducción</a> 
-                que me permite entender a fondo cada fase del proceso.
+                que me permite entender a fondo cada fase del procés.
             </p>
         </section>
 
-        <section class="contact-section">
-            <h2 class="about-title">Contacto</h2>
+<section class="contact-section">
+            <h2 class="about-title">Contact</h2>
             <ul class="contact-details">
-                <li>Email: <a href="mailto:tuemail@ejemplo.com">tuemail@ejemplo.com</a></li>
-                <li>Teléfono: <a href="tel:+34600000000">+34 600 000 000</a></li>
-                <li>Instagram: <a href="https://instagram.com/tuusuario" target="_blank">@tuusuario</a></li>
+                <li>Email: <a href="mailto:hi@javierbotellaperez.com">hi@javierbotellaperez.com</a></li>
+                <li>LinkedIn: <a href="https://www.linkedin.com/in/javierbotellaperez/" target="_blank">@javierbotellaperez</a></li>
+                <li>Bluesky: <a href="https://bsky.app/profile/javibotella.bsky.social" target="_blank">@javibotella.bsky.social</a></li>
+                <li>Instagram: <a href="https://instagram.com/viero.photo" target="_blank">@viero.photo</a> | <a href="https://instagram.com/__javibotella" target="_blank">@__javibotella</a></li>
             </ul>
         </section>
 
     </main>
 
     <nav class="minimal-menu">
+        <a href="index.html" class="menu-item">Portfolio</a>
+        <span class="menu-separator">•</span>
         <a href="produccion/index.html" class="menu-item">Producción</a>
         <span class="menu-separator">•</span>
         <a href="postproduccion/index.html" class="menu-item">Postproducción</a>
         <span class="menu-separator">•</span>
-        <a href="about.html" class="menu-item" style="color: #000000;">About</a>
+        <a href="aboutme.html" class="menu-item" style="color: #000000;">About</a>
     </nav>
 
 </body>
