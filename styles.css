@@ -697,4 +697,28 @@ body:has(.projects-grid-container) {
         width: 100%;
         min-width: 100%;
     }
+
+/* Desactivar la selección de texto y el menú emergente en móviles */
+body {
+    -webkit-user-select: none;  /* Safari */
+    -moz-user-select: none;     /* Firefox */
+    -ms-user-select: none;      /* IE10+ */
+    user-select: none;          /* Estándar */
+    -webkit-touch-callout: none; /* Desactiva el menú largo en iOS (Guardar imagen) */
+}
+
+/* ==========================================================================
+   12. EFECTO ZOOM INTERACTIVO EN LIGHTBOX
+   ========================================================================== */
+.lightbox #lightboxImg {
+    cursor: zoom-in; /* Icono de lupa con un más (+) */
+    transition: transform 0.1s ease-out; /* Suavidad al mover el ratón */
+    will-change: transform, transform-origin;
+}
+
+.lightbox #lightboxImg.zoomed-in {
+    cursor: zoom-out; /* Al estar ampliada, el icono cambia a menos (-) */
+}   
+   
+   
 }
