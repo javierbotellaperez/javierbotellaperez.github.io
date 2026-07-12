@@ -368,7 +368,6 @@ document.addEventListener("DOMContentLoaded", () => {
             lightbox.classList.add("show-img");
             
             if (lightboxCredits) {
-                // Objeto por defecto seguro con la propiedad 'year' incluida por si acaso
                 const data = photoData[currentIndex] || { title: `Fotografía #${currentIndex}`, location: "Javier Botella Pérez", project: "Personal Project", year: "2026" };
                 
                 lightboxCredits.innerHTML = `
@@ -384,18 +383,30 @@ document.addEventListener("DOMContentLoaded", () => {
             lightboxVid.play();
             
             if (lightboxCredits) {
-                const data = videoData[currentIndex] || { title: `Proyecto de Vídeo #${currentIndex}`, client: "Client / Artist Name", role: "Production Credit", year: "2026", director: "Director Name", dop: "DoP Name" };
+                const data = videoData[currentIndex] || { title: `Proyecto de Vídeo #${currentIndex}`, client: "Client / Artist Name", role: "Production Credit", year: "2026" };
                 
-                lightboxCredits.innerHTML = `
+                // 1. Inyectamos los datos estructurales fijos de la parte superior
+                let creditsHTML = `
                     <h3>${data.title}</h3>
                     <p>${data.client}</p>
                     <p>${data.role}</p>
                     <p>${data.year}</p>
                     <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> ${data.director}</p>
-                        <p><strong>DoP:</strong> ${data.dop}</p>
-                    </div>
                 `;
+
+                // 2. Renderizado dinámico de propiedades adicionales
+                const fixedKeys = ['title', 'client', 'role', 'year'];
+                
+                Object.keys(data).forEach(key => {
+                    if (!fixedKeys.includes(key)) {
+                        // Respeta mayúsculas si ya vienen bien definidas, si no capitaliza la primera letra
+                        const label = key.charAt(0).toUpperCase() + key.slice(1);
+                        creditsHTML += `<p><strong>${label}:</strong> ${data[key]}</p>`;
+                    }
+                });
+
+                creditsHTML += `</div>`;
+                lightboxCredits.innerHTML = creditsHTML;
             }
         }
     }
