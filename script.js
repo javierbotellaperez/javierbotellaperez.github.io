@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const photoSequence = getSmartShuffledSequence(totalImages, 2);
         photoSequence.forEach(i => {
             const img = document.createElement("img");
-            img.src = `/assets/Asset_${formatNumber(i)}.jpg`;
+            img.src = `/assets/Asset_${formatNumber(i)}.webp`;
             img.classList.add("carousel-image");
             img.dataset.index = i;
             img.onerror = () => img.remove();
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
             wrapper.dataset.index = i;
 
             const img = document.createElement("img");
-            img.src = `/assets/VidThumb_${formatNumber(i)}.jpg`;
+            img.src = `/assets/VidThumb_${formatNumber(i)}.webp`;
             img.classList.add("carousel-image");
             img.onerror = () => wrapper.remove();
 
@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (lightboxCredits) lightboxCredits.innerHTML = "";
         
         if (currentMode === 'photo') {
-            lightboxImg.src = `/assets/Asset_${formatted}.jpg`; 
+            lightboxImg.src = `/assets/Asset_${formatted}.webp`; 
             lightbox.classList.add("show-img");
             
             if (lightboxCredits) {
