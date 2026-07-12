@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextBtn = document.getElementById("lightboxNext");
     const prevBtn = document.getElementById("lightboxPrev");
 
-    const totalImages = 94;
+    const totalImages = 94; // Modifica este número cuando quieras, ya no romperá nada
     const totalVideos = 8;
     
     let currentMode = 'photo';
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
-    // --- ALGORITMO DE BARAJADO ANTIREPETICIÓN ---
+    // --- ALGORITMO DE BARAJADO ANTIREPETICIÓN INTEGRAL (REPARADO) ---
     function getSmartShuffledSequence(totalCount, duplicatesNeeded) {
         let base = Array.from({length: totalCount}, (_, i) => i + 1);
         
@@ -41,21 +41,31 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         let fullSequence = [];
-        let lastBatch = [];
 
         for (let d = 0; d < duplicatesNeeded; d++) {
             let currentBatch = shuffle([...base]);
-            if (lastBatch.length > 0 && currentBatch[0] === lastBatch[lastBatch.length - 1]) {
-                const first = currentBatch.shift();
-                currentBatch.push(first);
+            
+            // Si hay elementos acumulados y el primero del nuevo lote coincide con el último del anterior
+            if (fullSequence.length > 0 && currentBatch[0] === fullSequence[fullSequence.length - 1]) {
+                // Buscamos un elemento alternativo dentro del mismo lote para intercambiarlo
+                for (let i = 1; i < currentBatch.length; i++) {
+                    if (currentBatch[i] !== fullSequence[fullSequence.length - 1]) {
+                        [currentBatch[0], currentBatch[i]] = [currentBatch[i], currentBatch[0]];
+                        break;
+                    }
+                }
             }
             fullSequence = fullSequence.concat(currentBatch);
-            lastBatch = currentBatch;
         }
 
-        if (fullSequence[fullSequence.length - 1] === fullSequence[0]) {
-            const len = fullSequence.length;
-            [fullSequence[len - 1], fullSequence[len - 2]] = [fullSequence[len - 2], fullSequence[len - 1]];
+        // Corrección de cierre cíclico (último elemento vs primero del bucle infinito)
+        if (fullSequence.length > 1 && fullSequence[fullSequence.length - 1] === fullSequence[0]) {
+            for (let i = fullSequence.length - 2; i > 0; i--) {
+                if (fullSequence[i] !== fullSequence[0] && fullSequence[i-1] !== fullSequence[fullSequence.length - 1]) {
+                    [fullSequence[fullSequence.length - 1], fullSequence[i]] = [fullSequence[i], fullSequence[fullSequence.length - 1]];
+                    break;
+                }
+            }
         }
         return fullSequence;
     }
@@ -127,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- INTERACCIÓN TÁCTIL PARA MÓVILES (Inercia + Fluidez) ---
+    // --- INTERACCIÓN TÁCTIL PARA MÓVILES ---
     function setupTouchScroll(container, type) {
         let startX = 0;
         let isDragging = false;
@@ -174,22 +184,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- ESCUCHA DE HOVERS ---
+    // --- ESCUCHA DE HOVERS Y CLICS ---
     const photoLeftZone = containerPhotos.querySelector(".zone-left");
     const photoRightZone = containerPhotos.querySelector(".zone-right");
-    photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -8); 
-    photoRightZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * 8);  
+    if(photoLeftZone) photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -8); 
+    if(photoRightZone) photoRightZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * 8);  
     containerPhotos.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
-    setupSmartClick(photoLeftZone, 'photo');
-    setupSmartClick(photoRightZone, 'photo');
+    if(photoLeftZone) setupSmartClick(photoLeftZone, 'photo');
+    if(photoRightZone) setupSmartClick(photoRightZone, 'photo');
 
     const videoLeftZone = containerVideos.querySelector(".zone-left");
     const videoRightZone = containerVideos.querySelector(".zone-right");
-    videoLeftZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * -8); 
-    videoRightZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * 8);  
+    if(videoLeftZone) videoLeftZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * -8); 
+    if(videoRightZone) videoRightZone.addEventListener("mouseenter", () => currentSpeedVideos = baseSpeedVideos * 8);  
     containerVideos.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
-    setupSmartClick(videoLeftZone, 'video');
-    setupSmartClick(videoRightZone, 'video');
+    if(videoLeftZone) setupSmartClick(videoLeftZone, 'video');
+    if(videoRightZone) setupSmartClick(videoRightZone, 'video');
 
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
@@ -221,8 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function closeLightbox() { 
         lightbox.classList.remove("active", "show-img", "show-vid"); 
-        
-        // Purgado completo e inmediato de memoria visual y descriptiva al cerrar
         lightboxVid.pause(); 
         lightboxVid.removeAttribute('src'); 
         lightboxVid.load(); 
@@ -230,7 +238,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (lightboxCredits) lightboxCredits.innerHTML = "";
     }
 
-    document.getElementById("closeBtn").onclick = closeLightbox;
+    const closeBtn = document.getElementById("closeBtn");
+    if(closeBtn) closeBtn.onclick = closeLightbox;
     lightbox.onclick = closeLightbox;
     lightboxImg.onclick = (e) => e.stopPropagation();
     lightboxVid.onclick = (e) => e.stopPropagation();
@@ -238,8 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateContent() {
         const formatted = formatNumber(currentIndex);
-        
-        // Purga preventiva intermedia en cambios "Next/Prev" cruzados
         lightbox.classList.remove("show-img", "show-vid");
         lightboxVid.pause();
         lightboxVid.removeAttribute('src');
@@ -268,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <h3>Proyecto de Vídeo #${currentIndex}</h3>
                     <p>Client / Artist Name</p>
                     <p>Production Credit</p>
-                    <p>2024</p>
+                    <p>2026</p>
                     <div class="extra-credits-wrapper">
                         <p><strong>Director:</strong> Director Name</p>
                         <p><strong>DoP:</strong> DoP Name</p>
@@ -294,7 +301,8 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.key === "ArrowLeft") change(-1);
     });
 
-    loadVideos();
+    // Carga limpia secuencial asegurada
     loadPhotos();
+    loadVideos();
     animate();
 });
