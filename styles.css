@@ -77,7 +77,7 @@ html, body {
     object-fit: cover;  
     cursor: pointer;
     display: block;
-    filter: brightness(90%); /* Forzado al 10% de brillo por defecto */
+    filter: brightness(90%); /* Forzado al 10% de reducción de brillo por defecto */
     transition: filter 0.4s ease;
 }
 
@@ -697,8 +697,9 @@ body:has(.projects-grid-container) {
         width: 100%;
         min-width: 100%;
     }
+}
 
-/* Desactivar la selección de texto y el menú emergente en móviles */
+/* Desactivar la selección de texto y el menú emergente de guardado */
 body {
     -webkit-user-select: none;  /* Safari */
     -moz-user-select: none;     /* Firefox */
@@ -718,7 +719,4 @@ body {
 
 .lightbox #lightboxImg.zoomed-in {
     cursor: zoom-out; /* Al estar ampliada, el icono cambia a menos (-) */
-}   
-   
-   
 }
