@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextBtn = document.getElementById("lightboxNext");
     const prevBtn = document.getElementById("lightboxPrev");
 
-    const totalImages = 114;
+    const totalImages = 94;
     const totalVideos = 8;
     
     let currentMode = 'photo';
