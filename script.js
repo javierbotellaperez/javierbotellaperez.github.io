@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- CONTADORES TOTALES ---
     const totalImages = 94; // Modifica este número cuando cambie la cantidad de fotos
-    const totalVideos = 8;  // Modifica este número cuando cambie la cantidad de vídeos
+    const totalVideos = 8;  // Modifica este número cuando cambie la cantidad de vídeo
     
     // --- BASE DE DATOS DE CONTENIDOS ---
     const photoData = {
