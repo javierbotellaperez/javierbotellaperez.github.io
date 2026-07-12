@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.getElementById("lightboxPrev");
 
     // --- CONTADORES TOTALES ---
-    const totalImages = 94; // Modifica este número cuando cambie la cantidad de fotos
-    const totalVideos = 8;  // Modifica este número cuando cambie la cantidad de vídeo
+    const totalImages = 94; 
+    const totalVideos = 8;  
     
     // --- BASE DE DATOS DE CONTENIDOS ---
     const photoData = {
@@ -114,13 +114,144 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const videoData = {
         1: { title: "Quién quiera perdón que se lo pida a Dios", client: "Jabeat", role: "Director ReTakes + Editor", year: "2025", director: "Roger Martínez", Retakes: "Javier Botella", Edit: "Jabeat & Javier Botella" },
-        2: { title: "El Sexo Convexo", client: "Futurachicapop", role: "Director", year: "2021", director: "Javier Botella Pérez", dop: "Lucas Hope" },
-        3: { title: "Historias de Sadie Girl", client: "Futurachicapop", role: "Director", year: "2022", director: "Javier Botella Pérez", dop: "Noun" },
-        4: { title: "Money Queer", client: "Jabeat & Okamiluke", role: "Director", year: "2020", director: "Javier Botella Pérez & David Medina", dop: "Pau Ramirez" },
-        5: { title: "Autoboicot y Descanso", client: "Rocío Saiz & Tauro", role: "Director", year: "2022", director: "Javier Botella Pérez", dop: "Sergio Avellaneda" },
+        2: { 
+            title: "El Sexo Convexo", 
+            client: "Futurachicapop", 
+            role: "Director", 
+            year: "2021", 
+            awards: ["Nominación: Mejor Videoclip Internacional - 20ª edición de Bogoshorts"],
+            dirección: "Javier Botella", 
+            producción: "Oscila Studio, Martí Méndez, Anna Salgado",
+            ayudante_de_producción: "Júlia Fabs, Sergio Avellaneda",
+            PA: "Andrew, Marcel, Marc Marq",
+            ayudante_de_dirección: "Ford Fiesta Groc",
+            DOP: "Lucas Hope",
+            foquista: "Maximiliano Fritz",
+            gaffer: "Héctor",
+            foto: "Diego Ezia",
+            dirección_de_arte: "Jul Comin, David Medina Águila",
+            atrezzo: "Sara Martínez",
+            estilismo: "Aida, Dani Valiente",
+            wearing: "Víctor von Schwarz, Un Violeta Más, Mateu Lo",
+            MUAH: "Airin Lion, Raquel García Makeup",
+            edición: "Sergio Avellaneda, Marta MKV",
+            telecine: "Lucas Hope",
+            diseño_gráfico: "Judit Musachs",
+            diseño_de_sonido: "Carnaby Studios",
+            cast: "Sergio Avellaneda, Octawi, Fabri Montes, Graus, Mario de la Piedra, Ali Nastichenko, Nat Ramanandi, Joan Marc Herrera, Toni Aguilar, Kevin Antequera, Geo Cortés, Quique Muro López, Berta, Selma Ree, Carlos Olero Choa, Erik Anguera, Adrian MB"
+        },
+        3: { 
+            title: "Historias de Sadie Girl", 
+            client: "Futurachicapop", 
+            role: "Director", 
+            year: "2022", 
+            con: "Futurachicapop, Alvaro Lucas, Pau Gomez",
+            director: "Javier Botella", 
+            dop: "Noun, Lluis Ferrer, Marcel Pascual",
+            ayte_direccion: "Mara Problas",
+            director_de_arte: "David Medina Aguila",
+            estilista: "Blanco C",
+            maquillaje: "Airin Lion",
+            editor: "Deb G. Vargas, Desoto Gudayol",
+            post_produccion: "Marta MKV",
+            color: "Lita Bosch",
+            diseno_grafico: "Alfon Fan",
+            directora_de_produccion: "Mara Problas",
+            coordinador_de_produccion: "Adrián Gómez Gallego",
+            equipo_de_produccion: "Alejo Ayala, Champagne Shoots, Fon Blanco",
+            foquista: "Roger Milian",
+            aux_camara: "Enia Balagué",
+            maquinista: "Fontich",
+            jefe_de_electricos: "Martí Pluma",
+            electricos: "Joan Bustos, Erik Dalmau, Martí Molas, Oriol Tarrason",
+            ayte_arte: "Leire Oru",
+            aux_arte: "Marianna Terzini",
+            atrezzo: "Judit Jaumà, Manuel Menendez, Nunnurr",
+            ayte_estilismo: "Victor Nuns",
+            aux_estilismo: "Licari, Manuela Barreto",
+            ayte_maquillaje: "Lau Makeup BCN, Sofi D. Makeup",
+            aux_maquillaje: "Ana Codes, Arnau Soriano",
+            fotografo: "Fon Blanco",
+            coreografo: "Kevin Antequera",
+            bailarines: "Toni Aguilar, Domi Shameless, Biel Torra, Carles Un00",
+            amigas: "Airin Lion, Vittu Chloe, Nix Von Trier, Elena Aguilera"
+        },
+        4: { 
+            title: "Money Queer", 
+            client: "Jabeat & Okamiluke", 
+            role: "Director", 
+            year: "2020", 
+            directed_by: "We Are Liquorice",
+            head_of_production: "Anna Salgado",
+            production_manager: "Machinazo",
+            PA: "Gont, Penetroker, La Puig",
+            assistant_director: "Laura Ruiz Penacho",
+            second_assistant_director: "Víctor Radoselovicz",
+            DOP: "Pau Ramírez Marques",
+            AC: "Lali RP",
+            second_AC: "Albert Marcos",
+            DiT: "Andrés MV",
+            gaffer: "Citizen Kani",
+            sparks: "Antoine Sonnery, Daniel de José, Geraldo Souza, Santi Rodriguez, Anna Moliné, Victor Tapies",
+            art_director: "Youngard",
+            art_assist: "Joanet JC",
+            styling: "Juls Puig, Carlota Punceer",
+            MUAH: "Irene Gene",
+            editor: "Pauluzon",
+            color: "Martí Somoza",
+            graphics: "Quincoxes, Jayk Darvishian"
+        },
+        5: { 
+            title: "Autoboicot y Descanso", 
+            client: "Rocío Saiz & Tauro", 
+            role: "Director", 
+            year: "2022", 
+            director: "Javier Botella",
+            director_de_fotografia: "Sergio Avellaneda",
+            director_de_arte: "David Medina Aguila",
+            MUAH: "Airin Lion",
+            vestu: "Irene Arellano",
+            ayte_arte: "Llyli Roberts",
+            aux_arte: "Aurora Muñoz",
+            aux_ambientación: "Leire Oru",
+            producción: "La Puig",
+            ayte_dirección: "Futurachicapop",
+            ayte_muah: "Raquel García Makeup",
+            edit: "Deb G. Vargas, Miguel Lomana",
+            color: "Lita Bosch",
+            figuración: "Olga Fernández, Jsssssz, Airin Lion, Futurachicapop, Irene Arellano, Aurora Muñoz, La Puig"
+        },
         6: { title: "Turista Sueca", client: "Turista Sueca", role: "Director", year: "2023", director: "Javier Botella Pérez", Camera: "Jordi Terribas & Javier Botella" },
-        7: { title: "Borracho", client: "Warmi", role: "Director", year: "2023", director: "Javier Botella Pérez", dop: "Adrian Foj" },
-        8: { title: "Hiel", client: "Warmi", role: "Director", year: "2023", director: "Javier Botella Pérez", dop: "Adrian Foj" }
+        7: { 
+            title: "Borracho", 
+            client: "Warmi", 
+            role: "Director", 
+            year: "2023", 
+            él: "Rodrigo Parrilla",
+            director: "Javier Botella Pérez",
+            director_de_fotografía: "Adrián Foj",
+            gaffer: "Carmen Ramis",
+            producción: "Beatriz Rojo",
+            director_de_arte: "David Medina Águila",
+            editor: "Miguel Lomana",
+            color: "La Cúpula Audiovisual",
+            diseño_gráfico: "Guille Sotelo"
+        },
+        8: { 
+            title: "Hiel", 
+            client: "Warmi", 
+            role: "Director", 
+            year: "2023", 
+            él: "Rodrigo Parrilla",
+            director: "Javier Botella Pérez",
+            director_de_fotografía: "Adrián Foj",
+            gaffer: "Carmen Ramis",
+            producción: "Beatriz Rojo",
+            director_de_arte: "David Medina Águila",
+            editor: "Miguel Lomana",
+            color: "La Cúpula Audiovisual",
+            diseño_gráfico: "Guille Sotelo"
+        }
     };
 
     // --- VARIABLES DE ESTADO Y ANIMACIÓN ---
@@ -137,10 +268,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
-    // --- ALGORITMO DE BARAJADO ANTIREPETICIÓN INTEGRAL ---
+    // --- ALGORITMO DE BARAJADO ---
     function getSmartShuffledSequence(totalCount, duplicatesNeeded) {
         let base = Array.from({length: totalCount}, (_, i) => i + 1);
-        
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -148,12 +278,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             return array;
         }
-
         let fullSequence = [];
-
         for (let d = 0; d < duplicatesNeeded; d++) {
             let currentBatch = shuffle([...base]);
-            
             if (fullSequence.length > 0 && currentBatch[0] === fullSequence[fullSequence.length - 1]) {
                 for (let i = 1; i < currentBatch.length; i++) {
                     if (currentBatch[i] !== fullSequence[fullSequence.length - 1]) {
@@ -164,19 +291,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             fullSequence = fullSequence.concat(currentBatch);
         }
-
-        if (fullSequence.length > 1 && fullSequence[fullSequence.length - 1] === fullSequence[0]) {
-            for (let i = fullSequence.length - 2; i > 0; i--) {
-                if (fullSequence[i] !== fullSequence[0] && fullSequence[i-1] !== fullSequence[fullSequence.length - 1]) {
-                    [fullSequence[fullSequence.length - 1], fullSequence[i]] = [fullSequence[i], fullSequence[fullSequence.length - 1]];
-                    break;
-                }
-            }
-        }
         return fullSequence;
     }
 
-    // --- CARGA MULTIMEDIA CONTROLADA CON LAZY LOADING ---
+    // --- LAZY LOADING ---
     function loadPhotos() {
         const photoSequence = getSmartShuffledSequence(totalImages, 2);
         photoSequence.forEach(i => {
@@ -196,13 +314,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const wrapper = document.createElement("div");
             wrapper.classList.add("video-item-wrapper");
             wrapper.dataset.index = i;
-
             const img = document.createElement("img");
             img.src = `/assets/VidThumb_${formatNumber(i)}.webp`;
             img.classList.add("carousel-image");
             img.loading = "lazy";
             img.onerror = () => wrapper.remove();
-
             wrapper.appendChild(img);
             videoTrack.appendChild(wrapper);
         });
@@ -213,28 +329,23 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!lightbox.classList.contains("active")) {
             posPhotos += currentSpeedPhotos;
             posVideos += currentSpeedVideos;
-
             const halfPhotosWidth = photoTrack.scrollWidth / 2;
             if (posPhotos >= 0) posPhotos = -halfPhotosWidth;
             if (Math.abs(posPhotos) >= photoTrack.scrollWidth) posPhotos = -halfPhotosWidth;
-            
             const halfVideosWidth = videoTrack.scrollWidth / 2;
             if (posVideos >= 0) posVideos = -halfVideosWidth;
             if (Math.abs(posVideos) >= videoTrack.scrollWidth) posVideos = -halfVideosWidth;
-
             photoTrack.style.transform = `translateX(${posPhotos}px)`;
             videoTrack.style.transform = `translateX(${posVideos}px)`;
         }
         requestAnimationFrame(animate);
     }
 
-    // --- TRASPASAR EL CLIC DESDE LAS ZONAS DE ACELERACIÓN ---
     function setupSmartClick(zone, mode) {
         zone.addEventListener("click", (e) => {
             zone.style.pointerEvents = "none";
             const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
             zone.style.pointerEvents = "auto";
-
             if (elementBelow) {
                 const target = elementBelow.closest(".carousel-image, .video-item-wrapper");
                 if (target) {
@@ -245,33 +356,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- INTERACCIÓN TÁCTIL PARA MÓVILES ---
     function setupTouchScroll(container, type) {
-        let startX = 0;
-        let isDragging = false;
-        let lastDiffX = 0;
-        let inertiaFrame = null;
-
+        let startX = 0; let isDragging = false; let lastDiffX = 0; let inertiaFrame = null;
         container.addEventListener("touchstart", (e) => {
-            isDragging = true;
-            startX = e.touches[0].clientX;
-            lastDiffX = 0;
+            isDragging = true; startX = e.touches[0].clientX; lastDiffX = 0;
             if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
         }, { passive: true });
-
         container.addEventListener("touchmove", (e) => {
             if (!isDragging) return;
             const currentX = e.touches[0].clientX;
             lastDiffX = (currentX - startX) * 2.2; 
-
-            if (type === 'photo') {
-                currentSpeedPhotos = baseSpeedPhotos + lastDiffX;
-            } else {
-                currentSpeedVideos = baseSpeedVideos + lastDiffX;
-            }
+            if (type === 'photo') { currentSpeedPhotos = baseSpeedPhotos + lastDiffX; } 
+            else { currentSpeedVideos = baseSpeedVideos + lastDiffX; }
             startX = currentX; 
         }, { passive: true });
-
         container.addEventListener("touchend", () => {
             isDragging = false;
             function applyInertia() {
@@ -281,18 +379,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
                 lastDiffX *= 0.92;
-                if (type === 'photo') {
-                    currentSpeedPhotos = baseSpeedPhotos + lastDiffX;
-                } else {
-                    currentSpeedVideos = baseSpeedVideos + lastDiffX;
-                }
+                if (type === 'photo') { currentSpeedPhotos = baseSpeedPhotos + lastDiffX; } 
+                else { currentSpeedVideos = baseSpeedVideos + lastDiffX; }
                 inertiaFrame = requestAnimationFrame(applyInertia);
             }
             applyInertia();
         });
     }
 
-    // --- ESCUCHA DE HOVERS Y CLICS ---
+    // Controles de Aceleración y Mouseenter
     const photoLeftZone = containerPhotos.querySelector(".zone-left");
     const photoRightZone = containerPhotos.querySelector(".zone-right");
     if(photoLeftZone) photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -8); 
@@ -312,99 +407,88 @@ document.addEventListener("DOMContentLoaded", () => {
     photoTrack.addEventListener("mouseenter", () => currentSpeedPhotos = 0);
     photoTrack.addEventListener("mouseleave", () => currentSpeedPhotos = baseSpeedPhotos);
     photoTrack.addEventListener("click", (e) => {
-        if(e.target.classList.contains("carousel-image")) {
-            openLightbox('photo', parseInt(e.target.dataset.index));
-        }
+        if(e.target.classList.contains("carousel-image")) openLightbox('photo', parseInt(e.target.dataset.index));
     });
 
     videoTrack.addEventListener("mouseenter", () => currentSpeedVideos = 0);
     videoTrack.addEventListener("mouseleave", () => currentSpeedVideos = baseSpeedVideos);
     videoTrack.addEventListener("click", (e) => {
         const target = e.target.closest(".video-item-wrapper");
-        if(target) {
-            openLightbox('video', parseInt(target.dataset.index));
-        }
+        if(target) openLightbox('video', parseInt(target.dataset.index));
     });
 
     setupTouchScroll(containerPhotos, 'photo');
     setupTouchScroll(containerVideos, 'video');
 
-    // --- VISOR LIGHTBOX ---
     function openLightbox(mode, index) {
-        currentMode = mode; 
-        currentIndex = index;
-        updateContent(); 
-        lightbox.classList.add("active");
+        currentMode = mode; currentIndex = index;
+        updateContent(); lightbox.classList.add("active");
     }
 
     function closeLightbox() { 
         lightbox.classList.remove("active", "show-img", "show-vid"); 
-        lightboxVid.pause(); 
-        lightboxVid.removeAttribute('src'); 
-        lightboxVid.load(); 
-        lightboxImg.removeAttribute('src');
+        lightboxVid.pause(); lightboxVid.removeAttribute('src'); lightboxVid.load(); lightboxImg.removeAttribute('src');
         if (lightboxCredits) lightboxCredits.innerHTML = "";
     }
 
-    const closeBtn = document.getElementById("closeBtn");
-    if(closeBtn) closeBtn.onclick = closeLightbox;
+    if(document.getElementById("closeBtn")) document.getElementById("closeBtn").onclick = closeLightbox;
     lightbox.onclick = closeLightbox;
     lightboxImg.onclick = (e) => e.stopPropagation();
     lightboxVid.onclick = (e) => e.stopPropagation();
     if (lightboxCredits) lightboxCredits.onclick = (e) => e.stopPropagation();
 
-    // --- RENDERIZADO INTELIGENTE DE CRÉDITOS ---
+    // --- GENERADOR INTELIGENTE DE CONTENIDO ---
     function updateContent() {
         const formatted = formatNumber(currentIndex);
         lightbox.classList.remove("show-img", "show-vid");
-        lightboxVid.pause();
-        lightboxVid.removeAttribute('src');
-        lightboxVid.load();
-        lightboxImg.removeAttribute('src');
+        lightboxVid.pause(); lightboxVid.removeAttribute('src'); lightboxVid.load(); lightboxImg.removeAttribute('src');
         if (lightboxCredits) lightboxCredits.innerHTML = "";
         
         if (currentMode === 'photo') {
             lightboxImg.src = `/assets/Asset_${formatted}.jpg`; 
             lightbox.classList.add("show-img");
-            
             if (lightboxCredits) {
-                const data = photoData[currentIndex] || { title: `Fotografía #${currentIndex}`, location: "Javier Botella Pérez", project: "Personal Project", year: "2026" };
-                
+                const data = photoData[currentIndex] || { title: `Photo #${currentIndex}`, location: "Barcelona", project: "Personal Project", year: "2026" };
                 lightboxCredits.innerHTML = `
-                    <h3>${data.title}</h3>
-                    <p>${data.location}</p>
-                    <p>${data.project}</p>
-                    <p>${data.year}</p>
+                    <h3 class="credits-title">${data.title}</h3>
+                    <p class="credits-subtitle">${data.location} &bull; ${data.project} &bull; ${data.year}</p>
                 `;
             }
         } else {
             lightboxVid.src = `/videos/Video_${formatted}.mp4`; 
-            lightbox.classList.add("show-vid"); 
-            lightboxVid.play();
-            
+            lightbox.classList.add("show-vid"); lightboxVid.play();
             if (lightboxCredits) {
-                const data = videoData[currentIndex] || { title: `Proyecto de Vídeo #${currentIndex}`, client: "Client / Artist Name", role: "Production Credit", year: "2026" };
-                
-                // 1. Inyectamos los datos estructurales fijos de la parte superior
+                const data = videoData[currentIndex] || { title: `Video #${currentIndex}`, client: "Client", role: "Director", year: "2026" };
                 let creditsHTML = `
-                    <h3>${data.title}</h3>
-                    <p>${data.client}</p>
-                    <p>${data.role}</p>
-                    <p>${data.year}</p>
-                    <div class="extra-credits-wrapper">
+                    <h3 class="credits-title">${data.title}</h3>
+                    <p class="credits-subtitle">${data.client} &bull; ${data.role} &bull; ${data.year}</p>
                 `;
 
-                // 2. Renderizado dinámico de propiedades adicionales
-                const fixedKeys = ['title', 'client', 'role', 'year'];
+                if (data.awards) {
+                    creditsHTML += `<div class="credits-awards">`;
+                    const awardsList = Array.isArray(data.awards) ? data.awards : [data.awards];
+                    awardsList.forEach(award => { creditsHTML += `<p class="award-item">🌿 ${award}</p>`; });
+                    creditsHTML += `</div>`;
+                }
+
+                creditsHTML += `<hr class="credits-divider"><div class="extra-credits-wrapper">`;
+                const fixedKeys = ['title', 'client', 'role', 'year', 'awards'];
                 
                 Object.keys(data).forEach(key => {
                     if (!fixedKeys.includes(key)) {
-                        // Respeta mayúsculas si ya vienen bien definidas, si no capitaliza la primera letra
-                        const label = key.charAt(0).toUpperCase() + key.slice(1);
-                        creditsHTML += `<p><strong>${label}:</strong> ${data[key]}</p>`;
+                        // Limpia el nombre técnico del rol quitando barras bajas y capitalizando correctamente
+                        const label = key.replace(/_/g, ' ')
+                                         .split(' ')
+                                         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                                         .join(' ');
+                        creditsHTML += `
+                            <div class="credit-row">
+                                <span class="credit-label">${label}:</span>
+                                <span class="credit-value">${data[key]}</span>
+                            </div>
+                        `;
                     }
                 });
-
                 creditsHTML += `</div>`;
                 lightboxCredits.innerHTML = creditsHTML;
             }
@@ -427,8 +511,5 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.key === "ArrowLeft") change(-1);
     });
 
-    // Carga e inicio limpios
-    loadPhotos();
-    loadVideos();
-    animate();
+    loadPhotos(); loadVideos(); animate();
 });
