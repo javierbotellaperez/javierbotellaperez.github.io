@@ -266,6 +266,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSpeedPhotos = baseSpeedPhotos;
     let currentSpeedVideos = baseSpeedVideos;
 
+    // --- VARIABLES PARA PINCH-TO-ZOOM (MOVIL LIGHTBOX) ---
+    let scale = 1;
+    let startDistance = 0;
+    let isPinching = false;
+    let startX = 0, startY = 0;
+    let translateX = 0, translateY = 0;
+
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
     // --- ALGORITMO DE BARAJADO ---
@@ -357,18 +364,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function setupTouchScroll(container, type) {
-        let startX = 0; let isDragging = false; let lastDiffX = 0; let inertiaFrame = null;
+        let startTouchX = 0; let isDragging = false; let lastDiffX = 0; let inertiaFrame = null;
         container.addEventListener("touchstart", (e) => {
-            isDragging = true; startX = e.touches[0].clientX; lastDiffX = 0;
+            if(e.touches.length > 1) return; // Ignorar si es un gesto multitáctil
+            isDragging = true; startTouchX = e.touches[0].clientX; lastDiffX = 0;
             if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
         }, { passive: true });
         container.addEventListener("touchmove", (e) => {
             if (!isDragging) return;
             const currentX = e.touches[0].clientX;
-            lastDiffX = (currentX - startX) * 2.2; 
+            lastDiffX = (currentX - startTouchX) * 2.2; 
             if (type === 'photo') { currentSpeedPhotos = baseSpeedPhotos + lastDiffX; } 
             else { currentSpeedVideos = baseSpeedVideos + lastDiffX; }
-            startX = currentX; 
+            startTouchX = currentX; 
         }, { passive: true });
         container.addEventListener("touchend", () => {
             isDragging = false;
@@ -422,13 +430,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function openLightbox(mode, index) {
         currentMode = mode; currentIndex = index;
-        updateContent(); lightbox.classList.add("active");
+        resetZoom();
+        updateContent(); 
+        lightbox.classList.add("active");
     }
 
     function closeLightbox() { 
         lightbox.classList.remove("active", "show-img", "show-vid"); 
         lightboxVid.pause(); lightboxVid.removeAttribute('src'); lightboxVid.load(); lightboxImg.removeAttribute('src');
         if (lightboxCredits) lightboxCredits.innerHTML = "";
+        resetZoom();
     }
 
     if(document.getElementById("closeBtn")) document.getElementById("closeBtn").onclick = closeLightbox;
@@ -436,6 +447,58 @@ document.addEventListener("DOMContentLoaded", () => {
     lightboxImg.onclick = (e) => e.stopPropagation();
     lightboxVid.onclick = (e) => e.stopPropagation();
     if (lightboxCredits) lightboxCredits.onclick = (e) => e.stopPropagation();
+
+    // --- GESTOS PINCH-TO-ZOOM EN DISPOSITIVOS MÓVILES ---
+    function getDistance(touches) {
+        return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
+    }
+
+    function resetZoom() {
+        scale = 1; translateX = 0; translateY = 0;
+        lightboxImg.style.transform = `translate(0px, 0px) scale(1)`;
+    }
+
+    lightboxImg.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+            isPinching = true;
+            startDistance = getDistance(e.touches);
+            startX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - translateX;
+            startY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - translateY;
+        } else if (e.touches.length === 1 && scale > 1) {
+            // Permitir paneo/arrastre si la imagen tiene zoom
+            isPinching = false;
+            startX = e.touches[0].clientX - translateX;
+            startY = e.touches[0].clientY - translateY;
+        }
+    }, { passive: true });
+
+    lightboxImg.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2 && isPinching) {
+            const currentDistance = getDistance(e.touches);
+            // Factor de sensibilidad del zoom
+            scale = Math.min(Math.max(1, (currentDistance / startDistance) * scale), 4); 
+            
+            const currentX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            const currentY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+            translateX = currentX - startX;
+            translateY = currentY - startY;
+
+            lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        } else if (e.touches.length === 1 && scale > 1) {
+            translateX = e.touches[0].clientX - startX;
+            translateY = e.touches[0].clientY - startY;
+            lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        }
+    }, { passive: true });
+
+    lightboxImg.addEventListener('touchend', (e) => {
+        if (e.touches.length < 2) {
+            isPinching = false;
+        }
+        if (scale <= 1) {
+            resetZoom();
+        }
+    });
 
     // --- GENERADOR INTELIGENTE DE CONTENIDO ---
     function updateContent() {
@@ -476,7 +539,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 Object.keys(data).forEach(key => {
                     if (!fixedKeys.includes(key)) {
-                        // Limpia el nombre técnico del rol quitando barras bajas y capitalizando correctamente
                         const label = key.replace(/_/g, ' ')
                                          .split(' ')
                                          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -498,6 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function change(delta) {
         const total = (currentMode === 'photo') ? totalImages : totalVideos;
         currentIndex = (currentIndex + delta - 1 + total) % total + 1;
+        resetZoom();
         updateContent();
     }
 
@@ -509,15 +572,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === "Escape") closeLightbox();
         else if (e.key === "ArrowRight") change(1);
         else if (e.key === "ArrowLeft") change(-1);
+    });
 
-/* ==========================================================================
-   PROTECCIÓN DE CONTENIDO (Anti-copia y bloqueo de descargas básicas)
-   ========================================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-
+    /* ==========================================================================
+       PROTECCIÓN DE CONTENIDO (Anti-copia y bloqueo de descargas básicas)
+       ========================================================================== */
     // 1. Bloquear el click derecho (evita "Guardar imagen como...", "Guardar vídeo...")
     document.addEventListener('contextmenu', (e) => {
-        // Permitimos el click derecho solo si es un input de texto, por usabilidad
         if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
             e.preventDefault();
         }
@@ -544,10 +605,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
             e.preventDefault();
         }
-    });
-});
-        
-        
     });
 
     loadPhotos(); loadVideos(); animate();
