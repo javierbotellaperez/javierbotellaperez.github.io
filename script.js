@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextBtn = document.getElementById("lightboxNext");
     const prevBtn = document.getElementById("lightboxPrev");
 
-    const totalImages = 94; // Modifica este número cuando quieras, ya no romperá nada
-    const totalVideos = 8;
+    const totalImages = 94; // Modifica este número cuando añadas o quites fotos
+    const totalVideos = 8;  // Modifica este número cuando añadas o quites vídeos
     
     let currentMode = 'photo';
     let currentIndex = 1;
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
-    // --- ALGORITMO DE BARAJADO ANTIREPETICIÓN INTEGRAL (REPARADO) ---
+    // --- ALGORITMO DE BARAJADO ANTIREPETICIÓN INTEGRAL ---
     function getSmartShuffledSequence(totalCount, duplicatesNeeded) {
         let base = Array.from({length: totalCount}, (_, i) => i + 1);
         
@@ -45,9 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let d = 0; d < duplicatesNeeded; d++) {
             let currentBatch = shuffle([...base]);
             
-            // Si hay elementos acumulados y el primero del nuevo lote coincide con el último del anterior
             if (fullSequence.length > 0 && currentBatch[0] === fullSequence[fullSequence.length - 1]) {
-                // Buscamos un elemento alternativo dentro del mismo lote para intercambiarlo
                 for (let i = 1; i < currentBatch.length; i++) {
                     if (currentBatch[i] !== fullSequence[fullSequence.length - 1]) {
                         [currentBatch[0], currentBatch[i]] = [currentBatch[i], currentBatch[0]];
@@ -58,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
             fullSequence = fullSequence.concat(currentBatch);
         }
 
-        // Corrección de cierre cíclico (último elemento vs primero del bucle infinito)
         if (fullSequence.length > 1 && fullSequence[fullSequence.length - 1] === fullSequence[0]) {
             for (let i = fullSequence.length - 2; i > 0; i--) {
                 if (fullSequence[i] !== fullSequence[0] && fullSequence[i-1] !== fullSequence[fullSequence.length - 1]) {
@@ -70,14 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return fullSequence;
     }
 
-    // --- CARGA MULTIMEDIA CONTROLADA ---
+    // --- CARGA MULTIMEDIA CONTROLADA CON LAZY LOADING ---
     function loadPhotos() {
         const photoSequence = getSmartShuffledSequence(totalImages, 2);
         photoSequence.forEach(i => {
             const img = document.createElement("img");
-            img.src = `/assets/Asset_${formatNumber(i)}.webp`;
+            img.src = `/assets/Asset_${formatNumber(i)}.webp`; // El carrusel usa el .webp ligero
             img.classList.add("carousel-image");
             img.dataset.index = i;
+            img.loading = "lazy"; // Carga diferida inteligente
             img.onerror = () => img.remove();
             photoTrack.appendChild(img);
         });
@@ -91,8 +89,9 @@ document.addEventListener("DOMContentLoaded", () => {
             wrapper.dataset.index = i;
 
             const img = document.createElement("img");
-            img.src = `/assets/VidThumb_${formatNumber(i)}.webp`;
+            img.src = `/assets/VidThumb_${formatNumber(i)}.webp`; // Las miniaturas usan .webp ligero
             img.classList.add("carousel-image");
+            img.loading = "lazy"; // Carga diferida inteligente
             img.onerror = () => wrapper.remove();
 
             wrapper.appendChild(img);
@@ -255,7 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (lightboxCredits) lightboxCredits.innerHTML = "";
         
         if (currentMode === 'photo') {
-            lightboxImg.src = `/assets/Asset_${formatted}.webp`; 
+            // ¡EL TRUCO DE CALIDAD! Abre el archivo .jpg original en alta resolución
+            lightboxImg.src = `/assets/Asset_${formatted}.jpg`; 
             lightbox.classList.add("show-img");
             
             if (lightboxCredits) {
@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.key === "ArrowLeft") change(-1);
     });
 
-    // Carga limpia secuencial asegurada
+    // Carga secuencial e inicio de bucle de animación
     loadPhotos();
     loadVideos();
     animate();
