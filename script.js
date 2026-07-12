@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.key === "ArrowLeft") change(-1);
     });
 
-    loadPhotos();
     loadVideos();
+    loadPhotos();
     animate();
 });
