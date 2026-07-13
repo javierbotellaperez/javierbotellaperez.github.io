@@ -24,23 +24,23 @@ document.addEventListener("DOMContentLoaded", () => {
         6: { title: "Agus" , location: "Barcelona", project: "Personal Project", year: "2025" },
         7: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
         8: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" },    
-        9: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" }, // <-- REVISAR LOCATION
+        9: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" }, 
         10: { title: "Shower", location: "Barcelona", project: "Personal Project", year: "2023" },
         11: { title: "Cruising", location: "Barcelona", project: "Personal Project", year: "2023" },
         12: { title: "Wall", location: "Barcelona", project: "Personal Project", year: "2023" },
-        13: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" }, // <-- REVISAR LOCATION
+        13: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" }, 
         14: { title: "Selfportrait", location: "Barcelona", project: "Personal Project", year: "2026" },
         15: { title: "Futurachicapop", location: "Barcelona", project: "Personal Project", year: "2021" },
         16: { title: "Futurachicapop", location: "Barcelona", project: "Personal Project", year: "2021" },  
-        17: { title: "Futurachicapop", location: "Barcelona", project: "Personal Project", year: "2021" }, // <-- REVISAR LOCATION
+        17: { title: "Futurachicapop", location: "Barcelona", project: "Personal Project", year: "2021" }, 
         18: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
         19: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
         20: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
-        21: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" }, // <-- REVISAR LOCATION
+        21: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" }, 
         22: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
         23: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
         24: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },    
-        25: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" }, // <-- REVISAR LOCATION
+        25: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" }, 
         26: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" },
         27: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" },
         28: { title: "Luis", location: "Madrid", project: "Personal Project", year: "2022" },
@@ -266,12 +266,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSpeedPhotos = baseSpeedPhotos;
     let currentSpeedVideos = baseSpeedVideos;
 
-    // --- VARIABLES INTERACTIVAS DE SMART ZOOM & PINCH (MÓVIL / ESCRITORIO) ---
+    // --- VARIABLES INTERACTIVAS DE SMART ZOOM & PANNING ---
     let scale = 1;
-    let startDistance = 0;
-    let isPinching = false;
+    let isDragging = false;
     let startX = 0, startY = 0;
     let translateX = 0, translateY = 0;
+    let startDistance = 0;
+    let isPinching = false;
 
     function formatNumber(num) { return String(num).padStart(5, '0'); }
 
@@ -370,14 +371,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function setupTouchScroll(container, type) {
-        let startTouchX = 0; let isDragging = false; let lastDiffX = 0; let inertiaFrame = null;
+        let startTouchX = 0; let isDraggingTrack = false; let lastDiffX = 0; let inertiaFrame = null;
         container.addEventListener("touchstart", (e) => {
             if(e.touches.length > 1) return; 
-            isDragging = true; startTouchX = e.touches[0].clientX; lastDiffX = 0;
+            isDraggingTrack = true; startTouchX = e.touches[0].clientX; lastDiffX = 0;
             if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
         }, { passive: true });
         container.addEventListener("touchmove", (e) => {
-            if (!isDragging) return;
+            if (!isDraggingTrack) return;
             const currentX = e.touches[0].clientX;
             lastDiffX = (currentX - startTouchX) * 2.2; 
             if (type === 'photo') { currentSpeedPhotos = baseSpeedPhotos + lastDiffX; } 
@@ -385,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
             startTouchX = currentX; 
         }, { passive: true });
         container.addEventListener("touchend", () => {
-            isDragging = false;
+            isDraggingTrack = false;
             function applyInertia() {
                 if (Math.abs(lastDiffX) < 0.1) {
                     if (type === 'photo') currentSpeedPhotos = baseSpeedPhotos;
@@ -450,44 +451,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if(document.getElementById("closeBtn")) document.getElementById("closeBtn").onclick = closeLightbox;
     lightbox.onclick = closeLightbox;
     
-    // El clic en el vídeo frena el cierre, el clic en la imagen ahora controla el Zoom de Escritorio
     lightboxVid.onclick = (e) => e.stopPropagation();
     if (lightboxCredits) lightboxCredits.onclick = (e) => e.stopPropagation();
 
-    // --- INTERACCIÓN DE CLICK ZOOM EN ORDENADOR ---
-    lightboxImg.addEventListener("click", (e) => {
-        e.stopPropagation(); // Evita que se cierre el lightbox
-        
-        // Detecta si es un dispositivo táctil mediante soporte de puntos de contacto
-        if (window.matchMedia("(pointer: coarse)").matches) return;
-
-        if (scale === 1) {
-            scale = 2;
-            // Centra inteligentemente el zoom en base a la posición del puntero del ratón
-            const rect = lightboxImg.getBoundingClientRect();
-            const offsetX = e.clientX - rect.left - rect.width / 2;
-            const offsetY = e.clientY - rect.top - rect.height / 2;
-            translateX = -offsetX;
-            translateY = -offsetY;
-            lightboxImg.style.cursor = "zoom-out";
-        } else {
-            resetZoom();
-            lightboxImg.style.cursor = "zoom-in";
-        }
-        lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-    });
-
-    // --- CORRECCIÓN MATEMÁTICA Y LÍMITES PINCH-TO-ZOOM ---
-    function getDistance(touches) {
-        return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
-    }
-
+    // --- REINICIAR ZOOM ---
     function resetZoom() {
         scale = 1; translateX = 0; translateY = 0;
         lightboxImg.style.transform = `translate(0px, 0px) scale(1)`;
         lightboxImg.style.cursor = "zoom-in";
     }
 
+    // --- LÍMITES DE DESPLAZAMIENTO DEL ZOOM ---
     function clampTransforms() {
         if (scale <= 1) {
             translateX = 0;
@@ -497,6 +471,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const rect = lightboxImg.getBoundingClientRect();
         const parentRect = lightbox.getBoundingClientRect();
 
+        // Calculamos el espacio extra generado por el escalado de la imagen
         const maxTx = Math.max(0, (rect.width - parentRect.width) / 2);
         const maxTy = Math.max(0, (rect.height - parentRect.height) / 2);
 
@@ -504,14 +479,60 @@ document.addEventListener("DOMContentLoaded", () => {
         translateY = Math.min(Math.max(translateY, -maxTy), maxTy);
     }
 
+    // --- SISTEMA DE ZOOM X3 REVERSIBLE CON ARRASTRE DE NAVEGACIÓN ---
+    lightboxImg.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (window.matchMedia("(pointer: coarse)").matches) return; // Ignorar si es pantalla táctil
+
+        if (scale === 1) {
+            scale = 3; // Nivel óptimo de zoom x3
+            // Centra dinámicamente y permite arrastrar
+            translateX = 0;
+            translateY = 0;
+            lightboxImg.style.cursor = "move";
+        } else {
+            resetZoom();
+        }
+        lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    });
+
+    // Control del arrastre por ratón (Navegación en Escritorio)
+    lightboxImg.addEventListener("mousedown", (e) => {
+        if (scale > 1) {
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            lightboxImg.style.cursor = "grabbing";
+            e.preventDefault();
+        }
+    });
+
+    window.addEventListener("mousemove", (e) => {
+        if (!isDragging || scale <= 1) return;
+        translateX = e.clientX - startX;
+        translateY = e.clientY - startY;
+        clampTransforms();
+        lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    });
+
+    window.addEventListener("mouseup", () => {
+        if (isDragging) {
+            isDragging = false;
+            if (scale > 1) lightboxImg.style.cursor = "move";
+        }
+    });
+
+    // --- GESTIÓN DE PINCH-TO-ZOOM Y ARRASTRE (DISPOSITIVOS MÓVILES) ---
+    function getDistance(touches) {
+        return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
+    }
+
     lightboxImg.addEventListener('touchstart', (e) => {
         if (e.touches.length === 2) {
             isPinching = true;
             startDistance = getDistance(e.touches);
-            
             const touchCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
             const touchCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-            
             startX = touchCenterX - translateX;
             startY = touchCenterY - translateY;
         } else if (e.touches.length === 1) {
@@ -525,43 +546,34 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.touches.length === 2 && isPinching) {
             const currentDistance = getDistance(e.touches);
             const prevScale = scale;
-            
             scale = Math.min(Math.max(1, (currentDistance / startDistance) * scale), 4); 
-            
             const currentX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
             const currentY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-            
             if (prevScale !== scale) {
                 translateX = currentX - startX;
                 translateY = currentY - startY;
             }
-
             clampTransforms();
             lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
         } else if (e.touches.length === 1 && scale > 1 && !isPinching) {
             translateX = e.touches[0].clientX - startX;
             translateY = e.touches[0].clientY - startY;
-            
             clampTransforms();
             lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
         }
     }, { passive: true });
 
     lightboxImg.addEventListener('touchend', (e) => {
-        if (e.touches.length < 2) {
-            isPinching = false;
-        }
+        if (e.touches.length < 2) isPinching = false;
         if (scale <= 1) {
             resetZoom();
-        } else {
-            if(e.touches.length === 1) {
-                startX = e.touches[0].clientX - translateX;
-                startY = e.touches[0].clientY - translateY;
-            }
+        } else if (e.touches.length === 1) {
+            startX = e.touches[0].clientX - translateX;
+            startY = e.touches[0].clientY - translateY;
         }
     });
 
-    // --- GENERADOR INTELIGENTE DE CONTENIDO (ESTÉTICA 100% UNIFICADA CON PRODUCCIÓN) ---
+    // --- GENERADOR DE CRÉDITOS IDÉNTICO A PRODUCTION ---
     function updateContent() {
         const formatted = formatNumber(currentIndex);
         lightbox.classList.remove("show-img", "show-vid");
@@ -575,9 +587,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = photoData[currentIndex] || { title: `Photo #${currentIndex}`, location: "Barcelona", project: "Personal Project", year: "2026" };
                 lightboxCredits.innerHTML = `
                     <h3>${data.title}</h3>
-                    <p>${data.location}</p>
-                    <p>${data.project}</p>
-                    <p>${data.year}</p>
+                    <p>
+                        ${data.location}<br>
+                        ${data.project}<br>
+                        ${data.year}
+                    </p>
                 `;
             }
         } else {
@@ -586,34 +600,32 @@ document.addEventListener("DOMContentLoaded", () => {
             if (lightboxCredits) {
                 const data = videoData[currentIndex] || { title: `Video #${currentIndex}`, client: "Client", role: "Director", year: "2026" };
                 
-                // Estructura de bloque pura e idéntica a producción
                 let creditsHTML = `
                     <h3>${data.title}</h3>
-                    <p>${data.client}</p>
-                    <p>${data.role}</p>
-                    <p>${data.year}</p>
+                    <p>
+                        ${data.client}<br>
+                        ${data.role}<br>
+                        ${data.year}
                 `;
 
                 if (data.awards) {
                     const awardsList = Array.isArray(data.awards) ? data.awards : [data.awards];
-                    awardsList.forEach(award => { creditsHTML += `<p>🌿 ${award}</p>`; });
+                    awardsList.forEach(award => { creditsHTML += `<br>🌿 ${award}`; });
                 }
 
                 const fixedKeys = ['title', 'client', 'role', 'year', 'awards'];
                 
                 Object.keys(data).forEach(key => {
                     if (!fixedKeys.includes(key)) {
-                        // Formateamos claves automáticamente ("ayudante_de_direccion" -> "Ayudante De Direccion")
                         const label = key.replace(/_/g, ' ')
                                          .split(' ')
                                          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                                          .join(' ');
-                        
-                        // Renderizado plano en string que respeta los estilos tipográficos del CSS
-                        creditsHTML += `<p>${label}: ${data[key]}</p>`;
+                        creditsHTML += `<br>${label}: ${data[key]}`;
                     }
                 });
                 
+                creditsHTML += `</p>`;
                 lightboxCredits.innerHTML = creditsHTML;
             }
         }
