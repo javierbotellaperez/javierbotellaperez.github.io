@@ -24,23 +24,23 @@ document.addEventListener("DOMContentLoaded", () => {
         6: { title: "Agus" , location: "Barcelona", project: "Personal Project", year: "2025" },
         7: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
         8: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" },    
-        9: { title: "Jordi", location: "Javier Botella Pérez", project: "Personal Project", year: "2024" },
+        9: { title: "Jordi", location: "Barcelona", project: "Personal Project", year: "2024" }, // <-- REVISAR LOCATION
         10: { title: "Shower", location: "Barcelona", project: "Personal Project", year: "2023" },
         11: { title: "Cruising", location: "Barcelona", project: "Personal Project", year: "2023" },
         12: { title: "Wall", location: "Barcelona", project: "Personal Project", year: "2023" },
-        13: { title: "Arnau", location: "Javier Botella Pérez", project: "Personal Project", year: "2024" },
+        13: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" }, // <-- REVISAR LOCATION
         14: { title: "Selfportrait", location: "Barcelona", project: "Personal Project", year: "2026" },
         15: { title: "Futurachicapop", location: "Barcelona", project: "Personal Project", year: "2021" },
         16: { title: "Futurachicapop", location: "Barcelona", project: "Personal Project", year: "2021" },  
-        17: { title: "Futurachicapop", location: "Javier Botella Pérez", project: "Personal Project", year: "2021" },
+        17: { title: "Futurachicapop", location: "Barcelona", project: "Personal Project", year: "2021" }, // <-- REVISAR LOCATION
         18: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
         19: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
         20: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
-        21: { title: "Agus", location: "Javier Botella Pérez", project: "Personal Project", year: "2025" },
+        21: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" }, // <-- REVISAR LOCATION
         22: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
         23: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },
         24: { title: "Agus", location: "Barcelona", project: "Personal Project", year: "2025" },    
-        25: { title: "Arnau", location: "Javier Botella Pérez", project: "Personal Project", year: "2024" },
+        25: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" }, // <-- REVISAR LOCATION
         26: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" },
         27: { title: "Arnau", location: "Barcelona", project: "Personal Project", year: "2024" },
         28: { title: "Luis", location: "Madrid", project: "Personal Project", year: "2022" },
@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSpeedPhotos = baseSpeedPhotos;
     let currentSpeedVideos = baseSpeedVideos;
 
-    // --- VARIABLES PARA PINCH-TO-ZOOM (MOVIL LIGHTBOX) ---
+    // --- VARIABLES INTERACTIVAS DE SMART ZOOM & PINCH (MÓVIL / ESCRITORIO) ---
     let scale = 1;
     let startDistance = 0;
     let isPinching = false;
@@ -315,7 +315,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Código de carga inicial
     loadPhotos();
 
     function loadVideos() {
@@ -402,7 +401,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Controles de Aceleración y Mouseenter
     const photoLeftZone = containerPhotos.querySelector(".zone-left");
     const photoRightZone = containerPhotos.querySelector(".zone-right");
     if(photoLeftZone) photoLeftZone.addEventListener("mouseenter", () => currentSpeedPhotos = baseSpeedPhotos * -8); 
@@ -451,9 +449,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if(document.getElementById("closeBtn")) document.getElementById("closeBtn").onclick = closeLightbox;
     lightbox.onclick = closeLightbox;
-    lightboxImg.onclick = (e) => e.stopPropagation();
+    
+    // El clic en el vídeo frena el cierre, el clic en la imagen ahora controla el Zoom de Escritorio
     lightboxVid.onclick = (e) => e.stopPropagation();
     if (lightboxCredits) lightboxCredits.onclick = (e) => e.stopPropagation();
+
+    // --- INTERACCIÓN DE CLICK ZOOM EN ORDENADOR ---
+    lightboxImg.addEventListener("click", (e) => {
+        e.stopPropagation(); // Evita que se cierre el lightbox
+        
+        // Detecta si es un dispositivo táctil mediante soporte de puntos de contacto
+        if (window.matchMedia("(pointer: coarse)").matches) return;
+
+        if (scale === 1) {
+            scale = 2;
+            // Centra inteligentemente el zoom en base a la posición del puntero del ratón
+            const rect = lightboxImg.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left - rect.width / 2;
+            const offsetY = e.clientY - rect.top - rect.height / 2;
+            translateX = -offsetX;
+            translateY = -offsetY;
+            lightboxImg.style.cursor = "zoom-out";
+        } else {
+            resetZoom();
+            lightboxImg.style.cursor = "zoom-in";
+        }
+        lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    });
 
     // --- CORRECCIÓN MATEMÁTICA Y LÍMITES PINCH-TO-ZOOM ---
     function getDistance(touches) {
@@ -463,6 +485,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function resetZoom() {
         scale = 1; translateX = 0; translateY = 0;
         lightboxImg.style.transform = `translate(0px, 0px) scale(1)`;
+        lightboxImg.style.cursor = "zoom-in";
     }
 
     function clampTransforms() {
@@ -538,7 +561,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- GENERADOR INTELIGENTE DE CONTENIDO ---
+    // --- GENERADOR INTELIGENTE DE CONTENIDO (ESTÉTICA 100% UNIFICADA CON PRODUCCIÓN) ---
     function updateContent() {
         const formatted = formatNumber(currentIndex);
         lightbox.classList.remove("show-img", "show-vid");
@@ -551,8 +574,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (lightboxCredits) {
                 const data = photoData[currentIndex] || { title: `Photo #${currentIndex}`, location: "Barcelona", project: "Personal Project", year: "2026" };
                 lightboxCredits.innerHTML = `
-                    <h3 class="credits-title">${data.title}</h3>
-                    <p class="credits-subtitle">${data.location} &bull; ${data.project} &bull; ${data.year}</p>
+                    <h3>${data.title}</h3>
+                    <p>${data.location}</p>
+                    <p>${data.project}</p>
+                    <p>${data.year}</p>
                 `;
             }
         } else {
@@ -560,73 +585,37 @@ document.addEventListener("DOMContentLoaded", () => {
             lightbox.classList.add("show-vid"); lightboxVid.play();
             if (lightboxCredits) {
                 const data = videoData[currentIndex] || { title: `Video #${currentIndex}`, client: "Client", role: "Director", year: "2026" };
+                
+                // Estructura de bloque pura e idéntica a producción
                 let creditsHTML = `
-                    <h3 class="credits-title">${data.title}</h3>
-                    <p class="credits-subtitle">${data.client} &bull; ${data.role} &bull; ${data.year}</p>
+                    <h3>${data.title}</h3>
+                    <p>${data.client}</p>
+                    <p>${data.role}</p>
+                    <p>${data.year}</p>
                 `;
 
                 if (data.awards) {
-                    creditsHTML += `<div class="credits-awards">`;
                     const awardsList = Array.isArray(data.awards) ? data.awards : [data.awards];
-                    awardsList.forEach(award => { creditsHTML += `<p class="award-item">🌿 ${award}</p>`; });
-                    creditsHTML += `</div>`;
+                    awardsList.forEach(award => { creditsHTML += `<p>🌿 ${award}</p>`; });
                 }
 
-                creditsHTML += `<hr class="credits-divider"><div class="extra-credits-wrapper">`;
                 const fixedKeys = ['title', 'client', 'role', 'year', 'awards'];
                 
                 Object.keys(data).forEach(key => {
                     if (!fixedKeys.includes(key)) {
+                        // Formateamos claves automáticamente ("ayudante_de_direccion" -> "Ayudante De Direccion")
                         const label = key.replace(/_/g, ' ')
                                          .split(' ')
                                          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                                          .join(' ');
-                        creditsHTML += `
-                            <div class="credit-row">
-                                <span class="credit-label">${label}:</span>
-                                <span class="credit-value">${data[key]}</span>
-                            </div>
-                        `;
+                        
+                        // Renderizado plano en string que respeta los estilos tipográficos del CSS
+                        creditsHTML += `<p>${label}: ${data[key]}</p>`;
                     }
                 });
-                creditsHTML += `</div>`;
+                
                 lightboxCredits.innerHTML = creditsHTML;
             }
         }
     }
-
-    function change(delta) {
-        const total = (currentMode === 'photo') ? totalImages : totalVideos;
-        currentIndex = (currentIndex + delta - 1 + total) % total + 1;
-        resetZoom();
-        updateContent();
-    }
-
-    if(nextBtn) nextBtn.onclick = (e) => { e.stopPropagation(); change(1); };
-    if(prevBtn) prevBtn.onclick = (e) => { e.stopPropagation(); change(-1); };
-
-    document.addEventListener("keydown", (e) => {
-        if (!lightbox.classList.contains("active")) return;
-        if (e.key === "Escape") closeLightbox();
-        else if (e.key === "ArrowRight") change(1);
-        else if (e.key === "ArrowLeft") change(-1);
-    });
-
-    /* ==========================================================================
-       PROTECCIÓN DE CONTENIDO (Anti-copia y bloqueo de descargas básicas)
-       ========================================================================== */
-    // 1. Bloquear el click derecho (evita "Guardar imagen como...", "Guardar vídeo...")
-    document.addEventListener('contextmenu', (e) => {
-        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-            e.preventDefault();
-        }
-    });
-
-    // 2. Bloquear atajos de teclado típicos de clonación / guardado
-    document.addEventListener('keydown', (e) => {
-        // Bloquea Ctrl+S, Ctrl+U (Ver código fuente), Ctrl+P (Imprimir)
-        if ((e.ctrlKey || e.metaKey) && ['s', 'u', 'p'].includes(e.key.toLowerCase())) {
-            e.preventDefault();
-        }
-    });
 });
