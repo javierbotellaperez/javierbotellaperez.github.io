@@ -113,7 +113,22 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const videoData = {
-        1: { title: "Quién quiera perdón que se lo pida a Dios", client: "Jabeat", role: "Director ReTakes + Editor", year: "2025", director: "Roger Martínez", Retakes: "Javier Botella", Edit: "Jabeat & Javier Botella" },
+        1: {
+                 data-extra-credits='{
+                    "Artist": "Jabeat",
+                    "Director": "Roger Martínez",
+                    "Retakes": "Javier Botella Pérez",
+                    "Editor": "Jabeat & Javier Botella Pérez"
+                 }'>
+                <div class="project-info">
+                    <h3>Quién quiera perdón que se lo pida a Dios</h3>
+                    <p>Jabeat</p>
+                    <p>Retakes & Director</p>
+                    <p>2025</p>
+                </div>
+            </div>
+            
+            title: "Quién quiera perdón que se lo pida a Dios", client: "Jabeat", role: "Director ReTakes + Editor", year: "2025", director: "Roger Martínez", Retakes: "Javier Botella", Edit: "Jabeat & Javier Botella" },
         2: { 
             title: "El Sexo Convexo", 
             client: "Futurachicapop", 
