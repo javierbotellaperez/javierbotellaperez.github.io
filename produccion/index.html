@@ -79,15 +79,18 @@
             line-height: 1.5;
         }
 
-        /* --- NUEVO: Estilos para el ajuste de Créditos Extra --- */
+        /* --- Estilos para el ajuste de Créditos Extra --- */
         .extra-credits-wrapper {
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid #e5e5e5; /* Elegante línea divisoria minimalista */
+            max-height: 250px; /* Evita que saturen la pantalla si son demasiados */
+            overflow-y: auto;
         }
         .extra-credits-wrapper p {
             font-size: 13px !important;
             color: #333333 !important;
+            margin: 3px 0 !important;
         }
 
         /* Botón de Cierre (X) superior derecho */
@@ -119,22 +122,11 @@
             }
             .close-btn { top: 20px; right: 20px; font-size: 35px; }
         }
-
-        /* Oculta los créditos extras en la cuadrícula principal */
-.project-item .project-info .extra-credits-wrapper {
-    display: none;
-}
-
-/* Los vuelve a mostrar única y exclusivamente cuando se inyectan dentro del Lightbox */
-.lightbox-credits .extra-credits-wrapper {
-    display: block !important;
-}
-        
     </style>
 </head>
 <body>
 
-    <!-- CABECERA (Ruta directa a la página de inicio de la raíz) -->
+    <!-- CABECERA -->
     <header class="main-header">
         <h1><a href="../index.html">Javier Botella Pérez</a></h1>
     </header>
@@ -144,246 +136,360 @@
         <div class="projects-grid">
             
             <!-- Ejemplo Producción 1 -->
-            <div class="project-item" data-video="videos/prod_video_00001.mp4">
-                <img src="thumbs/prod_thumb_00001.jpg" alt="Campaña 1" class="project-thumb">
+            <div class="project-item" data-video="videos/prod_video_00001.mp4"
+                 data-extra-credits='{
+                    "Director": "Marc Ferrer",
+                    "DoP": "Nilo Zimmerman"
+                 }'>
+                <img src="thumbs/prod_thumb_00001.jpg" alt="¡Corten!" class="project-thumb">
                 <div class="project-info">
                     <h3>¡Corten!</h3>
                     <p>Marc Ferrer</p>
                     <p>Production Manager</p>
                     <p>2020</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Marc Ferrer</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
             <!-- Ejemplo Producción 2 -->
-            <div class="project-item" data-video="videos/prod_video_00002.mp4">
-                <img src="thumbs/prod_thumb_00002.jpg" alt="Campaña 2" class="project-thumb">
+            <div class="project-item" data-video="videos/prod_video_00002.mp4"
+                 data-extra-credits='{
+                    "Artist": "Dua Lipa",
+                    "Album": "Future Nostalgia",
+                    "Label": "Warner",
+                    "Production Company": "CANADA",
+                    "Director": "LOPE SERRANO",
+                    "Executive Producer": "Oscar Romagosa",
+                    "Head of Production": "Alba Barneda, Julia Carrasco",
+                    "Producer": "Laura Serra Estorch, Karen Saurí",
+                    "DOP": "Niklas Johansson",
+                    "Production Designer": "Anna Colomer Nogué",
+                    "Production Manager": "Dani Molina",
+                    "1st AD": "Luis Casacuberta Abril",
+                    "Stylist - Dua Lipa": "Lorenzo Posocco",
+                    "Stylist": "Adrian Bernal, Laura Vandall",
+                    "Choreographer": "Charm La Donna",
+                    "Make-Up & Hair Artist": "Rubén Mármol",
+                    "Casting": "LANE Casting",
+                    "Editor": "Carlos Font Clos",
+                    "Grading": "Marc Morató @ Metropolitana",
+                    "Animation": "Mathematic",
+                    "Logo Design": "Dua Lipa, Guillaume Sbalchiero"
+                 }'>
+                <img src="thumbs/prod_thumb_00002.jpg" alt="Physical" class="project-thumb">
                 <div class="project-info">
                     <h3>Physical</h3>
                     <p>Dua Lipa</p>
                     <p>Production Assistant</p>
                     <p>2019</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
             <!-- Ejemplo Producción 3 -->
-            <div class="project-item" data-video="videos/prod_video_00003.mp4">
-                <img src="thumbs/prod_thumb_00003.jpg" alt="Campaña 3" class="project-thumb">
+            <div class="project-item" data-video="videos/prod_video_00003.mp4"
+                 data-extra-credits='{
+                    "Artist": "Rosalía",
+                    "Album": "El Mal Querer",
+                    "Production Company": "CANADA",
+                    "Director": "NICOLÁS MÉNDEZ",
+                    "Executive Producer": "Oscar Romagosa",
+                    "Head of Production": "Alba Barneda",
+                    "Production Manager": "Xavi Vara",
+                    "DOP": "Daniel F. Abelló",
+                    "Art Director": "Jose Tirado",
+                    "Stylist": "Cris Quer",
+                    "Choreography": "Charm La Donna",
+                    "Make Up": "Javier Ceferino",
+                    "Sound": "Carles Prats",
+                    "Post Production": "Nadège Moreau",
+                    "FX": "Juan Carlos Davila",
+                    "Casting": "Lane Casting",
+                    "Editor": "Carlos Font Clos"
+                 }'>
+                <img src="thumbs/prod_thumb_00003.jpg" alt="Malamente" class="project-thumb">
                 <div class="project-info">
                     <h3>Malamente</h3>
                     <p>Rosalía</p>
                     <p>Production Assistant</p>
                     <p>2018</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
             <!-- Ejemplo Producción 4 -->
-            <div class="project-item" data-video="videos/prod_video_00004.mp4">
-                <img src="thumbs/prod_thumb_00004.jpg" alt="Campaña 4" class="project-thumb">
+            <div class="project-item" data-video="videos/prod_video_00004.mp4"
+                 data-extra-credits='{
+                    "Artist": "Rosalía",
+                    "Album": "El Mal Querer",
+                    "Production Company": "CANADA",
+                    "Director": "NICOLÁS MÉNDEZ",
+                    "Executive Producer": "Oscar Romagosa",
+                    "Head of Production": "Alba Barneda",
+                    "Production Manager": "Xavi Vara",
+                    "DOP": "Daniel F. Abelló",
+                    "Art Director": "Jose Tirado",
+                    "Stylist": "Cris Quer",
+                    "Choreography": "Charm La Donna",
+                    "Make Up": "Javier Ceferino",
+                    "Sound": "Carles Prats",
+                    "Post Production": "Nadège Moreau",
+                    "FX": "Juan Carlos Davila",
+                    "Casting": "Lane Casting",
+                    "Editor": "Carlos Font Clos"
+                 }'>
+                <img src="thumbs/prod_thumb_00004.jpg" alt="Malamente" class="project-thumb">
                 <div class="project-info">
                     <h3>Malamente</h3>
                     <p>Rosalía</p>
                     <p>Production Assistant</p>
                     <p>2018</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
             <!-- Ejemplo Producción 5 -->
-            <div class="project-item" data-video="videos/prod_video_00005.mp4">
-                <img src="thumbs/prod_thumb_00005.jpg" alt="Campaña 5" class="project-thumb">
+            <div class="project-item" data-video="videos/prod_video_00005.mp4"
+                 data-extra-credits='{
+                    "Client": "Coca-Cola",
+                    "Agency": "Bungalow25",
+                    "Production Company": "CANADA",
+                    "Director": "Gerson Aguerri",
+                    "Executive Producer": "Oscar Romagosa",
+                    "Head of Production": "Alba Barneda",
+                    "Producer": "Victor Mata",
+                    "Production Manager": "Xavi Vara",
+                    "DOP": "Pau Castejón",
+                    "Art Director": "Andrea Batlló",
+                    "Stylist": "Carolina Galiana",
+                    "Post Production": "El Ranchito",
+                    "FX": "El 28"
+                 }'>
+                <img src="thumbs/prod_thumb_00005.jpg" alt="6 segundos" class="project-thumb">
                 <div class="project-info">
                     <h3>6 segundos</h3>
                     <p>Royal Bliss</p>
                     <p>Production Assistant</p>
                     <p>2018</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
-                        <!-- Ejemplo Producción 6 -->
-            <div class="project-item" data-video="videos/prod_video_00006.mp4">
-                <img src="thumbs/prod_thumb_00006.jpg" alt="Campaña 4" class="project-thumb">
+            <!-- Ejemplo Producción 6 -->
+            <div class="project-item" data-video="videos/prod_video_00006.mp4"
+                 data-extra-credits='{
+                    "Artist": "Bad Gyal",
+                    "Album": "Worldwide Angel",
+                    "Label": "CANADA Editorial, Puro Records",
+                    "Production Company": "CANADA",
+                    "Director": "CYPRIEN CLÉMENT-DELMAS",
+                    "Executive Producer": "Oscar Romagosa",
+                    "Head of Production": "Alba Barneda",
+                    "Producer": "Itsasne Santos",
+                    "Production Manager": "Javier Botella",
+                    "DOP": "Oriol Barcelona",
+                    "Stylist": "Rocco Marvin, Bad Gyal",
+                    "Make Up": "Ariadna Martín",
+                    "Post Production": "Álvaro Posadas",
+                    "Editor": "Carlos Font"
+                 }'>
+                <img src="thumbs/prod_thumb_00006.jpg" alt="Yo Sigo Iual" class="project-thumb">
                 <div class="project-info">
                     <h3>Yo Sigo Iual</h3>
                     <p>Bad Gyal</p>
                     <p>Production Coordinator</p>
                     <p>2018</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
-                        <!-- Ejemplo Producción 7 -->
-            <div class="project-item" data-video="videos/prod_video_00007.mp4">
-                <img src="thumbs/prod_thumb_00007.jpg" alt="Campaña 4" class="project-thumb">
+            <!-- Ejemplo Producción 7 -->
+            <div class="project-item" data-video="videos/prod_video_00007.mp4"
+                 data-extra-credits='{
+                    "Director": "Marc Oller",
+                    "Production Company": "CANADA"
+                 }'>
+                <img src="thumbs/prod_thumb_00007.jpg" alt="Cuore di Pana" class="project-thumb">
                 <div class="project-info">
                     <h3>Cuore di Pana</h3>
                     <p>Cornetto</p>
                     <p>Production Assistant</p>
                     <p>2018</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
-                        <!-- Ejemplo Producción 8 -->
-            <div class="project-item" data-video="videos/prod_video_00008.mp4">
-                <img src="thumbs/prod_thumb_00008.jpg" alt="Campaña 4" class="project-thumb">
+            <!-- Ejemplo Producción 8 -->
+            <div class="project-item" data-video="videos/prod_video_00008.mp4"
+                 data-extra-credits='{
+                    "Director": "Marc Oller",
+                    "Production Company": "CANADA"
+                 }'>
+                <img src="thumbs/prod_thumb_00008.jpg" alt="Crush" class="project-thumb">
                 <div class="project-info">
                     <h3>Crush</h3>
                     <p>Cornetto</p>
                     <p>Production Assistant</p>
                     <p>2019</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
-                        <!-- Ejemplo Producción 9 -->
-            <div class="project-item" data-video="videos/prod_video_00009.mp4">
-                <img src="thumbs/prod_thumb_00009.jpg" alt="Campaña 4" class="project-thumb">
+            <!-- Ejemplo Producción 9 -->
+            <div class="project-item" data-video="videos/prod_video_00009.mp4"
+                 data-extra-credits='{
+                    "Director": "Eduardo Casanova",
+                    "Production Company": "CANADA"
+                 }'>
+                <img src="thumbs/prod_thumb_00009.jpg" alt="Dreams TV" class="project-thumb">
                 <div class="project-info">
                     <h3>Dreams TV</h3>
                     <p>Bimba y Lola</p>
                     <p>Production Coordinator</p>
                     <p>2018</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
-                        <!-- Ejemplo Producción 10 -->
-            <div class="project-item" data-video="videos/prod_video_00010.mp4">
-                <img src="thumbs/prod_thumb_00010.jpg" alt="Campaña 4" class="project-thumb">
+            <!-- Ejemplo Producción 10 -->
+            <div class="project-item" data-video="videos/prod_video_00010.mp4"
+                 data-extra-credits='{
+                    "Director": "Manson",
+                    "DoP": "Nauzet Gaspar"
+                    "Production Company": "CANADA"
+                 }'>
+                <img src="thumbs/prod_thumb_00010.jpg" alt="EYE" class="project-thumb">
                 <div class="project-info">
                     <h3>EYE</h3>
                     <p>LOEWE</p>
                     <p>Production Coordinator</p>
                     <p>2019</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
-                        <!-- Ejemplo Producción 11 -->
-            <div class="project-item" data-video="videos/prod_video_00011.mp4">
-                <img src="thumbs/prod_thumb_00011.jpg" alt="Campaña 4" class="project-thumb">
+            <!-- Ejemplo Producción 11 -->
+            <div class="project-item" data-video="videos/prod_video_00011.mp4"
+                 data-extra-credits='{
+                    "Artist": "Foals",
+                    "Album": "Everything Not Lost Will Be Saved",
+                    "Label": "Warner Music",
+                    "Production Company": "CANADA",
+                    "Director": "Albert Moya",
+                    "Executive Producer": "Oscar Romagosa",
+                    "Head of Production": "Alba Barneda",
+                    "Producer": "Karen Saurí, Roman Pichón Herrera",
+                    "DOP": "Benoit Soler",
+                    "Art Director": "Alexandra Jordana, Cristina Ramos",
+                    "Editor": "Carlos Font Clos",
+                    "Stylist": "Adrian Bernal",
+                    "Post Production": "Metropolitana, Álvaro Posadas @ CANADA",
+                    "Casting": "LANE Casting, Leo Pintér",
+                    "Grading": "Marc Morató @ Metropolitana"
+                 }'>
+                <img src="thumbs/prod_thumb_00011.jpg" alt="EXITS" class="project-thumb">
                 <div class="project-info">
                     <h3>EXITS</h3>
                     <p>Foals</p>
                     <p>Barcelona Production Coordinator</p>
                     <p>2019</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
-                        <!-- Ejemplo Producción 12 -->
-            <div class="project-item" data-video="videos/prod_video_00012.mp4">
-                <img src="thumbs/prod_thumb_00012.jpg" alt="Campaña 4" class="project-thumb">
+            <!-- Ejemplo Producción 12 -->
+            <div class="project-item" data-video="videos/prod_video_00012.mp4"
+                 data-extra-credits='{
+                    "Artist": "North State",
+                    "Production Company": "CANADA",
+                    "Director": "NUR CASADEVALL",
+                    "Executive Producer": "Oscar Romagosa",
+                    "Head of Production": "Alba Barneda",
+                    "Producer": "Karen Saurí, Itsasne Santos",
+                    "DOP": "Thais Català",
+                    "Choreographer": "Camilo Mejía",
+                    "Art Director": "Cristina Ramos",
+                    "Stylist": "Verónica Febrero, Judit Melis",
+                    "Hair and Makeup": "Cristina Canes, Nuria Ribera",
+                    "Editor": "Lluis Murúa",
+                    "Grading": "Marc Morató @ Metropolitana",
+                    "Post": "Álvaro Posadas @ CANADA, ESCAC Studios",
+                    "Animators": "Joe Ridout Jack, Greeley-Ward, Daniel Mitchell"
+                 }'>
+                <img src="thumbs/prod_thumb_00012.jpg" alt="Crowns" class="project-thumb">
                 <div class="project-info">
                     <h3>Crowns</h3>
                     <p>North State</p>
                     <p>Production Assistant</p>
                     <p>2018</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
-                        <!-- Ejemplo Producción 13 -->
-            <div class="project-item" data-video="videos/prod_video_00013.mp4">
-                <img src="thumbs/prod_thumb_00013.jpg" alt="Campaña 4" class="project-thumb">
+            <!-- Ejemplo Producción 13 -->
+            <div class="project-item" data-video="videos/prod_video_00013.mp4"
+                 data-extra-credits='{
+                    "Artist": "Jarami",
+                    "Label": "RCA",
+                    "Production Company": "CANADA",
+                    "Director": "PENSACOLA",
+                    "Executive Producer": "Oscar Romagosa",
+                    "Head of Production": "Alba Barneda",
+                    "Producer": "Karen Saurí",
+                    "Production Manager": "Bet Rasquí",
+                    "DOP": "Daniel F. Abelló",
+                    "Art Director": "Teresa Montanuy, Jose Tirado",
+                    "Stylist": "Violeta Comella",
+                    "Makeup": "Andrea Trenado",
+                    "Post Production": "Mathematic",
+                    "Casting": "LANE Casting",
+                    "Editor": "Lluis Murúa, Pau Dalmases"
+                 }'>
+                <img src="thumbs/prod_thumb_00013.jpg" alt="No Chance" class="project-thumb">
                 <div class="project-info">
                     <h3>No Chance</h3>
                     <p>Jarami</p>
                     <p>Production Assistant</p>
                     <p>2018</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
-                        <!-- Ejemplo Producción 14 -->
-            <div class="project-item" data-video="videos/prod_video_00014.mp4">
-                <img src="thumbs/prod_thumb_00014.jpg" alt="Campaña 4" class="project-thumb">
+            <!-- Ejemplo Producción 14 -->
+            <div class="project-item" data-video="videos/prod_video_00014.mp4"
+                 data-extra-credits='{
+                    "Director": "Cyprien Clément-Delmas",
+                    "Production Company": "CANADA"
+                 }'>
+                <img src="thumbs/prod_thumb_00014.jpg" alt="Liga Ball" class="project-thumb">
                 <div class="project-info">
                     <h3>Liga Ball</h3>
                     <p>Puma</p>
                     <p>Production Coordinator</p>
                     <p>2019</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
-                           <!-- Ejemplo Producción 14 -->
-            <div class="project-item" data-video="videos/prod_video_00015.mp4">
-                <img src="thumbs/prod_thumb_00015.jpg" alt="Campaña 4" class="project-thumb">
+            <!-- Ejemplo Producción 15 -->
+            <div class="project-item" data-video="videos/prod_video_00015.mp4"
+                 data-extra-credits='{
+                    "Artist": "Aitana",
+                    "Album": "Spoiler",
+                    "Production Company": "CANADA",
+                    "Director": "RÉALITÉ",
+                    "Executive Producer": "Oscar Romagosa",
+                    "Head of Production": "Alba Barneda",
+                    "Producer": "Karen Saurí",
+                    "DOP": "Elías M. Félix",
+                    "Production Manager": "Itsasne Santos",
+                    "1st AD": "Laura Ruiz",
+                    "Art Director": "Laura Santos & Adrià Porta",
+                    "Stylist": "Ahida Agirre",
+                    "Casting": "LANE Casting",
+                    "Choreographer": "Juan Montero",
+                    "Hair Artist": "Jesús de Paula",
+                    "Hair Artist & Make Up": "Cristo Rodriguez",
+                    "Editor": "Lluis Murúa",
+                    "Grading": "Marc Morató @ Metropolitana",
+                    "Post Production": "Alvaro Posadas @ CANADA",
+                    "Graphic Design": "Studio Albert Romagosa"
+                 }'>
+                <img src="thumbs/prod_thumb_00015.jpg" alt="Me Quedo" class="project-thumb">
                 <div class="project-info">
                     <h3>Me Quedo</h3>
                     <p>Aitana & Lola Indigo</p>
                     <p>Production Coordinator</p>
                     <p>2019</p>
-                    <!-- Bloque de créditos extra inyectable -->
-                    <div class="extra-credits-wrapper">
-                        <p><strong>Director:</strong> Canada</p>
-                        <p><strong>DoP:</strong> Name Name</p>
-                    </div>
                 </div>
             </div>
 
-            
         </div>
     </main>
 
@@ -446,11 +552,34 @@
                     const videoSrc = item.dataset.video;
                     lightboxVid.src = videoSrc;
                     
-                    // Clonamos/Inyectamos los créditos del contenedor de info del elemento clicado (incluye los extra)
+                    // Extraemos los créditos base visibles (Título, artista, rol, año)
                     const infoContainer = item.querySelector(".project-info");
+                    let creditsHTML = "";
+                    
                     if (infoContainer) {
-                        lightboxCredits.innerHTML = infoContainer.innerHTML;
+                        creditsHTML = infoContainer.innerHTML;
                     }
+                    
+                    // Procesamos inteligentemente los créditos del JSON de data-extra-credits
+                    if (item.dataset.extraCredits) {
+                        try {
+                            const extraData = JSON.parse(item.dataset.extraCredits);
+                            let extraHTML = '<div class="extra-credits-wrapper">';
+                            
+                            // Iteramos dinámicamente sobre todas las claves y valores del JSON
+                            for (const [key, value] of Object.entries(extraData)) {
+                                extraHTML += `<p><strong>${key}:</strong> ${value}</p>`;
+                            }
+                            
+                            extraHTML += '</div>';
+                            creditsHTML += extraHTML;
+                        } catch (e) {
+                            console.error("Error procesando créditos JSON en este ítem:", e);
+                        }
+                    }
+                    
+                    // Inyectamos todo el set final de créditos al lightbox
+                    lightboxCredits.innerHTML = creditsHTML;
                     
                     lightbox.classList.add("active");
                     lightbox.style.display = "flex";
